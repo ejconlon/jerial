@@ -1,0 +1,10 @@
+*.swo
+*.swp
+target/*
+out/*
+.idea/*
+*.iml
+*~
+*.bak
+*.tmp
+*.log
