@@ -44,4 +44,26 @@ public class Jitem {
     public String toString() {
         return "Jitem<"+(key != null ? key : "null")+","+(value != null ? value.toString() : "null")+","+model+">";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Jitem jitem = (Jitem) o;
+
+        if (key != null ? !key.equals(jitem.key) : jitem.key != null) return false;
+        if (model != jitem.model) return false;
+        if (!value.equals(jitem.value)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = key != null ? key.hashCode() : 0;
+        result = 31 * result + value.hashCode();
+        result = 31 * result + model.hashCode();
+        return result;
+    }
 }

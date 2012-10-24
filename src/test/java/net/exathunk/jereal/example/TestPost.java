@@ -10,6 +10,8 @@ import static org.junit.Assert.fail;
 
 import net.exathunk.jereal.base.*;
 
+import java.util.List;
+
 public class TestPost {
 
     private final JerialBuilderFactory factory = new SimpleMapBuilderFactory();
@@ -74,7 +76,7 @@ public class TestPost {
     }
 
     @Test
-    public void testBag() {
+    public void testBag() throws JerializerException {
         final Bag bag0 = new Bag("x", (long) 12, 4.5, true);
         final Bag bag1 = new Bag("y", (long) 13, 6.7, false, bag0);
 
@@ -82,17 +84,49 @@ public class TestPost {
         final String s0 = jerializeToString(factory, bag0, new BagJerializer());
         assertEquals(gold0, s0);
 
+        final Jerial j0 = jerializeFromString(factory, gold0);
+        for (Jitem entry : j0) {
+            Logger.log(entry);
+        }
+
         final String gold1 = "{\"d\":6.7,\"s\":\"y\",\"b\":false,\"next\":"+gold0+",\"l\":13}";
         final String s1 = jerializeToString(factory, bag1, new BagJerializer());
         assertEquals(gold1, s1);
 
+        final Jerial j1 = jerializeFromString(factory, gold1);
+        for (Jitem entry : j1) {
+            Logger.log(entry);
+        }
     }
 
     @Test
-    public void testArray() {
+    public void testArray() throws JerializerException {
         final Arr arr = new Arr((long) 1, 2.2,"xyz", true);
         final String gold = "{\"objects\":[1,2.2,\"xyz\",true]}";
         final String s = jerializeToString(factory, arr, new ArrJerializer());
         assertEquals(gold, s);
+
+        final Jerial j = jerializeFromString(factory, gold);
+
+        int i = 0;
+        for (Jitem entry : j) {
+            Logger.log(entry);
+            switch (i) {
+                case 0:
+                    assertEquals("objects", entry.key);
+                    assertEquals(arr.objects.size(), ((List<Jitem>)entry.value).size());
+                    for (int k = 0; k < arr.objects.size(); k++) {
+                        Jitem actual = arr.objects.get(k);
+                        Jitem expected = ((List<Jitem>)entry.value).get(k);
+                        assertEquals(expected, actual);
+                    }
+                    assertEquals(Jitem.Model.ARRAY, entry.model);
+                    break;
+                default:
+                    fail();
+            }
+            i += 1;
+        }
+        assertEquals(1, i);
     }
 }

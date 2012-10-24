@@ -3,21 +3,25 @@ package net.exathunk.jereal.base;
 import net.exathunk.jereal.base.visitors.Jerial;
 import net.exathunk.jereal.base.visitors.Jitem;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class MapBuilder implements JerialBuilder {
 
-    private final Map<String, Jitem> pairs;
+    private final Map<String, Jitem> objectPairs;
+    private final List<Jitem> arrayItems;
 
     public MapBuilder() {
-        this.pairs = new HashMap<String, Jitem>();
+        this.objectPairs = new HashMap<String, Jitem>();
+        this.arrayItems = new ArrayList<Jitem>();
     }
 
     @Override
     public void addJitem(Jitem jitem) {
-        pairs.put(jitem.key, jitem);
+        if (jitem.key != null) {
+            objectPairs.put(jitem.key, jitem);
+        } else {
+            arrayItems.add(jitem);
+        }
     }
 
     @Override
@@ -26,21 +30,23 @@ public class MapBuilder implements JerialBuilder {
             @Override
             public Iterator<Jitem> iterator() {
                 return new Iterator<Jitem>() {
-                    private final Iterator<Map.Entry<String, Jitem>> underit = pairs.entrySet().iterator();
+                    private final Iterator<Map.Entry<String, Jitem>> objit = objectPairs.entrySet().iterator();
+                    private final Iterator<Jitem> arrit = arrayItems.iterator();
 
                     @Override
                     public boolean hasNext() {
-                        return underit.hasNext();
+                        return objit.hasNext() || arrit.hasNext();
                     }
 
                     @Override
                     public Jitem next() {
-                        return underit.next().getValue();
+                        if (objit.hasNext()) return objit.next().getValue();
+                        else return arrit.next();
                     }
 
                     @Override
                     public void remove() {
-                        underit.remove();
+                        throw new UnsupportedOperationException();
                     }
                 };
             }

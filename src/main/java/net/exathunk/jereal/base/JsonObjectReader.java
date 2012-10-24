@@ -2,6 +2,8 @@ package net.exathunk.jereal.base;
 
 import net.exathunk.jereal.base.visitors.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 public class JsonObjectReader implements JerialVisitor<JerialContext> {
 
@@ -31,10 +33,14 @@ public class JsonObjectReader implements JerialVisitor<JerialContext> {
                     Logger.log("Reading object: "+key);
                     JerialContext newContext = context.push(key);
                     jerialize(value.getMiddle(), newContext);
+                    context.builder.addJitem(Jitem.makeObject(key, newContext.builder.buildJerial()));
                 } else {
                     Logger.log("Reading array");
                     JerialContext newContext = context.push(key);
                     jerialize(value.getRight(), newContext);
+                    List<Jitem> list = new ArrayList<Jitem>();
+                    for (Jitem item : newContext.builder.buildJerial()) { list.add(item); }
+                    context.builder.addJitem(Jitem.makeArray(key, list));
                 }
             }
         }
@@ -48,10 +54,14 @@ public class JsonObjectReader implements JerialVisitor<JerialContext> {
                     Logger.log("Reading object");
                     JerialContext newContext = context.push(null);
                     jerialize(value.getMiddle(), newContext);
+                    context.builder.addJitem(Jitem.makeObject(null, newContext.builder.buildJerial()));
                 } else {
                     Logger.log("Reading array");
                     JerialContext newContext = context.push(null);
                     jerialize(value.getRight(), newContext);
+                    List<Jitem> list = new ArrayList<Jitem>();
+                    for (Jitem item : newContext.builder.buildJerial()) { list.add(item); }
+                    context.builder.addJitem(Jitem.makeArray(null, list));
                 }
             }
         }
