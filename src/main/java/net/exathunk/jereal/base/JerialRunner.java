@@ -2,15 +2,15 @@ package net.exathunk.jereal.base;
 
 import java.util.Iterator;
 
-public class JerialRunner implements JerialVisitorAdapter<Jerial> {
+public class JerialRunner<U> implements JerialVisitorAdapter<Jerial, U> {
 
-    public void runJerialVisitor(Jerial parent, JerialVisitor visitor) {
-        visitor.seeStartObject();
-        runJerialVisitorInner(parent.iterator(), visitor);
-        visitor.seeEndObject();
+    public Writer<U> runJerialVisitor(Jerial parent, JerialVisitor<U> visitor) {
+        JerialVisitor.ObjectVisitor<U> objectVisitor = visitor.getObjectVisitor();
+        runJerialVisitorInner(parent.iterator(), objectVisitor);
+        return objectVisitor;
     }
 
-    private void runJerialVisitorInner(Iterator<Jitem> pairsIt, JerialVisitor visitor) {
+    private void runJerialVisitorInner(Iterator<Jitem> pairsIt, JerialVisitor.ObjectVisitor<U> visitor) {
         while (pairsIt.hasNext()) {
             final Jitem entry = pairsIt.next();
             switch (entry.model) {
@@ -27,9 +27,8 @@ public class JerialRunner implements JerialVisitorAdapter<Jerial> {
                     visitor.seeBooleanField(entry.key, (Boolean) entry.value);
                     break;
                 case OBJECT:
-                    visitor.seeObjectFieldStart(entry.key);
-                    runJerialVisitorInner(((Jerial) entry.value).iterator(), visitor);
-                    visitor.seeEndObject();
+                    JerialVisitor.ObjectVisitor<U> childVisitor = visitor.seeObjectFieldStart(entry.key);
+                    runJerialVisitorInner(((Jerial) entry.value).iterator(), childVisitor);
                     break;
             }
         }

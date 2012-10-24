@@ -35,4 +35,8 @@ public class Jitem {
     public static Jitem makeBoolean(String key, Boolean value) {
         return new Jitem(key, value, Model.BOOLEAN);
     }
+
+    public String toString() {
+        return "Jitem<"+key+","+value.toString()+","+model+">";
+    }
 }
