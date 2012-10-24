@@ -1,5 +1,9 @@
 package net.exathunk.jereal.example;
 
+import net.exathunk.jereal.base.visitors.Jerial;
+import net.exathunk.jereal.base.visitors.JerialVisitor;
+import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.visitors.Writer;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -21,10 +25,10 @@ public class TestPost {
         return sb.toString();
     }
 
-    <T> Jerial jerializeFromString(JerialBuilderFactory f, String x) throws JerializerException {
+    Jerial jerializeFromString(JerialBuilderFactory f, String x) throws JerializerException {
         JerialVisitor<JerialContext> reader = new JsonObjectReader();
         Writer<JerialContext> contextWriter = (new JsonParser<JerialContext>()).runJerialVisitor(x, reader);
-        JerialContext context = new JerialContext(factory);
+        JerialContext context = new JerialContext(f);
         contextWriter.writeTo(context);
         return context.builder.buildJerial();
     }
@@ -82,5 +86,13 @@ public class TestPost {
         final String s1 = jerializeToString(factory, bag1, new BagJerializer());
         assertEquals(gold1, s1);
 
+    }
+
+    @Test
+    public void testArray() {
+        final Arr arr = new Arr((long) 1, 2.2,"xyz", true);
+        final String gold = "{\"objects\":[1,2.2,\"xyz\",true]}";
+        final String s = jerializeToString(factory, arr, new ArrJerializer());
+        assertEquals(gold, s);
     }
 }

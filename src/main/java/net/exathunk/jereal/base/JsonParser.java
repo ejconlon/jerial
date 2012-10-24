@@ -1,5 +1,9 @@
 package net.exathunk.jereal.base;
 
+import net.exathunk.jereal.base.visitors.JerialVisitor;
+import net.exathunk.jereal.base.visitors.ObjectVisitor;
+import net.exathunk.jereal.base.visitors.Writer;
+
 public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
     public Writer<U> runJerialVisitor(String s, JerialVisitor<U> visitor) throws JerializerException {
         int i = 0;
@@ -13,7 +17,7 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                         throw new JerializerException("Already read object start.");
                     }
                     i += 1;
-                    Pair<Integer, Writer<U>> pair = objectVisitorInner(s, i, visitor.getObjectVisitor());
+                    Pair<Integer, Writer<U>> pair = objectVisitorInner(s, i, visitor.makeObjectVisitor());
                     i = pair.getKey();
                     writer = pair.getValue();
                     break;
@@ -36,7 +40,7 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
         return writer;
     }
 
-    private static <U> Pair<Integer,Writer<U>> objectVisitorInner(String s, int i, JerialVisitor.ObjectVisitor objectVisitor) throws JerializerException {
+    private static <U> Pair<Integer,Writer<U>> objectVisitorInner(String s, int i, ObjectVisitor<U> objectVisitor) throws JerializerException {
         boolean inquote = false;
         final int z = s.length();
         StringBuilder key = new StringBuilder();
@@ -109,7 +113,7 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
         throw new JerializerException("Did not read object end.");
     }
 
-    private static void emit(StringBuilder key, StringBuilder value, JerialVisitor.ObjectVisitor objectVisitor) throws JerializerException {
+    private static <U> void emit(StringBuilder key, StringBuilder value, ObjectVisitor<U> objectVisitor) throws JerializerException {
         final String ks = key.toString();
         if (value.length() > 1 && value.charAt(0) == '"' && value.charAt(value.length()-1) == '"') {
             objectVisitor.seeStringField(ks, value.substring(1, value.length() - 1));

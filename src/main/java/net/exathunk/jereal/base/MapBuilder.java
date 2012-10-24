@@ -1,5 +1,8 @@
 package net.exathunk.jereal.base;
 
+import net.exathunk.jereal.base.visitors.Jerial;
+import net.exathunk.jereal.base.visitors.Jitem;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

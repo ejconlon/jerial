@@ -1,9 +1,10 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.visitors;
+
+import java.util.List;
 
 public class Jitem {
-
     public enum Model {
-        STRING, LONG, DOUBLE, BOOLEAN, OBJECT
+        STRING, LONG, DOUBLE, BOOLEAN, OBJECT, ARRAY
     }
 
     public final String key;
@@ -18,6 +19,10 @@ public class Jitem {
 
     public static Jitem makeObject(String key, Jerial value) {
         return new Jitem(key, value, Model.OBJECT);
+    }
+
+    public static Jitem makeArray(String key, List<Jitem> value) {
+        return new Jitem(key, value, Model.ARRAY);
     }
 
     public static Jitem makeString(String key, String value) {
@@ -37,6 +42,6 @@ public class Jitem {
     }
 
     public String toString() {
-        return "Jitem<"+key+","+value.toString()+","+model+">";
+        return "Jitem<"+(key != null ? key : "null")+","+(value != null ? value.toString() : "null")+","+model+">";
     }
 }
