@@ -1,9 +1,8 @@
 package net.exathunk.jereal.example;
 
+import net.exathunk.jereal.TestUtils;
 import net.exathunk.jereal.base.visitors.Jerial;
-import net.exathunk.jereal.base.visitors.JerialVisitor;
 import net.exathunk.jereal.base.visitors.Jitem;
-import net.exathunk.jereal.base.visitors.Writer;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -16,34 +15,15 @@ public class TestPost {
 
     private final JerialBuilderFactory factory = new SimpleMapBuilderFactory();
 
-    <T> String jerializeToString(JerialBuilderFactory f, T x, Jerializer<T> y) {
-        JerialContext context = new JerialContext(f);
-        y.jerialize(x, context);
-        Jerial jerial = context.builder.buildJerial();
-        JerialVisitor<StringBuilder> objectWriter = new JsonObjectWriter();
-        Writer<StringBuilder> stringWriter = (new JerialRunner<StringBuilder>()).runJerialVisitor(jerial, objectWriter);
-        StringBuilder sb = new StringBuilder();
-        stringWriter.writeTo(sb);
-        return sb.toString();
-    }
-
-    Jerial jerializeFromString(JerialBuilderFactory f, String x) throws JerializerException {
-        JerialVisitor<JerialContext> reader = new JsonObjectReader();
-        Writer<JerialContext> contextWriter = (new JsonParser<JerialContext>()).runJerialVisitor(x, reader);
-        JerialContext context = new JerialContext(f);
-        contextWriter.writeTo(context);
-        return context.builder.buildJerial();
-    }
-
     @Test
     public void testSerializePost() throws JerializerException {
         final Post post = new Post("foo", "bar");
         final String gold = "{\"body\":\"bar\",\"title\":\"foo\"}";
 
-        final String s = jerializeToString(factory, post, new PostJerializer());
+        final String s = TestUtils.jerializeToString(factory, post, new PostJerializer());
         assertEquals(gold, s);
 
-        final Jerial j = jerializeFromString(factory, gold);
+        final Jerial j = TestUtils.jerializeFromString(factory, gold);
 
         int i = 0;
         for (Jitem entry : j) {
@@ -71,7 +51,7 @@ public class TestPost {
     public void testNulls() {
         final Bag bag0 = new Bag(null, null, null, null);
         final String gold0 = "{\"d\":null,\"s\":null,\"b\":null,\"l\":null}";
-        final String s0 = jerializeToString(factory, bag0, new BagJerializer());
+        final String s0 = TestUtils.jerializeToString(factory, bag0, new BagJerializer());
         assertEquals(gold0, s0);
     }
 
@@ -81,19 +61,19 @@ public class TestPost {
         final Bag bag1 = new Bag("y", (long) 13, 6.7, false, bag0);
 
         final String gold0 = "{\"d\":4.5,\"s\":\"x\",\"b\":true,\"l\":12}";
-        final String s0 = jerializeToString(factory, bag0, new BagJerializer());
+        final String s0 = TestUtils.jerializeToString(factory, bag0, new BagJerializer());
         assertEquals(gold0, s0);
 
-        final Jerial j0 = jerializeFromString(factory, gold0);
+        final Jerial j0 = TestUtils.jerializeFromString(factory, gold0);
         for (Jitem entry : j0) {
             Logger.log(entry);
         }
 
         final String gold1 = "{\"d\":6.7,\"s\":\"y\",\"b\":false,\"next\":"+gold0+",\"l\":13}";
-        final String s1 = jerializeToString(factory, bag1, new BagJerializer());
+        final String s1 = TestUtils.jerializeToString(factory, bag1, new BagJerializer());
         assertEquals(gold1, s1);
 
-        final Jerial j1 = jerializeFromString(factory, gold1);
+        final Jerial j1 = TestUtils.jerializeFromString(factory, gold1);
         for (Jitem entry : j1) {
             Logger.log(entry);
         }
@@ -103,10 +83,10 @@ public class TestPost {
     public void testArray() throws JerializerException {
         final Arr arr = new Arr((long) 1, 2.2,"xyz", true);
         final String gold = "{\"objects\":[1,2.2,\"xyz\",true]}";
-        final String s = jerializeToString(factory, arr, new ArrJerializer());
+        final String s = TestUtils.jerializeToString(factory, arr, new ArrJerializer());
         assertEquals(gold, s);
 
-        final Jerial j = jerializeFromString(factory, gold);
+        final Jerial j = TestUtils.jerializeFromString(factory, gold);
 
         int i = 0;
         for (Jitem entry : j) {

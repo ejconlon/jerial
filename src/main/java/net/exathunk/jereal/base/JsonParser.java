@@ -58,21 +58,33 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
         boolean skipComma = false;
         while (i < z) {
             final char c = s.charAt(i);
+            if (inquote || c == '"') {
+                cur.append(c);
+                i += 1;
+                if (c == '"') inquote = !inquote;
+                continue;
+            }
             switch (c) {
                 case '{':
                     i += 1;
                     assert key.length() > 0;
+                    assert value.length() == 0;
                     assert cur == value;
-                    pair = objectVisitorInner(s, i, objectVisitor.seeObjectFieldStart(key.toString()));
+                    pair = objectVisitorInner(s, i, objectVisitor.seeObjectFieldStart(key.substring(1, key.length()-1)));
                     i = pair.getKey();
+                    key.setLength(0);
+                    cur = key;
                     break;
 
                 case '[':
                     i += 1;
                     assert key.length() > 0;
+                    assert value.length() == 0;
                     assert cur == value;
-                    pair = arrayVisitorInner(s, i, objectVisitor.seeArrayFieldStart(key.toString()));
+                    pair = arrayVisitorInner(s, i, objectVisitor.seeArrayFieldStart(key.substring(1, key.length()-1)));
                     i = pair.getKey();
+                    key.setLength(0);
+                    cur = key;
                     break;
 
                 case '}':
@@ -80,6 +92,9 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                         assert cur == value;
                         assert key.length() > 0;
                         emit(key, value, objectVisitor);
+                        key.setLength(0);
+                        value.setLength(0);
+                        cur = key;
                     }
                     return new Pair<Integer, Writer<U>>(i, objectVisitor);
 
@@ -87,15 +102,7 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                     assert key.length() > 0;
                     assert cur == key;
                     assert value.length() == 0;
-                    assert !inquote;
                     cur = value;
-                    break;
-
-                case '"':
-                    if (cur == value) {
-                        cur.append(c);
-                    }
-                    inquote = !inquote;
                     break;
 
                 case ',':
@@ -103,10 +110,10 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                         if (value.length() > 0) {
                             assert key.length() > 0;
                             emit(key, value, objectVisitor);
+                            key.setLength(0);
+                            value.setLength(0);
+                            cur = key;
                         }
-                        key.setLength(0);
-                        value.setLength(0);
-                        cur = key;
                     } else {
                         skipComma = false;
                     }
@@ -116,9 +123,6 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                 case '\t':
                 case '\r':
                 case '\n':
-                    if (inquote) {
-                        cur.append(c);
-                    }
                     break;
 
                 default:
@@ -139,6 +143,12 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
         boolean skipComma = false;
         while (i < z) {
             final char c = s.charAt(i);
+            if (inquote || c == '"') {
+                value.append(c);
+                i += 1;
+                if (c == '"') inquote = !inquote;
+                continue;
+            }
             switch (c) {
                 case '{':
                     i += 1;
@@ -157,19 +167,16 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                 case ']':
                     if (value.length() > 0) {
                         emit(value, arrayVisitor);
+                        value.setLength(0);
                     }
                     return new Pair<Integer, Writer<U>>(i, arrayVisitor);
 
-                case '"':
-                    value.append(c);
-                    inquote = !inquote;
-                    break;
-
                 case ',':
                     if (!skipComma) {
-                        assert value.length() > 0;
-                        emit(value, arrayVisitor);
-                        value.setLength(0);
+                        if (value.length() > 0) {
+                            emit(value, arrayVisitor);
+                            value.setLength(0);
+                        }
                     } else {
                         skipComma = false;
                     }
@@ -179,9 +186,6 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                 case '\t':
                 case '\r':
                 case '\n':
-                    if (inquote) {
-                        value.append(c);
-                    }
                     break;
 
                 default:
@@ -194,7 +198,7 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
     }
 
     private static <U> void emit(StringBuilder key, StringBuilder value, ObjectVisitor<U> objectVisitor) throws JerializerException {
-        final String ks = key.toString();
+        final String ks = key.substring(1, key.length()-1);
         if (value.length() > 1 && value.charAt(0) == '"' && value.charAt(value.length()-1) == '"') {
             objectVisitor.seeStringField(ks, value.substring(1, value.length() - 1));
             return;

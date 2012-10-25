@@ -26,12 +26,10 @@ public class ConsList<T> {
     }
 
     public static <X> ConsList<X> singleton(X head) {
-        assert head != null;
         return new ConsList<X>(head);
     }
 
     public ConsList<T> cons(T newHead) {
-        assert newHead != null;
         return new ConsList<T>(newHead, this);
     }
 
