@@ -3,6 +3,7 @@ package net.exathunk.jereal.base.visitors;
 import java.util.List;
 
 public class Jitem {
+
     public enum Model {
         STRING, LONG, DOUBLE, BOOLEAN, OBJECT, ARRAY
     }
@@ -39,6 +40,10 @@ public class Jitem {
 
     public static Jitem makeBoolean(String key, Boolean value) {
         return new Jitem(key, value, Model.BOOLEAN);
+    }
+
+    public Jitem withKey(String newKey) {
+        return new Jitem(newKey, value, model);
     }
 
     public String toString() {

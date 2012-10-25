@@ -1,8 +1,10 @@
 package net.exathunk.jereal.base;
 
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
-public class ConsList<T> {
+public class ConsList<T> implements Iterable<T> {
     private T _head;
     private ConsList<T> _tail;
 
@@ -73,4 +75,13 @@ public class ConsList<T> {
         };
     }
 
+    public Pair<Integer, List<T>> toRevList() {
+        LinkedList<T> list = new LinkedList<T>();
+        int i = 0;
+        for (T ref : this) {
+            i += 1;
+            list.addFirst(ref);
+        }
+        return new Pair<Integer, List<T>>(i, list);
+    }
 }

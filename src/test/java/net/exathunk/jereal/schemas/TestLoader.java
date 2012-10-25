@@ -26,6 +26,7 @@ public class TestLoader {
         final Jerial j = TestUtils.jerializeFromString(factory, gold);
         final String s = TestUtils.jerializeToString(factory, j, new JerialJerializer());
         Logger.log("READ " + name + " => " + s);
+        // TODO add assertions
     }
 
     @Test

@@ -3,6 +3,7 @@ package net.exathunk.jereal.example;
 import net.exathunk.jereal.TestUtils;
 import net.exathunk.jereal.base.visitors.Jerial;
 import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.flattener.FlattenedBuilderFactory;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -67,6 +68,7 @@ public class TestPost {
         final Jerial j0 = TestUtils.jerializeFromString(factory, gold0);
         for (Jitem entry : j0) {
             Logger.log(entry);
+            // TODO add assertions
         }
 
         final String gold1 = "{\"d\":6.7,\"s\":\"y\",\"b\":false,\"next\":"+gold0+",\"l\":13}";
@@ -76,6 +78,7 @@ public class TestPost {
         final Jerial j1 = TestUtils.jerializeFromString(factory, gold1);
         for (Jitem entry : j1) {
             Logger.log(entry);
+            // TODO add assertions
         }
     }
 
@@ -108,5 +111,22 @@ public class TestPost {
             i += 1;
         }
         assertEquals(1, i);
+    }
+
+    // TODO add arrays and assertions
+    @Test
+    public void testFlattening() throws JerializerException {
+        final String gold0 = "{\"d\":4.5,\"s\":\"x\",\"b\":true,\"l\":12}";
+        final String gold1 = "{\"d\":6.7,\"s\":\"y\",\"b\":false,\"next\":"+gold0+",\"l\":13}";
+
+        JerialBuilderFactory flattenedFactory = new FlattenedBuilderFactory("/", "__NULL__");
+
+        final Jerial j1 = TestUtils.jerializeFromString(flattenedFactory, gold1);
+        for (Jitem entry : j1) {
+            Logger.log(entry);
+        }
+
+        final String s1 = TestUtils.jerializeToString(flattenedFactory, j1, new JerialJerializer());
+        Logger.log(s1);
     }
 }
