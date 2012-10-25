@@ -6,8 +6,8 @@ import java.util.List;
 
 public class JerialRunner<U> implements JerialVisitorAdapter<Jerial, U> {
 
-    public Writer<U> runJerialVisitor(Jerial parent, JerialVisitor<U> visitor) {
-        ObjectVisitor<U> objectVisitor = visitor.makeObjectVisitor();
+    public Writer<U> runJerialVisitor(Jerial parent, VisitorFactory<U> visitorFactory) {
+        ObjectVisitor<U> objectVisitor = visitorFactory.makeObjectVisitor();
         runJerialVisitorInner(parent, objectVisitor, null);
         return objectVisitor;
     }
@@ -18,24 +18,24 @@ public class JerialRunner<U> implements JerialVisitorAdapter<Jerial, U> {
             //Logger.log("runJerialVisitorInner: "+entry);
             switch (entry.model) {
                 case STRING:
-                    if (isObject) objectVisitor.seeStringField(entry.key, (String) entry.value);
+                    if (isObject) objectVisitor.seeStringField(entry.part.getLeft(), (String) entry.value);
                     else arrayVisitor.seeStringItem((String)entry.value);
                     break;
                 case LONG:
-                    if (isObject) objectVisitor.seeLongField(entry.key, (Long) entry.value);
+                    if (isObject) objectVisitor.seeLongField(entry.part.getLeft(), (Long) entry.value);
                     else arrayVisitor.seeLongItem((Long)entry.value);
                     break;
                 case DOUBLE:
-                    if (isObject) objectVisitor.seeDoubleField(entry.key, (Double) entry.value);
+                    if (isObject) objectVisitor.seeDoubleField(entry.part.getLeft(), (Double) entry.value);
                     else arrayVisitor.seeDoubleItem((Double)entry.value);
                     break;
                 case BOOLEAN:
-                    if (isObject) objectVisitor.seeBooleanField(entry.key, (Boolean) entry.value);
+                    if (isObject) objectVisitor.seeBooleanField(entry.part.getLeft(), (Boolean) entry.value);
                     else arrayVisitor.seeBooleanItem((Boolean) entry.value);
                     break;
                 case OBJECT:
                     if (isObject) {
-                        ObjectVisitor<U> childVisitor = objectVisitor.seeObjectFieldStart(entry.key);
+                        ObjectVisitor<U> childVisitor = objectVisitor.seeObjectFieldStart(entry.part.getLeft());
                         runJerialVisitorInner((Jerial) entry.value, childVisitor, null);
                     } else {
                         ObjectVisitor<U> childVisitor = arrayVisitor.seeObjectItemStart();
@@ -44,7 +44,7 @@ public class JerialRunner<U> implements JerialVisitorAdapter<Jerial, U> {
                     break;
                 case ARRAY:
                     if (isObject) {
-                        ArrayVisitor<U> childVisitor = objectVisitor.seeArrayFieldStart(entry.key);
+                        ArrayVisitor<U> childVisitor = objectVisitor.seeArrayFieldStart(entry.part.getLeft());
                         runJerialVisitorInner((List<Jitem>) entry.value, null, childVisitor);
                     } else {
                         ArrayVisitor<U> childVisitor = arrayVisitor.seeArrayItemStart();

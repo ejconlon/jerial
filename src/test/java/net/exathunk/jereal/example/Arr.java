@@ -1,6 +1,7 @@
 package net.exathunk.jereal.example;
 
 import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.visitors.PathPart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +14,20 @@ public class Arr {
 
     public Arr(Object... args) {
         objects = new ArrayList<Jitem>(args.length);
+        int i = 0;
         for (final Object x : args) {
             if (x instanceof String) {
-                objects.add(Jitem.makeString(null, (String) x));
+                objects.add(Jitem.makeString(PathPart.makeRight(i), (String) x));
             } else if (x instanceof Long) {
-                objects.add(Jitem.makeLong(null, (Long) x));
+                objects.add(Jitem.makeLong(PathPart.makeRight(i), (Long) x));
             } else if (x instanceof Double) {
-                objects.add(Jitem.makeDouble(null, (Double) x));
+                objects.add(Jitem.makeDouble(PathPart.makeRight(i), (Double) x));
             } else if (x instanceof Boolean) {
-                objects.add(Jitem.makeBoolean(null, (Boolean) x));
+                objects.add(Jitem.makeBoolean(PathPart.makeRight(i), (Boolean) x));
             } else {
                 throw new UnsupportedOperationException();
             }
+            i += 1;
         }
     }
 }

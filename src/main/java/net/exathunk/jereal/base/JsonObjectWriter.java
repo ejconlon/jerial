@@ -5,14 +5,10 @@ import net.exathunk.jereal.base.visitors.*;
 import java.util.List;
 import java.util.Map;
 
-public class JsonObjectWriter implements JerialVisitor<StringBuilder> {
+public class JsonObjectWriter extends TreeVisitorFactory<StringBuilder> {
 
-    public ObjectVisitor<StringBuilder> makeObjectVisitor() {
-        return new MyObjectVisitor();
-    }
-
-    public ArrayVisitor<StringBuilder> makeArrayVisitor() {
-        return new MyArrayVisitor();
+    public JsonObjectWriter() {
+        super(new MyWriter());
     }
 
     private static void writeJitem(Jitem jitem, StringBuilder out) {
@@ -57,32 +53,22 @@ public class JsonObjectWriter implements JerialVisitor<StringBuilder> {
         }
     }
 
-    private static class MyObjectVisitor extends TreeObjectVisitor<StringBuilder> {
-
+    private static class MyWriter implements JerialNodeMapWriter<StringBuilder> {
         @Override
-        public ObjectVisitor<StringBuilder> seeObjectFieldStart(String key) {
-            MyObjectVisitor v = new MyObjectVisitor();
-            addObjectVisitor(key, v);
-            return v;
+        public void writeTo(TreeNodeMap<StringBuilder> source, StringBuilder sink) {
+            if (source.isObject()) writeObject(source, sink);
+            else writeArray(source, sink);
         }
 
-        @Override
-        public ArrayVisitor<StringBuilder> seeArrayFieldStart(String key) {
-            MyArrayVisitor v = new MyArrayVisitor();
-            addArrayVisitor(key, v);
-            return v;
-        }
-
-        @Override
-        public void writeTo(StringBuilder out) {
+        private void writeObject(TreeNodeMap<StringBuilder> nodeMap, StringBuilder out) {
             out.append('{');
             boolean needComma = false;
-            for (Map.Entry<String, JerialNode<StringBuilder>> entry : getItems().entrySet()) {
-                final String key = entry.getKey();
-                final JerialNode<StringBuilder> value = entry.getValue();
+            for (Map.Entry<PathPart, TreeNode<StringBuilder>> entry : nodeMap) {
+                final PathPart path = entry.getKey();
+                final TreeNode<StringBuilder> value = entry.getValue();
                 if (needComma) out.append(',');
                 out.append('"');
-                out.append(key);
+                out.append(path.getLeft());
                 out.append("\":");
                 if (value.hasLeft()) {
                     writeJitem(value.getLeft(), out);
@@ -95,29 +81,12 @@ public class JsonObjectWriter implements JerialVisitor<StringBuilder> {
             }
             out.append('}');
         }
-    }
 
-    private static class MyArrayVisitor extends TreeArrayVisitor<StringBuilder> {
-
-        @Override
-        public ObjectVisitor<StringBuilder> seeObjectItemStart() {
-            MyObjectVisitor v = new MyObjectVisitor();
-            addObjectVisitor(v);
-            return v;
-        }
-
-        @Override
-        public ArrayVisitor<StringBuilder> seeArrayItemStart() {
-            MyArrayVisitor v = new MyArrayVisitor();
-            addArrayVisitor(v);
-            return v;
-        }
-
-        @Override
-        public void writeTo(StringBuilder out) {
+        private void writeArray(TreeNodeMap<StringBuilder> nodeMap, StringBuilder out) {
             out.append('[');
             boolean needComma = false;
-            for (Either3<Jitem, TreeObjectVisitor<StringBuilder>, TreeArrayVisitor<StringBuilder>> value : getItems()) {
+            for (Map.Entry<PathPart, TreeNode<StringBuilder>> entry : nodeMap) {
+                final TreeNode<StringBuilder> value = entry.getValue();
                 if (needComma) out.append(',');
                 if (value.hasLeft()) {
                     writeJitem(value.getLeft(), out);

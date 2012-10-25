@@ -1,40 +1,61 @@
 package net.exathunk.jereal.base.visitors;
 
-import java.util.HashMap;
-import java.util.Map;
-
 // This is a visitor that builds a tree of parsed Jitems and unparsed (in-progress) suspensions
-public abstract class TreeObjectVisitor<T> implements ObjectVisitor<T> {
+public class TreeObjectVisitor<T> implements ObjectVisitor<T> {
 
-    private final Map<String, JerialNode<T>> items = new HashMap<String, JerialNode<T>>();
+    private final TreeVisitorFactory<T> factory;
+    private final JerialNodeMapWriter<T> writer;
+    private final TreeNodeMap<T> map = new TreeNodeMap<T>();
 
-    public Map<String, JerialNode<T>> getItems() { return items; }
-
-    protected void addObjectVisitor(String key, TreeObjectVisitor<T> item) {
-        items.put(key, JerialNode.<T>makeMiddle(item));
+    public TreeObjectVisitor(TreeVisitorFactory<T> factory, JerialNodeMapWriter<T> writer) {
+        this.factory = factory;
+        this.writer = writer;
     }
 
-    protected void addArrayVisitor(String key, TreeArrayVisitor<T> item) {
-        items.put(key, JerialNode.<T>makeRight(item));
+    protected PathPart makePath(String key) {
+        return PathPart.makeLeft(key);
+    }
+
+    @Override
+    public ObjectVisitor<T> seeObjectFieldStart(String key) {
+        TreeObjectVisitor<T> v = factory.makeObjectVisitor();
+        map.putKeyed(key, TreeNode.<T>makeMiddle(v));
+        return v;
+    }
+
+    @Override
+    public ArrayVisitor<T> seeArrayFieldStart(String key) {
+        TreeArrayVisitor<T> v = factory.makeArrayVisitor();
+        map.putKeyed(key, TreeNode.<T>makeRight(v));
+        return v;
     }
 
     @Override
     public void seeStringField(String key, String value) {
-        items.put(key, JerialNode.<T>makeLeft(Jitem.makeString(key, value)));
+        map.putKeyed(key, TreeNode.<T>makeLeft(Jitem.makeString(makePath(key), value)));
     }
 
     @Override
     public void seeBooleanField(String key, Boolean value) {
-        items.put(key, JerialNode.<T>makeLeft(Jitem.makeBoolean(key, value)));
+        map.putKeyed(key, TreeNode.<T>makeLeft(Jitem.makeBoolean(makePath(key), value)));
     }
 
     @Override
     public void seeLongField(String key, Long value) {
-        items.put(key, JerialNode.<T>makeLeft(Jitem.makeLong(key, value)));
+        map.putKeyed(key, TreeNode.<T>makeLeft(Jitem.makeLong(makePath(key), value)));
     }
 
     @Override
     public void seeDoubleField(String key, Double value) {
-        items.put(key, JerialNode.<T>makeLeft(Jitem.makeDouble(key, value)));
+        map.putKeyed(key, TreeNode.<T>makeLeft(Jitem.makeDouble(makePath(key), value)));
+    }
+
+    public TreeNodeMap<T> getNodeMap() {
+        return map;
+    }
+
+    @Override
+    public void writeTo(T out) {
+        writer.writeTo(getNodeMap(), out);
     }
 }

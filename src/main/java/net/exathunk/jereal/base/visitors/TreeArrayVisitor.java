@@ -1,44 +1,73 @@
 package net.exathunk.jereal.base.visitors;
 
-import net.exathunk.jereal.base.Either3;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * charolastra 10/23/12 10:12 PM
  */
-public abstract class TreeArrayVisitor<T> implements ArrayVisitor<T> {
+public class TreeArrayVisitor<T> implements ArrayVisitor<T> {
 
-    private final List<Either3<Jitem, TreeObjectVisitor<T>, TreeArrayVisitor<T>>> items = new ArrayList<Either3<Jitem, TreeObjectVisitor<T>, TreeArrayVisitor<T>>>();
+    private final TreeVisitorFactory<T> factory;
+    private final JerialNodeMapWriter<T> writer;
+    private final TreeNodeMap<T> map = new TreeNodeMap<T>();
 
-    public List<Either3<Jitem, TreeObjectVisitor<T>, TreeArrayVisitor<T>>> getItems() { return items; }
+    private int index = 0;
 
-    protected void addObjectVisitor(TreeObjectVisitor<T> item) {
-        items.add(Either3.<Jitem, TreeObjectVisitor<T>, TreeArrayVisitor<T>>makeMiddle(item));
+    public TreeArrayVisitor(TreeVisitorFactory<T> factory, JerialNodeMapWriter<T> writer) {
+        this.factory = factory;
+        this.writer = writer;
     }
 
-    protected void addArrayVisitor(TreeArrayVisitor<T> item) {
-        items.add(Either3.<Jitem, TreeObjectVisitor<T>, TreeArrayVisitor<T>>makeRight(item));
+    protected int incIndex() {
+        return index++;
+    }
+
+    @Override
+    public ObjectVisitor<T> seeObjectItemStart() {
+        TreeObjectVisitor<T> v = factory.makeObjectVisitor();
+        map.putIndexed(incIndex(), TreeNode.<T>makeMiddle(v));
+        return v;
+    }
+
+    @Override
+    public ArrayVisitor<T> seeArrayItemStart() {
+        TreeArrayVisitor<T> v = factory.makeArrayVisitor();
+        map.putIndexed(incIndex(), TreeNode.<T>makeRight(v));
+        return v;
     }
 
     @Override
     public void seeStringItem(String value) {
-        items.add(Either3.<Jitem, TreeObjectVisitor<T>, TreeArrayVisitor<T>>makeLeft(Jitem.makeString(null, value)));
+        Integer index = incIndex();
+        PathPart part = PathPart.makeRight(index);
+        map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeString(part, value)));
     }
 
     @Override
     public void seeBooleanItem(Boolean value) {
-        items.add(Either3.<Jitem, TreeObjectVisitor<T>, TreeArrayVisitor<T>>makeLeft(Jitem.makeBoolean(null, value)));
+        Integer index = incIndex();
+        PathPart part = PathPart.makeRight(index);
+        map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeBoolean(part, value)));
     }
 
     @Override
     public void seeLongItem(Long value) {
-        items.add(Either3.<Jitem, TreeObjectVisitor<T>, TreeArrayVisitor<T>>makeLeft(Jitem.makeLong(null, value)));
+        Integer index = incIndex();
+        PathPart part = PathPart.makeRight(index);
+        map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeLong(part, value)));
     }
 
     @Override
     public void seeDoubleItem(Double value) {
-        items.add(Either3.<Jitem, TreeObjectVisitor<T>, TreeArrayVisitor<T>>makeLeft(Jitem.makeDouble(null, value)));
+        Integer index = incIndex();
+        PathPart part = PathPart.makeRight(index);
+        map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeDouble(part, value)));
+    }
+
+    public TreeNodeMap<T> getNodeMap() {
+        return map;
+    }
+
+    @Override
+    public void writeTo(T out) {
+        writer.writeTo(getNodeMap(), out);
     }
 }

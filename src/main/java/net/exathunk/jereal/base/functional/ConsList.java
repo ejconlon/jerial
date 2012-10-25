@@ -1,4 +1,4 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.functional;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -48,7 +48,7 @@ public class ConsList<T> implements Iterable<T> {
     }
 
     public boolean isEmpty() {
-        return _head != null;
+        return _head == null;
     }
 
     public Iterator<T> iterator() {
@@ -73,15 +73,5 @@ public class ConsList<T> implements Iterable<T> {
                throw new UnsupportedOperationException();
             }
         };
-    }
-
-    public Pair<Integer, List<T>> toRevList() {
-        LinkedList<T> list = new LinkedList<T>();
-        int i = 0;
-        for (T ref : this) {
-            i += 1;
-            list.addFirst(ref);
-        }
-        return new Pair<Integer, List<T>>(i, list);
     }
 }

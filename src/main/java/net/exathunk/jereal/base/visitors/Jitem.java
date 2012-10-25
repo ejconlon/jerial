@@ -8,46 +8,48 @@ public class Jitem {
         STRING, LONG, DOUBLE, BOOLEAN, OBJECT, ARRAY
     }
 
-    public final String key;
+    public final PathPart part;
     public final Object value;
     public final Model model;
 
-    private Jitem(String key, Object value, Model model) {
-        this.key = key;
+    private Jitem(PathPart part, Object value, Model model) {
+        this.part = part;
         this.value = value;
         this.model = model;
+        assert part != null;
+        assert model != null;
     }
 
-    public static Jitem makeObject(String key, Jerial value) {
-        return new Jitem(key, value, Model.OBJECT);
+    public static Jitem makeObject(PathPart part, Jerial value) {
+        return new Jitem(part, value, Model.OBJECT);
     }
 
-    public static Jitem makeArray(String key, List<Jitem> value) {
-        return new Jitem(key, value, Model.ARRAY);
+    public static Jitem makeArray(PathPart part, List<Jitem> value) {
+        return new Jitem(part, value, Model.ARRAY);
     }
 
-    public static Jitem makeString(String key, String value) {
-        return new Jitem(key, value, Model.STRING);
+    public static Jitem makeString(PathPart part, String value) {
+        return new Jitem(part, value, Model.STRING);
     }
 
-    public static Jitem makeLong(String key, Long value) {
-        return new Jitem(key, value, Model.LONG);
+    public static Jitem makeLong(PathPart part, Long value) {
+        return new Jitem(part, value, Model.LONG);
     }
 
-    public static Jitem makeDouble(String key, Double value) {
-        return new Jitem(key, value, Model.DOUBLE);
+    public static Jitem makeDouble(PathPart part, Double value) {
+        return new Jitem(part, value, Model.DOUBLE);
     }
 
-    public static Jitem makeBoolean(String key, Boolean value) {
-        return new Jitem(key, value, Model.BOOLEAN);
+    public static Jitem makeBoolean(PathPart part, Boolean value) {
+        return new Jitem(part, value, Model.BOOLEAN);
     }
 
-    public Jitem withKey(String newKey) {
-        return new Jitem(newKey, value, model);
+    public Jitem withPart(PathPart newPart) {
+        return new Jitem(newPart, value, model);
     }
 
     public String toString() {
-        return "Jitem<"+(key != null ? key : "null")+","+(value != null ? value.toString() : "null")+","+model+">";
+        return "Jitem<"+part+","+(value == null ? "NULL" : value)+","+model+">";
     }
 
     @Override
@@ -57,17 +59,17 @@ public class Jitem {
 
         Jitem jitem = (Jitem) o;
 
-        if (key != null ? !key.equals(jitem.key) : jitem.key != null) return false;
         if (model != jitem.model) return false;
-        if (!value.equals(jitem.value)) return false;
+        if (!part.equals(jitem.part)) return false;
+        if (value != null ? !value.equals(jitem.value) : jitem.value != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = key != null ? key.hashCode() : 0;
-        result = 31 * result + value.hashCode();
+        int result = part.hashCode();
+        result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + model.hashCode();
         return result;
     }

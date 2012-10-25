@@ -19,8 +19,7 @@ import static org.junit.Assert.fail;
  */
 public class TestLoader {
 
-    private static void assertFixed(final String name) throws IOException, JerializerException {
-        JerialBuilderFactory factory = new SimpleMapBuilderFactory();
+    private static void assertFixed(final JerialBuilderFactory factory, final String name) throws IOException, JerializerException {
         final String gold = Loader.loadSchemaResource(name);
         assertFalse(gold.isEmpty());
         final Jerial j = TestUtils.jerializeFromString(factory, gold);
@@ -31,12 +30,18 @@ public class TestLoader {
 
     @Test
     public void testLoadSchema() throws IOException, JerializerException {
+        List<JerialBuilderFactory> factories = Arrays.asList(
+                new SimpleMapBuilderFactory(),
+                new FlattenedBuilderFactory(new DefaultPathConverter())
+        );
         //List<String> names = Arrays.asList("json-ref");
         List<String> names = Arrays.asList(
                 "address", "calendar", "card", "geo",
                 "hyper-schema", "interfaces", "json-ref", "schema");
-        for (final String name : names) {
-            assertFixed(name);
+        for (final JerialBuilderFactory factory : factories) {
+            for (final String name : names) {
+                assertFixed(factory, name);
+            }
         }
     }
 }

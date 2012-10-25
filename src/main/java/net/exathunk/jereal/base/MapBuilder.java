@@ -2,26 +2,21 @@ package net.exathunk.jereal.base;
 
 import net.exathunk.jereal.base.visitors.Jerial;
 import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.visitors.PathPart;
 
 import java.util.*;
 
 public class MapBuilder implements JerialBuilder {
 
-    private final Map<String, Jitem> objectPairs;
-    private final List<Jitem> arrayItems;
+    private final Map<PathPart, Jitem> pairs;
 
     public MapBuilder() {
-        this.objectPairs = new HashMap<String, Jitem>();
-        this.arrayItems = new ArrayList<Jitem>();
+        this.pairs = new TreeMap<PathPart, Jitem>();
     }
 
     @Override
     public void addJitem(Jitem jitem) {
-        if (jitem.key != null) {
-            objectPairs.put(jitem.key, jitem);
-        } else {
-            arrayItems.add(jitem);
-        }
+        pairs.put(jitem.part, jitem);
     }
 
     @Override
@@ -30,18 +25,16 @@ public class MapBuilder implements JerialBuilder {
             @Override
             public Iterator<Jitem> iterator() {
                 return new Iterator<Jitem>() {
-                    private final Iterator<Map.Entry<String, Jitem>> objit = objectPairs.entrySet().iterator();
-                    private final Iterator<Jitem> arrit = arrayItems.iterator();
+                    private final Iterator<Map.Entry<PathPart, Jitem>> it = pairs.entrySet().iterator();
 
                     @Override
                     public boolean hasNext() {
-                        return objit.hasNext() || arrit.hasNext();
+                        return it.hasNext();
                     }
 
                     @Override
                     public Jitem next() {
-                        if (objit.hasNext()) return objit.next().getValue();
-                        else return arrit.next();
+                        return it.next().getValue();
                     }
 
                     @Override

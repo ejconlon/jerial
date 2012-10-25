@@ -1,4 +1,4 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.functional;
 
 import java.util.Map;
 

@@ -2,7 +2,7 @@ package net.exathunk.jereal;
 
 import net.exathunk.jereal.base.*;
 import net.exathunk.jereal.base.visitors.Jerial;
-import net.exathunk.jereal.base.visitors.JerialVisitor;
+import net.exathunk.jereal.base.visitors.VisitorFactory;
 import net.exathunk.jereal.base.visitors.Writer;
 
 /**
@@ -13,7 +13,7 @@ public class TestUtils {
         JerialContext context = new JerialContext(f);
         y.jerialize(x, context);
         Jerial jerial = context.builder.buildJerial();
-        JerialVisitor<StringBuilder> objectWriter = new JsonObjectWriter();
+        VisitorFactory<StringBuilder> objectWriter = new JsonObjectWriter();
         Writer<StringBuilder> stringWriter = (new JerialRunner<StringBuilder>()).runJerialVisitor(jerial, objectWriter);
         StringBuilder sb = new StringBuilder();
         stringWriter.writeTo(sb);
@@ -21,7 +21,7 @@ public class TestUtils {
     }
 
     public static Jerial jerializeFromString(JerialBuilderFactory f, String x) throws JerializerException {
-        JerialVisitor<JerialContext> reader = new JsonObjectReader();
+        VisitorFactory<JerialContext> reader = new JsonObjectReader();
         Writer<JerialContext> contextWriter = (new JsonParser<JerialContext>()).runJerialVisitor(x, reader);
         JerialContext context = new JerialContext(f);
         contextWriter.writeTo(context);

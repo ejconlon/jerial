@@ -1,12 +1,13 @@
 package net.exathunk.jereal.base;
 
+import net.exathunk.jereal.base.functional.Pair;
 import net.exathunk.jereal.base.visitors.ArrayVisitor;
-import net.exathunk.jereal.base.visitors.JerialVisitor;
+import net.exathunk.jereal.base.visitors.VisitorFactory;
 import net.exathunk.jereal.base.visitors.ObjectVisitor;
 import net.exathunk.jereal.base.visitors.Writer;
 
 public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
-    public Writer<U> runJerialVisitor(String s, JerialVisitor<U> visitor) throws JerializerException {
+    public Writer<U> runJerialVisitor(String s, VisitorFactory<U> visitorFactory) throws JerializerException {
         int i = 0;
         final int z = s.length();
         Pair<Integer, Writer<U>> pair = null;
@@ -18,7 +19,7 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                         throw new JerializerException("Already read object start.");
                     }
                     i += 1;
-                    pair = objectVisitorInner(s, i, visitor.makeObjectVisitor());
+                    pair = objectVisitorInner(s, i, visitorFactory.makeObjectVisitor());
                     i = pair.getKey();
                     break;
                 case '[':
@@ -26,7 +27,7 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                         throw new JerializerException("Already read array start");
                     }
                     i += 1;
-                    pair = arrayVisitorInner(s, i, visitor.makeArrayVisitor());
+                    pair = arrayVisitorInner(s, i, visitorFactory.makeArrayVisitor());
                     i = pair.getKey();
                 case ' ':
                 case '\t':
@@ -70,7 +71,7 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                     assert key.length() > 0;
                     assert value.length() == 0;
                     assert cur == value;
-                    pair = objectVisitorInner(s, i, objectVisitor.seeObjectFieldStart(key.substring(1, key.length()-1)));
+                    pair = objectVisitorInner(s, i, objectVisitor.seeObjectFieldStart(key.substring(1, key.length() - 1)));
                     i = pair.getKey();
                     key.setLength(0);
                     cur = key;
@@ -81,7 +82,7 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                     assert key.length() > 0;
                     assert value.length() == 0;
                     assert cur == value;
-                    pair = arrayVisitorInner(s, i, objectVisitor.seeArrayFieldStart(key.substring(1, key.length()-1)));
+                    pair = arrayVisitorInner(s, i, objectVisitor.seeArrayFieldStart(key.substring(1, key.length() - 1)));
                     i = pair.getKey();
                     key.setLength(0);
                     cur = key;
@@ -198,16 +199,17 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
     }
 
     private static <U> void emit(StringBuilder key, StringBuilder value, ObjectVisitor<U> objectVisitor) throws JerializerException {
-        final String ks = key.substring(1, key.length()-1);
+        final String ks = key.substring(1, key.length() - 1);
         if (value.length() > 1 && value.charAt(0) == '"' && value.charAt(value.length()-1) == '"') {
             objectVisitor.seeStringField(ks, value.substring(1, value.length() - 1));
             return;
-        } else if (value.equals("null")) {
+        }
+        final String vs = value.toString();
+        if (vs.equals("null")) {
             // NOTE nulls are strings by default
             objectVisitor.seeStringField(ks, value.toString());
             return;
         }
-        final String vs = value.toString();
         try {
             objectVisitor.seeLongField(ks, Long.parseLong(vs));
             return;
@@ -229,12 +231,13 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
         if (value.length() > 1 && value.charAt(0) == '"' && value.charAt(value.length()-1) == '"') {
             arrayVisitor.seeStringItem(value.substring(1, value.length() - 1));
             return;
-        } else if (value.equals("null")) {
+        }
+        final String vs = value.toString();
+        if (vs.equals("null")) {
             // NOTE nulls are strings by default
             arrayVisitor.seeStringItem(value.toString());
             return;
         }
-        final String vs = value.toString();
         try {
             arrayVisitor.seeLongItem(Long.parseLong(vs));
             return;

@@ -5,108 +5,67 @@ import net.exathunk.jereal.base.visitors.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-public class JsonObjectReader implements JerialVisitor<JerialContext> {
+public class JsonObjectReader extends TreeVisitorFactory<JerialContext> {
 
-    public ObjectVisitor<JerialContext> makeObjectVisitor() {
-        return new MyObjectVisitor();
+    public JsonObjectReader() {
+        super(new MyWriter());
     }
 
-    public ArrayVisitor<JerialContext> makeArrayVisitor() {
-        return new MyArrayVisitor();
-    }
-
-    private static class MyTreeVisitorJerializer implements Jerializer {
-
-        // Ugh
-        public void jerialize(Object object, JerialContext jerialContext) {
-            throw new UnsupportedOperationException();
+    private static class MyWriter implements JerialNodeMapWriter<JerialContext> {
+        @Override
+        public void writeTo(TreeNodeMap<JerialContext> source, JerialContext sink) {
+            if (source.isObject()) {
+                writeObjectVisitor(source, sink);
+            } else {
+                writeArrayVisitor(source, sink);
+            }
         }
 
-        public void jerialize(TreeObjectVisitor<JerialContext> object, JerialContext context) {
-            for (Map.Entry<String, JerialNode<JerialContext>> entry : object.getItems().entrySet()) {
-                final String key = entry.getKey();
-                final JerialNode<JerialContext> value = entry.getValue();
+        public void writeObjectVisitor(TreeNodeMap<JerialContext> nodeMap, JerialContext context) {
+            for (Map.Entry<PathPart, TreeNode<JerialContext>> entry : nodeMap) {
+                final PathPart part = entry.getKey();
+                final TreeNode<JerialContext> value = entry.getValue();
                 if (value.hasLeft()) {
                     Logger.log("Reading simple jitem: "+value.getLeft());
                     context.builder.addJitem(value.getLeft());
                 } else if (value.hasMiddle()) {
-                    Logger.log("Reading object: "+key);
-                    JerialContext newContext = context.push(key);
-                    jerialize(value.getMiddle(), newContext);
-                    context.builder.addJitem(Jitem.makeObject(key, newContext.builder.buildJerial()));
+                    Logger.log("Reading object: "+part);
+                    JerialContext newContext = context.push(part);
+                    writeObjectVisitor(value.getMiddle().getNodeMap(), newContext);
+                    context.builder.addJitem(Jitem.makeObject(part, newContext.builder.buildJerial()));
                 } else {
                     Logger.log("Reading array");
-                    JerialContext newContext = context.push(key);
-                    jerialize(value.getRight(), newContext);
+                    JerialContext newContext = context.push(part);
+                    writeArrayVisitor(value.getRight().getNodeMap(), newContext);
                     List<Jitem> list = new ArrayList<Jitem>();
                     for (Jitem item : newContext.builder.buildJerial()) { list.add(item); }
-                    context.builder.addJitem(Jitem.makeArray(key, list));
+                    context.builder.addJitem(Jitem.makeArray(part, list));
                 }
             }
         }
 
-        public void jerialize(TreeArrayVisitor<JerialContext> object, JerialContext context) {
-            for (Either3<Jitem, TreeObjectVisitor<JerialContext>, TreeArrayVisitor<JerialContext>> value : object.getItems()) {
+        public void writeArrayVisitor(TreeNodeMap<JerialContext> nodeMap, JerialContext context) {
+            int index = 0;
+            for (Map.Entry<PathPart, TreeNode<JerialContext>> entry : nodeMap) {
+                final TreeNode<JerialContext> value = entry.getValue();
                 if (value.hasLeft()) {
                     Logger.log("Reading simple jitem: "+value.getLeft());
                     context.builder.addJitem(value.getLeft());
                 } else if (value.hasMiddle()) {
                     Logger.log("Reading object");
-                    JerialContext newContext = context.push(null);
-                    jerialize(value.getMiddle(), newContext);
-                    context.builder.addJitem(Jitem.makeObject(null, newContext.builder.buildJerial()));
+                    JerialContext newContext = context.push(PathPart.makeRight(index));
+                    writeObjectVisitor(value.getMiddle().getNodeMap(), newContext);
+                    context.builder.addJitem(Jitem.makeObject(PathPart.makeRight(index), newContext.builder.buildJerial()));
                 } else {
                     Logger.log("Reading array");
-                    JerialContext newContext = context.push(null);
-                    jerialize(value.getRight(), newContext);
+                    JerialContext newContext = context.push(PathPart.makeRight(index));
+                    writeArrayVisitor(value.getRight().getNodeMap(), newContext);
                     List<Jitem> list = new ArrayList<Jitem>();
                     for (Jitem item : newContext.builder.buildJerial()) { list.add(item); }
-                    context.builder.addJitem(Jitem.makeArray(null, list));
+                    context.builder.addJitem(Jitem.makeArray(PathPart.makeRight(index), list));
                 }
+                index += 1;
             }
-        }
-    }
-
-    private static class MyObjectVisitor extends TreeObjectVisitor<JerialContext> {
-        @Override
-        public ObjectVisitor<JerialContext> seeObjectFieldStart(String key) {
-            MyObjectVisitor v = new MyObjectVisitor();
-            addObjectVisitor(key, v);
-            return v;
-        }
-
-        @Override
-        public ArrayVisitor<JerialContext> seeArrayFieldStart(String key) {
-            MyArrayVisitor v = new MyArrayVisitor();
-            addArrayVisitor(key, v);
-            return v;
-        }
-
-        @Override
-        public void writeTo(JerialContext out) {
-            (new MyTreeVisitorJerializer()).jerialize(this, out);
-        }
-    }
-
-    private static class MyArrayVisitor extends TreeArrayVisitor<JerialContext> {
-
-        @Override
-        public ObjectVisitor<JerialContext> seeObjectItemStart() {
-            MyObjectVisitor v = new MyObjectVisitor();
-            addObjectVisitor(v);
-            return v;
-        }
-
-        @Override
-        public ArrayVisitor<JerialContext> seeArrayItemStart() {
-            MyArrayVisitor v = new MyArrayVisitor();
-            addArrayVisitor(v);
-            return v;
-        }
-
-        @Override
-        public void writeTo(JerialContext out) {
-            (new MyTreeVisitorJerializer()).jerialize(this, out);
         }
     }
 }
