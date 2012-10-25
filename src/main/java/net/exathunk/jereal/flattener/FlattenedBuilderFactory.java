@@ -12,33 +12,28 @@ import java.util.List;
  */
 public class FlattenedBuilderFactory implements JerialBuilderFactory {
 
-    private final String delimiter;
-    private final String nullToken;
+    private final PathBuilder pathBuilder;
 
-    public FlattenedBuilderFactory(String delimiter, String nullToken) {
-        this.delimiter = delimiter;
-        this.nullToken = nullToken;
+    public FlattenedBuilderFactory(PathBuilder pathBuilder) {
+        this.pathBuilder = pathBuilder;
     }
 
     private String revCat(ConsList<String> path) {
         Pair<Integer, List<String>> pair = path.toRevList();
-        StringBuilder sb = new StringBuilder();
+        String newPath = "";
         int i = 0;
         final int len = pair.getKey();
         for (String p : pair.getValue()) {
             if (i < len - 1) {
-                sb.append(p == null ? nullToken : p);
-                if (i < len - 2) {
-                    sb.append(delimiter);
-                }
+                pathBuilder.addObjectKey(newPath, p);
             }
             i += 1;
         }
-        return sb.toString();
+        return newPath;
     }
 
     @Override
     public JerialBuilder createJerialBuilder(ConsList<String> path) {
-        return new FlattenedBuilder(revCat(path), delimiter, nullToken);
+        return new FlattenedBuilder(pathBuilder, revCat(path));
     }
 }

@@ -14,36 +14,37 @@ import java.util.*;
  */
 public class FlattenedBuilder extends MapBuilder {
 
-    // path is delimiter-trailed
-    private final String path;
-    private final String delimiter;
-    private final String nullToken;
+    private final String rootPath;
+    private final PathBuilder pathBuilder;
 
-    public FlattenedBuilder(String path, String delimiter, String nullToken) {
+    public FlattenedBuilder(PathBuilder pathBuilder, String rootPath) {
         super();
-        this.path = path;
-        this.delimiter = delimiter;
-        this.nullToken = nullToken;
-        assert path != null && delimiter != null && nullToken != null;
+        this.pathBuilder = pathBuilder;
+        this.rootPath = rootPath;
+        assert pathBuilder != null;
+        assert rootPath != null;
     }
 
     @Override
     public void addJitem(Jitem jitem) {
-        addJitem(jitem, path);
+        addJitem(jitem, rootPath);
     }
 
     private void addJitem(Jitem jitem, String path) {
-        String newPath;
-        if (path.isEmpty()) {
-            newPath = (jitem.key == null ? nullToken : jitem.key);
-        } else {
-          newPath = path + delimiter + (jitem.key == null ? nullToken : jitem.key);
-        }
         if (jitem.model.equals(Jitem.Model.OBJECT)) {
+            String newPath = pathBuilder.addObjectKey(path, jitem.key);
             for (Jitem child : (Jerial)jitem.value) {
                 addJitem(child, newPath);
             }
+        } else if (jitem.model.equals(Jitem.Model.ARRAY)) {
+            int i = 0;
+            for (Jitem child : (List<Jitem>)jitem.value) {
+                String newPath = pathBuilder.addArrayIndex(path, i);
+                addJitem(child, newPath);
+                i += 1;
+            }
         } else {
+            String newPath = pathBuilder.addObjectKey(path, jitem.key);
             super.addJitem(jitem.withKey(newPath));
         }
     }

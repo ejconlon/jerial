@@ -3,6 +3,7 @@ package net.exathunk.jereal.example;
 import net.exathunk.jereal.TestUtils;
 import net.exathunk.jereal.base.visitors.Jerial;
 import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.flattener.DefaultPathBuilder;
 import net.exathunk.jereal.flattener.FlattenedBuilderFactory;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -119,7 +120,7 @@ public class TestPost {
         final String gold0 = "{\"d\":4.5,\"s\":\"x\",\"b\":true,\"l\":12}";
         final String gold1 = "{\"d\":6.7,\"s\":\"y\",\"b\":false,\"next\":"+gold0+",\"l\":13}";
 
-        JerialBuilderFactory flattenedFactory = new FlattenedBuilderFactory("/", "__NULL__");
+        JerialBuilderFactory flattenedFactory = new FlattenedBuilderFactory(new DefaultPathBuilder());
 
         final Jerial j1 = TestUtils.jerializeFromString(flattenedFactory, gold1);
         for (Jitem entry : j1) {
