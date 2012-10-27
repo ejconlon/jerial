@@ -5,7 +5,7 @@ import net.exathunk.jereal.base.visitors.*;
 import java.util.List;
 import java.util.Map;
 
-public class JsonObjectWriter extends TreeVisitorFactory<StringBuilder> {
+public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {
 
     public JsonObjectWriter() {
         super(new MyWriter());
@@ -53,7 +53,7 @@ public class JsonObjectWriter extends TreeVisitorFactory<StringBuilder> {
         }
     }
 
-    private static class MyWriter implements JerialNodeMapWriter<StringBuilder> {
+    private static class MyWriter implements TreeNodeMapWriter<StringBuilder> {
         @Override
         public void writeTo(TreeNodeMap<StringBuilder> source, StringBuilder sink) {
             if (source.isObject()) writeObject(source, sink);
