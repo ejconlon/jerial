@@ -16,7 +16,7 @@ public class MapBuilder implements JerialBuilder {
 
     @Override
     public void addJitem(Jitem jitem) {
-        pairs.put(jitem.part, jitem);
+        pairs.put(jitem.getPart(), jitem);
     }
 
     @Override

@@ -13,20 +13,24 @@ public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {
 
     private static void writeJitem(Jitem jitem, StringBuilder out) {
         boolean needComma = false;
-        switch (jitem.model) {
+        switch (jitem.getModel()) {
             case STRING:
-                if (jitem.value != null) out.append('"');
-                out.append((String)jitem.value);
-                if (jitem.value != null) out.append('"');
+                String sv = jitem.getString();
+                if (sv != null) out.append('"');
+                out.append(sv);
+                if (sv != null) out.append('"');
                 break;
             case LONG:
+                out.append(jitem.getLong());
+                break;
             case DOUBLE:
-                out.append(jitem.value);
+                out.append(jitem.getDouble());
                 break;
             case BOOLEAN:
-                if (Boolean.TRUE.equals(jitem.value)) {
+                Boolean bv = jitem.getBoolean();
+                if (Boolean.TRUE.equals(bv)) {
                     out.append("true");
-                } else if (jitem.value != null) {
+                } else if (bv != null) {
                     out.append("false");
                 } else {
                     out.append("null");
@@ -34,7 +38,7 @@ public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {
                 break;
             case OBJECT:
                 out.append('{');
-                for (Jitem child : (Jerial)jitem.value) {
+                for (Jitem child : jitem.getObject()) {
                     if (needComma) out.append(',');
                     writeJitem(child, out);
                     needComma = true;
@@ -43,7 +47,7 @@ public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {
                 break;
             case ARRAY:
                 out.append('[');
-                for (Jitem child : (List<Jitem>)jitem.value) {
+                for (Jitem child : jitem.getArray()) {
                     if (needComma) out.append(',');
                     writeJitem(child, out);
                     needComma = true;

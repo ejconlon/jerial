@@ -8,9 +8,9 @@ public class Jitem {
         STRING, LONG, DOUBLE, BOOLEAN, OBJECT, ARRAY
     }
 
-    public final PathPart part;
-    public final Object value;
-    public final Model model;
+    private final PathPart part;
+    private final Object value;
+    private final Model model;
 
     private Jitem(PathPart part, Object value, Model model) {
         this.part = part;
@@ -18,6 +18,68 @@ public class Jitem {
         this.model = model;
         assert part != null;
         assert model != null;
+    }
+
+    public PathPart getPart() {
+        return part;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public String getString() {
+        assert isString();
+        return (String)value;
+    }
+
+    public Long getLong() {
+        assert isLong();
+        return (Long)value;
+    }
+
+    public Boolean getBoolean() {
+        assert isBoolean();
+        return (Boolean)value;
+    }
+
+    public Double getDouble() {
+        assert isDouble();
+        return (Double)value;
+    }
+
+    public Jerial getObject() {
+        assert isObject();
+        return (Jerial)value;
+    }
+
+    public List<Jitem> getArray() {
+        assert isArray();
+        return (List<Jitem>)value;
+    }
+
+    public boolean isString() {
+        return model.equals(Model.STRING);
+    }
+
+    public boolean isLong() {
+        return model.equals(Model.LONG);
+    }
+
+    public boolean isBoolean() {
+        return model.equals(Model.BOOLEAN);
+    }
+
+    public boolean isDouble() {
+        return model.equals(Model.DOUBLE);
+    }
+
+    public boolean isObject() {
+        return model.equals(Model.OBJECT);
+    }
+
+    public boolean isArray() {
+        return model.equals(Model.ARRAY);
     }
 
     public static Jitem makeObject(PathPart part, Jerial value) {

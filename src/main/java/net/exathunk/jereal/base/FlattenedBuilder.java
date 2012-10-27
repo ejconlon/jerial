@@ -29,17 +29,17 @@ public class FlattenedBuilder extends MapBuilder {
     }
 
     private void addJitem(Jitem jitem, ConsList<PathPart> path) {
-        Logger.log("HIT PATH: "+pathConverter.convertPath(path)+" => "+jitem.part);
-        if (jitem.model.equals(Jitem.Model.OBJECT)) {
-            for (Jitem child : (Jerial)jitem.value) {
-                addJitem(child, path.cons(jitem.part));
+        Logger.log("HIT PATH: "+pathConverter.convertPath(path)+" => "+jitem.getPart());
+        final ConsList<PathPart> newPath = path.cons(jitem.getPart());
+        if (jitem.isObject()) {
+            for (Jitem child : jitem.getObject()) {
+                addJitem(child, newPath);
             }
-        } else if (jitem.model.equals(Jitem.Model.ARRAY)) {
-            for (Jitem child : (List<Jitem>)jitem.value) {
-                addJitem(child, path.cons(jitem.part));
+        } else if (jitem.isArray()) {
+            for (Jitem child : jitem.getArray()) {
+                addJitem(child, newPath);
             }
         } else {
-            ConsList<PathPart> newPath = path.cons(jitem.part);
             String converted = pathConverter.convertPath(newPath);
             super.addJitem(jitem.withPart(PathPart.makeLeft(converted)));
         }

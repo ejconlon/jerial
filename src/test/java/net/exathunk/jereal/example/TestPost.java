@@ -1,6 +1,5 @@
 package net.exathunk.jereal.example;
 
-import net.exathunk.jereal.TestUtils;
 import net.exathunk.jereal.base.visitors.Jerial;
 import net.exathunk.jereal.base.visitors.Jitem;
 import net.exathunk.jereal.base.DefaultPathConverter;
@@ -11,13 +10,12 @@ import static org.junit.Assert.fail;
 
 import net.exathunk.jereal.base.*;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class TestPost {
 
+    private final JerializerRegistry emptyRegistry = new JerializerRegistryImpl();
     private final JerialBuilderFactory factory = new SimpleMapBuilderFactory();
 
     @Test
@@ -25,24 +23,24 @@ public class TestPost {
         final Post post = new Post("foo", "bar");
         final String gold = "{\"body\":\"bar\",\"title\":\"foo\"}";
 
-        final String s = TestUtils.jerializeToString(factory, post, new PostJerializer());
+        final String s = JerializerUtils.domainToJson(factory, emptyRegistry, new PostJerializer(), post);
         assertEquals(gold, s);
 
-        final Jerial j = TestUtils.jerializeFromString(factory, gold);
+        final Jerial j = JerializerUtils.jsonToJerial(factory, gold);
 
         int i = 0;
         for (Jitem entry : j) {
             Logger.log(entry);
             switch (i) {
                 case 0:
-                    assertEquals("body", entry.part.getLeft());
-                    assertEquals(post.body, entry.value);
-                    assertEquals(Jitem.Model.STRING, entry.model);
+                    assertEquals("body", entry.getPart().getLeft());
+                    assertEquals(post.body, entry.getString());
+                    assertEquals(Jitem.Model.STRING, entry.getModel());
                     break;
                 case 1:
-                    assertEquals("title", entry.part.getLeft());
-                    assertEquals(post.title, entry.value);
-                    assertEquals(Jitem.Model.STRING, entry.model);
+                    assertEquals("title", entry.getPart().getLeft());
+                    assertEquals(post.title, entry.getString());
+                    assertEquals(Jitem.Model.STRING, entry.getModel());
                     break;
                 default:
                     fail();
@@ -53,10 +51,10 @@ public class TestPost {
     }
 
     @Test
-    public void testNulls() {
+    public void testNulls() throws JerializerException {
         final Bag bag0 = new Bag(null, null, null, null);
         final String gold0 = "{\"b\":null,\"d\":null,\"l\":null,\"s\":null}";
-        final String s0 = TestUtils.jerializeToString(factory, bag0, new BagJerializer());
+        final String s0 = JerializerUtils.domainToJson(factory, emptyRegistry, new BagJerializer(), bag0);
         assertEquals(gold0, s0);
     }
 
@@ -66,20 +64,20 @@ public class TestPost {
         final Bag bag1 = new Bag("y", (long) 13, 6.7, false, bag0);
 
         final String gold0 = "{\"b\":true,\"d\":4.5,\"l\":12,\"s\":\"x\"}";
-        final String s0 = TestUtils.jerializeToString(factory, bag0, new BagJerializer());
+        final String s0 = JerializerUtils.domainToJson(factory, emptyRegistry, new BagJerializer(), bag0);
         assertEquals(gold0, s0);
 
-        final Jerial j0 = TestUtils.jerializeFromString(factory, gold0);
+        final Jerial j0 = JerializerUtils.jsonToJerial(factory, gold0);
         for (Jitem entry : j0) {
             Logger.log(entry);
             // TODO add assertions
         }
 
         final String gold1 = "{\"b\":false,\"d\":6.7,\"l\":13,\"next\":"+gold0+",\"s\":\"y\"}";
-        final String s1 = TestUtils.jerializeToString(factory, bag1, new BagJerializer());
+        final String s1 = JerializerUtils.domainToJson(factory, emptyRegistry, new BagJerializer(), bag1);
         assertEquals(gold1, s1);
 
-        final Jerial j1 = TestUtils.jerializeFromString(factory, gold1);
+        final Jerial j1 = JerializerUtils.jsonToJerial(factory, gold1);
         for (Jitem entry : j1) {
             Logger.log(entry);
             // TODO add assertions
@@ -90,24 +88,24 @@ public class TestPost {
     public void testArray() throws JerializerException {
         final Arr arr = new Arr((long) 1, 2.2,"xyz", true);
         final String gold = "{\"objects\":[1,2.2,\"xyz\",true]}";
-        final String s = TestUtils.jerializeToString(factory, arr, new ArrJerializer());
+        final String s = JerializerUtils.domainToJson(factory, emptyRegistry, new ArrJerializer(), arr);
         assertEquals(gold, s);
 
-        final Jerial j = TestUtils.jerializeFromString(factory, gold);
+        final Jerial j = JerializerUtils.jsonToJerial(factory, gold);
 
         int i = 0;
         for (Jitem entry : j) {
             Logger.log(entry);
             switch (i) {
                 case 0:
-                    assertEquals("objects", entry.part.getLeft());
-                    assertEquals(arr.objects.size(), ((List<Jitem>)entry.value).size());
+                    assertEquals("objects", entry.getPart().getLeft());
+                    assertEquals(arr.objects.size(), entry.getArray().size());
                     for (int k = 0; k < arr.objects.size(); k++) {
                         Jitem actual = arr.objects.get(k);
-                        Jitem expected = ((List<Jitem>)entry.value).get(k);
+                        Jitem expected = entry.getArray().get(k);
                         assertEquals(expected, actual);
                     }
-                    assertEquals(Jitem.Model.ARRAY, entry.model);
+                    assertEquals(Jitem.Model.ARRAY, entry.getModel());
                     break;
                 default:
                     fail();
@@ -120,7 +118,7 @@ public class TestPost {
     private static Set<String> pathParts(Jerial jerial) {
         Set<String> set = new TreeSet<String>();
         for (Jitem jitem : jerial) {
-            set.add(jitem.part.getLeft());
+            set.add(jitem.getPart().getLeft());
         }
         return set;
     }
@@ -141,7 +139,7 @@ public class TestPost {
 
         JerialBuilderFactory flattenedFactory = new FlattenedBuilderFactory(new DefaultPathConverter());
 
-        final Jerial j1 = TestUtils.jerializeFromString(flattenedFactory, gold1);
+        final Jerial j1 = JerializerUtils.jsonToJerial(flattenedFactory, gold1);
         for (Jitem entry : j1) {
             Logger.log(entry);
         }
@@ -152,13 +150,13 @@ public class TestPost {
         Set<String> actualKeys = pathParts(j1);
         assertEquals(expectedKeys, actualKeys);
 
-        final String s1 = TestUtils.jerializeToString(flattenedFactory, j1, new JerialJerializer());
+        final String s1 = JerializerUtils.domainToJson(flattenedFactory, emptyRegistry, new JerialJerializer(), j1);
         Logger.log(s1);
     }
 
     public void runFlatteningTest(String gold, Set<String> expectedKeys) throws JerializerException {
         JerialBuilderFactory flattenedFactory = new FlattenedBuilderFactory(new DefaultPathConverter());
-        final Jerial j1 = TestUtils.jerializeFromString(flattenedFactory, gold);
+        final Jerial j1 = JerializerUtils.jsonToJerial(flattenedFactory, gold);
         for (Jitem entry : j1) {
             Logger.log(entry);
         }
