@@ -1,5 +1,6 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.builders;
 
+import net.exathunk.jereal.base.PathConverter;
 import net.exathunk.jereal.base.functional.ConsList;
 import net.exathunk.jereal.base.visitors.PathPart;
 

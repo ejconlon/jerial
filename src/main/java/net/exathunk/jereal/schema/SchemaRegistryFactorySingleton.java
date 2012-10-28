@@ -1,7 +1,7 @@
 package net.exathunk.jereal.schema;
 
-import net.exathunk.jereal.base.RegistryBuilder;
-import net.exathunk.jereal.base.RegistryFactory;
+import net.exathunk.jereal.base.jerializers.RegistryBuilder;
+import net.exathunk.jereal.base.jerializers.RegistryFactory;
 
 /**
  * Horribly accurate name.
@@ -18,6 +18,7 @@ public class SchemaRegistryFactorySingleton extends RegistryBuilder {
 
     private SchemaRegistryFactorySingleton() {
         add(Schema.class, new SchemaJerializer(), new SchemaDejerializer());
+        add(Link.class, new LinkJerializer(), new LinkDejerializer());
     }
 
 }

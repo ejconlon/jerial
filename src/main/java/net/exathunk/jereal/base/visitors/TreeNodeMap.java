@@ -20,7 +20,7 @@ public class TreeNodeMap<T> implements Iterable<Map.Entry<PathPart, TreeNode<T>>
             sawAdd = true;
             addedKey = true;
         }
-        map.put(PathPart.makeLeft(key), node);
+        map.put(PathPart.key(key), node);
     }
 
     public void putIndexed(Integer index, TreeNode<T> node) {
@@ -30,7 +30,7 @@ public class TreeNodeMap<T> implements Iterable<Map.Entry<PathPart, TreeNode<T>>
             sawAdd = true;
             addedKey = false;
         }
-        map.put(PathPart.makeRight(index), node);
+        map.put(PathPart.index(index), node);
     }
 
     public boolean isObject() {

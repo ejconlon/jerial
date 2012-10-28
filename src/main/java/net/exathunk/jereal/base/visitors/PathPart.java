@@ -10,11 +10,11 @@ public class PathPart extends Either<String, Integer> implements Comparable<Path
         super(s, integer);
     }
 
-    public static PathPart makeLeft(String left) {
+    public static PathPart key(String left) {
         return new PathPart(left, null);
     }
 
-    public static PathPart makeRight(Integer right) {
+    public static PathPart index(Integer right) {
         return new PathPart(null, right);
     }
 

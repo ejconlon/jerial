@@ -17,13 +17,13 @@ public class Arr {
         int i = 0;
         for (final Object x : args) {
             if (x instanceof String) {
-                objects.add(Jitem.makeString(PathPart.makeRight(i), (String) x));
+                objects.add(Jitem.makeString(PathPart.index(i), (String) x));
             } else if (x instanceof Long) {
-                objects.add(Jitem.makeLong(PathPart.makeRight(i), (Long) x));
+                objects.add(Jitem.makeLong(PathPart.index(i), (Long) x));
             } else if (x instanceof Double) {
-                objects.add(Jitem.makeDouble(PathPart.makeRight(i), (Double) x));
+                objects.add(Jitem.makeDouble(PathPart.index(i), (Double) x));
             } else if (x instanceof Boolean) {
-                objects.add(Jitem.makeBoolean(PathPart.makeRight(i), (Boolean) x));
+                objects.add(Jitem.makeBoolean(PathPart.index(i), (Boolean) x));
             } else {
                 throw new UnsupportedOperationException();
             }

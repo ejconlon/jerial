@@ -1,4 +1,4 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.builders;
 
 import net.exathunk.jereal.base.visitors.Jerial;
 import net.exathunk.jereal.base.visitors.Jitem;
@@ -20,7 +20,7 @@ public class MapBuilder implements JerialBuilder {
     }
 
     @Override
-    public Jerial buildJerial() {
+    public Jerial buildObject() {
         return new Jerial() {
             @Override
             public Iterator<Jitem> iterator() {

@@ -1,9 +1,15 @@
 package net.exathunk.jereal.example;
 
+import net.exathunk.jereal.base.builders.JerialBuilderFactory;
+import net.exathunk.jereal.base.builders.SimpleMapBuilderFactory;
+import net.exathunk.jereal.base.jerializers.JerialJerializer;
+import net.exathunk.jereal.base.jerializers.JerializerRegistry;
+import net.exathunk.jereal.base.jerializers.JerializerRegistryImpl;
+import net.exathunk.jereal.base.jerializers.JerializerUtils;
 import net.exathunk.jereal.base.visitors.Jerial;
 import net.exathunk.jereal.base.visitors.Jitem;
 import net.exathunk.jereal.base.DefaultPathConverter;
-import net.exathunk.jereal.base.FlattenedBuilderFactory;
+import net.exathunk.jereal.base.builders.FlattenedBuilderFactory;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

@@ -1,8 +1,8 @@
 package net.exathunk.jereal.schema;
 
-import net.exathunk.jereal.base.JerialBuilderFactory;
+import net.exathunk.jereal.base.builders.JerialBuilderFactory;
 import net.exathunk.jereal.base.JerializerException;
-import net.exathunk.jereal.base.JerializerUtils;
+import net.exathunk.jereal.base.jerializers.JerializerUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

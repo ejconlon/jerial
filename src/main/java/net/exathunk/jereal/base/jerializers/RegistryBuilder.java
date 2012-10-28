@@ -1,4 +1,4 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.jerializers;
 
 /**
  * charolastra 10/27/12 3:38 PM
@@ -9,7 +9,15 @@ public class RegistryBuilder implements RegistryFactory {
     private final DejerializerRegistryImpl dejerializerRegistry = new DejerializerRegistryImpl();
 
     protected <T> void add(Class<T> key, Jerializer<T> jerializer, Dejerializer<T> dejerializer) {
+        add(key, jerializer);
+        add(key, dejerializer);
+    }
+
+    protected <T> void add(Class<T> key, Jerializer<T> jerializer) {
         jerializerRegistry.addJerializer(key, jerializer);
+    }
+
+    protected <T> void add(Class<T> key, Dejerializer<T> dejerializer) {
         dejerializerRegistry.addDejerializer(key, dejerializer);
     }
 

@@ -1,5 +1,6 @@
 package net.exathunk.jereal.base;
 
+import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.visitors.*;
 
 import java.util.ArrayList;
@@ -32,13 +33,13 @@ public class JsonObjectReader extends TreeVisitorFactoryImpl<JerialContext> {
                     Logger.log("Reading object: "+part);
                     JerialContext newContext = context.push(part);
                     writeObjectVisitor(value.getMiddle().getTreeNodeMap(), newContext);
-                    context.builder.addJitem(Jitem.makeObject(part, newContext.builder.buildJerial()));
+                    context.builder.addJitem(Jitem.makeObject(part, newContext.builder.buildObject()));
                 } else {
                     Logger.log("Reading array");
                     JerialContext newContext = context.push(part);
                     writeArrayVisitor(value.getRight().getTreeNodeMap(), newContext);
                     List<Jitem> list = new ArrayList<Jitem>();
-                    for (Jitem item : newContext.builder.buildJerial()) { list.add(item); }
+                    for (Jitem item : newContext.builder.buildObject()) { list.add(item); }
                     context.builder.addJitem(Jitem.makeArray(part, list));
                 }
             }
@@ -53,16 +54,16 @@ public class JsonObjectReader extends TreeVisitorFactoryImpl<JerialContext> {
                     context.builder.addJitem(value.getLeft());
                 } else if (value.hasMiddle()) {
                     Logger.log("Reading object");
-                    JerialContext newContext = context.push(PathPart.makeRight(index));
+                    JerialContext newContext = context.push(PathPart.index(index));
                     writeObjectVisitor(value.getMiddle().getTreeNodeMap(), newContext);
-                    context.builder.addJitem(Jitem.makeObject(PathPart.makeRight(index), newContext.builder.buildJerial()));
+                    context.builder.addJitem(Jitem.makeObject(PathPart.index(index), newContext.builder.buildObject()));
                 } else {
                     Logger.log("Reading array");
-                    JerialContext newContext = context.push(PathPart.makeRight(index));
+                    JerialContext newContext = context.push(PathPart.index(index));
                     writeArrayVisitor(value.getRight().getTreeNodeMap(), newContext);
                     List<Jitem> list = new ArrayList<Jitem>();
-                    for (Jitem item : newContext.builder.buildJerial()) { list.add(item); }
-                    context.builder.addJitem(Jitem.makeArray(PathPart.makeRight(index), list));
+                    for (Jitem item : newContext.builder.buildObject()) { list.add(item); }
+                    context.builder.addJitem(Jitem.makeArray(PathPart.index(index), list));
                 }
                 index += 1;
             }

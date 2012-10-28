@@ -1,5 +1,6 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.jerializers;
 
+import net.exathunk.jereal.base.JerializerException;
 import net.exathunk.jereal.base.visitors.Jerial;
 
 /**

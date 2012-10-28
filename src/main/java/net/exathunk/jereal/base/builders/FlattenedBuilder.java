@@ -1,11 +1,10 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.builders;
 
+import net.exathunk.jereal.base.Logger;
+import net.exathunk.jereal.base.PathConverter;
 import net.exathunk.jereal.base.functional.ConsList;
-import net.exathunk.jereal.base.visitors.Jerial;
 import net.exathunk.jereal.base.visitors.Jitem;
 import net.exathunk.jereal.base.visitors.PathPart;
-
-import java.util.*;
 
 /**
  * charolastra 10/24/12 9:14 PM
@@ -29,7 +28,7 @@ public class FlattenedBuilder extends MapBuilder {
     }
 
     private void addJitem(Jitem jitem, ConsList<PathPart> path) {
-        Logger.log("HIT PATH: "+pathConverter.convertPath(path)+" => "+jitem.getPart());
+        Logger.log("HIT PATH: " + pathConverter.convertPath(path) + " => " + jitem.getPart());
         final ConsList<PathPart> newPath = path.cons(jitem.getPart());
         if (jitem.isObject()) {
             for (Jitem child : jitem.getObject()) {
@@ -41,7 +40,7 @@ public class FlattenedBuilder extends MapBuilder {
             }
         } else {
             String converted = pathConverter.convertPath(newPath);
-            super.addJitem(jitem.withPart(PathPart.makeLeft(converted)));
+            super.addJitem(jitem.withPart(PathPart.key(converted)));
         }
     }
 }

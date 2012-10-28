@@ -37,28 +37,28 @@ public class TreeArrayVisitorImpl<T> implements TreeArrayVisitor<T> {
     @Override
     public void seeStringItem(String value) {
         Integer index = incIndex();
-        PathPart part = PathPart.makeRight(index);
+        PathPart part = PathPart.index(index);
         map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeString(part, value)));
     }
 
     @Override
     public void seeBooleanItem(Boolean value) {
         Integer index = incIndex();
-        PathPart part = PathPart.makeRight(index);
+        PathPart part = PathPart.index(index);
         map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeBoolean(part, value)));
     }
 
     @Override
     public void seeLongItem(Long value) {
         Integer index = incIndex();
-        PathPart part = PathPart.makeRight(index);
+        PathPart part = PathPart.index(index);
         map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeLong(part, value)));
     }
 
     @Override
     public void seeDoubleItem(Double value) {
         Integer index = incIndex();
-        PathPart part = PathPart.makeRight(index);
+        PathPart part = PathPart.index(index);
         map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeDouble(part, value)));
     }
 

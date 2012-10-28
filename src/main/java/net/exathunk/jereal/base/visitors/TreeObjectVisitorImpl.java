@@ -13,7 +13,7 @@ public class TreeObjectVisitorImpl<T> implements TreeObjectVisitor<T> {
     }
 
     protected PathPart makePath(String key) {
-        return PathPart.makeLeft(key);
+        return PathPart.key(key);
     }
 
     @Override

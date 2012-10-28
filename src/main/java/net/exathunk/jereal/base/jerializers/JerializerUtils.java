@@ -1,5 +1,8 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.jerializers;
 
+import net.exathunk.jereal.base.*;
+import net.exathunk.jereal.base.builders.JerialBuilderFactory;
+import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.visitors.Jerial;
 import net.exathunk.jereal.base.visitors.VisitorFactory;
 import net.exathunk.jereal.base.visitors.Writer;
@@ -13,7 +16,7 @@ public class JerializerUtils {
                                             Jerializer<T> jerializer, T domain) throws JerializerException {
         JerialContext context = new JerialContext(factory);
         jerializer.jerialize(registry, domain, context);
-        return context.builder.buildJerial();
+        return context.builder.buildObject();
     }
 
     public static <T> Jerial domainToJerial(JerialBuilderFactory factory, JerializerRegistry registry,
@@ -52,7 +55,7 @@ public class JerializerUtils {
         Writer<JerialContext> contextWriter = (new JsonParser<JerialContext>()).runJerialVisitor(json, reader);
         JerialContext context = new JerialContext(factory);
         contextWriter.writeTo(context);
-        return context.builder.buildJerial();
+        return context.builder.buildObject();
     }
 
     public static <T> void jsonToDomain(JerialBuilderFactory factory, DejerializerRegistry registry,

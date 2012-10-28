@@ -1,4 +1,6 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.jerializers;
+
+import net.exathunk.jereal.base.JerializerException;
 
 /**
  * charolastra 10/27/12 3:10 PM
