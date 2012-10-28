@@ -2,9 +2,9 @@ package net.exathunk.jereal.base.jerializers;
 
 import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.JerializerException;
+import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.functional.Either;
 import net.exathunk.jereal.base.functional.Either3;
-import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.PathPart;
 import net.exathunk.jereal.schema.Schema;
 
@@ -20,16 +20,16 @@ public class JDSL {
     private static boolean addSimple(PathPart part, Object value, JerialContext context) {
         if (value != null) {
            if (value instanceof String) {
-              context.builder.addJitem(Jitem.makeString(part, (String) value));
+              context.builder.addThing(part, JThing.make(new JString((String) value)));
            } else if (value instanceof Long) {
-               context.builder.addJitem(Jitem.makeLong(part, (Long) value));
+               context.builder.addThing(part, JThing.make(new JLong((Long) value)));
            } else if (value instanceof Double) {
-               context.builder.addJitem(Jitem.makeDouble(part, (Double) value));
+               context.builder.addThing(part, JThing.make(new JDouble((Double) value)));
            } else if (value instanceof Boolean) {
-               context.builder.addJitem(Jitem.makeBoolean(part, (Boolean) value));
+               context.builder.addThing(part, JThing.make(new JBoolean((Boolean) value)));
            } else if (value instanceof Enum) {
                // to make TYPE enum work easily
-               context.builder.addJitem(Jitem.makeString(part, value.toString()));
+               context.builder.addThing(part, JThing.make(new JString(value.toString())));
            } else {
                return false;
            }
@@ -95,14 +95,14 @@ public class JDSL {
 
     public static void addTypes(String key, List<Schema.TYPE> types, JerialContext context) {
         if (types == null) return;
-        List<Jitem> arr = new ArrayList<Jitem>(types.size());
+        List<JThing> arr = new ArrayList<JThing>(types.size());
         for (int i = 0; i < types.size(); ++i) {
-            arr.add(Jitem.makeString(PathPart.index(i), types.get(i).toString()));
+            arr.add(JThing.make(new JString(types.get(i).toString())));
         }
         if (arr.size() == 1) {
-            context.builder.addJitem(Jitem.makeString(PathPart.key(key), arr.get(0).getString()));
+            context.builder.addThing(PathPart.key(key), arr.get(0));
         } else {
-            context.builder.addJitem(Jitem.makeArray(PathPart.key(key), arr));
+            context.builder.addThing(PathPart.key(key), JThing.make(new JArray(arr)));
         }
     }
 
@@ -111,7 +111,7 @@ public class JDSL {
         JerialContext newContext = context.push(part);
         Jerializer<T> jerializer = registry.getJerializer((Class<T>)subObject.getClass());
         jerializer.jerialize(registry, subObject, newContext);
-        context.builder.addJitem(Jitem.makeObject(part, newContext.builder.buildObject()));
+        context.builder.addThing(part, JThing.make(newContext.builder.buildObject()));
     }
 
     public static <T> void addMap(JerializerRegistry registry, PathPart part, Map<String, T> subObjectMap, JerialContext context) throws JerializerException {
@@ -120,7 +120,7 @@ public class JDSL {
         for (Map.Entry<String, T> entry : subObjectMap.entrySet()) {
             add(registry, PathPart.key(entry.getKey()), entry.getValue(), parentContext);
         }
-        context.builder.addJitem(Jitem.makeObject(part, parentContext.builder.buildObject()));
+        context.builder.addThing(part, JThing.make(parentContext.builder.buildObject()));
     }
 
     public static <T> void addSinglyList(JerializerRegistry registry, PathPart part, List<T> subObjectList, JerialContext context) throws JerializerException {
@@ -142,7 +142,7 @@ public class JDSL {
             add(registry, childPart, subObject, parentContext);
             i += 1;
         }
-        List<Jitem> array = parentContext.builder.buildArray();
-        context.builder.addJitem(Jitem.makeArray(part, array));
+        JArray array = parentContext.builder.buildArray();
+        context.builder.addThing(part, JThing.make(array));
     }
 }

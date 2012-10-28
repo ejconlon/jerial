@@ -1,6 +1,7 @@
 package net.exathunk.jereal.example;
 
 import net.exathunk.jereal.base.builders.JerialContext;
+import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.jerializers.Jerializer;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.visitors.PathPart;
@@ -13,14 +14,14 @@ public class BagJerializer implements Jerializer<Bag> {
 
     @Override
     public void jerialize(JerializerRegistry registry, Bag bag, JerialContext context) {
-        context.builder.addJitem(Jitem.makeString(PathPart.key("s"), bag.s));
-        context.builder.addJitem(Jitem.makeLong(PathPart.key("l"), bag.l));
-        context.builder.addJitem(Jitem.makeDouble(PathPart.key("d"), bag.d));
-        context.builder.addJitem(Jitem.makeBoolean(PathPart.key("b"), bag.b));
+        context.builder.addThing(PathPart.key("s"), JThing.make(bag.s));
+        context.builder.addThing(PathPart.key("l"), JThing.make(bag.l));
+        context.builder.addThing(PathPart.key("d"), JThing.make(bag.d));
+        context.builder.addThing(PathPart.key("b"), JThing.make(bag.b));
         if (bag.next != null) {
             JerialContext nextContext = context.push(PathPart.key("next"));
             jerialize(registry, bag.next, nextContext);
-            context.builder.addJitem(Jitem.makeObject(PathPart.key("next"), nextContext.builder.buildObject()));
+            context.builder.addThing(PathPart.key("next"), JThing.make(nextContext.builder.buildObject()));
         }
     }
 }

@@ -1,5 +1,6 @@
 package net.exathunk.jereal.schema;
 
+import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Either;
 import net.exathunk.jereal.base.core.Jitem;
 
@@ -44,7 +45,7 @@ public class Schema {
     public String fragmentResolution;
 
     // This is an "unparsed" item
-    public Jitem defaultz;
+    public JThing defaultz;
 
     public Boolean required;
     public Boolean uniqueItems;

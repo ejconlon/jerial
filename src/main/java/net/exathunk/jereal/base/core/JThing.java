@@ -13,16 +13,18 @@ import java.util.Map;
  */
 public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
     private final Jitem.Model model;
-    private final Object erased;
+    private final Object value;
 
-    private JThing(Jitem.Model model, Object erased) {
+    private JThing(Jitem.Model model, Object value) {
         this.model = model;
-        this.erased = erased;
+        this.value = value;
+        assert model != null;
+        assert value != null;
     }
 
     public Maybe<JObject> getObject() {
         if (Jitem.Model.OBJECT.equals(model)) {
-            return Maybe.just((JObject)erased);
+            return Maybe.just((JObject) value);
         } else {
             return Maybe.nothing();
         }
@@ -30,7 +32,7 @@ public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
 
     public Maybe<JArray> getArray() {
         if (Jitem.Model.ARRAY.equals(model)) {
-            return Maybe.just((JArray)erased);
+            return Maybe.just((JArray) value);
         } else {
             return Maybe.nothing();
         }
@@ -38,14 +40,14 @@ public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
 
     public Maybe<JString> getString() {
         if (Jitem.Model.STRING.equals(model)) {
-            return Maybe.just((JString)erased);
+            return Maybe.just((JString) value);
         } else {
             return Maybe.nothing();
         }
     }
     public Maybe<JBoolean> getBoolean() {
         if (Jitem.Model.BOOLEAN.equals(model)) {
-            return Maybe.just((JBoolean)erased);
+            return Maybe.just((JBoolean) value);
         } else {
             return Maybe.nothing();
         }
@@ -53,7 +55,7 @@ public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
 
     public Maybe<JLong> getLong() {
         if (Jitem.Model.LONG.equals(model)) {
-            return Maybe.just((JLong)erased);
+            return Maybe.just((JLong) value);
         } else {
             return Maybe.nothing();
         }
@@ -61,18 +63,18 @@ public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
 
     public Maybe<JDouble> getDouble() {
         if (Jitem.Model.DOUBLE.equals(model)) {
-            return Maybe.just((JDouble)erased);
+            return Maybe.just((JDouble) value);
         } else {
             return Maybe.nothing();
         }
     }
 
-    private JObject  rawGetObject()  { return (JObject)erased; }
-    private JArray   rawGetArray()   { return (JArray)erased; }
-    private JString  rawGetString()  { return (JString)erased; }
-    private JBoolean rawGetBoolean() { return (JBoolean)erased; }
-    private JLong    rawGetLong()    { return (JLong)erased; }
-    private JDouble  rawGetDouble()  { return (JDouble)erased; }
+    public JObject  rawGetObject()  { return (JObject) value; }
+    public JArray   rawGetArray()   { return (JArray) value; }
+    public JString  rawGetString()  { return (JString) value; }
+    public JBoolean rawGetBoolean() { return (JBoolean) value; }
+    public JLong    rawGetLong()    { return (JLong) value; }
+    public JDouble  rawGetDouble()  { return (JDouble) value; }
 
     public boolean isObject() {
         return (Jitem.Model.OBJECT.equals(model));
@@ -102,86 +104,118 @@ public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
         return model;
     }
 
-    public static JThing makeObject() {
-        return new JThing(Jitem.Model.OBJECT, new JObject());
+    public static JThing make(JObject object) {
+        return new JThing(Jitem.Model.OBJECT, object);
     }
 
-    public static JThing makeArray() {
-        return new JThing(Jitem.Model.ARRAY, new JArray());
+    public static JThing make(JArray array) {
+        return new JThing(Jitem.Model.ARRAY, array);
     }
 
-    public static JThing makeString(String value) {
-        return new JThing(Jitem.Model.STRING, new JString(value));
+    public static JThing make(JString scalar) {
+        return new JThing(Jitem.Model.STRING, scalar);
     }
 
-    public static JThing makeBoolean(Boolean value) {
-        return new JThing(Jitem.Model.BOOLEAN, new JBoolean(value));
+    public static JThing make(JBoolean scalar) {
+        return new JThing(Jitem.Model.BOOLEAN, scalar);
     }
 
-    public static JThing makeLong(Long value) {
-        return new JThing(Jitem.Model.LONG, new JLong(value));
+    public static JThing make(JLong scalar) {
+        return new JThing(Jitem.Model.LONG, scalar);
     }
 
-    public static JThing makeDouble(Double value) {
-        return new JThing(Jitem.Model.DOUBLE, new JDouble(value));
+    public static JThing make(JDouble scalar) {
+        return new JThing(Jitem.Model.DOUBLE, scalar);
     }
 
-    public <T> void acceptObjectVisitor(VisitorFactory<T> factory, String key, ObjectVisitor<T> visitor) {
-        switch (model) {
+    public static JThing make(Map<String, JThing> object) {
+        return new JThing(Jitem.Model.OBJECT, new JObject(object));
+    }
+
+    public static JThing make(List<JThing> array) {
+        return new JThing(Jitem.Model.ARRAY, new JArray(array));
+    }
+
+    public static JThing make(String scalar) {
+        return new JThing(Jitem.Model.STRING, new JString(scalar));
+    }
+
+    public static JThing make(Boolean scalar) {
+        return new JThing(Jitem.Model.BOOLEAN, new JBoolean(scalar));
+    }
+
+    public static JThing make(Long scalar) {
+        return new JThing(Jitem.Model.LONG, new JLong(scalar));
+    }
+
+    @Override
+    public String toString() {
+        return "JThing{" +
+                "model=" + model +
+                ", value=" + value +
+                '}';
+    }
+
+    public static JThing make(Double scalar) {
+        return new JThing(Jitem.Model.DOUBLE, new JDouble(scalar));
+    }
+
+    public static <T> void acceptObjectVisitor(VisitorFactory<T> factory, String key, JThing value, ObjectVisitor<T> visitor) {
+        switch (value.getModel()) {
             case OBJECT:
                 ObjectVisitor<T> childObjectVisitor = visitor.seeObjectFieldStart(key);
-                for (Map.Entry<String, JThing> entry : rawGetObject().seq()) {
-                    entry.getValue().acceptObjectVisitor(factory, entry.getKey(), childObjectVisitor);
+                for (Map.Entry<String, JThing> entry : value.rawGetObject().seq()) {
+                    entry.getValue().acceptObjectVisitor(factory, entry.getKey(), entry.getValue(), childObjectVisitor);
                 }
                 break;
             case ARRAY:
                 ArrayVisitor<T> childArrayVisitor = visitor.seeArrayFieldStart(key);
-                for (Map.Entry<Integer, JThing> entry : rawGetArray().seq()) {
-                    entry.getValue().acceptArrayVisitor(factory,  entry.getKey(), childArrayVisitor);
+                for (Map.Entry<Integer, JThing> entry : value.rawGetArray().seq()) {
+                    entry.getValue().acceptArrayVisitor(factory,  entry.getKey(), entry.getValue(), childArrayVisitor);
                 }
                 break;
             case STRING:
-                visitor.seeStringField(key, rawGetString().runResFunc());
+                visitor.seeStringField(key, value.rawGetString().runResFunc());
                 break;
             case BOOLEAN:
-                visitor.seeBooleanField(key, rawGetBoolean().runResFunc());
+                visitor.seeBooleanField(key, value.rawGetBoolean().runResFunc());
                 break;
             case LONG:
-                visitor.seeLongField(key, rawGetLong().runResFunc());
+                visitor.seeLongField(key, value.rawGetLong().runResFunc());
                 break;
             case DOUBLE:
-                visitor.seeDoubleField(key, rawGetDouble().runResFunc());
+                visitor.seeDoubleField(key, value.rawGetDouble().runResFunc());
                 break;
             default:
                 throw new IllegalStateException();
         }
     }
 
-    public <T> void acceptArrayVisitor(VisitorFactory<T> factory, Integer index, ArrayVisitor<T> visitor) {
-        switch (model) {
+    public static <T> void acceptArrayVisitor(VisitorFactory<T> factory, Integer index, JThing value, ArrayVisitor<T> visitor) {
+        switch (value.getModel()) {
             case OBJECT:
                 ObjectVisitor<T> childObjectVisitor = visitor.seeObjectItemStart();
-                for (Map.Entry<String, JThing> entry : rawGetObject().seq()) {
-                    entry.getValue().acceptObjectVisitor(factory, entry.getKey(), childObjectVisitor);
+                for (Map.Entry<String, JThing> entry : value.rawGetObject().seq()) {
+                    entry.getValue().acceptObjectVisitor(factory, entry.getKey(), entry.getValue(), childObjectVisitor);
                 }
                 break;
             case ARRAY:
                 ArrayVisitor<T> childArrayVisitor = visitor.seeArrayItemStart();
-                for (Map.Entry<Integer, JThing> entry : rawGetArray().seq()) {
-                    entry.getValue().acceptArrayVisitor(factory,  entry.getKey(), childArrayVisitor);
+                for (Map.Entry<Integer, JThing> entry : value.rawGetArray().seq()) {
+                    entry.getValue().acceptArrayVisitor(factory,  entry.getKey(), entry.getValue(), childArrayVisitor);
                 }
                 break;
             case STRING:
-                visitor.seeStringItem(rawGetString().runResFunc());
+                visitor.seeStringItem(value.rawGetString().runResFunc());
                 break;
             case BOOLEAN:
-                visitor.seeBooleanItem(rawGetBoolean().runResFunc());
+                visitor.seeBooleanItem(value.rawGetBoolean().runResFunc());
                 break;
             case LONG:
-                visitor.seeLongItem(rawGetLong().runResFunc());
+                visitor.seeLongItem(value.rawGetLong().runResFunc());
                 break;
             case DOUBLE:
-                visitor.seeDoubleItem(rawGetDouble().runResFunc());
+                visitor.seeDoubleItem(value.rawGetDouble().runResFunc());
                 break;
             default:
                 throw new IllegalStateException();
@@ -189,17 +223,20 @@ public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
     }
 
     public <T> Maybe<Writer<T>> accept(VisitorFactory<T> factory) {
-        Writer<T> writer = null;
         if (isObject()) {
             ObjectVisitor<T> visitor = factory.makeObjectVisitor();
-            acceptObjectVisitor(factory, null, visitor);
-            writer = visitor;
+            for (Map.Entry<String, JThing> entry : rawGetObject().seq()) {
+                acceptObjectVisitor(factory, entry.getKey(), entry.getValue(), visitor);
+            }
+            return Maybe.<Writer<T>>just(visitor);
         } else if (isArray()) {
             ArrayVisitor<T> visitor = factory.makeArrayVisitor();
-            acceptArrayVisitor(factory, null, visitor);
-            writer = visitor;
+            for (Map.Entry<Integer, JThing> entry : rawGetArray().seq()) {
+                acceptArrayVisitor(factory, entry.getKey(), entry.getValue(), visitor);
+            }
+            return Maybe.<Writer<T>>just(visitor);
         }
-        return Maybe.nonNull(writer);
+        return Maybe.nothing();
     }
 
     @Override
@@ -264,5 +301,25 @@ public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
         public void remove() {
             throw new UnsupportedOperationException();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        JThing entries = (JThing) o;
+
+        if (!value.equals(entries.value)) return false;
+        if (model != entries.model) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = model.hashCode();
+        result = 31 * result + value.hashCode();
+        return result;
     }
 }

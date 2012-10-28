@@ -1,4 +1,6 @@
 package net.exathunk.jereal.base.visitors;
 
-public interface VisitorFactory<T> extends ObjectVisitorFactory<T>, ArrayVisitorFactory<T> {
+public interface VisitorFactory<T> {
+    ArrayVisitor<T> makeArrayVisitor();
+    ObjectVisitor<T> makeObjectVisitor();
 }

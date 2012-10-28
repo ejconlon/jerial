@@ -8,16 +8,16 @@ import java.util.Iterator;
 public class Maybe<A> implements Sequence<A> {
 
     private final A value;
-    private final boolean isJust;
+    private final boolean just;
 
     private Maybe(A value) {
         this.value = value;
-        this.isJust = true;
+        this.just = true;
     }
 
     private Maybe() {
         this.value = null;
-        this.isJust = false;
+        this.just = false;
     }
 
     public static <A> Maybe<A> just(A value) {
@@ -36,16 +36,8 @@ public class Maybe<A> implements Sequence<A> {
         return new Maybe<A>();
     }
 
-    public boolean isEmpty() {
-        return isJust;
-    }
-
-    public int size() {
-        return isJust ? 1 : 0;
-    }
-
     public <Z> Maybe<Z> fmap(ResFunc1<A, Z> f) {
-        if (isJust) {
+        if (just) {
             return Maybe.just(f.runResFunc(value));
         } else {
             return Maybe.nothing();
@@ -53,7 +45,7 @@ public class Maybe<A> implements Sequence<A> {
     }
 
     public <Z> Maybe<Z> bind(ResFunc1<A, Maybe<Z>> f) {
-        if (isJust) {
+        if (just) {
             return f.runResFunc(value);
         } else {
             return Maybe.nothing();
@@ -62,11 +54,19 @@ public class Maybe<A> implements Sequence<A> {
 
     @Override
     public Iterator<A> iterator() {
-        if (isJust) return new SinglySequence.SinglySequenceIterator<A>(value);
+        if (just) return new SinglySequence.SinglySequenceIterator<A>(value);
         else return new EmptySequence.EmptyIterator<A>();
     }
 
     public A unJust() {
         return value;
+    }
+
+    public boolean isJust() {
+        return just;
+    }
+
+    public boolean isNothing() {
+        return !just;
     }
 }

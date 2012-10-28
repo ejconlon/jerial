@@ -1,55 +1,85 @@
 package net.exathunk.jereal.base;
 
-import net.exathunk.jereal.base.core.Jerial;
+import net.exathunk.jereal.base.core.JArray;
+import net.exathunk.jereal.base.core.JObject;
+import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.*;
 
-public class JerialRunner<U> implements JerialVisitorAdapter<Jerial, U> {
+import java.util.Map;
 
-    public Writer<U> runJerialVisitor(Jerial parent, VisitorFactory<U> visitorFactory) {
+import static net.exathunk.jereal.base.core.Jitem.Model.*;
+
+public class JerialRunner<U> implements JerialVisitorAdapter<JObject, U> {
+
+    public Writer<U> runJerialVisitor(JObject parent, VisitorFactory<U> visitorFactory) {
         ObjectVisitor<U> objectVisitor = visitorFactory.makeObjectVisitor();
-        runJerialVisitorInner(parent, objectVisitor, null);
+        runJerialVisitorInner(parent, objectVisitor);
         return objectVisitor;
     }
 
-    private void runJerialVisitorInner(Iterable<Jitem> parent, ObjectVisitor<U> objectVisitor, ArrayVisitor<U> arrayVisitor) {
-        final boolean isObject = objectVisitor != null;
-        for (Jitem entry : parent) {
+    private void runJerialVisitorInner(JObject parent, ObjectVisitor<U> objectVisitor) {
+        for (Map.Entry<String, JThing> entry : parent.seq()) {
             //Logger.log("runJerialVisitorInner: "+entry);
-            final PathPart part = entry.getPart();
-            switch (entry.getModel()) {
+            final PathPart part = PathPart.key(entry.getKey());
+            final JThing value = entry.getValue();
+            switch (value.getModel()) {
                 case STRING:
-                    if (isObject) objectVisitor.seeStringField(part.getLeft(), entry.getString());
-                    else arrayVisitor.seeStringItem(entry.getString());
+                    objectVisitor.seeStringField(part.getLeft(), value.rawGetString().runResFunc());
                     break;
                 case LONG:
-                    if (isObject) objectVisitor.seeLongField(part.getLeft(), entry.getLong());
-                    else arrayVisitor.seeLongItem(entry.getLong());
+                    objectVisitor.seeLongField(part.getLeft(), value.rawGetLong().runResFunc());
                     break;
                 case DOUBLE:
-                    if (isObject) objectVisitor.seeDoubleField(part.getLeft(), entry.getDouble());
-                    else arrayVisitor.seeDoubleItem(entry.getDouble());
+                    objectVisitor.seeDoubleField(part.getLeft(), value.rawGetDouble().runResFunc());
                     break;
                 case BOOLEAN:
-                    if (isObject) objectVisitor.seeBooleanField(part.getLeft(), entry.getBoolean());
-                    else arrayVisitor.seeBooleanItem(entry.getBoolean());
+                    objectVisitor.seeBooleanField(part.getLeft(), value.rawGetBoolean().runResFunc());
                     break;
                 case OBJECT:
-                    if (isObject) {
+                    {
                         ObjectVisitor<U> childVisitor = objectVisitor.seeObjectFieldStart(part.getLeft());
-                        runJerialVisitorInner(entry.getObject(), childVisitor, null);
-                    } else {
-                        ObjectVisitor<U> childVisitor = arrayVisitor.seeObjectItemStart();
-                        runJerialVisitorInner(entry.getObject(), childVisitor, null);
+                        runJerialVisitorInner(value.rawGetObject(), childVisitor);
                     }
                     break;
                 case ARRAY:
-                    if (isObject) {
+                    {
                         ArrayVisitor<U> childVisitor = objectVisitor.seeArrayFieldStart(part.getLeft());
-                        runJerialVisitorInner(entry.getArray(), null, childVisitor);
-                    } else {
+                        runJerialVisitorInner(value.rawGetArray(), childVisitor);
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void runJerialVisitorInner(JArray parent, ArrayVisitor<U> arrayVisitor) {
+        for (Map.Entry<Integer, JThing> entry : parent.seq()) {
+            //Logger.log("runJerialVisitorInner: "+entry);
+            final PathPart part = PathPart.index(entry.getKey());
+            final JThing value = entry.getValue();
+            switch (value.getModel()) {
+                case STRING:
+                    arrayVisitor.seeStringItem(value.rawGetString().runResFunc());
+                    break;
+                case LONG:
+                    arrayVisitor.seeLongItem(value.rawGetLong().runResFunc());
+                    break;
+                case DOUBLE:
+                    arrayVisitor.seeDoubleItem(value.rawGetDouble().runResFunc());
+                    break;
+                case BOOLEAN:
+                    arrayVisitor.seeBooleanItem(value.rawGetBoolean().runResFunc());
+                    break;
+                case OBJECT:
+                    {
+                        ObjectVisitor<U> childVisitor = arrayVisitor.seeObjectItemStart();
+                        runJerialVisitorInner(value.rawGetObject(), childVisitor);
+                    }
+                    break;
+                case ARRAY:
+                    {
                         ArrayVisitor<U> childVisitor = arrayVisitor.seeArrayItemStart();
-                        runJerialVisitorInner(entry.getArray(), null, childVisitor);
+                        runJerialVisitorInner(value.rawGetArray(), childVisitor);
                     }
                     break;
             }

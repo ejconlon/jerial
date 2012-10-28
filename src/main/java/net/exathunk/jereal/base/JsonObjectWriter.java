@@ -1,5 +1,6 @@
 package net.exathunk.jereal.base;
 
+import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.*;
 
@@ -11,23 +12,23 @@ public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {
         super(new MyWriter());
     }
 
-    private static void writeJitem(Jitem jitem, StringBuilder out) {
+    private static void writeJThing(JThing thing, StringBuilder out) {
         boolean needComma = false;
-        switch (jitem.getModel()) {
+        switch (thing.getModel()) {
             case STRING:
-                String sv = jitem.getString();
+                String sv = thing.rawGetString().runResFunc();
                 if (sv != null) out.append('"');
                 out.append(sv);
                 if (sv != null) out.append('"');
                 break;
             case LONG:
-                out.append(jitem.getLong());
+                out.append(thing.rawGetLong().runResFunc());
                 break;
             case DOUBLE:
-                out.append(jitem.getDouble());
+                out.append(thing.rawGetDouble().runResFunc());
                 break;
             case BOOLEAN:
-                Boolean bv = jitem.getBoolean();
+                Boolean bv = thing.rawGetBoolean().runResFunc();
                 if (Boolean.TRUE.equals(bv)) {
                     out.append("true");
                 } else if (bv != null) {
@@ -38,18 +39,18 @@ public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {
                 break;
             case OBJECT:
                 out.append('{');
-                for (Jitem child : jitem.getObject()) {
+                for (Map.Entry<String, JThing> child : thing.rawGetObject().seq()) {
                     if (needComma) out.append(',');
-                    writeJitem(child, out);
+                    writeJThing(child.getValue(), out);
                     needComma = true;
                 }
                 out.append('}');
                 break;
             case ARRAY:
                 out.append('[');
-                for (Jitem child : jitem.getArray()) {
+                for (Map.Entry<Integer, JThing> child : thing.rawGetArray().seq()) {
                     if (needComma) out.append(',');
-                    writeJitem(child, out);
+                    writeJThing(child.getValue(), out);
                     needComma = true;
                 }
                 out.append(']');
@@ -75,7 +76,7 @@ public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {
                 out.append(path.getLeft());
                 out.append("\":");
                 if (value.hasLeft()) {
-                    writeJitem(value.getLeft(), out);
+                    writeJThing(value.getLeft(), out);
                 } else if (value.hasMiddle()) {
                     value.getMiddle().writeTo(out);
                 } else {
@@ -93,7 +94,7 @@ public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {
                 final TreeNode<StringBuilder> value = entry.getValue();
                 if (needComma) out.append(',');
                 if (value.hasLeft()) {
-                    writeJitem(value.getLeft(), out);
+                    writeJThing(value.getLeft(), out);
                 } else if (value.hasMiddle()) {
                     value.getMiddle().writeTo(out);
                 } else {

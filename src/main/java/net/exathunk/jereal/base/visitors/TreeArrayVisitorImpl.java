@@ -1,6 +1,6 @@
 package net.exathunk.jereal.base.visitors;
 
-import net.exathunk.jereal.base.core.Jitem;
+import net.exathunk.jereal.base.core.*;
 
 /**
  * charolastra 10/23/12 10:12 PM
@@ -39,29 +39,25 @@ public class TreeArrayVisitorImpl<T> implements TreeArrayVisitor<T> {
     @Override
     public void seeStringItem(String value) {
         Integer index = incIndex();
-        PathPart part = PathPart.index(index);
-        map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeString(part, value)));
+        map.putIndexed(index, TreeNode.<T>makeLeft(JThing.make(new JString(value))));
     }
 
     @Override
     public void seeBooleanItem(Boolean value) {
         Integer index = incIndex();
-        PathPart part = PathPart.index(index);
-        map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeBoolean(part, value)));
+        map.putIndexed(index, TreeNode.<T>makeLeft(JThing.make(new JBoolean(value))));
     }
 
     @Override
     public void seeLongItem(Long value) {
         Integer index = incIndex();
-        PathPart part = PathPart.index(index);
-        map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeLong(part, value)));
+        map.putIndexed(index, TreeNode.<T>makeLeft(JThing.make(new JLong(value))));
     }
 
     @Override
     public void seeDoubleItem(Double value) {
         Integer index = incIndex();
-        PathPart part = PathPart.index(index);
-        map.putIndexed(index, TreeNode.<T>makeLeft(Jitem.makeDouble(part, value)));
+        map.putIndexed(index, TreeNode.<T>makeLeft(JThing.make(new JDouble(value))));
     }
 
     public TreeNodeMap<T> getTreeNodeMap() {

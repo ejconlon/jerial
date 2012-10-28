@@ -26,7 +26,7 @@ public class SchemaJerializer implements Jerializer<Schema> {
 
         // Unparsed item
         if (schema.defaultz != null) {
-            context.builder.addJitem(schema.defaultz);
+            context.builder.addThing(PathPart.key("default"), schema.defaultz);
         }
 
         JDSL.addBoolean("required", schema.required, context);

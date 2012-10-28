@@ -1,12 +1,12 @@
 package net.exathunk.jereal.base.builders;
 
-import net.exathunk.jereal.base.core.Jerial;
-import net.exathunk.jereal.base.core.Jitem;
+import net.exathunk.jereal.base.core.*;
+import net.exathunk.jereal.base.visitors.PathPart;
 
 import java.util.List;
 
 public interface JerialBuilder {
-    void addJitem(Jitem jitem);
-    Jerial buildObject();
-    List<Jitem> buildArray();
+    void addThing(PathPart part, JThing thing);
+    JObject buildObject();
+    JArray buildArray();
 }

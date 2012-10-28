@@ -2,6 +2,7 @@ package net.exathunk.jereal.base.builders;
 
 import net.exathunk.jereal.base.Logger;
 import net.exathunk.jereal.base.PathConverter;
+import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.ConsList;
 import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.PathPart;
@@ -10,7 +11,7 @@ import net.exathunk.jereal.base.visitors.PathPart;
  * charolastra 10/24/12 9:14 PM
  */
 public class FlattenedBuilder extends MapBuilder {
-
+    /*
     private final ConsList<PathPart> rootPath;
     private final PathConverter pathConverter;
 
@@ -23,16 +24,16 @@ public class FlattenedBuilder extends MapBuilder {
     }
 
     @Override
-    public void addJitem(Jitem jitem) {
-        addJitem(jitem, rootPath);
+    public void addThing(PathPart part, JThing thing) {
+        addThing(part, thing, rootPath);
     }
 
-    private void addJitem(Jitem jitem, ConsList<PathPart> path) {
-        Logger.log("HIT PATH: " + pathConverter.convertPath(path) + " => " + jitem.getPart());
-        final ConsList<PathPart> newPath = path.cons(jitem.getPart());
-        if (jitem.isObject()) {
+    private void addThing(PathPart part, JThing thing, ConsList<PathPart> path) {
+        Logger.log("HIT PATH: " + pathConverter.convertPath(path) + " => " + part);
+        final ConsList<PathPart> newPath = path.cons(part);
+        if (thing.isObject()) {
             for (Jitem child : jitem.getObject()) {
-                addJitem(child, newPath);
+                thing.set(child, newPath);
             }
         } else if (jitem.isArray()) {
             for (Jitem child : jitem.getArray()) {
@@ -42,5 +43,5 @@ public class FlattenedBuilder extends MapBuilder {
             String converted = pathConverter.convertPath(newPath);
             super.addJitem(jitem.withPart(PathPart.key(converted)));
         }
-    }
+    } */
 }

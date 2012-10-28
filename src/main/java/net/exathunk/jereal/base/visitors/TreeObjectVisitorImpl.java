@@ -1,6 +1,6 @@
 package net.exathunk.jereal.base.visitors;
 
-import net.exathunk.jereal.base.core.Jitem;
+import net.exathunk.jereal.base.core.*;
 
 // This is a visitor that builds a tree of parsed Jitems and unparsed (in-progress) suspensions
 public class TreeObjectVisitorImpl<T> implements TreeObjectVisitor<T> {
@@ -34,22 +34,22 @@ public class TreeObjectVisitorImpl<T> implements TreeObjectVisitor<T> {
 
     @Override
     public void seeStringField(String key, String value) {
-        map.putKeyed(key, TreeNode.<T>makeLeft(Jitem.makeString(makePath(key), value)));
+        map.putKeyed(key, TreeNode.<T>makeLeft(JThing.make(new JString(value))));
     }
 
     @Override
     public void seeBooleanField(String key, Boolean value) {
-        map.putKeyed(key, TreeNode.<T>makeLeft(Jitem.makeBoolean(makePath(key), value)));
+        map.putKeyed(key, TreeNode.<T>makeLeft(JThing.make(new JBoolean(value))));
     }
 
     @Override
     public void seeLongField(String key, Long value) {
-        map.putKeyed(key, TreeNode.<T>makeLeft(Jitem.makeLong(makePath(key), value)));
+        map.putKeyed(key, TreeNode.<T>makeLeft(JThing.make(new JLong(value))));
     }
 
     @Override
     public void seeDoubleField(String key, Double value) {
-        map.putKeyed(key, TreeNode.<T>makeLeft(Jitem.makeDouble(makePath(key), value)));
+        map.putKeyed(key, TreeNode.<T>makeLeft(JThing.make(new JDouble(value))));
     }
 
     public TreeNodeMap<T> getTreeNodeMap() {

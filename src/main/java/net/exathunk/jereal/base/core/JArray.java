@@ -14,6 +14,30 @@ public class JArray implements JMutableCollection<Integer, JThing> {
 
     private final List<JThing> array;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        JArray jArray = (JArray) o;
+
+        if (array != null ? !array.equals(jArray.array) : jArray.array != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return array != null ? array.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "JArray{" +
+                "array=" + array +
+                '}';
+    }
+
     public JArray() {
         this.array = new ArrayList<JThing>();
     }
