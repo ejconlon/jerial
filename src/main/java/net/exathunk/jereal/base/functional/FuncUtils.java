@@ -1,5 +1,6 @@
 package net.exathunk.jereal.base.functional;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -81,5 +82,9 @@ public class FuncUtils {
 
     public static <A> Sequence<A> filterSingly(ResFunc1<A, Boolean> p, A singly) {
         return new FilterSequence<A>(p, seqSingly(singly));
+    }
+
+    public static <A> Iterator<A> concat(Iterator<A> first, Iterator<A> second) {
+        return new ConcatIterator<A>(first, second);
     }
 }
