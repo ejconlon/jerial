@@ -45,7 +45,7 @@ public class TestLoader {
         //        new SimpleMapBuilderFactory(),
         //        new FlattenedBuilderFactory(new DefaultPathConverter())
         //);
-        List<String> names = Arrays.asList("address");
+        List<String> names = Arrays.asList("address", "calendar", "card", "geo");
         //List<String> names = Arrays.asList(
         //        "address", "calendar", "card", "geo",
         //        "hyper-schema", "interfaces", "json-ref", "schema");

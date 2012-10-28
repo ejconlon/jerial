@@ -13,5 +13,5 @@ public class Link {
     public String targetSchema;
     public String enctype;
     public String method;
-    public final Map<String, Meta> properties = new TreeMap<String, Meta>();
+    public final Map<String, Schema> properties = new TreeMap<String, Schema>();
 }
