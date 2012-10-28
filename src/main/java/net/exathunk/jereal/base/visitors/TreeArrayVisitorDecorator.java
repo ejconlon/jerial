@@ -47,7 +47,7 @@ public class TreeArrayVisitorDecorator<T> implements TreeArrayVisitor<T> {
     }
 
     @Override
-    public void writeTo(T out) {
-        decorated.writeTo(out);
+    public void runFunc(T out) {
+        decorated.runFunc(out);
     }
 }

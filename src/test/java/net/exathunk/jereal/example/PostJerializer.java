@@ -4,7 +4,6 @@ import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.jerializers.Jerializer;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
-import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.PathPart;
 
 public class PostJerializer implements Jerializer<Post> {

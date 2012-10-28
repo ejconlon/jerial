@@ -3,8 +3,6 @@ package net.exathunk.jereal.base.jerializers;
 import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.Jerial;
-import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.PathPart;
 
 import java.util.Map;

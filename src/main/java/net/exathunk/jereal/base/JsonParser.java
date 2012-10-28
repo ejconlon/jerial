@@ -1,16 +1,16 @@
 package net.exathunk.jereal.base;
 
 import net.exathunk.jereal.base.functional.Pair;
+import net.exathunk.jereal.base.functional.Func1;
 import net.exathunk.jereal.base.visitors.ArrayVisitor;
 import net.exathunk.jereal.base.visitors.VisitorFactory;
 import net.exathunk.jereal.base.visitors.ObjectVisitor;
-import net.exathunk.jereal.base.visitors.Writer;
 
 public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
-    public Writer<U> runJerialVisitor(String s, VisitorFactory<U> visitorFactory) throws JerializerException {
+    public Func1<U> runJerialVisitor(String s, VisitorFactory<U> visitorFactory) throws JerializerException {
         int i = 0;
         final int z = s.length();
-        Pair<Integer, Writer<U>> pair = null;
+        Pair<Integer, Func1<U>> pair = null;
         while (i < z) {
             final char c = s.charAt(i);
             switch (c) {
@@ -48,10 +48,10 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
         return pair.getValue();
     }
 
-    private static <U> Pair<Integer,Writer<U>> objectVisitorInner(String s, int i, ObjectVisitor<U> objectVisitor) throws JerializerException {
+    private static <U> Pair<Integer, Func1<U>> objectVisitorInner(String s, int i, ObjectVisitor<U> objectVisitor) throws JerializerException {
         boolean inquote = false;
         final int z = s.length();
-        Pair<Integer, Writer<U>> pair;
+        Pair<Integer, Func1<U>> pair;
         StringBuilder key = new StringBuilder();
         StringBuilder value = new StringBuilder();
         StringBuilder cur = key;
@@ -97,7 +97,7 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                         value.setLength(0);
                         cur = key;
                     }
-                    return new Pair<Integer, Writer<U>>(i, objectVisitor);
+                    return new Pair<Integer, Func1<U>>(i, objectVisitor);
 
                 case ':':
                     assert key.length() > 0;
@@ -135,10 +135,10 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
         throw new JerializerException("Did not read object end.");
     }
 
-    private static <U> Pair<Integer,Writer<U>> arrayVisitorInner(String s, int i, ArrayVisitor<U> arrayVisitor) throws JerializerException {
+    private static <U> Pair<Integer,Func1<U>> arrayVisitorInner(String s, int i, ArrayVisitor<U> arrayVisitor) throws JerializerException {
         boolean inquote = false;
         final int z = s.length();
-        Pair<Integer, Writer<U>> pair;
+        Pair<Integer, Func1<U>> pair;
         StringBuilder value = new StringBuilder();
 
         boolean skipComma = false;
@@ -170,7 +170,7 @@ public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
                         emit(value, arrayVisitor);
                         value.setLength(0);
                     }
-                    return new Pair<Integer, Writer<U>>(i, arrayVisitor);
+                    return new Pair<Integer, Func1<U>>(i, arrayVisitor);
 
                 case ',':
                     if (!skipComma) {

@@ -1,12 +1,14 @@
 package net.exathunk.jereal.base.visitors;
 
+import net.exathunk.jereal.base.functional.Func2;
+
 /**
  * charolastra 10/25/12 11:30 AM
  */
 public class TreeVisitorFactoryImpl<T> implements TreeVisitorFactory<T> {
-    private final TreeNodeMapWriter<T> writer;
+    private final Func2<TreeNodeMap<T>, T> writer;
 
-    public TreeVisitorFactoryImpl(TreeNodeMapWriter<T> writer) {
+    public TreeVisitorFactoryImpl(Func2<TreeNodeMap<T>, T> writer) {
         this.writer = writer;
     }
 

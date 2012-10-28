@@ -3,16 +3,14 @@ package net.exathunk.jereal.base;
 import net.exathunk.jereal.base.core.JArray;
 import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.Jitem;
+import net.exathunk.jereal.base.functional.Func1;
 import net.exathunk.jereal.base.visitors.*;
 
 import java.util.Map;
 
-import static net.exathunk.jereal.base.core.Jitem.Model.*;
-
 public class JerialRunner<U> implements JerialVisitorAdapter<JObject, U> {
 
-    public Writer<U> runJerialVisitor(JObject parent, VisitorFactory<U> visitorFactory) {
+    public Func1<U> runJerialVisitor(JObject parent, VisitorFactory<U> visitorFactory) {
         ObjectVisitor<U> objectVisitor = visitorFactory.makeObjectVisitor();
         runJerialVisitorInner(parent, objectVisitor);
         return objectVisitor;

@@ -1,7 +1,7 @@
 package net.exathunk.jereal.base;
 
 import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.Jitem;
+import net.exathunk.jereal.base.functional.Func2;
 import net.exathunk.jereal.base.visitors.*;
 
 import java.util.Map;
@@ -58,9 +58,9 @@ public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {
         }
     }
 
-    private static class MyWriter implements TreeNodeMapWriter<StringBuilder> {
+    private static class MyWriter implements Func2<TreeNodeMap<StringBuilder>, StringBuilder> {
         @Override
-        public void writeTo(TreeNodeMap<StringBuilder> source, StringBuilder sink) {
+        public void runFunc(TreeNodeMap<StringBuilder> source, StringBuilder sink) {
             if (source.isObject()) writeObject(source, sink);
             else writeArray(source, sink);
         }
@@ -78,9 +78,9 @@ public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {
                 if (value.hasLeft()) {
                     writeJThing(value.getLeft(), out);
                 } else if (value.hasMiddle()) {
-                    value.getMiddle().writeTo(out);
+                    value.getMiddle().runFunc(out);
                 } else {
-                    value.getRight().writeTo(out);
+                    value.getRight().runFunc(out);
                 }
                 needComma = true;
             }
@@ -96,9 +96,9 @@ public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {
                 if (value.hasLeft()) {
                     writeJThing(value.getLeft(), out);
                 } else if (value.hasMiddle()) {
-                    value.getMiddle().writeTo(out);
+                    value.getMiddle().runFunc(out);
                 } else {
-                    value.getRight().writeTo(out);
+                    value.getRight().runFunc(out);
                 }
                 needComma = true;
             }

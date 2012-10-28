@@ -2,13 +2,10 @@ package net.exathunk.jereal.schema;
 
 import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.Jerial;
 import net.exathunk.jereal.base.jerializers.Dejerializer;
 import net.exathunk.jereal.base.JerializerException;
 import net.exathunk.jereal.base.jerializers.DejerializerRegistry;
 import net.exathunk.jereal.base.functional.Either;
-import net.exathunk.jereal.base.core.Jitem;
-import net.exathunk.jereal.base.visitors.PathPart;
 
 import java.util.List;
 import java.util.Map;

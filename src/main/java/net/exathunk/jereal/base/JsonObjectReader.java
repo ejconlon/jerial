@@ -2,7 +2,7 @@ package net.exathunk.jereal.base;
 
 import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.Jitem;
+import net.exathunk.jereal.base.functional.Func2;
 import net.exathunk.jereal.base.visitors.*;
 
 import java.util.ArrayList;
@@ -14,9 +14,9 @@ public class JsonObjectReader extends TreeVisitorFactoryImpl<JerialContext> {
         super(new MyWriter());
     }
 
-    private static class MyWriter implements TreeNodeMapWriter<JerialContext> {
+    private static class MyWriter implements Func2<TreeNodeMap<JerialContext>, JerialContext> {
         @Override
-        public void writeTo(TreeNodeMap<JerialContext> source, JerialContext sink) {
+        public void runFunc(TreeNodeMap<JerialContext> source, JerialContext sink) {
             if (source.isObject()) {
                 writeObjectVisitor(source, sink);
             } else {

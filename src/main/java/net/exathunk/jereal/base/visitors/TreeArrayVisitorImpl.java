@@ -1,6 +1,7 @@
 package net.exathunk.jereal.base.visitors;
 
 import net.exathunk.jereal.base.core.*;
+import net.exathunk.jereal.base.functional.Func2;
 
 /**
  * charolastra 10/23/12 10:12 PM
@@ -8,12 +9,12 @@ import net.exathunk.jereal.base.core.*;
 public class TreeArrayVisitorImpl<T> implements TreeArrayVisitor<T> {
 
     private final TreeVisitorFactory<T> factory;
-    private final TreeNodeMapWriter<T> writer;
+    private final Func2<TreeNodeMap<T>, T> writer;
     private final TreeNodeMap<T> map = new TreeNodeMap<T>();
 
     private int index = 0;
 
-    public TreeArrayVisitorImpl(TreeVisitorFactory<T> factory, TreeNodeMapWriter<T> writer) {
+    public TreeArrayVisitorImpl(TreeVisitorFactory<T> factory,  Func2<TreeNodeMap<T>, T> writer) {
         this.factory = factory;
         this.writer = writer;
     }
@@ -65,7 +66,7 @@ public class TreeArrayVisitorImpl<T> implements TreeArrayVisitor<T> {
     }
 
     @Override
-    public void writeTo(T out) {
-        writer.writeTo(getTreeNodeMap(), out);
+    public void runFunc(T out) {
+        writer.runFunc(getTreeNodeMap(), out);
     }
 }

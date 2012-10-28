@@ -5,10 +5,9 @@ import net.exathunk.jereal.base.builders.JerialBuilderFactory;
 import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
+import net.exathunk.jereal.base.functional.Func1;
 import net.exathunk.jereal.base.functional.Maybe;
 import net.exathunk.jereal.base.visitors.VisitorFactory;
-import net.exathunk.jereal.base.visitors.Writer;
-
 /**
  * charolastra 10/27/12 2:49 PM
  */
@@ -35,10 +34,10 @@ public class JerializerUtils {
 
     public static String jobjectToJson(JObject jobject) throws JerializerException {
         VisitorFactory<StringBuilder> objectWriter = new JsonObjectWriter();
-        Maybe<Writer<StringBuilder>> maybeWriter = JThing.make(jobject).accept(objectWriter);
+        Maybe<Func1<StringBuilder>> maybeWriter = JThing.make(jobject).accept(objectWriter);
         if (maybeWriter.isNothing()) throw new JerializerException("No writer");
         StringBuilder sb = new StringBuilder();
-        maybeWriter.unJust().writeTo(sb);
+        maybeWriter.unJust().runFunc(sb);
         return sb.toString();
     }
 
@@ -55,9 +54,9 @@ public class JerializerUtils {
 
     public static JObject jsonToJObject(JerialBuilderFactory factory, String json) throws JerializerException {
         VisitorFactory<JerialContext> reader = new JsonObjectReader();
-        Writer<JerialContext> contextWriter = (new JsonParser<JerialContext>()).runJerialVisitor(json, reader);
+        Func1<JerialContext> contextWriter = (new JsonParser<JerialContext>()).runJerialVisitor(json, reader);
         JerialContext context = new JerialContext(factory);
-        contextWriter.writeTo(context);
+        contextWriter.runFunc(context);
         return context.builder.buildObject();
     }
 
