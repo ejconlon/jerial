@@ -1,8 +1,7 @@
 package net.exathunk.jereal.schema;
 
 import net.exathunk.jereal.base.functional.Either;
-import net.exathunk.jereal.base.functional.Either3;
-import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.core.Jitem;
 
 import java.util.ArrayList;
 import java.util.List;

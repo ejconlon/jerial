@@ -5,8 +5,11 @@ import net.exathunk.jereal.base.core.Jitem;
 
 import java.util.List;
 
-public interface JerialBuilder {
-    void addJitem(Jitem jitem);
+/**
+ * charolastra 10/27/12 11:51 PM
+ */
+public interface ObjectBuilder {
+    void put(String key, Jitem jitem);
     Jerial buildObject();
     List<Jitem> buildArray();
 }

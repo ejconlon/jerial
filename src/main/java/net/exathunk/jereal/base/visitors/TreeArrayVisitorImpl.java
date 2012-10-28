@@ -1,5 +1,7 @@
 package net.exathunk.jereal.base.visitors;
 
+import net.exathunk.jereal.base.core.Jitem;
+
 /**
  * charolastra 10/23/12 10:12 PM
  */

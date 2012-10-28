@@ -1,8 +1,8 @@
 package net.exathunk.jereal.base.jerializers;
 
 import net.exathunk.jereal.base.builders.JerialContext;
-import net.exathunk.jereal.base.visitors.Jerial;
-import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.core.Jerial;
+import net.exathunk.jereal.base.core.Jitem;
 
 /**
  * Puzzling class, to be sure.

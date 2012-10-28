@@ -1,8 +1,8 @@
 package net.exathunk.jereal.base;
 
+import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.*;
 
-import java.util.List;
 import java.util.Map;
 
 public class JsonObjectWriter extends TreeVisitorFactoryImpl<StringBuilder> {

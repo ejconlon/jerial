@@ -1,8 +1,8 @@
 package net.exathunk.jereal.base;
 
+import net.exathunk.jereal.base.core.Jerial;
+import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.*;
-
-import java.util.List;
 
 public class JerialRunner<U> implements JerialVisitorAdapter<Jerial, U> {
 

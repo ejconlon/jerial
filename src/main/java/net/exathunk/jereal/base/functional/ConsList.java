@@ -1,10 +1,8 @@
 package net.exathunk.jereal.base.functional;
 
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
-public class ConsList<T> implements Iterable<T> {
+public class ConsList<T> implements Sequence<T> {
     private T _head;
     private ConsList<T> _tail;
 

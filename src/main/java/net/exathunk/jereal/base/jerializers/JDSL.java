@@ -4,7 +4,7 @@ import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.JerializerException;
 import net.exathunk.jereal.base.functional.Either;
 import net.exathunk.jereal.base.functional.Either3;
-import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.PathPart;
 import net.exathunk.jereal.schema.Schema;
 

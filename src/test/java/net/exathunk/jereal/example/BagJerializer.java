@@ -4,7 +4,7 @@ import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.jerializers.Jerializer;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.visitors.PathPart;
-import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.core.Jitem;
 
 /**
  * charolastra 10/23/12 9:07 PM

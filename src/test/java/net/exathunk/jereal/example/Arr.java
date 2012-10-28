@@ -1,6 +1,6 @@
 package net.exathunk.jereal.example;
 
-import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.PathPart;
 
 import java.util.ArrayList;

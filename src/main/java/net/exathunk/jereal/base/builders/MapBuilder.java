@@ -1,7 +1,7 @@
 package net.exathunk.jereal.base.builders;
 
-import net.exathunk.jereal.base.visitors.Jerial;
-import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.core.Jerial;
+import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.PathPart;
 
 import java.util.*;

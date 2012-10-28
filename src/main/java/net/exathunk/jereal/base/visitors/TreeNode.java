@@ -1,5 +1,6 @@
 package net.exathunk.jereal.base.visitors;
 
+import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.functional.Either3;
 
 /**

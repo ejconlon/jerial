@@ -3,7 +3,7 @@ package net.exathunk.jereal.base.jerializers;
 import net.exathunk.jereal.base.*;
 import net.exathunk.jereal.base.builders.JerialBuilderFactory;
 import net.exathunk.jereal.base.builders.JerialContext;
-import net.exathunk.jereal.base.visitors.Jerial;
+import net.exathunk.jereal.base.core.Jerial;
 import net.exathunk.jereal.base.visitors.VisitorFactory;
 import net.exathunk.jereal.base.visitors.Writer;
 
@@ -27,13 +27,13 @@ public class JerializerUtils {
 
     // for parity
     public static <T> void jerialToDomain(DejerializerRegistry registry, Dejerializer<T> dejerializer,
-                                          Jerial jerial, T domain) throws JerializerException {
-        dejerializer.dejerialize(registry, jerial, domain);
+                                          Jerial Jerial, T domain) throws JerializerException {
+        dejerializer.dejerialize(registry, Jerial, domain);
     }
 
-    public static String jerialToJson(Jerial jerial) {
+    public static String jerialToJson(Jerial Jerial) {
         VisitorFactory<StringBuilder> objectWriter = new JsonObjectWriter();
-        Writer<StringBuilder> stringWriter = (new JerialRunner<StringBuilder>()).runJerialVisitor(jerial, objectWriter);
+        Writer<StringBuilder> stringWriter = (new JerialRunner<StringBuilder>()).runJerialVisitor(Jerial, objectWriter);
         StringBuilder sb = new StringBuilder();
         stringWriter.writeTo(sb);
         return sb.toString();

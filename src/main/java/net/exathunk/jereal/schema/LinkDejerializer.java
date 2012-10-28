@@ -1,10 +1,10 @@
 package net.exathunk.jereal.schema;
 
+import net.exathunk.jereal.base.core.Jerial;
 import net.exathunk.jereal.base.jerializers.Dejerializer;
 import net.exathunk.jereal.base.jerializers.DejerializerRegistry;
 import net.exathunk.jereal.base.JerializerException;
-import net.exathunk.jereal.base.visitors.Jerial;
-import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.PathPart;
 
 /**
@@ -12,9 +12,9 @@ import net.exathunk.jereal.base.visitors.PathPart;
  */
 public class LinkDejerializer implements Dejerializer<Link> {
     @Override
-    public void dejerialize(DejerializerRegistry registry, Jerial jerial, Link link) throws JerializerException {
+    public void dejerialize(DejerializerRegistry registry, Jerial Jerial, Link link) throws JerializerException {
         Dejerializer<Schema> schemaDejerializer = registry.getDejerializer(Schema.class);
-        for (Jitem item : jerial) {
+        for (Jitem item : Jerial) {
             final PathPart part = item.getPart();
             if (part.hasRight()) throw new JerializerException("Unexpected array elt: "+part);
             else {

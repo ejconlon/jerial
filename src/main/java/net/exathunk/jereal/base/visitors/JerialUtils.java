@@ -1,5 +1,8 @@
 package net.exathunk.jereal.base.visitors;
 
+import net.exathunk.jereal.base.core.Jerial;
+import net.exathunk.jereal.base.core.Jitem;
+
 import java.util.Iterator;
 
 /**

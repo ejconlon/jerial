@@ -1,5 +1,7 @@
 package net.exathunk.jereal.base.visitors;
 
+import net.exathunk.jereal.base.core.Jitem;
+
 // This is a visitor that builds a tree of parsed Jitems and unparsed (in-progress) suspensions
 public class TreeObjectVisitorImpl<T> implements TreeObjectVisitor<T> {
 

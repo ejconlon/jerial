@@ -2,12 +2,12 @@ package net.exathunk.jereal.example;
 
 import net.exathunk.jereal.base.builders.JerialBuilderFactory;
 import net.exathunk.jereal.base.builders.SimpleMapBuilderFactory;
+import net.exathunk.jereal.base.core.Jerial;
 import net.exathunk.jereal.base.jerializers.JerialJerializer;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.jerializers.JerializerRegistryImpl;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
-import net.exathunk.jereal.base.visitors.Jerial;
-import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.DefaultPathConverter;
 import net.exathunk.jereal.base.builders.FlattenedBuilderFactory;
 import org.junit.Test;
@@ -121,9 +121,9 @@ public class TestPost {
         assertEquals(1, i);
     }
 
-    private static Set<String> pathParts(Jerial jerial) {
+    private static Set<String> pathParts(Jerial Jerial) {
         Set<String> set = new TreeSet<String>();
-        for (Jitem jitem : jerial) {
+        for (Jitem jitem : Jerial) {
             set.add(jitem.getPart().getLeft());
         }
         return set;

@@ -1,12 +1,11 @@
 package net.exathunk.jereal.schemas;
 
 import net.exathunk.jereal.base.*;
-import net.exathunk.jereal.base.builders.FlattenedBuilderFactory;
 import net.exathunk.jereal.base.builders.JerialBuilderFactory;
 import net.exathunk.jereal.base.builders.SimpleMapBuilderFactory;
+import net.exathunk.jereal.base.core.Jerial;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
-import net.exathunk.jereal.base.visitors.Jerial;
 import net.exathunk.jereal.schema.Loader;
 import net.exathunk.jereal.schema.Schema;
 import net.exathunk.jereal.schema.SchemaRegistryFactorySingleton;

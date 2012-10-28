@@ -3,10 +3,8 @@ package net.exathunk.jereal.base.builders;
 import net.exathunk.jereal.base.Logger;
 import net.exathunk.jereal.base.PathConverter;
 import net.exathunk.jereal.base.functional.ConsList;
-import net.exathunk.jereal.base.visitors.Jitem;
+import net.exathunk.jereal.base.core.Jitem;
 import net.exathunk.jereal.base.visitors.PathPart;
-
-import java.util.List;
 
 /**
  * charolastra 10/24/12 9:14 PM
