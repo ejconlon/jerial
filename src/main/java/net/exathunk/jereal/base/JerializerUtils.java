@@ -23,9 +23,9 @@ public class JerializerUtils {
     }
 
     // for parity
-    public static <T> T jerialToDomain(DejerializerRegistry registry, Dejerializer<T> dejerializer,
-                                       Jerial jerial) throws JerializerException {
-        return dejerializer.dejerialize(registry, jerial);
+    public static <T> void jerialToDomain(DejerializerRegistry registry, Dejerializer<T> dejerializer,
+                                          Jerial jerial, T domain) throws JerializerException {
+        dejerializer.dejerialize(registry, jerial, domain);
     }
 
     public static String jerialToJson(Jerial jerial) {
@@ -55,8 +55,8 @@ public class JerializerUtils {
         return context.builder.buildJerial();
     }
 
-    public static <T> T jsonToDomain(JerialBuilderFactory factory, DejerializerRegistry registry,
-                                     Dejerializer<T> dejerializer, String json) throws JerializerException {
-        return jerialToDomain(registry, dejerializer, jsonToJerial(factory, json));
+    public static <T> void jsonToDomain(JerialBuilderFactory factory, DejerializerRegistry registry,
+                                     Dejerializer<T> dejerializer, String json, T domain) throws JerializerException {
+        jerialToDomain(registry, dejerializer, jsonToJerial(factory, json), domain);
     }
 }

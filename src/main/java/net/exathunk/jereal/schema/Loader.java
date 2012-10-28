@@ -29,8 +29,10 @@ public class Loader {
 
     public static Schema loadSchema(JerialBuilderFactory factory, String name) throws IOException, JerializerException {
         final String schemaString = loadSchemaString(name);
-        return JerializerUtils.jsonToDomain(
-                factory, SchemaRegistryFactorySingleton.getInstance().makeDejerializerRegistry(),
-                new SchemaDejerializer(), schemaString);
+        final Schema schema = new Schema();
+        JerializerUtils.jsonToDomain(
+            factory, SchemaRegistryFactorySingleton.getInstance().makeDejerializerRegistry(),
+            new SchemaDejerializer(), schemaString, schema);
+        return schema;
     }
 }

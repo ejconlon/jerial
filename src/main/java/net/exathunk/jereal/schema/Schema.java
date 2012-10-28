@@ -12,4 +12,15 @@ public class Schema {
     public final Meta meta = new Meta();
     public final Map<String, Meta> properties = new TreeMap<String, Meta>();
     public final List<Link> links = new ArrayList<Link>();
+    public final Map<String, String> dependencies = new TreeMap<String, String>();
+
+    @Override
+    public String toString() {
+        return "Schema{" +
+                "meta=" + meta +
+                ", properties=" + properties +
+                ", links=" + links +
+                ", dependencies=" + dependencies +
+                '}';
+    }
 }

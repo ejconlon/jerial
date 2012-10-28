@@ -4,6 +4,7 @@ import net.exathunk.jereal.base.Dejerializer;
 import net.exathunk.jereal.base.JerializerException;
 import net.exathunk.jereal.base.DejerializerRegistry;
 import net.exathunk.jereal.base.visitors.Jerial;
+import net.exathunk.jereal.base.visitors.JerialUtils;
 import net.exathunk.jereal.base.visitors.Jitem;
 import net.exathunk.jereal.base.visitors.PathPart;
 
@@ -12,20 +13,29 @@ import net.exathunk.jereal.base.visitors.PathPart;
  */
 public class SchemaDejerializer implements Dejerializer<Schema> {
     @Override
-    public Schema dejerialize(DejerializerRegistry registry, Jerial jerial) throws JerializerException {
-        Schema s = new Schema();
+    public void dejerialize(DejerializerRegistry registry, Jerial jerial, Schema schema) throws JerializerException {
+        Dejerializer<Meta> metaDejerializer = registry.getDejerializer(Meta.class);
         for (Jitem item : jerial) {
             final PathPart part = item.getPart();
             if (part.hasRight()) throw new JerializerException("Unexpected array elt");
             else {
                 final String key = part.getLeft();
-                if (part.equals("name")) {
-                    s.meta.name = key;
+                if ("dependencies".equals(key)) {
+                    for (Jitem dep : item.getObject()) {
+                        schema.dependencies.put(dep.getPart().getLeft(), dep.getString());
+                    }
+                } else if ("properties".equals(key)) {
+                    for (Jitem prop : item.getObject()) {
+                        Meta propMeta = new Meta();
+                        metaDejerializer.dejerialize(registry, prop.getObject(), propMeta);
+                        schema.properties.put(prop.getPart().getLeft(), propMeta);
+                    }
+                } else if ("links".equals(key)) {
+                    throw new JerializerException("TODO");
                 } else {
-                    throw new JerializerException("UNHANDLED: "+key);
+                    metaDejerializer.dejerialize(registry, JerialUtils.singleton(item), schema.meta);
                 }
             }
         }
-        return s;
     }
 }

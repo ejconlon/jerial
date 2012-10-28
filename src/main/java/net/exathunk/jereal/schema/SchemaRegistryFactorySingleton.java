@@ -18,6 +18,7 @@ public class SchemaRegistryFactorySingleton extends RegistryBuilder {
 
     private SchemaRegistryFactorySingleton() {
         add(Schema.class, new SchemaJerializer(), new SchemaDejerializer());
+        add(Meta.class, new MetaJerializer(), new MetaDejerializer());
     }
 
 }
