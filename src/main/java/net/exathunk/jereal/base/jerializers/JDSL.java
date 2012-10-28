@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class JDSL {
 
-    public static boolean addSimple(PathPart part, Object value, JerialContext context) {
+    private static boolean addSimple(PathPart part, Object value, JerialContext context) {
         if (value != null) {
            if (value instanceof String) {
               context.builder.addJitem(Jitem.makeString(part, (String) value));
@@ -35,7 +35,7 @@ public class JDSL {
         return false;
     }
 
-    public static boolean addSimple(String key, Object value, JerialContext context) {
+    private static boolean addSimple(String key, Object value, JerialContext context) {
         return addSimple(PathPart.key(key), value, context);
     }
 
@@ -51,13 +51,26 @@ public class JDSL {
         addSimple(key, value, context);
     }
 
+    private static boolean addStructural(JerializerRegistry registry, PathPart part, Object value, JerialContext context) throws JerializerException {
+        if (value instanceof Either) {
+            addEither(registry, part, (Either)value, context);
+        } else if (value instanceof Either3) {
+            addEither3(registry, part, (Either3)value, context);
+        } else {
+            return false;
+        }
+        return true;
+    }
+
     public static void add(JerializerRegistry registry, PathPart part, Object value, JerialContext context) throws JerializerException {
         if (!addSimple(part, value, context)) {
-            addSubObject(registry, part, value, context);
+            if (!addStructural(registry, part, value, context)) {
+                addCustom(registry, part, value, context);
+            }
         }
     }
 
-    public static <A, B> void addEither(JerializerRegistry registry, PathPart part, Either<A, B> either, JerialContext context) throws JerializerException {
+    private static <A, B> void addEither(JerializerRegistry registry, PathPart part, Either<A, B> either, JerialContext context) throws JerializerException {
         if (either == null) return;
         if (either.hasLeft()) {
             add(registry, part, either.getLeft(), context);
@@ -66,7 +79,7 @@ public class JDSL {
         }
     }
 
-    public static <A, B, C> void addEither3(JerializerRegistry registry, PathPart part, Either3<A, B, C> either, JerialContext context) throws JerializerException {
+    private static <A, B, C> void addEither3(JerializerRegistry registry, PathPart part, Either3<A, B, C> either, JerialContext context) throws JerializerException {
         if (either == null) return;
         if (either.hasLeft()) {
             add(registry, part, either.getLeft(), context);
@@ -90,7 +103,7 @@ public class JDSL {
         }
     }
 
-    public static <T> void addSubObject(JerializerRegistry registry, PathPart part, T subObject, JerialContext context) throws JerializerException {
+    private static <T> void addCustom(JerializerRegistry registry, PathPart part, T subObject, JerialContext context) throws JerializerException {
         if (subObject == null) return;
         JerialContext newContext = context.push(part);
         Jerializer<T> jerializer = registry.getJerializer((Class<T>)subObject.getClass());

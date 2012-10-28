@@ -35,13 +35,13 @@ public class SchemaJerializer implements Jerializer<Schema> {
         JDSL.addLong("minItems", schema.minItems, context);
         JDSL.addLong("minimum", schema.minimum, context);
 
-        JDSL.addEither3(registry, PathPart.key("additionalProperties"), schema.additionalProperties, context);
+        JDSL.add(registry, PathPart.key("additionalProperties"), schema.additionalProperties, context);
 
         if (!schema.type.isEmpty()) JDSL.addTypes("type", schema.type, context);
 
-        JDSL.addEither(registry, PathPart.key("items"), schema.items, context);
+        JDSL.add(registry, PathPart.key("items"), schema.items, context);
 
-        JDSL.addSubObject(registry, PathPart.key("extends"), schema.extendz, context);
+        JDSL.add(registry, PathPart.key("extends"), schema.extendz, context);
 
         if (!schema.properties.isEmpty()) JDSL.addMap(registry, PathPart.key("properties"), schema.properties, context);
 

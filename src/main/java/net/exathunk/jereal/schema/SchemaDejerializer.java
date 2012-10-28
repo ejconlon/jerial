@@ -29,9 +29,15 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
                     }
                 } else if ("properties".equals(key)) {
                     for (Jitem prop : item.getObject()) {
-                        Schema propSchema = new Schema();
-                        dejerialize(registry, prop.getObject(), propSchema);
-                        schema.properties.put(prop.getPart().getLeft(), propSchema);
+                        if (prop.isString()) {
+                            schema.properties.put(prop.getPart().getLeft(), Either.<Schema, String>makeRight(prop.getString()));
+                        } else if (prop.isObject()) {
+                            Schema propSchema = new Schema();
+                            dejerialize(registry, prop.getObject(), propSchema);
+                            schema.properties.put(prop.getPart().getLeft(), Either.<Schema, String>makeLeft(propSchema));
+                        } else {
+                            throw new JerializerException("Unexpected property: "+prop);
+                        }
                     }
                 } else if ("links".equals(key)) {
                     for (Jitem linkItem : item.getArray()) {

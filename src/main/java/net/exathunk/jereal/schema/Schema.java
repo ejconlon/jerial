@@ -61,7 +61,33 @@ public class Schema {
 
     public Either<Schema, String> extendz;
 
-    public final Map<String, Schema> properties = new TreeMap<String, Schema>();
+    public final Map<String, Either<Schema, String>> properties = new TreeMap<String, Either<Schema, String>>();
     public final List<Link> links = new ArrayList<Link>();
     public final Map<String, String> dependencies = new TreeMap<String, String>();
+
+    @Override
+    public String toString() {
+        return "Schema{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", format='" + format + '\'' +
+                ", dollar_ref='" + dollar_ref + '\'' +
+                ", dollar_schema='" + dollar_schema + '\'' +
+                ", fragmentResolution='" + fragmentResolution + '\'' +
+                ", defaultz=" + defaultz +
+                ", required=" + required +
+                ", uniqueItems=" + uniqueItems +
+                ", minItems=" + minItems +
+                ", minimum=" + minimum +
+                ", additionalProperties=" + additionalProperties +
+                ", type=" + type +
+                ", items=" + items +
+                ", extendz=" + extendz +
+                ", properties=" + properties +
+                ", links=" + links +
+                ", dependencies=" + dependencies +
+                '}';
+    }
 }
