@@ -45,4 +45,9 @@ public class MapBuilder implements JerialBuilder {
             }
         };
     }
+
+    @Override
+    public List<Jitem> buildArray() {
+        return new ArrayList<Jitem>(pairs.values());
+    }
 }

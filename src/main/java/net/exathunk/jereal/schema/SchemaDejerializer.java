@@ -30,11 +30,11 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
                 } else if ("properties".equals(key)) {
                     for (Jitem prop : item.getObject()) {
                         if (prop.isString()) {
-                            schema.properties.put(prop.getPart().getLeft(), Either.<Schema, String>makeRight(prop.getString()));
+                            schema.properties.put(prop.getPart().getLeft(), SchemaRef.makeRef(prop.getString()));
                         } else if (prop.isObject()) {
                             Schema propSchema = new Schema();
                             dejerialize(registry, prop.getObject(), propSchema);
-                            schema.properties.put(prop.getPart().getLeft(), Either.<Schema, String>makeLeft(propSchema));
+                            schema.properties.put(prop.getPart().getLeft(), SchemaRef.<String>makeSchema(propSchema));
                         } else {
                             throw new JerializerException("Unexpected property: "+prop);
                         }
@@ -62,14 +62,14 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
                 } else if ("minimum".equals(key)) {
                     schema.minimum = item.getLong();
                 } else if ("type".equals(key)) {
-                    addTypes(item, schema.type);
+                    addTypes(registry, item, schema.type);
                 } else if ("items".equals(key)) {
                     if (item.isString()) {
-                        schema.items = Either.makeRight(item.getString());
+                        schema.items = SchemaRef.makeRef(item.getString());
                     } else {
                         Schema s = new Schema();
                         registry.getDejerializer(Schema.class).dejerialize(registry, item.getObject(), s);
-                        schema.items = Either.makeLeft(s);
+                        schema.items = SchemaRef.<String>makeSchema(s);
                     }
                 } else if ("$ref".equals(key)) {
                     schema.dollar_ref = item.getString();
@@ -77,10 +77,12 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
                     schema.dollar_schema = item.getString();
                 } else if ("extends".equals(key)) {
                     if (item.isString()) {
-                        schema.extendz = Either.makeRight(item.getString());
+                        schema.extendz = SchemaRef.makeRef(item.getString());
+                    } else if (item.isObject()) {
+                        Schema s = new Schema();
+                        registry.getDejerializer(Schema.class).dejerialize(registry, item.getObject(), s);
+                        schema.extendz = SchemaRef.makeSchema(s);
                     } else {
-                        //schema.extendz = new Schema();
-                        //registry.getDejerializer(Schema.class).dejerialize(registry, item.getObject(), schema.extendz);
                         throw new JerializerException("Unhandled extends: "+item);
                     }
                 } else if ("fragmentResolution".equals(key)) {
@@ -91,13 +93,13 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
                     schema.defaultz = item;
                 } else if ("additionalProperties".equals(key)) {
                     if (item.isString()) {
-                        schema.additionalProperties = Either3.makeMiddle(item.getString());
+                        schema.additionalProperties = Either.makeLeft(SchemaRef.makeRef(item.getString()));
                     } else if (item.isBoolean()) {
-                        schema.additionalProperties = Either3.makeRight(item.getBoolean());
+                        schema.additionalProperties = Either.makeRight(item.getBoolean());
                     } else if (item.isObject()) {
                         Schema s = new Schema();
                         dejerialize(registry, item.getObject(), s);
-                        schema.additionalProperties = Either3.makeLeft(s);
+                        schema.additionalProperties = Either.makeLeft(SchemaRef.<String>makeSchema(s));
                     } else {
                         throw new JerializerException("Unhandled additionalProperties: "+item);
                     }
@@ -108,13 +110,17 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
         }
     }
 
-    private static void addTypes(Jitem item, List<Schema.TYPE> types) throws JerializerException{
+    private void addTypes(DejerializerRegistry registry, Jitem item, List<SchemaRef<Schema.TYPE>> types) throws JerializerException{
         if (item.isArray()) {
             for (Jitem child : item.getArray()) {
-                types.add(Schema.TYPE.fromString(child.getString()));
+                addTypes(registry, child, types);
             }
         } else if (item.isString()) {
-            types.add(Schema.TYPE.fromString(item.getString()));
+            types.add(SchemaRef.makeRef(Schema.TYPE.fromString(item.getString())));
+        } else if (item.isObject()) {
+            Schema s = new Schema();
+            dejerialize(registry, item.getObject(), s);
+            types.add(SchemaRef.<Schema.TYPE>makeSchema(s));
         } else {
             throw new JerializerException("Bad type format: "+item);
         }

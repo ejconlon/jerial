@@ -1,6 +1,7 @@
 package net.exathunk.jereal.schemas;
 
 import net.exathunk.jereal.base.*;
+import net.exathunk.jereal.base.builders.FlattenedBuilderFactory;
 import net.exathunk.jereal.base.builders.JerialBuilderFactory;
 import net.exathunk.jereal.base.builders.SimpleMapBuilderFactory;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
@@ -49,12 +50,9 @@ public class TestLoader {
         //        new SimpleMapBuilderFactory(),
         //        new FlattenedBuilderFactory(new DefaultPathConverter())
         //);
-        List<String> names = Arrays.asList("address", "calendar", "card", "geo", "schema", "interfaces", "json-ref");
-        //List<String> names = Arrays.asList("hyper-schema");
-
-        //List<String> names = Arrays.asList(
-        //        "address", "calendar", "card", "geo",
-        //        "hyper-schema", "interfaces", "json-ref", "schema");
+        List<String> names = Arrays.asList(
+                "address", "calendar", "card", "geo",
+                "hyper-schema", "interfaces", "json-ref", "schema");
 
         final JerializerRegistry registry =
                 SchemaRegistryFactorySingleton.getInstance().makeJerializerRegistry();

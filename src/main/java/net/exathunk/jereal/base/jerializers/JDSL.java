@@ -27,6 +27,9 @@ public class JDSL {
                context.builder.addJitem(Jitem.makeDouble(part, (Double) value));
            } else if (value instanceof Boolean) {
                context.builder.addJitem(Jitem.makeBoolean(part, (Boolean) value));
+           } else if (value instanceof Enum) {
+               // to make TYPE enum work easily
+               context.builder.addJitem(Jitem.makeString(part, value.toString()));
            } else {
                return false;
            }
@@ -55,7 +58,7 @@ public class JDSL {
         if (value instanceof Either) {
             addEither(registry, part, (Either)value, context);
         } else if (value instanceof Either3) {
-            addEither3(registry, part, (Either3)value, context);
+            addEither3(registry, part, (Either3) value, context);
         } else {
             return false;
         }
@@ -120,20 +123,26 @@ public class JDSL {
         context.builder.addJitem(Jitem.makeObject(part, parentContext.builder.buildObject()));
     }
 
+    public static <T> void addSinglyList(JerializerRegistry registry, PathPart part, List<T> subObjectList, JerialContext context) throws JerializerException {
+        if (subObjectList == null) return;
+        if (subObjectList.size() == 1) {
+            add(registry, part, subObjectList.get(0), context);
+        } else {
+            addList(registry, part, subObjectList, context);
+        }
+    }
+
     public static <T> void addList(JerializerRegistry registry, PathPart part, List<T> subObjectList, JerialContext context) throws JerializerException {
         if (subObjectList == null) return;
         final PathPart parentPart = PathPart.key("links");
         JerialContext parentContext = context.push(parentPart);
-        List<Jitem> list = new ArrayList<Jitem>();
         int i = 0;
         for (T subObject : subObjectList) {
             final PathPart childPart = PathPart.index(i);
-            JerialContext childContext = parentContext.push(childPart);
-            Jerializer<T> jerializer = registry.getJerializer((Class<T>)subObject.getClass());
-            jerializer.jerialize(registry, subObject, childContext);
-            list.add(Jitem.makeObject(childPart, childContext.builder.buildObject()));
+            add(registry, childPart, subObject, parentContext);
             i += 1;
         }
-        context.builder.addJitem(Jitem.makeArray(part, list));
+        List<Jitem> array = parentContext.builder.buildArray();
+        context.builder.addJitem(Jitem.makeArray(part, array));
     }
 }

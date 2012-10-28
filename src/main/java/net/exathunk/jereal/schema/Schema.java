@@ -53,15 +53,15 @@ public class Schema {
     public Long minItems;
     public Long minimum;
 
-    public Either3<Schema, String, Boolean> additionalProperties;
+    public Either<SchemaRef<String>, Boolean> additionalProperties;
 
-    public List<TYPE> type = new ArrayList<TYPE>();
+    public List<SchemaRef<TYPE>> type = new ArrayList<SchemaRef<TYPE>>();
 
-    public Either<Schema, String> items;
+    public SchemaRef<String> items;
 
-    public Either<Schema, String> extendz;
+    public SchemaRef<String> extendz;
 
-    public final Map<String, Either<Schema, String>> properties = new TreeMap<String, Either<Schema, String>>();
+    public final Map<String, SchemaRef<String>> properties = new TreeMap<String, SchemaRef<String>>();
     public final List<Link> links = new ArrayList<Link>();
     public final Map<String, String> dependencies = new TreeMap<String, String>();
 

@@ -37,7 +37,7 @@ public class SchemaJerializer implements Jerializer<Schema> {
 
         JDSL.add(registry, PathPart.key("additionalProperties"), schema.additionalProperties, context);
 
-        if (!schema.type.isEmpty()) JDSL.addTypes("type", schema.type, context);
+        if (!schema.type.isEmpty()) JDSL.addSinglyList(registry, PathPart.key("type"), schema.type, context);
 
         JDSL.add(registry, PathPart.key("items"), schema.items, context);
 

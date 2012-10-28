@@ -8,4 +8,5 @@ import java.util.List;
 public interface JerialBuilder {
     void addJitem(Jitem jitem);
     Jerial buildObject();
+    List<Jitem> buildArray();
 }
