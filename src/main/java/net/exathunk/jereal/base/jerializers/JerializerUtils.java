@@ -54,7 +54,7 @@ public class JerializerUtils {
 
     public static JObject jsonToJObject(JerialBuilderFactory factory, String json) throws JerializerException {
         VisitorFactory<JerialContext> reader = new JsonObjectReader();
-        Func1<JerialContext> contextWriter = (new JsonParser<JerialContext>()).runJerialVisitor(json, reader);
+        Func1<JerialContext> contextWriter = (new JsonParser<JerialContext>()).runVisitor(json, reader);
         JerialContext context = new JerialContext(factory);
         contextWriter.runFunc(context);
         return context.builder.buildObject();

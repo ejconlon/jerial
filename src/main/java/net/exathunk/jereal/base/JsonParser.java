@@ -6,8 +6,10 @@ import net.exathunk.jereal.base.visitors.ArrayVisitor;
 import net.exathunk.jereal.base.visitors.VisitorFactory;
 import net.exathunk.jereal.base.visitors.ObjectVisitor;
 
-public class JsonParser<U> implements JerialVisitorAdapter<String, U> {
-    public Func1<U> runJerialVisitor(String s, VisitorFactory<U> visitorFactory) throws JerializerException {
+// NOTE There be dragons here. Unicode and escape sequences be damned.
+// TODO sensibly implement the last 10%
+public class JsonParser<U> implements VisitorRunner<String, U> {
+    public Func1<U> runVisitor(String s, VisitorFactory<U> visitorFactory) throws JerializerException {
         int i = 0;
         final int z = s.length();
         Pair<Integer, Func1<U>> pair = null;
