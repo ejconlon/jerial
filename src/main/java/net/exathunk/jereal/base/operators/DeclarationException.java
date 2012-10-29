@@ -1,4 +1,4 @@
-package net.exathunk.jereal.base.jerializers;
+package net.exathunk.jereal.base.operators;
 
 /**
  * charolastra 10/29/12 2:49 PM

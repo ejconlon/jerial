@@ -1,12 +1,8 @@
-package net.exathunk.jereal.base.jerializers;
+package net.exathunk.jereal.base.operators;
 
-import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.core.SuperModel;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,20 +13,23 @@ public class Implementer<X> implements OperatorMapBuilder<X> {
 
     private final String key;
     private final Set<SuperModel> models;
-    private final Map<SuperModel, Operator<X>> implementations;
+    private final Map<SuperModel, Operator<X, ?>> implementations;
 
     public Implementer(String key, Set<SuperModel> models) {
         this.key = key;
         this.models = models;
-        this.implementations = new HashMap<SuperModel, Operator<X>>(models.size());
+        this.implementations = new HashMap<SuperModel, Operator<X, ?>>(models.size());
         assert key != null;
         assert models != null;
         assert !models.isEmpty();
     }
 
-    public Implementer<X> implement(SuperModel model, Operator<X> operator) {
+    public Implementer<X> implement(SuperModel model, Operator<X, ?> operator) throws DeclarationException {
         if (!hasDeclared(model)) {
-            throw new IllegalStateException("Did not declare: "+key+" "+model);
+            throw new DeclarationException("Did not declare: "+key+" "+model);
+        }
+        if (!operator.canCast(model)) {
+            throw new DeclarationException("Cannot cast: "+key+" "+model);
         }
         implementations.put(model, operator);
         return this;
@@ -65,7 +64,7 @@ public class Implementer<X> implements OperatorMapBuilder<X> {
             if (sb.length() > 0) sb.deleteCharAt(sb.length()-1);
             throw new DeclarationException("Did not implement: "+key+" => "+sb.toString());
         }
-        for (Map.Entry<SuperModel, Operator<X>> entry : implementations.entrySet()) {
+        for (Map.Entry<SuperModel, Operator<X, ?>> entry : implementations.entrySet()) {
             opMap.put(key, entry.getKey(), entry.getValue());
         }
     }

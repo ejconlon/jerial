@@ -1,12 +1,10 @@
 package net.exathunk.jereal.schemas;
 
-import net.exathunk.jereal.base.jerializers.DeclarationException;
-import net.exathunk.jereal.base.jerializers.OperatorMap;
+import net.exathunk.jereal.base.operators.DeclarationException;
+import net.exathunk.jereal.base.operators.OperatorMap;
 import net.exathunk.jereal.schema.Schema;
 import net.exathunk.jereal.schema.SchemaOperatorMapBuilder;
 import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 

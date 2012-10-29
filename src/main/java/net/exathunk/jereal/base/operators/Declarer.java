@@ -1,4 +1,4 @@
-package net.exathunk.jereal.base.jerializers;
+package net.exathunk.jereal.base.operators;
 
 import java.util.HashSet;
 import java.util.Map;
