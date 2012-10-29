@@ -10,9 +10,9 @@ import net.exathunk.jereal.base.operators.core.JStringOperator;
 /**
  * charolastra 10/29/12 12:36 PM
  */
-public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema> {
+public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema, ExecutionException> {
 
-    public void declare(Declarer<Schema> dec) throws DeclarationException {
+    public void declare(Declarer<Schema, ExecutionException> dec) throws DeclarationException {
         // 8 simple string
         dec.declare("$ref", SuperModel.STRING);
         dec.declare("$schema", SuperModel.STRING);
@@ -50,51 +50,51 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema> {
         */
     }
 
-    public void implement(Declarer<Schema> dec) throws DeclarationException {
+    public void implement(Declarer<Schema, ExecutionException> dec) throws DeclarationException {
         // 8 simple string
-        dec.reopen("$ref").implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        dec.reopen("$ref").implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.dollar_ref = thing.runResFunc();
             }
         });
-        dec.reopen("$schema").implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        dec.reopen("$schema").implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.dollar_schema = thing.runResFunc();
             }
         });
-        dec.reopen("description").implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        dec.reopen("description").implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.description = thing.runResFunc();
             }
         });
-        dec.reopen("format").implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        dec.reopen("format").implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.format = thing.runResFunc();
             }
         });
-        dec.reopen("fragmentResolution").implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        dec.reopen("fragmentResolution").implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.fragmentResolution = thing.runResFunc();
             }
         });
-        dec.reopen("id").implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        dec.reopen("id").implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.id = thing.runResFunc();
             }
         });
-        dec.reopen("name").implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        dec.reopen("name").implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.name = thing.runResFunc();
             }
         });
-        dec.reopen("title").implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        dec.reopen("title").implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.title = thing.runResFunc();
@@ -102,13 +102,13 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema> {
         });
 
         // 2 simple boolean
-        dec.reopen("required").implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema>() {
+        dec.reopen("required").implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JBoolean thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.required = thing.runResFunc();
             }
         });
-        dec.reopen("uniqueItems").implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema>() {
+        dec.reopen("uniqueItems").implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JBoolean thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.uniqueItems = thing.runResFunc();
@@ -116,13 +116,13 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema> {
         });
 
         // 2 simple long
-        dec.reopen("minimum").implement(SuperModel.LONG, new JLongOperator<Schema>() {
+        dec.reopen("minimum").implement(SuperModel.LONG, new JLongOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JLong thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.minimum = thing.runResFunc();
             }
         });
-        dec.reopen("minItems").implement(SuperModel.LONG, new JLongOperator<Schema>() {
+        dec.reopen("minItems").implement(SuperModel.LONG, new JLongOperator<Schema, ExecutionException>() {
             @Override
             public void runFunc(PathPart pathPart, JLong thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.minItems = thing.runResFunc();
@@ -130,8 +130,8 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema> {
         });
     }
 
-    public void buildOperatorMap(OperatorMap<Schema> opMap) throws DeclarationException {
-        final Declarer<Schema> dec = new Declarer<Schema>();
+    public void buildOperatorMap(OperatorMap<Schema, ExecutionException> opMap) throws DeclarationException {
+        final Declarer<Schema, ExecutionException> dec = new Declarer<Schema, ExecutionException>();
         declare(dec);
         implement(dec);
         dec.buildOperatorMap(opMap);

@@ -9,7 +9,7 @@ import net.exathunk.jereal.base.operators.Operator;
 /**
  * charolastra 10/29/12 3:33 PM
  */
-public abstract class JLongOperator<D> implements Operator<D, JLong> {
+public abstract class JLongOperator<D, E> implements Operator<D, E, JLong> {
     @Override
     public boolean canCast(SuperModel model) {
         return SuperModel.LONG.equals(model);

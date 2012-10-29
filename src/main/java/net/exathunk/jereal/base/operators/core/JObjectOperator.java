@@ -9,7 +9,7 @@ import net.exathunk.jereal.base.operators.Operator;
 /**
  * charolastra 10/29/12 3:33 PM
  */
-public abstract class JObjectOperator<D> implements Operator<D, JObject> {
+public abstract class JObjectOperator<D, E> implements Operator<D, E, JObject> {
     @Override
     public boolean canCast(SuperModel model) {
         return SuperModel.OBJECT.equals(model);

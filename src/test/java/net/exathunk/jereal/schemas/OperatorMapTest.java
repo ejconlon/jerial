@@ -1,6 +1,7 @@
 package net.exathunk.jereal.schemas;
 
 import net.exathunk.jereal.base.operators.DeclarationException;
+import net.exathunk.jereal.base.operators.ExecutionException;
 import net.exathunk.jereal.base.operators.OperatorMap;
 import net.exathunk.jereal.schema.Schema;
 import net.exathunk.jereal.schema.SchemaOperatorMapBuilder;
@@ -15,7 +16,7 @@ public class OperatorMapTest {
     @Test
     public void testSchema() throws DeclarationException {
         SchemaOperatorMapBuilder b = new SchemaOperatorMapBuilder();
-        OperatorMap<Schema> m = new OperatorMap<Schema>();
+        OperatorMap<Schema, ExecutionException> m = new OperatorMap<Schema, ExecutionException>();
         b.buildOperatorMap(m);
         assertEquals(false, m.isEmpty());
     }

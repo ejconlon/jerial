@@ -9,7 +9,7 @@ import net.exathunk.jereal.base.operators.Operator;
 /**
  * charolastra 10/29/12 3:33 PM
  */
-public abstract class JArrayOperator<D> implements Operator<D, JArray> {
+public abstract class JArrayOperator<D, E> implements Operator<D, E, JArray> {
     @Override
     public boolean canCast(SuperModel model) {
         return SuperModel.ARRAY.equals(model);

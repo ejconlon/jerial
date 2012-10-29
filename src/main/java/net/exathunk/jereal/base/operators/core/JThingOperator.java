@@ -7,7 +7,7 @@ import net.exathunk.jereal.base.operators.Operator;
 /**
  * charolastra 10/29/12 3:28 PM
  */
-public abstract class JThingOperator<D> implements Operator<D, JThing> {
+public abstract class JThingOperator<D, E> implements Operator<D, E, JThing> {
     @Override
     public boolean canCast(SuperModel model) {
         // maybe SuperModel.NULL has significance...

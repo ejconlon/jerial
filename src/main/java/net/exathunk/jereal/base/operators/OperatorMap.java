@@ -6,5 +6,5 @@ import net.exathunk.jereal.base.core.SuperModel;
 /**
  * charolastra 10/29/12 12:29 PM
  */
-public class OperatorMap<D> extends TwoLevelMap<String, SuperModel, Operator<D, ?>> {
+public class OperatorMap<D, E> extends TwoLevelMap<String, SuperModel, Operator<D, E, ?>> {
 }

@@ -1,13 +1,7 @@
 package net.exathunk.jereal.schema;
 
-import net.exathunk.jereal.base.core.Model;
-import net.exathunk.jereal.base.operators.Operator;
 import net.exathunk.jereal.base.visitors.ArrayVisitor;
 import net.exathunk.jereal.base.visitors.ObjectVisitor;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * charolastra 10/28/12 10:00 PM

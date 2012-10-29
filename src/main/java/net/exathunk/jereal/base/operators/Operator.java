@@ -9,7 +9,7 @@ import net.exathunk.jereal.base.functional.Reference;
 /**
  * charolastra 10/29/12 12:14 PM
  */
-public interface Operator<D, J> extends Func4<PathPart, J, D, Reference<ExecutionException>> {
+public interface Operator<D, E, J> extends Func4<PathPart, J, D, Reference<E>> {
     boolean canCast(SuperModel model);
     J cast(SuperModel model, JThing thing) throws ExecutionException;
 }

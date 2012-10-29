@@ -9,7 +9,7 @@ import net.exathunk.jereal.base.operators.Operator;
 /**
  * charolastra 10/29/12 3:33 PM
  */
-public abstract class JDoubleOperator<D> implements Operator<D, JDouble> {
+public abstract class JDoubleOperator<D, E> implements Operator<D, E, JDouble> {
     @Override
     public boolean canCast(SuperModel model) {
         return SuperModel.DOUBLE.equals(model);

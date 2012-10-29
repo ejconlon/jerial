@@ -1,8 +1,8 @@
 package net.exathunk.jereal.base.functional;
 
 public class Either<Left, Right> {
-    private final Left left;
-    private final Right right;
+    private Left left;
+    private Right right;
 
     protected Either(Left left, Right right) {
         this.left = left;
@@ -46,6 +46,16 @@ public class Either<Left, Right> {
     public Right getRight() {
         assert right != null;
         return right;
+    }
+
+    protected void setLeft(Left left) {
+        this.left = left;
+        this.right = null;
+    }
+
+    protected void setRight(Right right) {
+        this.right = right;
+        this.left = null;
     }
 
     public static <X, Y> Either<X, Y> makeLeft(X left) {
