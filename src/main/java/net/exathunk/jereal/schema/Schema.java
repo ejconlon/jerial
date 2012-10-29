@@ -66,27 +66,28 @@ public class Schema {
 
     @Override
     public String toString() {
-        return "Schema{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", format='" + format + '\'' +
-                ", dollar_ref='" + dollar_ref + '\'' +
-                ", dollar_schema='" + dollar_schema + '\'' +
-                ", fragmentResolution='" + fragmentResolution + '\'' +
-                ", defaultz=" + defaultz +
-                ", required=" + required +
-                ", uniqueItems=" + uniqueItems +
-                ", minItems=" + minItems +
-                ", minimum=" + minimum +
-                ", additionalProperties=" + additionalProperties +
-                ", type=" + type +
-                ", items=" + items +
-                ", extendz=" + extendz +
-                ", properties=" + properties +
-                ", links=" + links +
-                ", dependencies=" + dependencies +
-                '}';
+        StringBuilder sb = new StringBuilder("Schema{");
+        if (id != null) sb.append("id='" + id + '\''+", ");
+        if (name != null) sb.append("name='" + name + '\''+", ");
+        if (title != null) sb.append("title='" + title + '\''+", ");
+        if (description != null) sb.append("description='" + description + '\''+", ");
+        if (format != null) sb.append("format='" + format + '\''+", ");
+        if (dollar_ref != null) sb.append("dollar_ref='" + dollar_ref + '\''+", ");
+        if (dollar_schema != null) sb.append("dollar_schema='" + dollar_schema + '\''+", ");
+        if (fragmentResolution != null) sb.append("fragmentResolution='" + fragmentResolution + '\''+", ");
+        if (defaultz != null) sb.append("defaultz=" + defaultz+", ");
+        if (required != null) sb.append("required=" + required+", ");
+        if (uniqueItems != null) sb.append("uniqueItems=" + uniqueItems+", ");
+        if (minItems != null) sb.append("minItems=" + minItems+", ");
+        if (minimum != null) sb.append("minimum=" + minimum+", ");
+        if (additionalProperties != null) sb.append("additionalProperties=" + additionalProperties+", ");
+        if (type != null) sb.append("type=" + type+", ");
+        if (items != null) sb.append("items=" + items+", ");
+        if (extendz != null) sb.append("extendz=" + extendz+", ");
+        if (properties != null) sb.append("properties=" + properties+", ");
+        if (links != null) sb.append("links=" + links+", ");
+        if (dependencies != null) sb.append("dependencies=" + dependencies+", ");
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -59,8 +59,8 @@ public class Either<Left, Right> {
     @Override
     public String toString() {
         return "Either{" +
-                "left=" + left +
-                ", right=" + right +
+                ((left != null) ? ("left=" + left) :
+                ("right=" + right)) +
                 '}';
     }
 }

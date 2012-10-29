@@ -15,6 +15,13 @@ public class JObject implements JMutableCollection<String, JThing> {
     private final Map<String, JThing> map;
 
     @Override
+    public String toString() {
+        return "JObject{" +
+                "map=" + map +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
