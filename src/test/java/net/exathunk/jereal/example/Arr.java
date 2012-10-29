@@ -1,7 +1,6 @@
 package net.exathunk.jereal.example;
 
 import net.exathunk.jereal.base.core.*;
-import net.exathunk.jereal.base.visitors.PathPart;
 
 import java.util.ArrayList;
 import java.util.List;

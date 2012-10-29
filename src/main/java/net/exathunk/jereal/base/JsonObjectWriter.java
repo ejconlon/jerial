@@ -1,6 +1,7 @@
 package net.exathunk.jereal.base;
 
 import net.exathunk.jereal.base.core.JThing;
+import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.Func2;
 import net.exathunk.jereal.base.visitors.*;
 

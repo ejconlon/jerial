@@ -3,14 +3,17 @@ package net.exathunk.jereal.base.functional;
 import java.util.Iterator;
 
 public class ConsList<T> implements Sequence<T> {
-    private T _head;
-    private ConsList<T> _tail;
+    private final T _head;
+    private final ConsList<T> _tail;
 
-    private ConsList() {}
-    private ConsList(T head) { this._head = head; }
+    private ConsList() {
+        this._head = null;
+        this._tail = this;
+    }
     private ConsList(T head, ConsList<T> tail) {
         this._head = head;
         this._tail = tail;
+        assert tail != null;
     }
 
     public T head() {
@@ -23,10 +26,6 @@ public class ConsList<T> implements Sequence<T> {
 
     public static <X> ConsList<X> nil() {
         return new ConsList<X>();
-    }
-
-    public static <X> ConsList<X> singleton(X head) {
-        return new ConsList<X>(head);
     }
 
     public ConsList<T> cons(T newHead) {

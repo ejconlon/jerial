@@ -1,9 +1,7 @@
 package net.exathunk.jereal.base.builders;
 
 import net.exathunk.jereal.base.core.*;
-import net.exathunk.jereal.base.visitors.PathPart;
-
-import java.util.List;
+import net.exathunk.jereal.base.core.PathPart;
 
 public interface JerialBuilder {
     void addThing(PathPart part, JThing thing);

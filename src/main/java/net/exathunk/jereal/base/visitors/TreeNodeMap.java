@@ -1,5 +1,7 @@
 package net.exathunk.jereal.base.visitors;
 
+import net.exathunk.jereal.base.core.PathPart;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;

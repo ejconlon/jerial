@@ -1,4 +1,4 @@
-package net.exathunk.jereal.base.visitors;
+package net.exathunk.jereal.base.core;
 
 import net.exathunk.jereal.base.functional.Either;
 

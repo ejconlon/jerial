@@ -1,7 +1,7 @@
 package net.exathunk.jereal.base.builders;
 
 import net.exathunk.jereal.base.functional.ConsList;
-import net.exathunk.jereal.base.visitors.PathPart;
+import net.exathunk.jereal.base.core.PathPart;
 
 public class SimpleMapBuilderFactory implements JerialBuilderFactory {
     @Override

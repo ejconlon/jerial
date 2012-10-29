@@ -5,7 +5,7 @@ import net.exathunk.jereal.base.jerializers.JDSL;
 import net.exathunk.jereal.base.jerializers.Jerializer;
 import net.exathunk.jereal.base.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
-import net.exathunk.jereal.base.visitors.PathPart;
+import net.exathunk.jereal.base.core.PathPart;
 
 /**
  * charolastra 10/27/12 5:50 PM

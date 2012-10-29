@@ -1,7 +1,6 @@
 package net.exathunk.jereal.base.core;
 
 import net.exathunk.jereal.base.functional.*;
-import net.exathunk.jereal.base.visitors.PathPart;
 
 import java.util.Map;
 
