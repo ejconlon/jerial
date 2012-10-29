@@ -1,6 +1,7 @@
 package net.exathunk.jereal.schema;
 
 import net.exathunk.jereal.base.core.JThing;
+import net.exathunk.jereal.base.core.Model;
 import net.exathunk.jereal.base.jerializers.Operator;
 import net.exathunk.jereal.base.visitors.ArrayVisitor;
 import net.exathunk.jereal.base.visitors.ObjectVisitor;
@@ -8,7 +9,6 @@ import net.exathunk.jereal.base.visitors.ObjectVisitor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * charolastra 10/28/12 10:00 PM
@@ -16,11 +16,11 @@ import java.util.Set;
 public class SchemaVisitor implements ObjectVisitor<Schema> {
 
     private final Schema schema;
-    private final Map<JThing.Model, List<Operator<Schema>>> operatorMap;
+    private final Map<Model, List<Operator<Schema>>> operatorMap;
 
     public SchemaVisitor() {
         schema = new Schema();
-        operatorMap = new HashMap<JThing.Model, List<Operator<Schema>>>();
+        operatorMap = new HashMap<Model, List<Operator<Schema>>>();
     }
 
     @Override

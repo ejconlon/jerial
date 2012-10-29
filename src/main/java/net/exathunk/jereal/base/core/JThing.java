@@ -13,10 +13,6 @@ import java.util.Map;
  */
 public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
 
-    public enum Model {
-        STRING, LONG, DOUBLE, BOOLEAN, OBJECT, ARRAY
-    }
-    
     private final Model model;
     private final Object value;
 
@@ -153,16 +149,16 @@ public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
         return new JThing(Model.LONG, new JLong(scalar));
     }
 
+    public static JThing make(Double scalar) {
+        return new JThing(Model.DOUBLE, new JDouble(scalar));
+    }
+
     @Override
     public String toString() {
         return "JThing{" +
                 "model=" + model +
                 ", value=" + value +
                 '}';
-    }
-
-    public static JThing make(Double scalar) {
-        return new JThing(Model.DOUBLE, new JDouble(scalar));
     }
 
     public static <T> void acceptObjectVisitor(VisitorFactory<T> factory, String key, JThing value, ObjectVisitor<T> visitor) {
