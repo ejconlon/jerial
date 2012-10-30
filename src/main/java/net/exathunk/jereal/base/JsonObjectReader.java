@@ -30,15 +30,15 @@ public class JsonObjectReader extends TreeVisitorFactoryImpl<JerialContext> {
                 final PathPart part = entry.getKey();
                 final TreeNode<JerialContext> value = entry.getValue();
                 if (value.hasLeft()) {
-                    Logger.log("Reading simple jitem: "+value.getLeft());
+                    Logger.log(Logger.Level.TRACE, "Reading simple jitem: "+value.getLeft());
                     context.builder.addThing(part, value.getLeft());
                 } else if (value.hasMiddle()) {
-                    Logger.log("Reading object: "+part);
+                    Logger.log(Logger.Level.TRACE, "Reading object: "+part);
                     JerialContext newContext = context.push(part);
                     writeObjectVisitor(value.getMiddle().getTreeNodeMap(), newContext);
                     context.builder.addThing(part, JThing.make(newContext.builder.buildObject()));
                 } else {
-                    Logger.log("Reading array");
+                    Logger.log(Logger.Level.TRACE, "Reading array");
                     JerialContext newContext = context.push(part);
                     writeArrayVisitor(value.getRight().getTreeNodeMap(), newContext);
                     List<JThing> list = new ArrayList<JThing>();
@@ -54,15 +54,15 @@ public class JsonObjectReader extends TreeVisitorFactoryImpl<JerialContext> {
                 final PathPart part = PathPart.index(index);
                 final TreeNode<JerialContext> value = entry.getValue();
                 if (value.hasLeft()) {
-                    Logger.log("Reading simple jitem: "+value.getLeft());
+                    Logger.log(Logger.Level.TRACE, "Reading simple jitem: "+value.getLeft());
                     context.builder.addThing(part, value.getLeft());
                 } else if (value.hasMiddle()) {
-                    Logger.log("Reading object");
+                    Logger.log(Logger.Level.TRACE, "Reading object");
                     JerialContext newContext = context.push(PathPart.index(index));
                     writeObjectVisitor(value.getMiddle().getTreeNodeMap(), newContext);
                     context.builder.addThing(part, JThing.make(newContext.builder.buildObject()));
                 } else {
-                    Logger.log("Reading array");
+                    Logger.log(Logger.Level.TRACE, "Reading array");
                     JerialContext newContext = context.push(PathPart.index(index));
                     writeArrayVisitor(value.getRight().getTreeNodeMap(), newContext);
                     List<JThing> list = new ArrayList<JThing>();

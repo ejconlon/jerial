@@ -31,11 +31,11 @@ public class TestPost {
         final String s = JerializerUtils.domainToJson(factory, emptyRegistry, new PostJerializer(), post);
         assertEquals(gold, s);
 
-        final JObject j = JerializerUtils.jsonToJObject(factory, gold);
+        final JObject j = JerializerUtils.jsonToJObject(gold);
 
         int i = 0;
         for (Map.Entry<String, JThing> entry : j.seq()) {
-            Logger.log(entry);
+            Logger.log(Logger.Level.TRACE, entry);
             switch (i) {
                 case 0:
                     assertEquals("body", entry.getKey());
@@ -72,9 +72,9 @@ public class TestPost {
         final String s0 = JerializerUtils.domainToJson(factory, emptyRegistry, new BagJerializer(), bag0);
         assertEquals(gold0, s0);
 
-        final JObject j0 = JerializerUtils.jsonToJObject(factory, gold0);
+        final JObject j0 = JerializerUtils.jsonToJObject(gold0);
         for (Map.Entry<String, JThing> entry : j0.seq()) {
-            Logger.log(entry);
+            Logger.log(Logger.Level.TRACE, entry);
             // TODO add assertions
         }
 
@@ -82,9 +82,9 @@ public class TestPost {
         final String s1 = JerializerUtils.domainToJson(factory, emptyRegistry, new BagJerializer(), bag1);
         assertEquals(gold1, s1);
 
-        final JObject j1 = JerializerUtils.jsonToJObject(factory, gold1);
+        final JObject j1 = JerializerUtils.jsonToJObject(gold1);
         for (Map.Entry<String, JThing> entry : j1.seq()) {
-            Logger.log(entry);
+            Logger.log(Logger.Level.TRACE, entry);
             // TODO add assertions
         }
     }
@@ -96,12 +96,12 @@ public class TestPost {
         final String s = JerializerUtils.domainToJson(factory, emptyRegistry, new ArrJerializer(), arr);
         assertEquals(gold, s);
 
-        final JObject j = JerializerUtils.jsonToJObject(factory, gold);
+        final JObject j = JerializerUtils.jsonToJObject(gold);
 
         int i = 0;
         for (Map.Entry<String, JThing> entry : j.seq()) {
             int k = 0;
-            Logger.log(entry);
+            Logger.log(Logger.Level.TRACE, entry);
             switch (i) {
                 case 0:
                     assertEquals("objects", entry.getKey());
@@ -146,7 +146,7 @@ public class TestPost {
 
         final Jerial j1 = JerializerUtils.jsonToJerial(flattenedFactory, gold1);
         for (Jitem entry : j1) {
-            Logger.log(entry);
+            Logger.log(Logger.Level.TRACE, entry);
         }
         Set<String> expectedKeys = asSet(
                 "b","d","l","s",
@@ -156,14 +156,14 @@ public class TestPost {
         assertEquals(expectedKeys, actualKeys);
 
         final String s1 = JerializerUtils.domainToJson(flattenedFactory, emptyRegistry, new JObjectJerializer(), j1);
-        Logger.log(s1);
+        Logger.log(Logger.Level.TRACE, s1);
     }
 
     public void runFlatteningTest(String gold, Set<String> expectedKeys) throws JerializerException {
         JerialBuilderFactory flattenedFactory = new FlattenedBuilderFactory(new DefaultPathConverter());
         final Jerial j1 = JerializerUtils.jsonToJerial(flattenedFactory, gold);
         for (Jitem entry : j1) {
-            Logger.log(entry);
+            Logger.log(Logger.Level.TRACE, entry);
         }
         Set<String> actualKeys = pathParts(j1);
         assertEquals(expectedKeys, actualKeys);

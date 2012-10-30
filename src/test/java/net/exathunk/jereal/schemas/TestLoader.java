@@ -28,13 +28,13 @@ public class TestLoader {
                                     final String name) throws IOException, JerializerException, VisitException {
         final String gold = Loader.loadSchemaString(name);
         assertFalse(gold.isEmpty());
-        final JObject j = JerializerUtils.jsonToJObject(factory, gold);
+        final JObject j = JerializerUtils.jsonToJObject(gold);
         final String s1 = JerializerUtils.jobjectToJson(j);
-        Logger.log("READ " + name + " => " + s1);
+        Logger.log(Logger.Level.TRACE, "READ " + name + " => " + s1);
 
         final Schema schema = Loader.loadSchema(factory, name);
 
-        Logger.log("SCHEMA "+schema);
+        Logger.log(Logger.Level.TRACE, "SCHEMA "+schema);
 
         final String s2 = JerializerUtils.domainToJson(factory, registry, schema);
 
@@ -46,10 +46,7 @@ public class TestLoader {
     public void testLoadSchema() throws IOException, JerializerException, VisitException {
         List<JerialBuilderFactory> factories = Arrays.asList(
                 (JerialBuilderFactory)new SimpleMapBuilderFactory());
-        //List<JerialBuilderFactory> factories = Arrays.asList(
-        //        new SimpleMapBuilderFactory(),
-        //        new FlattenedBuilderFactory(new DefaultPathConverter())
-        //);
+
         List<String> names = Arrays.asList(
                 "address", "calendar", "card", "geo",
                 "hyper-schema", "interfaces", "json-ref", "schema");

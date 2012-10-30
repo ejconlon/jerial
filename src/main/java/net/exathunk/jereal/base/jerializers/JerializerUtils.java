@@ -54,16 +54,13 @@ public class JerializerUtils {
         return jobjectToJson(domainToJObject(factory, registry, jerializer, domain));
     }
 
-    public static JObject jsonToJObject(JerialBuilderFactory factory, String json) throws JerializerException {
-        VisitorFactory<JerialContext> reader = new JsonObjectReader();
-        Func1<JerialContext> contextWriter = (new JsonParser<JerialContext>()).runVisitor(json, reader);
-        JerialContext context = new JerialContext(factory);
-        contextWriter.runFunc(context);
-        return context.builder.buildObject();
+    public static JObject jsonToJObject(String json) throws JerializerException {
+        NewJsonParser parser = new NewJsonParser();
+        return parser.parse(json).rawGetObject();
     }
 
     public static <T> void jsonToDomain(JerialBuilderFactory factory, DejerializerRegistry registry,
                                         Dejerializer<T> dejerializer, String json, T domain) throws JerializerException {
-        jobjectToDomain(registry, dejerializer, jsonToJObject(factory, json), domain);
+        jobjectToDomain(registry, dejerializer, jsonToJObject(json), domain);
     }
 }
