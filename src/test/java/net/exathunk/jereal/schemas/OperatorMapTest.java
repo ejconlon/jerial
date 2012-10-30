@@ -6,6 +6,7 @@ import net.exathunk.jereal.base.core.VisitException;
 import net.exathunk.jereal.base.functional.EitherRef;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
+import net.exathunk.jereal.base.operators.Direction;
 import net.exathunk.jereal.base.operators.declaration.DeclarationException;
 import net.exathunk.jereal.base.operators.ExecutionException;
 import net.exathunk.jereal.base.operators.OperatorMap;
@@ -45,7 +46,7 @@ public class OperatorMapTest {
     @Test
     public void testSchema() throws DeclarationException {
         final OperatorMap<Schema, ExecutionException> m = makeSchemaMap();
-        assertEquals(false, m.isEmpty());
+        assertEquals(false, m.dir(Direction.SERIALIZE).isEmpty());
     }
 
     @Test
@@ -53,7 +54,7 @@ public class OperatorMapTest {
         final OperatorMap<Schema, ExecutionException> m = makeSchemaMap();
         final JObject j = loadSchema("schema");
         final EitherRef<Schema, ExecutionException> r = EitherRef.makeLeftRef(new Schema());
-        final OperatorMapVisitor<Schema, ExecutionException> v = new OperatorMapVisitor<Schema, ExecutionException>(m, r);
+        final OperatorMapVisitor<Schema, ExecutionException> v = new OperatorMapVisitor<Schema, ExecutionException>(m, Direction.SERIALIZE, r);
 
         assertEquals(null, r.getLeft().format);
         j.accept(Path.root(), v);

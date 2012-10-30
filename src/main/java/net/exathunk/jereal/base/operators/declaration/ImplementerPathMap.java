@@ -4,7 +4,6 @@ import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.SuperModel;
 import net.exathunk.jereal.base.operators.OperatorMap;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

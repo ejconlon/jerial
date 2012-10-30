@@ -2,6 +2,7 @@ package net.exathunk.jereal.base.operators.declaration;
 
 import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.SuperModel;
+import net.exathunk.jereal.base.operators.Direction;
 import net.exathunk.jereal.base.operators.core.Operator;
 import net.exathunk.jereal.base.operators.OperatorMap;
 
@@ -13,10 +14,6 @@ import java.util.Set;
  * charolastra 10/29/12 2:29 PM
  */
 public class Implementer<D, E> implements OperatorMapBuilder<D, E> {
-
-    public static enum Direction {
-        SERIALIZE, DESERIALIZE
-    }
 
     private final Direction dir;
     private final Path path;
@@ -74,7 +71,7 @@ public class Implementer<D, E> implements OperatorMapBuilder<D, E> {
             throw new DeclarationException("Did not implement: "+path+" => "+sb.toString());
         }
         for (Map.Entry<SuperModel, Operator<D, E, ?>> entry : implementations.entrySet()) {
-            opMap.put(path, entry.getKey(), entry.getValue());
+            opMap.dir(dir).put(path, entry.getKey(), entry.getValue());
         }
     }
 }

@@ -4,6 +4,7 @@ import java.util.*;
 
 import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.SuperModel;
+import net.exathunk.jereal.base.operators.Direction;
 
 /**
  * charolastra 10/29/12 1:44 PM
@@ -35,9 +36,9 @@ public class DeclarationBuilder<D, E> {
         declare(path, makeSet(models));
     }
 
-    public ImplementerDirMap<D, E> buildImplementers() {
-        Map<Implementer.Direction, ImplementerPathMap<D, E>> dirMap = new TreeMap<Implementer.Direction, ImplementerPathMap<D, E>>();
-        for (Implementer.Direction dir : Implementer.Direction.values()) {
+    public <Y> ImplementerDirMap<D, E> buildImplementers() {
+        Map<Direction, ImplementerPathMap<D, E>> dirMap = new TreeMap<Direction, ImplementerPathMap<D, E>>();
+        for (Direction dir : Direction.values()) {
             Map<Path, Implementer<D, E>> implementers = new HashMap<Path, Implementer<D, E>>();
             for (Map.Entry<Path, Set<SuperModel>> entry : declarations.entrySet()) {
                 Implementer<D, E> implementer = new Implementer<D, E>(dir, entry.getKey(), entry.getValue());

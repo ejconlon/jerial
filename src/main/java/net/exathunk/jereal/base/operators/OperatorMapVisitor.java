@@ -11,19 +11,21 @@ import net.exathunk.jereal.base.util.EmptyVisitor;
 public class OperatorMapVisitor<D, E extends Throwable> extends EmptyVisitor {
 
     private final OperatorMap<D, E> opMap;
+    private final Direction dir;
     private final EitherRef<D, E> ref;
 
-    public OperatorMapVisitor(OperatorMap<D, E> opMap, EitherRef<D, E> ref) {
+    public OperatorMapVisitor(OperatorMap<D, E> opMap, Direction dir, EitherRef<D, E> ref) {
         this.opMap = opMap;
+        this.dir = dir;
         this.ref = ref;
     }
 
     private <Y> boolean run(Path path, Y thing, SuperModel model) throws VisitException {
-        Operator<D, E, Y> op = (Operator<D, E, Y>)opMap.get(path, model);
+        Operator<D, E, Y> op = (Operator<D, E, Y>) opMap.dir(dir).get(path, model);
         boolean hasRun = false;
         if (op != null && ref.hasLeft()) {
             final D domain = ref.getLeft();
-            op.runFunc(path, thing, domain, ref.getRightReference());
+            op.runFunc(dir, path, thing, domain, ref.getRightReference());
             hasRun = true;
         }
         if (ref.hasRight()) {

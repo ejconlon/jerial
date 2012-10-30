@@ -61,49 +61,49 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema, Exec
         // 8 simple string
         imp.path(Path.singletonKey("$ref")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.dollar_ref = thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("$schema")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.dollar_schema = thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("description")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.description = thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("format")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.format = thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("fragmentResolution")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.fragmentResolution = thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("id")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.id = thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("name")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.name = thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("title")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.title = thing.runResFunc();
             }
         });
@@ -111,13 +111,13 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema, Exec
         // 2 simple boolean
         imp.path(Path.singletonKey("required")).implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JBoolean thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JBoolean thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.required = thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("uniqueItems")).implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JBoolean thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JBoolean thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.uniqueItems = thing.runResFunc();
             }
         });
@@ -125,13 +125,13 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema, Exec
         // 2 simple long
         imp.path(Path.singletonKey("minimum")).implement(SuperModel.LONG, new JLongOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JLong thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JLong thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.minimum = thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("minItems")).implement(SuperModel.LONG, new JLongOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JLong thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JLong thing, Schema schema, Reference<ExecutionException> fail) {
                 schema.minItems = thing.runResFunc();
             }
         });
@@ -139,7 +139,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema, Exec
         // 1 simple array
         imp.path(Path.singletonKey("links")).implement(SuperModel.ARRAY, new JArrayOperator<Schema, ExecutionException>() {
             @Override
-            public void runFunc(Path path, JArray thing, Schema schema, Reference<ExecutionException> fail) {
+            public void runFunc(Direction dir, Path path, JArray thing, Schema schema, Reference<ExecutionException> fail) {
                 RegistryFactory factory = SchemaRegistryFactorySingleton.getInstance();
                 DejerializerRegistry registry = factory.makeDejerializerRegistry();
                 try {
@@ -159,7 +159,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema, Exec
     public void buildOperatorMap(OperatorMap<Schema, ExecutionException> opMap) throws DeclarationException {
         final DeclarationBuilder<Schema, ExecutionException> dec = new DeclarationBuilder<Schema, ExecutionException>();
         declare(dec);
-        final ImplementerPathMap<Schema, ExecutionException> imp = dec.buildImplementers().dir(Implementer.Direction.SERIALIZE);
+        final ImplementerPathMap<Schema, ExecutionException> imp = dec.buildImplementers().dir(Direction.SERIALIZE);
         implement(imp);
         imp.buildOperatorMap(opMap);
     }

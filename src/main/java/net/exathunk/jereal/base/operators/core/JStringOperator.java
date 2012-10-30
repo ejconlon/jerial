@@ -3,6 +3,7 @@ package net.exathunk.jereal.base.operators.core;
 import net.exathunk.jereal.base.core.JString;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.SuperModel;
+import net.exathunk.jereal.base.core.Visitable;
 import net.exathunk.jereal.base.operators.ExecutionException;
 
 /**
