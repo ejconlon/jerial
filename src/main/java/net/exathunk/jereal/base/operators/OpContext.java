@@ -9,12 +9,10 @@ import net.exathunk.jereal.base.operators.core.Operator;
  */
 public class OpContext<J, D> {
     public final OperatorMap<J, D> opMap;
-    public final D domain;
     public final Reference<OperatorException> failRef;
 
     public OpContext(OperatorMap<J, D> opMap,
-                     D domain, Reference<OperatorException> failRef) {
-        this.domain = domain;
+                     Reference<OperatorException> failRef) {
         this.failRef = failRef;
         this.opMap = opMap;
     }
@@ -28,7 +26,7 @@ public class OpContext<J, D> {
     }
 
     // return true if should continue
-    public boolean apply(Operator<J, J, D, D> op, ArgContext argC, J thing) {
+    public boolean apply(Operator<J, J, D, D> op, ArgContext argC, J thing, D domain) {
         if (op == null) {
             return true;   // null op == no-op; recurse
         }

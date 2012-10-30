@@ -1,8 +1,10 @@
 package net.exathunk.jereal.schema.operators;
 
 import net.exathunk.jereal.base.core.*;
+import net.exathunk.jereal.base.functional.ResFunc0;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.base.operators.*;
+import net.exathunk.jereal.base.operators.converters.Converter;
 import net.exathunk.jereal.base.operators.core.*;
 import net.exathunk.jereal.base.operators.declaration.*;
 import net.exathunk.jereal.schema.domain.Link;
@@ -36,7 +38,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         //dec.declare(Path.singletonKey("minItems"), Model.LONG);
 
         // 1 simple array
-        //dec.declare(Path.singletonKey("links"), Model.ARRAY);
+        dec.declare(Path.singletonKey("links"), Model.ARRAY);
 
         /*// 1 simple object
         dec.declare("dependencies", Model.OBJECT);
@@ -73,19 +75,31 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
 
 
         // 1 simple array
-        /*imp.path(Path.singletonKey("links")).implement(Model.ARRAY, new JArrayMapOperator<JObject, Link>() {
+        imp.path(Path.singletonKey("links")).implement(Model.ARRAY, new JArrayOperator<Schema, Schema>(new JArrayMapOperator<Schema, Schema, Link>(new Converter<Schema, ResFunc0<Link>>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Link> opC, ArgContext<JObject> argC) {
+            public ResFunc0<Link> convert(final Schema schema) throws OperatorException {
+                return new ResFunc0<Link>() {
+                    @Override
+                    public Link runResFunc() {
+                        Link link = new Link();
+                        schema.links.add(link);
+                        return link;
+                    }
+                };
+            }
+        }, new JObjectOperator<Schema, Link>(new Operator<JThing, JObject, Schema, Link>() {
+            @Override
+            public void runFunc(OpContext<JThing, Schema> opC, ArgContext argC, JObject thing, Link link) {
                 RegistryFactory factory = SchemaRegistryFactorySingleton.getInstance();
                 DejerializerRegistry registry = factory.makeDejerializerRegistry();
                 try {
                     Dejerializer<Link> linkDejerializer = registry.getDejerializer(Link.class);
-                    linkDejerializer.dejerialize(registry, argC.thing, opC.domain);
+                    linkDejerializer.dejerialize(registry, thing, link);
                 } catch (JerializerException e) {
                     opC.fail(new OperatorException("link jer stuff", e));
                 }
             }
-        });*/
+        }))));
     }
 
     public void buildOperatorMap(OperatorMap<JThing, Schema> opMap) throws DeclarationException {

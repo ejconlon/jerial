@@ -17,8 +17,7 @@ public abstract class BaseConverter<B> implements Converter<JThing, B> {
         assert model != null;
     }
 
-    @Override
-    public boolean canConvert(JThing thing) {
+    protected boolean canConvert(JThing thing) {
         return thing != null && model.equals(thing.getModel());
     }
 

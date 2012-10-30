@@ -10,15 +10,17 @@ import net.exathunk.jereal.base.operators.core.Operator;
 public class OperatorVisitor<D> implements UntypedVisitor {
 
     private final OpContext<JThing, D> opC;
+    private final D domain;
 
-    public OperatorVisitor(OpContext<JThing, D> opC) {
+    public OperatorVisitor(OpContext<JThing, D> opC, D domain) {
         this.opC = opC;
+        this.domain = domain;
     }
 
     @Override
     public boolean visitThing(Path path, JThing thing) throws VisitException {
         Operator<JThing, JThing, D, D> op = opC.opMap.get(path, thing.getModel());
         final ArgContext argC = new ArgContext(path);
-        return opC.apply(op, argC, thing);
+        return opC.apply(op, argC, thing, domain);
     }
 }

@@ -11,4 +11,12 @@ public class ArgContext {
     public ArgContext(Path path) {
         this.path = path;
     }
+
+    public ArgContext push(Integer index) {
+        return new ArgContext(path.consIndex(index));
+    }
+
+    public ArgContext push(String key) {
+        return new ArgContext(path.consKey(key));
+    }
 }

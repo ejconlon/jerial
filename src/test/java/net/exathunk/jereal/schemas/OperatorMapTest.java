@@ -48,12 +48,13 @@ public class OperatorMapTest {
     public void testSchemaSerialization() throws DeclarationException, IOException, JerializerException, VisitException {
         final OperatorMap<JThing, Schema> opMap = makeSchemaMap();
         final JObject j = loadSchema("schema");
-        final OpContext<JThing, Schema> context = new OpContext<JThing, Schema>(opMap, new Schema(), new ReferenceImpl<OperatorException>());
-        final OperatorVisitor<Schema> v = new OperatorVisitor<Schema>(context);
+        final OpContext<JThing, Schema> context = new OpContext<JThing, Schema>(opMap, new ReferenceImpl<OperatorException>());
+        final Schema domain = new Schema();
+        final OperatorVisitor<Schema> v = new OperatorVisitor<Schema>(context, domain);
 
-        assertEquals(null, context.domain.id);
+        assertEquals(null, domain.id);
         JThing.make(j).acceptUntyped(Path.root(), v);
-        Logger.getLogger(getClass()).debug(context.domain);
-        assertEquals("http://json-schema.org/schema#", context.domain.id);
+        Logger.getLogger(getClass()).debug(domain);
+        assertEquals("http://json-schema.org/schema#", domain.id);
     }
 }
