@@ -2,18 +2,13 @@ package net.exathunk.jereal.base.operators.core;
 
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.operators.OperatorException;
+import net.exathunk.jereal.base.operators.converters.JBooleanConverter;
 
 /**
  * charolastra 10/29/12 3:33 PM
  */
-public abstract class JBooleanOperator<D> extends BaseOperator<JBoolean, D> {
+public abstract class JBooleanOperator<D> extends ArgConverterOperator<JThing, JBoolean, D> {
     public JBooleanOperator() {
-        super(Model.BOOLEAN);
-    }
-
-    @Override
-    public JBoolean convert(JThing thing) throws OperatorException {
-        if (!thing.isBoolean()) throw new OperatorException("Expected BOOLEAN: "+thing.getModel());
-        return thing.rawGetBoolean();
+        super(new JBooleanConverter());
     }
 }

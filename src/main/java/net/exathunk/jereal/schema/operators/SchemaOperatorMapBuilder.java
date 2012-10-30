@@ -36,7 +36,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         dec.declare(Path.singletonKey("minItems"), Model.LONG);
 
         // 1 simple array
-        dec.declare(Path.singletonKey("links"), Model.ARRAY);
+        //dec.declare(Path.singletonKey("links"), Model.ARRAY);
 
         /*// 1 simple object
         dec.declare("dependencies", Model.OBJECT);
@@ -57,49 +57,49 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         // 8 simple string
         imp.path(Path.singletonKey("$ref")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
                 opC.domain.dollar_ref = argC.thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("$schema")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
                 opC.domain.dollar_schema = argC.thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("description")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
                 opC.domain.description = argC.thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("format")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
                 opC.domain.format = argC.thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("fragmentResolution")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
                 opC.domain.fragmentResolution = argC.thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("id")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
                 opC.domain.id = argC.thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("name")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
                 opC.domain.name = argC.thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("title")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
                 opC.domain.title = argC.thing.runResFunc();
             }
         });
@@ -107,13 +107,13 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         // 2 simple boolean
         imp.path(Path.singletonKey("required")).implement(Model.BOOLEAN, new JBooleanOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JBoolean> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JBoolean> argC) {
                 opC.domain.required = argC.thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("uniqueItems")).implement(Model.BOOLEAN, new JBooleanOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JBoolean> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JBoolean> argC) {
                 opC.domain.uniqueItems = argC.thing.runResFunc();
             }
         });
@@ -121,35 +121,31 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         // 2 simple long
         imp.path(Path.singletonKey("minimum")).implement(Model.LONG, new JLongOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JLong> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JLong> argC) {
                 opC.domain.minimum = argC.thing.runResFunc();
             }
         });
         imp.path(Path.singletonKey("minItems")).implement(Model.LONG, new JLongOperator<Schema>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JLong> argC) {
+            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JLong> argC) {
                 opC.domain.minItems = argC.thing.runResFunc();
             }
         });
 
         // 1 simple array
-        imp.path(Path.singletonKey("links")).implement(Model.ARRAY, new JArrayOperator<Schema>() {
+        /*imp.path(Path.singletonKey("links")).implement(Model.ARRAY, new JArrayMapOperator<JObject, Link>() {
             @Override
-            public void typedRunFunc(OpContext<JThing, Schema> opC, ArgContext<JArray> argC) {
+            public void typedRunFunc(OpContext<JThing, Link> opC, ArgContext<JObject> argC) {
                 RegistryFactory factory = SchemaRegistryFactorySingleton.getInstance();
                 DejerializerRegistry registry = factory.makeDejerializerRegistry();
                 try {
                     Dejerializer<Link> linkDejerializer = registry.getDejerializer(Link.class);
-                    for (Map.Entry<Integer, JThing> entry : argC.thing.seq()) {
-                        Link link = new Link();
-                        linkDejerializer.dejerialize(registry, entry.getValue().rawGetObject(), link);
-                        opC.domain.links.add(link);
-                    }
+                    linkDejerializer.dejerialize(registry, argC.thing, opC.domain);
                 } catch (JerializerException e) {
                     opC.fail(new OperatorException("link jer stuff", e));
                 }
             }
-        });
+        });*/
     }
 
     public void buildOperatorMap(OperatorMap<JThing, Schema> opMap) throws DeclarationException {

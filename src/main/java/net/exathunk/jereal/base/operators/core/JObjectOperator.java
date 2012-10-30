@@ -2,18 +2,13 @@ package net.exathunk.jereal.base.operators.core;
 
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.operators.OperatorException;
+import net.exathunk.jereal.base.operators.converters.JObjectConverter;
 
 /**
  * charolastra 10/29/12 3:33 PM
  */
-public abstract class JObjectOperator<D> extends BaseOperator<JObject, D> {
+public abstract class JObjectOperator<D> extends ArgConverterOperator<JThing, JObject, D> {
     public JObjectOperator() {
-        super(Model.OBJECT);
-    }
-
-    @Override
-    public JObject convert(JThing thing) throws OperatorException {
-        if (!thing.isObject()) throw new OperatorException("Expected OBJECT: "+thing.getModel());
-        return thing.rawGetObject();
+        super(new JObjectConverter());
     }
 }

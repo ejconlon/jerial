@@ -2,18 +2,13 @@ package net.exathunk.jereal.base.operators.core;
 
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.operators.OperatorException;
+import net.exathunk.jereal.base.operators.converters.JArrayConverter;
 
 /**
  * charolastra 10/29/12 3:33 PM
  */
-public abstract class JArrayOperator<D> extends BaseOperator<JArray, D> {
+public abstract class JArrayOperator<D> extends ArgConverterOperator<JThing, JArray, D> {
     public JArrayOperator() {
-        super(Model.ARRAY);
-    }
-
-    @Override
-    public JArray convert(JThing thing) throws OperatorException {
-        if (!thing.isArray()) throw new OperatorException("Expected ARRAY: "+thing.getModel());
-        return thing.rawGetArray();
+        super(new JArrayConverter());
     }
 }
