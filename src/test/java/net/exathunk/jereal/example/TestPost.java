@@ -7,7 +7,7 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.jerializers.JerializerRegistryImpl;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
-import net.exathunk.jereal.base.visitors.VisitException;
+import net.exathunk.jereal.base.core.VisitException;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

@@ -4,13 +4,10 @@ import net.exathunk.jereal.base.*;
 import net.exathunk.jereal.base.builders.JerialBuilderFactory;
 import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JObject;
-import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.ConsList;
-import net.exathunk.jereal.base.functional.Func1;
-import net.exathunk.jereal.base.functional.Maybe;
-import net.exathunk.jereal.base.visitors.VisitException;
-import net.exathunk.jereal.base.visitors.VisitorFactory;
+import net.exathunk.jereal.base.core.VisitException;
+
 /**
  * charolastra 10/27/12 2:49 PM
  */
@@ -55,7 +52,7 @@ public class JerializerUtils {
     }
 
     public static JObject jsonToJObject(String json) throws JerializerException {
-        NewJsonParser parser = new NewJsonParser();
+        JsonParser parser = new JsonParser();
         return parser.parse(json).rawGetObject();
     }
 

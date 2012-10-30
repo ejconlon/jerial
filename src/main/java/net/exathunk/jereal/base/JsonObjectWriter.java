@@ -2,9 +2,6 @@ package net.exathunk.jereal.base;
 
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.functional.*;
-import net.exathunk.jereal.base.visitors.*;
-
-import java.util.Map;
 
 public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
 

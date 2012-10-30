@@ -4,8 +4,6 @@ import net.exathunk.jereal.base.functional.ConsList;
 import net.exathunk.jereal.base.functional.MapSequence;
 import net.exathunk.jereal.base.functional.Maybe;
 import net.exathunk.jereal.base.functional.Sequence;
-import net.exathunk.jereal.base.visitors.TypedVisitor;
-import net.exathunk.jereal.base.visitors.VisitException;
 
 import java.util.Map;
 import java.util.TreeMap;

@@ -1,8 +1,6 @@
 package net.exathunk.jereal.base.core;
 
 import net.exathunk.jereal.base.functional.ConsList;
-import net.exathunk.jereal.base.visitors.TypedVisitor;
-import net.exathunk.jereal.base.visitors.VisitException;
 
 /**
  * charolastra 10/27/12 11:56 PM

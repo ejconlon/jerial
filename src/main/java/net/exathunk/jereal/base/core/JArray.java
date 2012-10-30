@@ -1,8 +1,6 @@
 package net.exathunk.jereal.base.core;
 
 import net.exathunk.jereal.base.functional.*;
-import net.exathunk.jereal.base.visitors.TypedVisitor;
-import net.exathunk.jereal.base.visitors.VisitException;
 
 import java.util.ArrayList;
 import java.util.List;
