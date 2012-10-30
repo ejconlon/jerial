@@ -80,7 +80,7 @@ public class JObject implements JMutableCollection<String, JThing> {
 
     @Override
     public void accept(Path path, TypedVisitor visitor) throws VisitException {
-        visitor.visitObjectStart(path, this);
+        if (!visitor.visitObjectStart(path, this)) return;
         for (Map.Entry<String, JThing> entry : map.entrySet()) {
             entry.getValue().accept(path.cons(PathPart.key(entry.getKey())), visitor);
         }

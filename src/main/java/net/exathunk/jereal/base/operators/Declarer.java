@@ -3,6 +3,7 @@ package net.exathunk.jereal.base.operators;
 import java.util.HashSet;
 import java.util.Map;
 
+import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.SuperModel;
 
 import java.util.HashMap;
@@ -13,10 +14,10 @@ import java.util.Set;
  */
 public class Declarer<D, E> implements OperatorMapBuilder<D, E> {
 
-    private final Map<String, Implementer<D, E>> implementers;
+    private final Map<Path, Implementer<D, E>> implementers;
 
     public Declarer() {
-        this.implementers = new HashMap<String, Implementer<D, E>>();
+        this.implementers = new HashMap<Path, Implementer<D, E>>();
     }
 
     private static <Z> Set<Z> makeSet(Z... zs) {
@@ -27,29 +28,29 @@ public class Declarer<D, E> implements OperatorMapBuilder<D, E> {
         return set;
     }
 
-    public Implementer<D, E> declare(String key, Set<SuperModel> models) throws DeclarationException {
-        if (implementers.containsKey(key)) {
-            throw new DeclarationException("Cannot declare twice: "+key);
+    public Implementer<D, E> declare(Path path, Set<SuperModel> models) throws DeclarationException {
+        if (implementers.containsKey(path)) {
+            throw new DeclarationException("Cannot declare twice: "+path);
         }
-        Implementer<D, E> implementer = new Implementer<D, E>(key, models);
-        implementers.put(key, implementer);
+        Implementer<D, E> implementer = new Implementer<D, E>(path, models);
+        implementers.put(path, implementer);
         return implementer;
     }
 
-    public Implementer<D, E> declare(String key, SuperModel... models) throws DeclarationException {
-        return declare(key, makeSet(models));
+    public Implementer<D, E> declare(Path path, SuperModel... models) throws DeclarationException {
+        return declare(path, makeSet(models));
     }
 
-    public Implementer<D, E> reopen(String key) throws DeclarationException {
-        Implementer<D, E> implementer = implementers.get(key);
+    public Implementer<D, E> reopen(Path path) throws DeclarationException {
+        Implementer<D, E> implementer = implementers.get(path);
         if (implementer != null) {
             if (implementer.hasImplementedAll()) {
-                throw new DeclarationException("Implementer is sealed: "+key);
+                throw new DeclarationException("Implementer is sealed: "+path);
             } else {
                 return implementer;
             }
         } else {
-            throw new DeclarationException("Have not declared "+key);
+            throw new DeclarationException("Have not declared "+path);
         }
     }
 
@@ -104,7 +105,7 @@ public class Declarer<D, E> implements OperatorMapBuilder<D, E> {
 
     @Override
     public void buildOperatorMap(OperatorMap<D, E> opMap) throws DeclarationException {
-        for (Map.Entry<String, Implementer<D, E>> entry : implementers.entrySet()) {
+        for (Map.Entry<Path, Implementer<D, E>> entry : implementers.entrySet()) {
             entry.getValue().buildOperatorMap(opMap);
         }
     }

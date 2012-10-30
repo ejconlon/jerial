@@ -49,11 +49,12 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
     }
 
     @Override
-    public void visitObjectStart(Path part, JObject thing) throws VisitException {
+    public boolean visitObjectStart(Path part, JObject thing) throws VisitException {
         outputComma();
         outputKey(part);
         sb.append('{');
         needComma.push(Boolean.FALSE);
+        return true;
     }
 
     @Override
@@ -63,11 +64,12 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
     }
 
     @Override
-    public void visitArrayStart(Path part, JArray thing) {
+    public boolean visitArrayStart(Path part, JArray thing) {
         outputComma();
         outputKey(part);
         sb.append('[');
         needComma.push(Boolean.FALSE);
+        return true;
     }
 
     @Override

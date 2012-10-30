@@ -90,7 +90,7 @@ public class JArray implements JMutableCollection<Integer, JThing> {
 
     @Override
     public void accept(Path path, TypedVisitor visitor) throws VisitException {
-        visitor.visitArrayStart(path, this);
+        if (!visitor.visitArrayStart(path, this)) return;
         for (Map.Entry<Integer, JThing> entry : seq()) {
             entry.getValue().accept(path.cons(PathPart.index(entry.getKey())), visitor);
         }

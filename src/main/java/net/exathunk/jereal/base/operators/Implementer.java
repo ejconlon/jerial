@@ -1,5 +1,6 @@
 package net.exathunk.jereal.base.operators;
 
+import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.SuperModel;
 
 import java.util.HashMap;
@@ -11,25 +12,25 @@ import java.util.Set;
  */
 public class Implementer<D, E> implements OperatorMapBuilder<D, E> {
 
-    private final String key;
+    private final Path path;
     private final Set<SuperModel> models;
     private final Map<SuperModel, Operator<D, E, ?>> implementations;
 
-    public Implementer(String key, Set<SuperModel> models) {
-        this.key = key;
+    public Implementer(Path path, Set<SuperModel> models) {
+        this.path = path;
         this.models = models;
         this.implementations = new HashMap<SuperModel, Operator<D, E, ?>>(models.size());
-        assert key != null;
+        assert path != null;
         assert models != null;
         assert !models.isEmpty();
     }
 
     public Implementer<D, E> implement(SuperModel model, Operator<D, E, ?> operator) throws DeclarationException {
         if (!hasDeclared(model)) {
-            throw new DeclarationException("Did not declare: "+key+" "+model);
+            throw new DeclarationException("Did not declare: "+path+" "+model);
         }
         if (!operator.canCast(model)) {
-            throw new DeclarationException("Cannot cast: "+key+" "+model);
+            throw new DeclarationException("Cannot cast: "+path+" "+model);
         }
         implementations.put(model, operator);
         return this;
@@ -62,10 +63,10 @@ public class Implementer<D, E> implements OperatorMapBuilder<D, E> {
 
             }
             if (sb.length() > 0) sb.deleteCharAt(sb.length()-1);
-            throw new DeclarationException("Did not implement: "+key+" => "+sb.toString());
+            throw new DeclarationException("Did not implement: "+path+" => "+sb.toString());
         }
         for (Map.Entry<SuperModel, Operator<D, E, ?>> entry : implementations.entrySet()) {
-            opMap.put(key, entry.getKey(), entry.getValue());
+            opMap.put(path, entry.getKey(), entry.getValue());
         }
     }
 }

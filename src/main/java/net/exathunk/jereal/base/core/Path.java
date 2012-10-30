@@ -17,6 +17,18 @@ public class Path extends ConsList<PathPart> implements Comparable<Path> {
         return new Path();
     }
 
+    public static Path singleton(PathPart head) {
+        return root().cons(head);
+    }
+
+    public static Path singletonKey(String key) {
+        return singleton(PathPart.key(key));
+    }
+
+    public static Path singletonIndex(Integer index) {
+        return singleton(PathPart.index(index));
+    }
+
     @Override
     public Path cons(PathPart newHead) {
         return new Path(newHead, this);
@@ -47,5 +59,25 @@ public class Path extends ConsList<PathPart> implements Comparable<Path> {
     @Override
     public String toString() {
         return "Path{convert="+convert()+"}";
+    }
+
+    // This "/a/b" is above other "/a/b/c"
+    public boolean isAbove(Path other) {
+        return other.convert().startsWith(convert());
+    }
+
+    // This "/a/b/c" is below other "/a/b"
+    public boolean isBelow(Path other) {
+        return convert().startsWith(other.convert());
+    }
+
+    // This "/a/b/c" is nesting other "/b/c"
+    public boolean isNesting(Path other) {
+        return convert().endsWith(other.convert());
+    }
+
+    // This "/b/c" is nested by other "/a/b/c"
+    public boolean isNestedBy(Path other) {
+        return other.convert().endsWith(convert());
     }
 }

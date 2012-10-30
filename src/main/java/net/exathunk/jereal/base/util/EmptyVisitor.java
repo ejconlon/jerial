@@ -7,8 +7,8 @@ import net.exathunk.jereal.base.core.*;
  */
 public class EmptyVisitor implements TypedVisitor {
     @Override
-    public void visitObjectStart(Path part, JObject thing) throws VisitException {
-
+    public boolean visitObjectStart(Path part, JObject thing) throws VisitException {
+        return true;
     }
 
     @Override
@@ -17,8 +17,8 @@ public class EmptyVisitor implements TypedVisitor {
     }
 
     @Override
-    public void visitArrayStart(Path part, JArray thing) throws VisitException {
-
+    public boolean visitArrayStart(Path part, JArray thing) throws VisitException {
+        return true;
     }
 
     @Override
