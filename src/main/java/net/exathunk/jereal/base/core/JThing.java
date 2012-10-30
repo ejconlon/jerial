@@ -11,12 +11,12 @@ import java.util.Map;
 /**
  * charolastra 10/28/12 3:22 AM
  */
-public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
+public class JThing implements Visitable {
 
     private final Model model;
-    private final Object value;
+    private final Visitable value;
 
-    private JThing(Model model, Object value) {
+    private JThing(Model model, Visitable value) {
         this.model = model;
         this.value = value;
         assert model != null;
@@ -161,147 +161,8 @@ public class JThing implements Sequence<Map.Entry<ConsList<PathPart>, JThing>> {
                 '}';
     }
 
-    public static <T> void acceptObjectVisitor(VisitorFactory<T> factory, String key, JThing value, ObjectVisitor<T> visitor) {
-        switch (value.getModel()) {
-            case OBJECT:
-                ObjectVisitor<T> childObjectVisitor = visitor.seeObjectFieldStart(key);
-                for (Map.Entry<String, JThing> entry : value.rawGetObject().seq()) {
-                    entry.getValue().acceptObjectVisitor(factory, entry.getKey(), entry.getValue(), childObjectVisitor);
-                }
-                break;
-            case ARRAY:
-                ArrayVisitor<T> childArrayVisitor = visitor.seeArrayFieldStart(key);
-                for (Map.Entry<Integer, JThing> entry : value.rawGetArray().seq()) {
-                    entry.getValue().acceptArrayVisitor(factory,  entry.getKey(), entry.getValue(), childArrayVisitor);
-                }
-                break;
-            case STRING:
-                visitor.seeStringField(key, value.rawGetString().runResFunc());
-                break;
-            case BOOLEAN:
-                visitor.seeBooleanField(key, value.rawGetBoolean().runResFunc());
-                break;
-            case LONG:
-                visitor.seeLongField(key, value.rawGetLong().runResFunc());
-                break;
-            case DOUBLE:
-                visitor.seeDoubleField(key, value.rawGetDouble().runResFunc());
-                break;
-            default:
-                throw new IllegalStateException();
-        }
-    }
-
-    public static <T> void acceptArrayVisitor(VisitorFactory<T> factory, Integer index, JThing value, ArrayVisitor<T> visitor) {
-        switch (value.getModel()) {
-            case OBJECT:
-                ObjectVisitor<T> childObjectVisitor = visitor.seeObjectItemStart();
-                for (Map.Entry<String, JThing> entry : value.rawGetObject().seq()) {
-                    entry.getValue().acceptObjectVisitor(factory, entry.getKey(), entry.getValue(), childObjectVisitor);
-                }
-                break;
-            case ARRAY:
-                ArrayVisitor<T> childArrayVisitor = visitor.seeArrayItemStart();
-                for (Map.Entry<Integer, JThing> entry : value.rawGetArray().seq()) {
-                    entry.getValue().acceptArrayVisitor(factory,  entry.getKey(), entry.getValue(), childArrayVisitor);
-                }
-                break;
-            case STRING:
-                visitor.seeStringItem(value.rawGetString().runResFunc());
-                break;
-            case BOOLEAN:
-                visitor.seeBooleanItem(value.rawGetBoolean().runResFunc());
-                break;
-            case LONG:
-                visitor.seeLongItem(value.rawGetLong().runResFunc());
-                break;
-            case DOUBLE:
-                visitor.seeDoubleItem(value.rawGetDouble().runResFunc());
-                break;
-            default:
-                throw new IllegalStateException();
-        }
-    }
-
-    public <T> Maybe<Func1<T>> accept(VisitorFactory<T> factory) {
-        if (isObject()) {
-            ObjectVisitor<T> visitor = factory.makeObjectVisitor();
-            for (Map.Entry<String, JThing> entry : rawGetObject().seq()) {
-                acceptObjectVisitor(factory, entry.getKey(), entry.getValue(), visitor);
-            }
-            return Maybe.<Func1<T>>just(visitor);
-        } else if (isArray()) {
-            ArrayVisitor<T> visitor = factory.makeArrayVisitor();
-            for (Map.Entry<Integer, JThing> entry : rawGetArray().seq()) {
-                acceptArrayVisitor(factory, entry.getKey(), entry.getValue(), visitor);
-            }
-            return Maybe.<Func1<T>>just(visitor);
-        }
-        return Maybe.nothing();
-    }
-
-    @Override
-    public Iterator<Map.Entry<ConsList<PathPart>, JThing>> iterator() {
-        return new JThingPathIterator(ConsList.<PathPart>nil(), this);
-    }
-
-    private static class JThingPathIterator implements Iterator<Map.Entry<ConsList<PathPart>, JThing>> {
-        private final ConsList<PathPart> path;
-        private final JThing thing;
-        private final List<JThingPathIterator> nexts;
-        int index = -1;
-
-        public JThingPathIterator(ConsList<PathPart> path, JThing thing) {
-            this.path = path;
-            this.thing = thing;
-            nexts = new ArrayList<JThingPathIterator>();
-            if (thing.isObject()) {
-                for (Map.Entry<String, JThing> entry : thing.rawGetObject().seq()) {
-                    nexts.add(new JThingPathIterator(path.cons(PathPart.key(entry.getKey())), entry.getValue()));
-                }
-            } else if (thing.isArray()) {
-                for (Map.Entry<Integer, JThing> entry : thing.rawGetArray().seq()) {
-                    nexts.add(new JThingPathIterator(path.cons(PathPart.index(entry.getKey())), entry.getValue()));
-                }
-            }
-        }
-
-        @Override
-        public boolean hasNext() {
-            if (index >= nexts.size()) return false;
-            else if (index == 0) {
-                return true;
-            } else {
-                while (index < nexts.size()) {
-                    if (nexts.get(index).hasNext()) return true;
-                    index++;
-                }
-                return false;
-            }
-        }
-
-        @Override
-        public Map.Entry<ConsList<PathPart>, JThing> next() {
-            if (index == 0) {
-                index++;
-                return new Pair<ConsList<PathPart>, JThing>(path, thing);
-            } else {
-                while (index < nexts.size()) {
-                    Iterator<Map.Entry<ConsList<PathPart>, JThing>> curit = nexts.get(index);
-                    if (curit.hasNext()) {
-                        return curit.next();
-                    } else {
-                        index++;
-                    }
-                }
-                throw new IllegalStateException();
-            }
-        }
-
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
+    public void accept(ConsList<PathPart> path, TypedVisitor visitor) throws VisitException {
+        value.accept(path, visitor);
     }
 
     @Override

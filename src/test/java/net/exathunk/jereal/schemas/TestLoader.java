@@ -6,6 +6,7 @@ import net.exathunk.jereal.base.builders.SimpleMapBuilderFactory;
 import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
+import net.exathunk.jereal.base.visitors.VisitException;
 import net.exathunk.jereal.schema.Loader;
 import net.exathunk.jereal.schema.Schema;
 import net.exathunk.jereal.schema.SchemaRegistryFactorySingleton;
@@ -24,7 +25,7 @@ import static org.junit.Assert.assertFalse;
 public class TestLoader {
 
     private static void assertFixed(final JerialBuilderFactory factory, final JerializerRegistry registry,
-                                    final String name) throws IOException, JerializerException {
+                                    final String name) throws IOException, JerializerException, VisitException {
         final String gold = Loader.loadSchemaString(name);
         assertFalse(gold.isEmpty());
         final JObject j = JerializerUtils.jsonToJObject(factory, gold);
@@ -42,7 +43,7 @@ public class TestLoader {
     }
 
     @Test
-    public void testLoadSchema() throws IOException, JerializerException {
+    public void testLoadSchema() throws IOException, JerializerException, VisitException {
         List<JerialBuilderFactory> factories = Arrays.asList(
                 (JerialBuilderFactory)new SimpleMapBuilderFactory());
         //List<JerialBuilderFactory> factories = Arrays.asList(

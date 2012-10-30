@@ -1,8 +1,11 @@
 package net.exathunk.jereal.base.core;
 
+import net.exathunk.jereal.base.functional.ConsList;
 import net.exathunk.jereal.base.functional.MapSequence;
 import net.exathunk.jereal.base.functional.Maybe;
 import net.exathunk.jereal.base.functional.Sequence;
+import net.exathunk.jereal.base.visitors.TypedVisitor;
+import net.exathunk.jereal.base.visitors.VisitException;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -76,5 +79,14 @@ public class JObject implements JMutableCollection<String, JThing> {
         } else {
             return Maybe.nothing();
         }
+    }
+
+    @Override
+    public void accept(ConsList<PathPart> path, TypedVisitor visitor) throws VisitException {
+        visitor.visitObjectStart(path, this);
+        for (Map.Entry<String, JThing> entry : map.entrySet()) {
+            entry.getValue().accept(path.cons(PathPart.key(entry.getKey())), visitor);
+        }
+        visitor.visitObjectEnd(path, this);
     }
 }

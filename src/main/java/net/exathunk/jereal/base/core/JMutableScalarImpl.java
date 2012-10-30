@@ -3,7 +3,7 @@ package net.exathunk.jereal.base.core;
 /**
  * charolastra 10/28/12 12:53 PM
  */
-public class JMutableScalarImpl<T> implements JMutableScalar<T> {
+public abstract class JMutableScalarImpl<T> implements JMutableScalar<T> {
     private T value;
 
     public JMutableScalarImpl() {}

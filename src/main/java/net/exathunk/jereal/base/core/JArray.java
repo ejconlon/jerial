@@ -1,6 +1,8 @@
 package net.exathunk.jereal.base.core;
 
 import net.exathunk.jereal.base.functional.*;
+import net.exathunk.jereal.base.visitors.TypedVisitor;
+import net.exathunk.jereal.base.visitors.VisitException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,5 +88,14 @@ public class JArray implements JMutableCollection<Integer, JThing> {
         } else {
             return Maybe.nothing();
         }
+    }
+
+    @Override
+    public void accept(ConsList<PathPart> path, TypedVisitor visitor) throws VisitException {
+        visitor.visitArrayStart(path, this);
+        for (Map.Entry<Integer, JThing> entry : seq()) {
+            entry.getValue().accept(path.cons(PathPart.index(entry.getKey())), visitor);
+        }
+        visitor.visitArrayEnd(path, this);
     }
 }

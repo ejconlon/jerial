@@ -7,6 +7,7 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.jerializers.JerializerRegistryImpl;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
+import net.exathunk.jereal.base.visitors.VisitException;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -23,7 +24,7 @@ public class TestPost {
     private final JerialBuilderFactory factory = new SimpleMapBuilderFactory();
 
     @Test
-    public void testSerializePost() throws JerializerException {
+    public void testSerializePost() throws JerializerException, VisitException {
         final Post post = new Post("foo", "bar");
         final String gold = "{\"body\":\"bar\",\"title\":\"foo\"}";
 
@@ -55,7 +56,7 @@ public class TestPost {
     }
 
     @Test
-    public void testNulls() throws JerializerException {
+    public void testNulls() throws JerializerException, VisitException {
         final Bag bag0 = new Bag(null, null, null, null);
         final String gold0 = "{\"b\":null,\"d\":null,\"l\":null,\"s\":null}";
         final String s0 = JerializerUtils.domainToJson(factory, emptyRegistry, new BagJerializer(), bag0);
@@ -63,7 +64,7 @@ public class TestPost {
     }
 
     @Test
-    public void testBag() throws JerializerException {
+    public void testBag() throws JerializerException, VisitException {
         final Bag bag0 = new Bag("x", (long) 12, 4.5, true);
         final Bag bag1 = new Bag("y", (long) 13, 6.7, false, bag0);
 
@@ -89,7 +90,7 @@ public class TestPost {
     }
 
     @Test
-    public void testArray() throws JerializerException {
+    public void testArray() throws JerializerException, VisitException {
         final Arr arr = new Arr((long) 1, 2.2,"xyz", true);
         final String gold = "{\"objects\":[1,2.2,\"xyz\",true]}";
         final String s = JerializerUtils.domainToJson(factory, emptyRegistry, new ArrJerializer(), arr);
