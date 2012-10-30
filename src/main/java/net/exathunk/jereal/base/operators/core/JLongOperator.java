@@ -8,7 +8,7 @@ import net.exathunk.jereal.base.operators.OperatorException;
  */
 public abstract class JLongOperator<D> extends BaseOperator<JLong, D> {
     public JLongOperator() {
-        super(Model.LONG, SuperModel.LONG);
+        super(Model.LONG);
     }
 
     @Override

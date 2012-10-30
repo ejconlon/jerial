@@ -8,7 +8,7 @@ import net.exathunk.jereal.base.operators.OperatorException;
  */
 public abstract class JArrayOperator<D> extends BaseOperator<JArray, D> {
     public JArrayOperator() {
-        super(Model.ARRAY, SuperModel.ARRAY);
+        super(Model.ARRAY);
     }
 
     @Override

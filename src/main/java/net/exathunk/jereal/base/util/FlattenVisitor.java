@@ -6,7 +6,7 @@ import net.exathunk.jereal.base.functional.ResFunc0;
 /**
  * charolastra 10/29/12 9:09 PM
  */
-public class FlattenVisitor extends EmptyVisitor implements ResFunc0<JObject> {
+public class FlattenVisitor extends EmptyTypedVisitor implements ResFunc0<JObject> {
 
     private final PathConverter converter = new DefaultPathConverter();
     private final JObject object = new JObject();

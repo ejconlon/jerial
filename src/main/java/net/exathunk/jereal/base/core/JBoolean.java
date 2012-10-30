@@ -9,7 +9,7 @@ public class JBoolean extends JMutableScalarImpl<Boolean> {
     }
 
     @Override
-    public void accept(Path path, TypedVisitor visitor) throws VisitException {
+    public void acceptTyped(Path path, TypedVisitor visitor) throws VisitException {
         visitor.visitBoolean(path, this);
     }
 }

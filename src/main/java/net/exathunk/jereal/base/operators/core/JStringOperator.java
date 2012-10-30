@@ -8,7 +8,7 @@ import net.exathunk.jereal.base.operators.OperatorException;
  */
 public abstract class JStringOperator<D> extends BaseOperator<JString, D> {
     public JStringOperator() {
-        super(Model.STRING, SuperModel.STRING);
+        super(Model.STRING);
     }
 
     @Override

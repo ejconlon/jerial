@@ -8,7 +8,7 @@ import net.exathunk.jereal.base.operators.OperatorException;
  */
 public abstract class JDoubleOperator<D> extends BaseOperator<JDouble, D> {
     public JDoubleOperator() {
-        super(Model.DOUBLE, SuperModel.DOUBLE);
+        super(Model.DOUBLE);
     }
 
     @Override

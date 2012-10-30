@@ -1,12 +1,11 @@
 package net.exathunk.jereal.schemas;
 
 import net.exathunk.jereal.base.core.*;
-import net.exathunk.jereal.base.functional.EitherRef;
+import net.exathunk.jereal.base.functional.ReferenceImpl;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
 import net.exathunk.jereal.base.operators.*;
 import net.exathunk.jereal.base.operators.declaration.DeclarationException;
-import net.exathunk.jereal.base.operators.declaration.OpOutput;
 import net.exathunk.jereal.base.util.Logger;
 import net.exathunk.jereal.schema.domain.Schema;
 import net.exathunk.jereal.schema.operators.SchemaOperatorMapBuilder;
@@ -49,12 +48,12 @@ public class OperatorMapTest {
     public void testSchemaSerialization() throws DeclarationException, IOException, JerializerException, VisitException {
         final OperatorMap<JThing, Schema> m = makeSchemaMap();
         final JObject j = loadSchema("schema");
-        final OpContext<JThing, Schema> context = new OpContext<JThing, Schema>(Direction.SERIALIZE, Path.root(), SuperModel.OBJECT, null, EitherRef.<Schema, OperatorException>makeLeftRef(new Schema()));
+        final OpContext<JThing, Schema> context = new OpContext<JThing, Schema>(Direction.SERIALIZE, Path.root(), Model.OBJECT, null, new Schema(), new ReferenceImpl<OperatorException>());
         final OperatorMapVisitor<Schema> v = new OperatorMapVisitor<Schema>(m, context);
 
-        assertEquals(null, context.out.getLeft().format);
-        j.accept(Path.root(), v);
-        Logger.getLogger(getClass()).debug(context.out.getLeft());
-        assertEquals("uri", context.out.getLeft().format);
+        assertEquals(null, context.domain.format);
+        JThing.make(j).acceptUntyped(Path.root(), v);
+        Logger.getLogger(getClass()).debug(context.domain);
+        assertEquals("uri", context.domain.format);
     }
 }

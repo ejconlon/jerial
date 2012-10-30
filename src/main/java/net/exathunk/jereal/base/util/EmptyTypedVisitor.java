@@ -5,7 +5,7 @@ import net.exathunk.jereal.base.core.*;
 /**
  * charolastra 10/29/12 9:09 PM
  */
-public class EmptyVisitor implements TypedVisitor {
+public class EmptyTypedVisitor implements TypedVisitor {
     @Override
     public boolean visitObjectStart(Path part, JObject thing) throws VisitException {
         return true;

@@ -8,7 +8,7 @@ import net.exathunk.jereal.base.operators.OperatorException;
  */
 public abstract class JObjectOperator<D> extends BaseOperator<JObject, D> {
     public JObjectOperator() {
-        super(Model.OBJECT, SuperModel.OBJECT);
+        super(Model.OBJECT);
     }
 
     @Override

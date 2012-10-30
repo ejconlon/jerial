@@ -9,7 +9,7 @@ public class JDouble extends JMutableScalarImpl<Double> {
     }
 
     @Override
-    public void accept(Path path, TypedVisitor visitor) throws VisitException {
+    public void acceptTyped(Path path, TypedVisitor visitor) throws VisitException {
         visitor.visitDouble(path, this);
     }
 }

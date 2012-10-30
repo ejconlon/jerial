@@ -21,122 +21,122 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
 
     public void declare(DeclarationBuilder dec) throws DeclarationException {
         // 8 simple string
-        dec.declare(Path.singletonKey("$ref"), SuperModel.STRING);
-        dec.declare(Path.singletonKey("$schema"), SuperModel.STRING);
-        dec.declare(Path.singletonKey("description"), SuperModel.STRING);
-        dec.declare(Path.singletonKey("format"), SuperModel.STRING);
-        dec.declare(Path.singletonKey("fragmentResolution"), SuperModel.STRING);
-        dec.declare(Path.singletonKey("id"), SuperModel.STRING);
-        dec.declare(Path.singletonKey("name"), SuperModel.STRING);
-        dec.declare(Path.singletonKey("title"), SuperModel.STRING);
+        dec.declare(Path.singletonKey("$ref"), Model.STRING);
+        dec.declare(Path.singletonKey("$schema"), Model.STRING);
+        dec.declare(Path.singletonKey("description"), Model.STRING);
+        dec.declare(Path.singletonKey("format"), Model.STRING);
+        dec.declare(Path.singletonKey("fragmentResolution"), Model.STRING);
+        dec.declare(Path.singletonKey("id"), Model.STRING);
+        dec.declare(Path.singletonKey("name"), Model.STRING);
+        dec.declare(Path.singletonKey("title"), Model.STRING);
 
         // 2 simple boolean
-        dec.declare(Path.singletonKey("required"), SuperModel.BOOLEAN);
-        dec.declare(Path.singletonKey("uniqueItems"), SuperModel.BOOLEAN);
+        dec.declare(Path.singletonKey("required"), Model.BOOLEAN);
+        dec.declare(Path.singletonKey("uniqueItems"), Model.BOOLEAN);
 
         // 2 simple long
-        dec.declare(Path.singletonKey("minimum"), SuperModel.LONG);
-        dec.declare(Path.singletonKey("minItems"), SuperModel.LONG);
+        dec.declare(Path.singletonKey("minimum"), Model.LONG);
+        dec.declare(Path.singletonKey("minItems"), Model.LONG);
 
         // 1 simple array
-        dec.declare(Path.singletonKey("links"), SuperModel.ARRAY);
+        dec.declare(Path.singletonKey("links"), Model.ARRAY);
 
         /*// 1 simple object
-        dec.declare("dependencies", SuperModel.OBJECT);
-        dec.declare("properties", SuperModel.OBJECT);
+        dec.declare("dependencies", Model.OBJECT);
+        dec.declare("properties", Model.OBJECT);
 
         // 1 simple any
-        dec.declare("default", SuperModel.ANY);
+        dec.declare("default", Model.ANY);
 
         // 4 union
-        dec.declare("extends", SuperModel.STRING, SuperModel.OBJECT);
-        dec.declare("type", SuperModel.STRING, SuperModel.ARRAY, SuperModel.OBJECT);
-        dec.declare("items", SuperModel.STRING, SuperModel.ARRAY, SuperModel.OBJECT);
-        dec.declare("additionalProperties", SuperModel.STRING, SuperModel.BOOLEAN, SuperModel.OBJECT);
+        dec.declare("extends", Model.STRING, Model.OBJECT);
+        dec.declare("type", Model.STRING, Model.ARRAY, Model.OBJECT);
+        dec.declare("items", Model.STRING, Model.ARRAY, Model.OBJECT);
+        dec.declare("additionalProperties", Model.STRING, Model.BOOLEAN, Model.OBJECT);
         */
     }
 
     public void implement(ImplementerMap<JThing, Schema> imp) throws DeclarationException {
         // 8 simple string
-        imp.path(Path.singletonKey("$ref")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        imp.path(Path.singletonKey("$ref")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JString, Schema> c) {
-                c.out.getLeft().dollar_ref = c.thing.runResFunc();
+                c.domain.dollar_ref = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("$schema")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        imp.path(Path.singletonKey("$schema")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JString, Schema> c) {
-                c.out.getLeft().dollar_schema = c.thing.runResFunc();
+                c.domain.dollar_schema = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("description")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        imp.path(Path.singletonKey("description")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JString, Schema> c) {
-                c.out.getLeft().description = c.thing.runResFunc();
+                c.domain.description = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("format")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        imp.path(Path.singletonKey("format")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JString, Schema> c) {
-                c.out.getLeft().format = c.thing.runResFunc();
+                c.domain.format = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("fragmentResolution")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        imp.path(Path.singletonKey("fragmentResolution")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JString, Schema> c) {
-                c.out.getLeft().fragmentResolution = c.thing.runResFunc();
+                c.domain.fragmentResolution = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("id")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        imp.path(Path.singletonKey("id")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JString, Schema> c) {
-                c.out.getLeft().id = c.thing.runResFunc();
+                c.domain.id = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("name")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        imp.path(Path.singletonKey("name")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JString, Schema> c) {
-                c.out.getLeft().name = c.thing.runResFunc();
+                c.domain.name = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("title")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
+        imp.path(Path.singletonKey("title")).implement(Model.STRING, new JStringOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JString, Schema> c) {
-                c.out.getLeft().title = c.thing.runResFunc();
+                c.domain.title = c.thing.runResFunc();
             }
         });
 
         // 2 simple boolean
-        imp.path(Path.singletonKey("required")).implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema>() {
+        imp.path(Path.singletonKey("required")).implement(Model.BOOLEAN, new JBooleanOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JBoolean, Schema> c) {
-                c.out.getLeft().required = c.thing.runResFunc();
+                c.domain.required = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("uniqueItems")).implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema>() {
+        imp.path(Path.singletonKey("uniqueItems")).implement(Model.BOOLEAN, new JBooleanOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JBoolean, Schema> c) {
-                c.out.getLeft().uniqueItems = c.thing.runResFunc();
+                c.domain.uniqueItems = c.thing.runResFunc();
             }
         });
 
         // 2 simple long
-        imp.path(Path.singletonKey("minimum")).implement(SuperModel.LONG, new JLongOperator<Schema>() {
+        imp.path(Path.singletonKey("minimum")).implement(Model.LONG, new JLongOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JLong, Schema> c) {
-                c.out.getLeft().minimum = c.thing.runResFunc();
+                c.domain.minimum = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("minItems")).implement(SuperModel.LONG, new JLongOperator<Schema>() {
+        imp.path(Path.singletonKey("minItems")).implement(Model.LONG, new JLongOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JLong, Schema> c) {
-                c.out.getLeft().minItems = c.thing.runResFunc();
+                c.domain.minItems = c.thing.runResFunc();
             }
         });
 
         // 1 simple array
-        imp.path(Path.singletonKey("links")).implement(SuperModel.ARRAY, new JArrayOperator<Schema>() {
+        imp.path(Path.singletonKey("links")).implement(Model.ARRAY, new JArrayOperator<Schema>() {
             @Override
             public void typedRunFunc(OpContext<JArray, Schema> c) {
                 RegistryFactory factory = SchemaRegistryFactorySingleton.getInstance();
@@ -146,7 +146,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
                     for (Map.Entry<Integer, JThing> entry : c.thing.seq()) {
                         Link link = new Link();
                         linkDejerializer.dejerialize(registry, entry.getValue().rawGetObject(), link);
-                        c.out.getLeft().links.add(link);
+                        c.domain.links.add(link);
                     }
                 } catch (JerializerException e) {
                     c.fail(new OperatorException("link jer stuff", e));

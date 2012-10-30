@@ -33,7 +33,7 @@ public class JerializerUtils {
 
     public static String jobjectToJson(JObject jobject) throws VisitException {
         JsonObjectWriter visitor = new JsonObjectWriter();
-        jobject.accept(Path.root(), visitor);
+        jobject.acceptTyped(Path.root(), visitor);
         StringBuilder sb = new StringBuilder();
         visitor.runFunc(sb);
         return sb.toString();

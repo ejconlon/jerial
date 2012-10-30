@@ -8,7 +8,7 @@ import net.exathunk.jereal.base.operators.OperatorException;
  */
 public abstract class JBooleanOperator<D> extends BaseOperator<JBoolean, D> {
     public JBooleanOperator() {
-        super(Model.BOOLEAN, SuperModel.BOOLEAN);
+        super(Model.BOOLEAN);
     }
 
     @Override

@@ -79,10 +79,10 @@ public class JObject implements JMutableCollection<String, JThing> {
     }
 
     @Override
-    public void accept(Path path, TypedVisitor visitor) throws VisitException {
+    public void acceptTyped(Path path, TypedVisitor visitor) throws VisitException {
         if (!visitor.visitObjectStart(path, this)) return;
         for (Map.Entry<String, JThing> entry : map.entrySet()) {
-            entry.getValue().accept(path.cons(PathPart.key(entry.getKey())), visitor);
+            entry.getValue().acceptTyped(path.cons(PathPart.key(entry.getKey())), visitor);
         }
         visitor.visitObjectEnd(path, this);
     }

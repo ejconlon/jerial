@@ -8,12 +8,12 @@ import java.util.Map;
 /**
  * charolastra 10/28/12 3:22 AM
  */
-public class JThing implements Visitable {
+public class JThing implements TypedVisitable, UntypedVisitable {
 
     private final Model model;
-    private final Visitable value;
+    private final TypedVisitable value;
 
-    private JThing(Model model, Visitable value) {
+    private JThing(Model model, TypedVisitable value) {
         this.model = model;
         this.value = value;
         assert model != null;
@@ -158,8 +158,24 @@ public class JThing implements Visitable {
                 '}';
     }
 
-    public void accept(Path path, TypedVisitor visitor) throws VisitException {
-        value.accept(path, visitor);
+    @Override
+    public void acceptTyped(Path path, TypedVisitor visitor) throws VisitException {
+        value.acceptTyped(path, visitor);
+    }
+
+    @Override
+    public void acceptUntyped(Path path, UntypedVisitor visitor) throws VisitException {
+        if (visitor.visitThing(path, this)) {
+            if (isObject()) {
+                for (Map.Entry<String, JThing> entry : rawGetObject().seq()) {
+                    entry.getValue().acceptUntyped(path.consKey(entry.getKey()), visitor);
+                }
+            } else if (isArray()) {
+                for (Map.Entry<Integer, JThing> entry : rawGetArray().seq()) {
+                    entry.getValue().acceptUntyped(path.consIndex(entry.getKey()), visitor);
+                }
+            }
+        }
     }
 
     @Override

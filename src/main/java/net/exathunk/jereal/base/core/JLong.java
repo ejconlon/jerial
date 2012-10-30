@@ -9,7 +9,7 @@ public class JLong extends JMutableScalarImpl<Long> {
     }
 
     @Override
-    public void accept(Path path, TypedVisitor visitor) throws VisitException {
+    public void acceptTyped(Path path, TypedVisitor visitor) throws VisitException {
         visitor.visitLong(path, this);
     }
 }

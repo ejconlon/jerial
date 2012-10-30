@@ -9,7 +9,7 @@ public class JString extends JMutableScalarImpl<String> {
     }
 
     @Override
-    public void accept(Path path, TypedVisitor visitor) throws VisitException {
+    public void acceptTyped(Path path, TypedVisitor visitor) throws VisitException {
         visitor.visitString(path, this);
     }
 }

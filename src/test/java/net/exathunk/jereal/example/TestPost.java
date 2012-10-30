@@ -148,7 +148,7 @@ public class TestPost {
         }
 
         FlattenVisitor visitor = new FlattenVisitor();
-        j1.accept(Path.root(), visitor);
+        j1.acceptTyped(Path.root(), visitor);
 
         final JObject j2 = visitor.runResFunc();
         for (Map.Entry<String, JThing> entry : j2.seq()) {
@@ -173,7 +173,7 @@ public class TestPost {
         }
 
         FlattenVisitor visitor = new FlattenVisitor();
-        j1.accept(Path.root(), visitor);
+        j1.acceptTyped(Path.root(), visitor);
 
         final JObject j2 = visitor.runResFunc();
 

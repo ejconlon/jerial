@@ -1,7 +1,7 @@
 package net.exathunk.jereal.base.operators.declaration;
 
+import net.exathunk.jereal.base.core.Model;
 import net.exathunk.jereal.base.core.Path;
-import net.exathunk.jereal.base.core.SuperModel;
 import net.exathunk.jereal.base.operators.OperatorMap;
 
 import java.util.Map;
@@ -29,7 +29,7 @@ public class ImplementerMap<J, F> implements OperatorMapBuilder<J, F> {
         }
     }
 
-    public boolean hasDeclaredAny(String key) {
+    public boolean hasDeclaredAny(Path key) {
         return implementers.containsKey(key);
     }
 
@@ -37,7 +37,7 @@ public class ImplementerMap<J, F> implements OperatorMapBuilder<J, F> {
         return !implementers.isEmpty();
     }
 
-    public boolean hasDeclaredOne(String key, SuperModel model) {
+    public boolean hasDeclaredOne(Path key, Model model) {
         Implementer<J, F> implementer = implementers.get(key);
         if (implementer != null) {
             return implementer.hasDeclared(model);
@@ -46,7 +46,7 @@ public class ImplementerMap<J, F> implements OperatorMapBuilder<J, F> {
         }
     }
 
-    public boolean hasImplementedAny(String key) {
+    public boolean hasImplementedAny(Path key) {
         Implementer<J, F> implementer = implementers.get(key);
         if (implementer != null) {
             return implementer.hasImplementedAny();
@@ -62,7 +62,7 @@ public class ImplementerMap<J, F> implements OperatorMapBuilder<J, F> {
         return false;
     }
 
-    public boolean hasImplementedAll(String key) {
+    public boolean hasImplementedAll(Path key) {
         Implementer<J, F> implementer = implementers.get(key);
         if (implementer != null) {
             return implementer.hasImplementedAll();

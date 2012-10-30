@@ -2,7 +2,6 @@ package net.exathunk.jereal.base.operators.core;
 
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.Model;
-import net.exathunk.jereal.base.core.SuperModel;
 import net.exathunk.jereal.base.operators.OpContext;
 import net.exathunk.jereal.base.operators.OperatorException;
 
@@ -11,16 +10,14 @@ import net.exathunk.jereal.base.operators.OperatorException;
  */
 public abstract class BaseOperator<J, D> implements Operator<JThing, D> {
     private final Model model;
-    private final SuperModel superModel;
 
-    protected BaseOperator(Model model, SuperModel superModel) {
+    protected BaseOperator(Model model) {
         this.model = model;
-        this.superModel = superModel;
-        assert model != null && superModel != null;
+        assert model != null;
     }
 
     public final boolean canConvert(OpContext<JThing, D> c) {
-        return model.equals(c.thing.getModel()) && superModel.equals(c.model);
+        return model.equals(c.thing.getModel());
     }
 
     public final OpContext<J, D> convert(OpContext<JThing, D> c) throws OperatorException{
