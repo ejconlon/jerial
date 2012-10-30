@@ -23,7 +23,7 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
         }
     }
 
-    private void outputKey(ConsList<PathPart> path) {
+    private void outputKey(Path path) {
         if (!path.isEmpty()) {
             final PathPart part = path.head();
             if (part.hasLeft()) {
@@ -35,7 +35,7 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
         }
     }
 
-    private void output(ConsList<PathPart> path, String v, boolean quote) {
+    private void output(Path path, String v, boolean quote) {
         outputComma();
         outputKey(path);
         if (quote && v != null) sb.append('"');
@@ -49,7 +49,7 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
     }
 
     @Override
-    public void visitObjectStart(ConsList<PathPart> part, JObject thing) throws VisitException {
+    public void visitObjectStart(Path part, JObject thing) throws VisitException {
         outputComma();
         outputKey(part);
         sb.append('{');
@@ -57,13 +57,13 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
     }
 
     @Override
-    public void visitObjectEnd(ConsList<PathPart> part, JObject thing) {
+    public void visitObjectEnd(Path part, JObject thing) {
         sb.append('}');
         needComma.pop();
     }
 
     @Override
-    public void visitArrayStart(ConsList<PathPart> part, JArray thing) {
+    public void visitArrayStart(Path part, JArray thing) {
         outputComma();
         outputKey(part);
         sb.append('[');
@@ -71,19 +71,19 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
     }
 
     @Override
-    public void visitArrayEnd(ConsList<PathPart> part, JArray thing) {
+    public void visitArrayEnd(Path part, JArray thing) {
         sb.append(']');
         needComma.pop();
     }
 
     @Override
-    public void visitString(ConsList<PathPart> part, JString thing) {
+    public void visitString(Path part, JString thing) {
         String v = thing.runResFunc();
         output(part, v, true);
     }
 
     @Override
-    public void visitBoolean(ConsList<PathPart> part, JBoolean thing) {
+    public void visitBoolean(Path part, JBoolean thing) {
         String v = null;
         Boolean x = thing.runResFunc();
         if (x != null) v = x.toString().toLowerCase();
@@ -91,7 +91,7 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
     }
 
     @Override
-    public void visitLong(ConsList<PathPart> part, JLong thing) {
+    public void visitLong(Path part, JLong thing) {
         String v = null;
         Long x = thing.runResFunc();
         if (x != null) v = x.toString();
@@ -99,7 +99,7 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
     }
 
     @Override
-    public void visitDouble(ConsList<PathPart> part, JDouble thing) {
+    public void visitDouble(Path part, JDouble thing) {
         String v = null;
         Double x = thing.runResFunc();
         if (x != null) v = x.toString();

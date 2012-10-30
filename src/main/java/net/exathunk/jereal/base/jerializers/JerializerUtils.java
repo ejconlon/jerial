@@ -2,8 +2,7 @@ package net.exathunk.jereal.base.jerializers;
 
 import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JObject;
-import net.exathunk.jereal.base.core.PathPart;
-import net.exathunk.jereal.base.functional.ConsList;
+import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.VisitException;
 import net.exathunk.jereal.base.util.JsonObjectWriter;
 import net.exathunk.jereal.base.util.JsonParser;
@@ -34,7 +33,7 @@ public class JerializerUtils {
 
     public static String jobjectToJson(JObject jobject) throws VisitException {
         JsonObjectWriter visitor = new JsonObjectWriter();
-        jobject.accept(new ConsList<PathPart>(), visitor);
+        jobject.accept(Path.root(), visitor);
         StringBuilder sb = new StringBuilder();
         visitor.runFunc(sb);
         return sb.toString();

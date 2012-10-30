@@ -3,30 +3,29 @@ package net.exathunk.jereal.base.functional;
 import java.util.Iterator;
 
 public class ConsList<T> implements Sequence<T> {
-    private final T _head;
-    private final ConsList<T> _tail;
+    protected final T _head;
+    protected final ConsList<T> _tail;
+    protected final boolean isNil;
 
     public ConsList() {
         this._head = null;
         this._tail = null;
+        this.isNil = true;
     }
-    public ConsList(T head) {
-        this._head = head;
-        this._tail = null;
-    }
-    private ConsList(T head, ConsList<T> tail) {
+    protected ConsList(T head, ConsList<T> tail) {
         this._head = head;
         this._tail = tail;
+        this.isNil = false;
         assert tail != null;
     }
 
     public T head() {
-        if (_tail == null) throw new IllegalStateException("NULL HEAD");
+        if (isNil) throw new IllegalStateException("NIL HEAD");
         return _head;
     }
 
     public ConsList<T> tail() {
-        if (_tail == null) throw new IllegalStateException("NULL TAIL");
+        if (isNil) throw new IllegalStateException("NIL TAIL");
         return _tail;
     }
 

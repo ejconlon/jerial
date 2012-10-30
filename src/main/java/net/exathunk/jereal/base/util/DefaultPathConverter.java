@@ -1,6 +1,6 @@
 package net.exathunk.jereal.base.util;
 
-import net.exathunk.jereal.base.functional.ConsList;
+import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.PathPart;
 
 /**
@@ -24,7 +24,7 @@ public class DefaultPathConverter implements PathConverter {
         }
     }
 
-    private void recurse(ConsList<PathPart> path, StringBuilder sb) {
+    private void recurse(Path path, StringBuilder sb) {
         if (path.isEmpty()) return;
         recurse(path.tail(), sb);
         sb.append(delimiter);
@@ -32,7 +32,7 @@ public class DefaultPathConverter implements PathConverter {
     }
 
     @Override
-    public String convertPath(ConsList<PathPart> path) {
+    public String convertPath(Path path) {
         StringBuilder sb = new StringBuilder();
         recurse(path, sb);
         return sb.toString();

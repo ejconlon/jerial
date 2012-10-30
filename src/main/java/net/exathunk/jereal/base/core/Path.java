@@ -10,8 +10,8 @@ import net.exathunk.jereal.base.util.PathConverter;
 public class Path extends ConsList<PathPart> implements Comparable<Path> {
     private static final PathConverter CONVERTER = new DefaultPathConverter();
 
-    public Path() { super(); }
-    public Path(PathPart part) { super(part); }
+    private Path() { super(); }
+    protected Path(PathPart head, Path tail) { super(head, tail); }
 
     public static Path root() {
         return new Path();
@@ -19,7 +19,12 @@ public class Path extends ConsList<PathPart> implements Comparable<Path> {
 
     @Override
     public Path cons(PathPart newHead) {
-        return new Path(newHead);
+        return new Path(newHead, this);
+    }
+
+    @Override
+    public Path tail() {
+        return (Path)super.tail();
     }
 
     public Path consKey(String key) {

@@ -1,6 +1,5 @@
 package net.exathunk.jereal.base.core;
 
-import net.exathunk.jereal.base.functional.ConsList;
 import net.exathunk.jereal.base.functional.MapSequence;
 import net.exathunk.jereal.base.functional.Maybe;
 import net.exathunk.jereal.base.functional.Sequence;
@@ -80,7 +79,7 @@ public class JObject implements JMutableCollection<String, JThing> {
     }
 
     @Override
-    public void accept(ConsList<PathPart> path, TypedVisitor visitor) throws VisitException {
+    public void accept(Path path, TypedVisitor visitor) throws VisitException {
         visitor.visitObjectStart(path, this);
         for (Map.Entry<String, JThing> entry : map.entrySet()) {
             entry.getValue().accept(path.cons(PathPart.key(entry.getKey())), visitor);

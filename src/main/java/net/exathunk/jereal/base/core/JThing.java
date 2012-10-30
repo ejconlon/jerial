@@ -158,7 +158,7 @@ public class JThing implements Visitable {
                 '}';
     }
 
-    public void accept(ConsList<PathPart> path, TypedVisitor visitor) throws VisitException {
+    public void accept(Path path, TypedVisitor visitor) throws VisitException {
         value.accept(path, visitor);
     }
 

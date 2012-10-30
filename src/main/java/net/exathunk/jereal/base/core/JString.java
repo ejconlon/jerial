@@ -1,7 +1,5 @@
 package net.exathunk.jereal.base.core;
 
-import net.exathunk.jereal.base.functional.ConsList;
-
 /**
  * charolastra 10/27/12 11:56 PM
  */
@@ -11,7 +9,7 @@ public class JString extends JMutableScalarImpl<String> {
     }
 
     @Override
-    public void accept(ConsList<PathPart> path, TypedVisitor visitor) throws VisitException {
+    public void accept(Path path, TypedVisitor visitor) throws VisitException {
         visitor.visitString(path, this);
     }
 }

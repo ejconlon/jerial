@@ -1,14 +1,10 @@
 package net.exathunk.jereal.example;
 
-import net.exathunk.jereal.base.core.JObject;
-import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.PathPart;
-import net.exathunk.jereal.base.functional.ConsList;
+import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.jerializers.JerializerRegistryImpl;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
-import net.exathunk.jereal.base.core.VisitException;
 import net.exathunk.jereal.base.util.FlattenVisitor;
 import net.exathunk.jereal.base.util.Logger;
 import net.exathunk.jereal.schema.util.Loader;
@@ -152,7 +148,7 @@ public class TestPost {
         }
 
         FlattenVisitor visitor = new FlattenVisitor();
-        j1.accept(new ConsList<PathPart>(), visitor);
+        j1.accept(Path.root(), visitor);
 
         final JObject j2 = visitor.runResFunc();
         for (Map.Entry<String, JThing> entry : j2.seq()) {
@@ -177,7 +173,7 @@ public class TestPost {
         }
 
         FlattenVisitor visitor = new FlattenVisitor();
-        j1.accept(new ConsList<PathPart>(), visitor);
+        j1.accept(Path.root(), visitor);
 
         final JObject j2 = visitor.runResFunc();
 
