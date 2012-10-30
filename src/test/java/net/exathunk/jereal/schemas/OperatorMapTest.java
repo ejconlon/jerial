@@ -42,7 +42,7 @@ public class OperatorMapTest {
     @Test
     public void testSchema() throws DeclarationException {
         final OperatorMap<JThing, Schema> m = makeSchemaMap();
-        assertEquals(false, m.dir(Direction.SERIALIZE).isEmpty());
+        assertEquals(false, m.isEmpty());
     }
 
     @Test

@@ -1,6 +1,5 @@
 package net.exathunk.jereal.base.operators.declaration;
 
-import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.SuperModel;
 import net.exathunk.jereal.base.operators.Direction;
@@ -16,13 +15,11 @@ import java.util.Set;
  */
 public class Implementer<J, F> implements OperatorMapBuilder<J, F> {
 
-    private final Direction dir;
     private final Path path;
     private final Set<SuperModel> models;
     private final Map<SuperModel, Operator<J, F>> implementations;
 
-    public Implementer(Direction dir, Path path, Set<SuperModel> models) {
-        this.dir = dir;
+    public Implementer(Path path, Set<SuperModel> models) {
         this.path = path;
         this.models = models;
         this.implementations = new HashMap<SuperModel, Operator<J, F>>(models.size());
@@ -69,7 +66,7 @@ public class Implementer<J, F> implements OperatorMapBuilder<J, F> {
             throw new DeclarationException("Did not implement: "+path+" => "+sb.toString());
         }
         for (Map.Entry<SuperModel, Operator<J, F>> entry : implementations.entrySet()) {
-            opMap.dir(dir).put(path, entry.getKey(), entry.getValue());
+            opMap.put(path, entry.getKey(), entry.getValue());
         }
     }
 }

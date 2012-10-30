@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Schema> {
 
-    public void declare(DeclarationBuilder<JThing, Schema> dec) throws DeclarationException {
+    public void declare(DeclarationBuilder dec) throws DeclarationException {
         // 8 simple string
         dec.declare(Path.singletonKey("$ref"), SuperModel.STRING);
         dec.declare(Path.singletonKey("$schema"), SuperModel.STRING);
@@ -56,7 +56,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         */
     }
 
-    public void implement(ImplementerPathMap<JThing, Schema> imp) throws DeclarationException {
+    public void implement(ImplementerMap<JThing, Schema> imp) throws DeclarationException {
         // 8 simple string
         imp.path(Path.singletonKey("$ref")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
             @Override
@@ -156,9 +156,9 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
     }
 
     public void buildOperatorMap(OperatorMap<JThing, Schema> opMap) throws DeclarationException {
-        final DeclarationBuilder<JThing, Schema> dec = new DeclarationBuilder<JThing, Schema>();
+        final DeclarationBuilder dec = new DeclarationBuilder();
         declare(dec);
-        final ImplementerPathMap<JThing, Schema> imp = dec.buildImplementers().dir(Direction.SERIALIZE);
+        final ImplementerMap<JThing, Schema> imp = dec.buildImplementerMap();
         implement(imp);
         imp.buildOperatorMap(opMap);
     }

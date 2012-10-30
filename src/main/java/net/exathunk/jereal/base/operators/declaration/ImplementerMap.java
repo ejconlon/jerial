@@ -9,10 +9,10 @@ import java.util.Map;
 /**
  * charolastra 10/30/12 12:11 AM
  */
-public class ImplementerPathMap<J, F> implements OperatorMapBuilder<J, F> {
+public class ImplementerMap<J, F> implements OperatorMapBuilder<J, F> {
     private final Map<Path, Implementer<J, F>> implementers;
 
-    ImplementerPathMap(Map<Path, Implementer<J, F>> implementers) {
+    ImplementerMap(Map<Path, Implementer<J, F>> implementers) {
         this.implementers = implementers;
     }
 

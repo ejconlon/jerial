@@ -18,7 +18,7 @@ public class OperatorMapVisitor<F> extends EmptyVisitor {
     }
 
     private boolean run(Path path, SuperModel model, JThing thing) throws VisitException {
-        Operator<JThing, F> op = opMap.dir(context.dir).get(path, model);
+        Operator<JThing, F> op = opMap.get(path, model);
         boolean hasRun = false;
         final OpContext newContext = context.withPath(path).withThing(thing);
         if (op != null && newContext.out.hasLeft()) {
