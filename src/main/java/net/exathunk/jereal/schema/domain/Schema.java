@@ -84,9 +84,9 @@ public class Schema {
         if (type != null) sb.append("type=" + type+", ");
         if (items != null) sb.append("items=" + items+", ");
         if (extendz != null) sb.append("extendz=" + extendz+", ");
-        if (properties != null) sb.append("properties=" + properties+", ");
-        if (links != null) sb.append("links=" + links+", ");
-        if (dependencies != null) sb.append("dependencies=" + dependencies+", ");
+        if (!properties.isEmpty()) sb.append("properties=" + properties+", ");
+        if (!links.isEmpty()) sb.append("links=" + links+", ");
+        if (!dependencies.isEmpty()) sb.append("dependencies=" + dependencies+", ");
         sb.append('}');
         return sb.toString();
     }

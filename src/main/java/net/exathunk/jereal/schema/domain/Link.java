@@ -14,4 +14,17 @@ public class Link {
     public String enctype;
     public String method;
     public final Map<String, SchemaRef<String>> properties = new TreeMap<String, SchemaRef<String>>();
+
+    @Override
+    public String toString() {
+        return "Link{" +
+                "rel='" + rel + '\'' +
+                ", href='" + href + '\'' +
+                (schema != null ? ", schema='" + schema + '\'' : "") +
+                (targetSchema != null ? ", targetSchema='" + targetSchema + '\'' : "") +
+                (enctype != null ? ", enctype='" + enctype + '\'' : "") +
+                (method != null ? ", method='" + method + '\'' : "") +
+                (!properties.isEmpty() ? ", properties=" + properties : "") +
+                '}';
+    }
 }
