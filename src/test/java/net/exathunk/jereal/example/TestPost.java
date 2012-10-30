@@ -200,4 +200,23 @@ public class TestPost {
             runFlatteningTest(Loader.loadSchemaString(name), null);
         }
     }
+
+    private static class FluMap<A, B> {
+        public Map<A, B> map = new TreeMap<A, B>();
+        public FluMap put(A k, B v) { map.put(k, v); return this; }
+    }
+
+    @Test
+    public void testPathConvert() {
+        Map<Path, String> map = (new FluMap<Path, String>())
+                .put(Path.root(), "")
+                .put(Path.root().consKey("a"), "/a")
+                .put(Path.root().consIndex(0), "/0")
+                .put(Path.root().consKey("b").consIndex(1), "/b/1")
+                .put(Path.root().consIndex(2).consKey("c"), "/2/c")
+                .map;
+        for (Map.Entry<Path, String> entry : map.entrySet()) {
+            assertEquals(entry.getValue(), entry.getKey().convert());
+        }
+    }
 }
