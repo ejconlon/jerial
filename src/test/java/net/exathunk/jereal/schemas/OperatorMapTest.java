@@ -46,10 +46,10 @@ public class OperatorMapTest {
 
     @Test
     public void testSchemaSerialization() throws DeclarationException, IOException, JerializerException, VisitException {
-        final OperatorMap<JThing, Schema> m = makeSchemaMap();
+        final OperatorMap<JThing, Schema> opMap = makeSchemaMap();
         final JObject j = loadSchema("schema");
-        final OpContext<JThing, Schema> context = new OpContext<JThing, Schema>(Direction.SERIALIZE, Path.root(), Model.OBJECT, null, new Schema(), new ReferenceImpl<OperatorException>());
-        final OperatorMapVisitor<Schema> v = new OperatorMapVisitor<Schema>(m, context);
+        final OpContext<JThing, Schema> context = new OpContext<JThing, Schema>(opMap, new Schema(), new ReferenceImpl<OperatorException>());
+        final OperatorVisitor<Schema> v = new OperatorVisitor<Schema>(context);
 
         assertEquals(null, context.domain.format);
         JThing.make(j).acceptUntyped(Path.root(), v);

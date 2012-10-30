@@ -16,24 +16,24 @@ public abstract class BaseOperator<J, D> implements Operator<JThing, D> {
         assert model != null;
     }
 
-    public final boolean canConvert(OpContext<JThing, D> c) {
-        return model.equals(c.thing.getModel());
+    public final boolean canConvert(ArgContext<JThing> argC) {
+        return model.equals(argC.thing.getModel());
     }
 
-    public final OpContext<J, D> convert(OpContext<JThing, D> c) throws OperatorException{
-        return c.withThing(convert(c.thing));
+    public final ArgContext<J> convert(ArgContext<JThing> argC) throws OperatorException {
+        return argC.withThing(convert(argC.thing));
     }
 
     @Override
-    public final void runFunc(OpContext<JThing, D> c) {
+    public final void runFunc(OpContext<JThing, D> opC, ArgContext<JThing> argC) {
         try {
-            final OpContext<J, D> converted = convert(c);
-            typedRunFunc(converted);
+            final ArgContext<J> newArgC = convert(argC);
+            typedRunFunc(opC, newArgC);
         } catch (OperatorException e) {
-            c.fail(e);
+            opC.fail(e);
         }
     }
 
     public abstract J convert(JThing thing) throws OperatorException;
-    public abstract void typedRunFunc(OpContext<J, D> c);
+    public abstract void typedRunFunc(OpContext<JThing, D> opC, ArgContext<J> argC);
 }
