@@ -12,22 +12,22 @@ import java.util.Set;
 /**
  * charolastra 10/29/12 2:29 PM
  */
-public class Implementer<J, F> implements OperatorMapBuilder<J, F> {
+public class Implementer<J, D> implements OperatorMapBuilder<J, D> {
 
     private final Path path;
     private final Set<Model> models;
-    private final Map<Model, Operator<J, F>> implementations;
+    private final Map<Model, Operator<J, J, D, D>> implementations;
 
     public Implementer(Path path, Set<Model> models) {
         this.path = path;
         this.models = models;
-        this.implementations = new HashMap<Model, Operator<J, F>>(models.size());
+        this.implementations = new HashMap<Model, Operator<J, J, D, D>>(models.size());
         assert path != null;
         assert models != null;
         assert !models.isEmpty();
     }
 
-    public Implementer<J, F> implement(Model model, Operator<J, F> operator) throws DeclarationException {
+    public Implementer<J, D> implement(Model model, Operator<J, J, D, D> operator) throws DeclarationException {
         if (!hasDeclared(model)) {
             throw new DeclarationException("Did not declare: "+path+" "+model);
         }
@@ -52,7 +52,7 @@ public class Implementer<J, F> implements OperatorMapBuilder<J, F> {
     }
 
     @Override
-    public void buildOperatorMap(OperatorMap<J, F> opMap) throws DeclarationException {
+    public void buildOperatorMap(OperatorMap<J, D> opMap) throws DeclarationException {
         if (!hasImplementedAll()) {
             StringBuilder sb = new StringBuilder();
             for (Model model : models) {
@@ -64,7 +64,7 @@ public class Implementer<J, F> implements OperatorMapBuilder<J, F> {
             if (sb.length() > 0) sb.deleteCharAt(sb.length()-1);
             throw new DeclarationException("Did not implement: "+path+" => "+sb.toString());
         }
-        for (Map.Entry<Model, Operator<J, F>> entry : implementations.entrySet()) {
+        for (Map.Entry<Model, Operator<J, J, D, D>> entry : implementations.entrySet()) {
             opMap.put(path, entry.getKey(), entry.getValue());
         }
     }

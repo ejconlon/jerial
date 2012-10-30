@@ -51,9 +51,9 @@ public class OperatorMapTest {
         final OpContext<JThing, Schema> context = new OpContext<JThing, Schema>(opMap, new Schema(), new ReferenceImpl<OperatorException>());
         final OperatorVisitor<Schema> v = new OperatorVisitor<Schema>(context);
 
-        assertEquals(null, context.domain.format);
+        assertEquals(null, context.domain.id);
         JThing.make(j).acceptUntyped(Path.root(), v);
         Logger.getLogger(getClass()).debug(context.domain);
-        assertEquals("uri", context.domain.format);
+        assertEquals("http://json-schema.org/schema#", context.domain.id);
     }
 }

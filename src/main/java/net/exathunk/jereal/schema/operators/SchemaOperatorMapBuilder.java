@@ -18,22 +18,22 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
 
     public void declare(DeclarationBuilder dec) throws DeclarationException {
         // 8 simple string
-        dec.declare(Path.singletonKey("$ref"), Model.STRING);
-        dec.declare(Path.singletonKey("$schema"), Model.STRING);
-        dec.declare(Path.singletonKey("description"), Model.STRING);
-        dec.declare(Path.singletonKey("format"), Model.STRING);
-        dec.declare(Path.singletonKey("fragmentResolution"), Model.STRING);
+        //dec.declare(Path.singletonKey("$ref"), Model.STRING);
+        //dec.declare(Path.singletonKey("$schema"), Model.STRING);
+        //dec.declare(Path.singletonKey("description"), Model.STRING);
+        //dec.declare(Path.singletonKey("format"), Model.STRING);
+        //dec.declare(Path.singletonKey("fragmentResolution"), Model.STRING);
         dec.declare(Path.singletonKey("id"), Model.STRING);
-        dec.declare(Path.singletonKey("name"), Model.STRING);
-        dec.declare(Path.singletonKey("title"), Model.STRING);
+        //dec.declare(Path.singletonKey("name"), Model.STRING);
+        //dec.declare(Path.singletonKey("title"), Model.STRING);
 
         // 2 simple boolean
         dec.declare(Path.singletonKey("required"), Model.BOOLEAN);
-        dec.declare(Path.singletonKey("uniqueItems"), Model.BOOLEAN);
+        //dec.declare(Path.singletonKey("uniqueItems"), Model.BOOLEAN);
 
         // 2 simple long
-        dec.declare(Path.singletonKey("minimum"), Model.LONG);
-        dec.declare(Path.singletonKey("minItems"), Model.LONG);
+        //dec.declare(Path.singletonKey("minimum"), Model.LONG);
+        //dec.declare(Path.singletonKey("minItems"), Model.LONG);
 
         // 1 simple array
         //dec.declare(Path.singletonKey("links"), Model.ARRAY);
@@ -55,82 +55,22 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
 
     public void implement(ImplementerMap<JThing, Schema> imp) throws DeclarationException {
         // 8 simple string
-        imp.path(Path.singletonKey("$ref")).implement(Model.STRING, new JStringOperator<Schema>() {
+
+        imp.path(Path.singletonKey("id")).implement(Model.STRING, new JStringOperator<Schema, Schema>(new Operator<JThing, JString, Schema, Schema>() {
             @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
-                opC.domain.dollar_ref = argC.thing.runResFunc();
+            public void runFunc(OpContext<JThing, Schema> opC, ArgContext argC, JString thing, Schema domain) {
+                domain.id = thing.runResFunc();
             }
-        });
-        imp.path(Path.singletonKey("$schema")).implement(Model.STRING, new JStringOperator<Schema>() {
-            @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
-                opC.domain.dollar_schema = argC.thing.runResFunc();
-            }
-        });
-        imp.path(Path.singletonKey("description")).implement(Model.STRING, new JStringOperator<Schema>() {
-            @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
-                opC.domain.description = argC.thing.runResFunc();
-            }
-        });
-        imp.path(Path.singletonKey("format")).implement(Model.STRING, new JStringOperator<Schema>() {
-            @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
-                opC.domain.format = argC.thing.runResFunc();
-            }
-        });
-        imp.path(Path.singletonKey("fragmentResolution")).implement(Model.STRING, new JStringOperator<Schema>() {
-            @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
-                opC.domain.fragmentResolution = argC.thing.runResFunc();
-            }
-        });
-        imp.path(Path.singletonKey("id")).implement(Model.STRING, new JStringOperator<Schema>() {
-            @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
-                opC.domain.id = argC.thing.runResFunc();
-            }
-        });
-        imp.path(Path.singletonKey("name")).implement(Model.STRING, new JStringOperator<Schema>() {
-            @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
-                opC.domain.name = argC.thing.runResFunc();
-            }
-        });
-        imp.path(Path.singletonKey("title")).implement(Model.STRING, new JStringOperator<Schema>() {
-            @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JString> argC) {
-                opC.domain.title = argC.thing.runResFunc();
-            }
-        });
+        }));
 
         // 2 simple boolean
-        imp.path(Path.singletonKey("required")).implement(Model.BOOLEAN, new JBooleanOperator<Schema>() {
+        imp.path(Path.singletonKey("required")).implement(Model.BOOLEAN, new JBooleanOperator<Schema, Schema>(new Operator<JThing, JBoolean, Schema, Schema>() {
             @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JBoolean> argC) {
-                opC.domain.required = argC.thing.runResFunc();
+            public void runFunc(OpContext<JThing, Schema> opC, ArgContext argC, JBoolean thing, Schema domain) {
+                domain.required = thing.runResFunc();
             }
-        });
-        imp.path(Path.singletonKey("uniqueItems")).implement(Model.BOOLEAN, new JBooleanOperator<Schema>() {
-            @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JBoolean> argC) {
-                opC.domain.uniqueItems = argC.thing.runResFunc();
-            }
-        });
+        }));
 
-        // 2 simple long
-        imp.path(Path.singletonKey("minimum")).implement(Model.LONG, new JLongOperator<Schema>() {
-            @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JLong> argC) {
-                opC.domain.minimum = argC.thing.runResFunc();
-            }
-        });
-        imp.path(Path.singletonKey("minItems")).implement(Model.LONG, new JLongOperator<Schema>() {
-            @Override
-            public void runArgConvertedFunc(OpContext<JThing, Schema> opC, ArgContext<JLong> argC) {
-                opC.domain.minItems = argC.thing.runResFunc();
-            }
-        });
 
         // 1 simple array
         /*imp.path(Path.singletonKey("links")).implement(Model.ARRAY, new JArrayMapOperator<JObject, Link>() {

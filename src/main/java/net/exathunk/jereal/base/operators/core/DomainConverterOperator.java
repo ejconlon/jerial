@@ -5,13 +5,13 @@ import net.exathunk.jereal.base.operators.OperatorException;
 import net.exathunk.jereal.base.operators.converters.Converter;
 
 /**
- * charolastra 10/30/12 1:24 AM
+ * charolastra 10/30/12 3:03 PM
  */
-public class ArgConverterOperator<J, K, L, D, E> implements Operator<J, K, D, E> {
-    private final Converter<K, L> converter;
-    private final Operator<J, L, D, E> op;
+public class DomainConverterOperator<J, K, D, E, F> implements Operator<J, K, D, E> {
+    private final Converter<E, F> converter;
+    private final Operator<J, K, D, F> op;
 
-    protected ArgConverterOperator(Converter<K, L> converter, Operator<J, L, D, E> op) {
+    protected DomainConverterOperator(Converter<E, F> converter, Operator<J, K, D, F> op) {
         this.converter = converter;
         this.op = op;
         assert converter != null && op != null;
@@ -20,8 +20,8 @@ public class ArgConverterOperator<J, K, L, D, E> implements Operator<J, K, D, E>
     @Override
     public final void runFunc(OpContext<J, D> opC, ArgContext argC, K thing, E domain) {
         try {
-            final L newThing = converter.convert(thing);
-            op.runFunc(opC, argC, newThing, domain);
+            final F newDomain = converter.convert(domain);
+            op.runFunc(opC, argC, thing, newDomain);
         } catch (OperatorException e) {
             opC.fail(e);
         }

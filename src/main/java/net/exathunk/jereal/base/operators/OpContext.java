@@ -28,14 +28,13 @@ public class OpContext<J, D> {
     }
 
     // return true if should continue
-    public boolean apply(Operator<J, D> op, ArgContext<J> argC) {
+    public boolean apply(Operator<J, J, D, D> op, ArgContext argC, J thing) {
         if (op == null) {
-            return true;   // null op == no-op
-        } else if (!hasFailed()) {
-            op.runFunc(this, argC);
-            return hasFailed();
-        } else {
-            return false;
+            return true;   // null op == no-op; recurse
         }
+        if (!hasFailed()) {
+            op.runFunc(this, argC, thing, domain);
+        }
+        return false;
     }
 }

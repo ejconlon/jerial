@@ -8,5 +8,5 @@ import net.exathunk.jereal.base.operators.core.Operator;
 /**
  * charolastra 10/29/12 12:29 PM
  */
-public class OperatorMap<J, F> extends TwoLevelMap<Path, Model, Operator<J, F>> {
+public class OperatorMap<J, D> extends TwoLevelMap<Path, Model, Operator<J, J, D, D>> {
 }
