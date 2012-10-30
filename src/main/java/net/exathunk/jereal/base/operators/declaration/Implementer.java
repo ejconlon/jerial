@@ -1,7 +1,9 @@
-package net.exathunk.jereal.base.operators;
+package net.exathunk.jereal.base.operators.declaration;
 
 import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.SuperModel;
+import net.exathunk.jereal.base.operators.core.Operator;
+import net.exathunk.jereal.base.operators.OperatorMap;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,11 +14,17 @@ import java.util.Set;
  */
 public class Implementer<D, E> implements OperatorMapBuilder<D, E> {
 
+    public static enum Direction {
+        SERIALIZE, DESERIALIZE
+    }
+
+    private final Direction dir;
     private final Path path;
     private final Set<SuperModel> models;
     private final Map<SuperModel, Operator<D, E, ?>> implementations;
 
-    public Implementer(Path path, Set<SuperModel> models) {
+    public Implementer(Direction dir, Path path, Set<SuperModel> models) {
+        this.dir = dir;
         this.path = path;
         this.models = models;
         this.implementations = new HashMap<SuperModel, Operator<D, E, ?>>(models.size());

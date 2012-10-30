@@ -1,4 +1,4 @@
-package net.exathunk.jereal.base.operators;
+package net.exathunk.jereal.base.operators.declaration;
 
 /**
  * charolastra 10/29/12 2:49 PM

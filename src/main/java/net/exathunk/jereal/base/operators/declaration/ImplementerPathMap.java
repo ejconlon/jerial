@@ -1,47 +1,23 @@
-package net.exathunk.jereal.base.operators;
-
-import java.util.HashSet;
-import java.util.Map;
+package net.exathunk.jereal.base.operators.declaration;
 
 import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.SuperModel;
+import net.exathunk.jereal.base.operators.OperatorMap;
 
 import java.util.HashMap;
-import java.util.Set;
+import java.util.Map;
 
 /**
- * charolastra 10/29/12 1:44 PM
+ * charolastra 10/30/12 12:11 AM
  */
-public class Declarer<D, E> implements OperatorMapBuilder<D, E> {
-
+public class ImplementerPathMap<D, E> implements OperatorMapBuilder<D, E> {
     private final Map<Path, Implementer<D, E>> implementers;
 
-    public Declarer() {
-        this.implementers = new HashMap<Path, Implementer<D, E>>();
+    ImplementerPathMap(Map<Path, Implementer<D, E>> implementers) {
+        this.implementers = implementers;
     }
 
-    private static <Z> Set<Z> makeSet(Z... zs) {
-        Set<Z> set = new HashSet<Z>(zs.length);
-        for (Z z : zs) {
-            set.add(z);
-        }
-        return set;
-    }
-
-    public Implementer<D, E> declare(Path path, Set<SuperModel> models) throws DeclarationException {
-        if (implementers.containsKey(path)) {
-            throw new DeclarationException("Cannot declare twice: "+path);
-        }
-        Implementer<D, E> implementer = new Implementer<D, E>(path, models);
-        implementers.put(path, implementer);
-        return implementer;
-    }
-
-    public Implementer<D, E> declare(Path path, SuperModel... models) throws DeclarationException {
-        return declare(path, makeSet(models));
-    }
-
-    public Implementer<D, E> reopen(Path path) throws DeclarationException {
+    public Implementer<D, E> path(Path path) throws DeclarationException {
         Implementer<D, E> implementer = implementers.get(path);
         if (implementer != null) {
             if (implementer.hasImplementedAll()) {

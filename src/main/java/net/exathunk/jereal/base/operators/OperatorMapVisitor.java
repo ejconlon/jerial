@@ -2,6 +2,7 @@ package net.exathunk.jereal.base.operators;
 
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.functional.EitherRef;
+import net.exathunk.jereal.base.operators.core.Operator;
 import net.exathunk.jereal.base.util.EmptyVisitor;
 
 /**

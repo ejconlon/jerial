@@ -2,7 +2,6 @@ package net.exathunk.jereal.base.operators.core;
 
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.SuperModel;
-import net.exathunk.jereal.base.operators.Operator;
 
 /**
  * charolastra 10/29/12 3:28 PM

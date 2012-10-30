@@ -6,7 +6,7 @@ import net.exathunk.jereal.base.core.VisitException;
 import net.exathunk.jereal.base.functional.EitherRef;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
-import net.exathunk.jereal.base.operators.DeclarationException;
+import net.exathunk.jereal.base.operators.declaration.DeclarationException;
 import net.exathunk.jereal.base.operators.ExecutionException;
 import net.exathunk.jereal.base.operators.OperatorMap;
 import net.exathunk.jereal.base.operators.OperatorMapVisitor;
