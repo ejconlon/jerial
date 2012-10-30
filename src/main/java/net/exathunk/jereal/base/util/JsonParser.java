@@ -56,7 +56,7 @@ public class JsonParser {
         Token<StreamType> storedId = null;
         while (streamit.hasNext()) {
             Token<StreamType> token = streamit.next();
-            Logger.log(Logger.Level.TRACE, "Considering: "+token);
+            Logger.getLogger(getClass()).trace("Considering: "+token);
             JThing thing = null;
             switch (token.type) {
                 case OBJECTSTART:
@@ -159,16 +159,16 @@ public class JsonParser {
         }
 
         void emitPair(boolean force) {
-            Logger.log(Logger.Level.TRACE, "emit pair?");
+            Logger.getLogger(getClass()).trace("emit pair?");
             if (force && first == null) {
                 //emitOne(fail("no pair present"));
             } else if (force || first != null) {
                 if (second != null) {
-                    Logger.log(Logger.Level.TRACE, "emit pair");
+                    Logger.getLogger(getClass()).trace("emit pair");
                     emitOne(new Token<StreamType>(StreamType.ID, first.value));
                     emitOne(makeScalar(second.value));
                 } else {
-                    Logger.log(Logger.Level.TRACE, "emit item");
+                    Logger.getLogger(getClass()).trace("emit item");
                     emitOne(makeScalar(first.value));
                 }
             }
@@ -179,11 +179,11 @@ public class JsonParser {
         }
 
         void emitId(boolean force) {
-            Logger.log(Logger.Level.TRACE, "emit id?");
+            Logger.getLogger(getClass()).trace("emit id?");
             if (force && first == null) {
                 emitOne(fail("no id present"));
             } else if (force || first != null){
-                Logger.log(Logger.Level.TRACE, "emitting id");
+                Logger.getLogger(getClass()).trace("emitting id");
                 emitOne(new Token<StreamType>(StreamType.ID, first.value));
 
             }
@@ -297,7 +297,7 @@ public class JsonParser {
         }
 
         private void emit(Token token) {
-            Logger.log(Logger.Level.TRACE, "TOKEN: "+token);
+            Logger.getLogger(getClass()).trace("TOKEN: "+token);
             nextTokens.addLast(token);
         }
         

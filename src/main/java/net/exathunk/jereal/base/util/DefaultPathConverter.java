@@ -10,8 +10,8 @@ public class DefaultPathConverter implements PathConverter {
 
     private final String delimiter = "/";
     private final String nullToken = "NULL";
-    private final String arrayStart = "[";
-    private final String arrayEnd = "]";
+    private final String arrayStart = "";
+    private final String arrayEnd = "";
 
     private String format(PathPart part) {
         if (part.hasLeft()) {
@@ -24,12 +24,11 @@ public class DefaultPathConverter implements PathConverter {
         }
     }
 
-    private boolean recurse(ConsList<PathPart> path, StringBuilder sb) {
-        if (path == null || path.isEmpty()) return false;
-        final boolean addDelim = recurse(path.tail(), sb);
-        if (addDelim) sb.append(delimiter);
+    private void recurse(ConsList<PathPart> path, StringBuilder sb) {
+        if (path == null || path.isEmpty()) return;
+        recurse(path.tail(), sb);
+        sb.append(delimiter);
         sb.append(format(path.head()));
-        return true;
     }
 
     @Override

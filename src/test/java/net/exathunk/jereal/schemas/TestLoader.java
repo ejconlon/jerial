@@ -23,17 +23,21 @@ import static org.junit.Assert.assertFalse;
  */
 public class TestLoader {
 
+    static {
+        Logger.getPolicyBuilder().add(TestLoader.class, Logger.Level.INFO);
+    }
+
     private static void assertFixed(final JerializerRegistry registry,
                                     final String name) throws IOException, JerializerException, VisitException {
         final String gold = Loader.loadSchemaString(name);
         assertFalse(gold.isEmpty());
         final JObject j = JerializerUtils.jsonToJObject(gold);
         final String s1 = JerializerUtils.jobjectToJson(j);
-        Logger.log(Logger.Level.TRACE, "READ " + name + " => " + s1);
+        Logger.getLogger(TestLoader.class).trace("READ " + name + " => " + s1);
 
         final Schema schema = Loader.loadSchema(name);
 
-        Logger.log(Logger.Level.TRACE, "SCHEMA "+schema);
+        Logger.getLogger(TestLoader.class).trace("SCHEMA "+schema);
 
         final String s2 = JerializerUtils.domainToJson(registry, schema);
 

@@ -2,11 +2,14 @@ package net.exathunk.jereal.example;
 
 import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
+import net.exathunk.jereal.base.core.PathPart;
+import net.exathunk.jereal.base.functional.ConsList;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.jerializers.JerializerRegistryImpl;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
 import net.exathunk.jereal.base.core.VisitException;
+import net.exathunk.jereal.base.util.FlattenVisitor;
 import net.exathunk.jereal.base.util.Logger;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -17,6 +20,10 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class TestPost {
+
+    static {
+        Logger.getPolicyBuilder().add(TestPost.class, Logger.Level.INFO);
+    }
 
     private final JerializerRegistry emptyRegistry = new JerializerRegistryImpl();
 
@@ -32,7 +39,7 @@ public class TestPost {
 
         int i = 0;
         for (Map.Entry<String, JThing> entry : j.seq()) {
-            Logger.log(Logger.Level.TRACE, entry);
+            Logger.getLogger(getClass()).trace(entry);
             switch (i) {
                 case 0:
                     assertEquals("body", entry.getKey());
@@ -71,7 +78,7 @@ public class TestPost {
 
         final JObject j0 = JerializerUtils.jsonToJObject(gold0);
         for (Map.Entry<String, JThing> entry : j0.seq()) {
-            Logger.log(Logger.Level.TRACE, entry);
+            Logger.getLogger(getClass()).trace(entry);
             // TODO add assertions
         }
 
@@ -81,7 +88,7 @@ public class TestPost {
 
         final JObject j1 = JerializerUtils.jsonToJObject(gold1);
         for (Map.Entry<String, JThing> entry : j1.seq()) {
-            Logger.log(Logger.Level.TRACE, entry);
+            Logger.getLogger(getClass()).trace(entry);
             // TODO add assertions
         }
     }
@@ -98,7 +105,7 @@ public class TestPost {
         int i = 0;
         for (Map.Entry<String, JThing> entry : j.seq()) {
             int k = 0;
-            Logger.log(Logger.Level.TRACE, entry);
+            Logger.getLogger(getClass()).trace(entry);
             switch (i) {
                 case 0:
                     assertEquals("objects", entry.getKey());
@@ -134,42 +141,52 @@ public class TestPost {
     }
 
     // TODO add arrays and assertions
-    /*@Test
-    public void testFlattening() throws JerializerException {
+    @Test
+    public void testFlattening() throws JerializerException, VisitException {
         final String gold0 = "{\"b\":true,\"d\":4.5,\"l\":12,\"s\":\"x\"}";
         final String gold1 = "{\"b\":false,\"d\":6.7,\"l\":13,\"next\":"+gold0+",\"s\":\"y\",\"z\":[4,5,6]}";
 
-        JerialBuilderFactory flattenedFactory = new FlattenedBuilderFactory(new DefaultPathConverter());
-
-        final Jerial j1 = JerializerUtils.jsonToJerial(flattenedFactory, gold1);
-        for (Jitem entry : j1) {
-            Logger.log(Logger.Level.TRACE, entry);
+        final JObject j1 = JerializerUtils.jsonToJObject(gold1);
+        for (Map.Entry<String, JThing> entry : j1.seq()) {
+            Logger.getLogger(getClass()).trace(entry);
         }
+
+        FlattenVisitor visitor = new FlattenVisitor();
+        j1.accept(ConsList.<PathPart>nil(), visitor);
+
+        final JObject j2 = visitor.runResFunc();
+        for (Map.Entry<String, JThing> entry : j2.seq()) {
+            Logger.getLogger(getClass()).trace(entry);
+        }
+
         Set<String> expectedKeys = asSet(
-                "b","d","l","s",
-                "next/b","next/d","next/l","next/s",
-                "z/[0]", "z/[1]", "z/[2]");
-        Set<String> actualKeys = pathParts(j1);
+                "/b","/d","/l","/s",
+                "/next/b","/next/d","/next/l","/next/s",
+                "/z/0", "/z/1", "/z/2");
+        Set<String> actualKeys = pathParts(j2);
         assertEquals(expectedKeys, actualKeys);
 
-        final String s1 = JerializerUtils.domainToJson(flattenedFactory, emptyRegistry, new JObjectJerializer(), j1);
-        Logger.log(Logger.Level.TRACE, s1);
+        final String s2 = JerializerUtils.jobjectToJson(j2);
+        Logger.getLogger(getClass()).trace(s2);
     }
 
-    public void runFlatteningTest(String gold, Set<String> expectedKeys) throws JerializerException {
-        JerialBuilderFactory flattenedFactory = new FlattenedBuilderFactory(new DefaultPathConverter());
-        final Jerial j1 = JerializerUtils.jsonToJerial(flattenedFactory, gold);
-        for (Jitem entry : j1) {
-            Logger.log(Logger.Level.TRACE, entry);
+    public void runFlatteningTest(String gold, Set<String> expectedKeys) throws JerializerException, VisitException {
+        final JObject j1 = JerializerUtils.jsonToJObject(gold);
+        for (Map.Entry<String, JThing> entry : j1.seq()) {
+            Logger.getLogger(getClass()).trace(entry);
         }
-        Set<String> actualKeys = pathParts(j1);
+
+        FlattenVisitor visitor = new FlattenVisitor();
+        j1.accept(ConsList.<PathPart>nil(), visitor);
+
+        Set<String> actualKeys = pathParts(visitor.runResFunc());
         assertEquals(expectedKeys, actualKeys);
     }
 
     @Test
-    public void testMoreFlattening() throws JerializerException {
+    public void testMoreFlattening() throws JerializerException, VisitException {
         runFlatteningTest(
                 "{\"a\":{\"b\":{\"c\":1}}}",
-                asSet("a/b/c"));
-    }*/
+                asSet("/a/b/c"));
+    }
 }
