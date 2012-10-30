@@ -34,7 +34,7 @@ public class JerializerUtils {
 
     public static String jobjectToJson(JObject jobject) throws VisitException {
         JsonObjectWriter visitor = new JsonObjectWriter();
-        jobject.accept(ConsList.<PathPart>nil(), visitor);
+        jobject.accept(new ConsList<PathPart>(), visitor);
         StringBuilder sb = new StringBuilder();
         visitor.runFunc(sb);
         return sb.toString();

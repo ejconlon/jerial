@@ -25,7 +25,7 @@ public class DefaultPathConverter implements PathConverter {
     }
 
     private void recurse(ConsList<PathPart> path, StringBuilder sb) {
-        if (path == null || path.isEmpty()) return;
+        if (path.isEmpty()) return;
         recurse(path.tail(), sb);
         sb.append(delimiter);
         sb.append(format(path.head()));

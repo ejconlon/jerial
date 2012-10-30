@@ -6,9 +6,13 @@ public class ConsList<T> implements Sequence<T> {
     private final T _head;
     private final ConsList<T> _tail;
 
-    private ConsList() {
+    public ConsList() {
         this._head = null;
-        this._tail = this;
+        this._tail = null;
+    }
+    public ConsList(T head) {
+        this._head = head;
+        this._tail = null;
     }
     private ConsList(T head, ConsList<T> tail) {
         this._head = head;
@@ -17,15 +21,13 @@ public class ConsList<T> implements Sequence<T> {
     }
 
     public T head() {
+        if (_tail == null) throw new IllegalStateException("NULL HEAD");
         return _head;
     }
 
     public ConsList<T> tail() {
+        if (_tail == null) throw new IllegalStateException("NULL TAIL");
         return _tail;
-    }
-
-    public static <X> ConsList<X> nil() {
-        return new ConsList<X>();
     }
 
     public ConsList<T> cons(T newHead) {
@@ -70,5 +72,25 @@ public class ConsList<T> implements Sequence<T> {
                throw new UnsupportedOperationException();
             }
         };
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ConsList)) return false;
+
+        ConsList consList = (ConsList) o;
+
+        if (_head != null ? !_head.equals(consList._head) : consList._head != null) return false;
+        if (_tail != null ? !_tail.equals(consList._tail) : consList._tail != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = _head != null ? _head.hashCode() : 0;
+        result = 31 * result + (_tail != null ? _tail.hashCode() : 0);
+        return result;
     }
 }

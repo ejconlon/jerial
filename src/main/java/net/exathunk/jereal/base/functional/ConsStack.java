@@ -10,7 +10,7 @@ public class ConsStack<T> implements Stack<T> {
     private ConsList<T> list;
 
     public ConsStack() {
-        list = ConsList.nil();
+        list = new ConsList<T>();
     }
 
     @Override

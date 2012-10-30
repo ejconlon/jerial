@@ -152,7 +152,7 @@ public class TestPost {
         }
 
         FlattenVisitor visitor = new FlattenVisitor();
-        j1.accept(ConsList.<PathPart>nil(), visitor);
+        j1.accept(new ConsList<PathPart>(), visitor);
 
         final JObject j2 = visitor.runResFunc();
         for (Map.Entry<String, JThing> entry : j2.seq()) {
@@ -177,7 +177,7 @@ public class TestPost {
         }
 
         FlattenVisitor visitor = new FlattenVisitor();
-        j1.accept(ConsList.<PathPart>nil(), visitor);
+        j1.accept(new ConsList<PathPart>(), visitor);
 
         final JObject j2 = visitor.runResFunc();
 

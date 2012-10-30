@@ -15,7 +15,7 @@ public class JerialContext {
 
     private JerialContext(JerialBuilderFactory factory) {
         this.factory = factory;
-        this.path = ConsList.nil();
+        this.path = new ConsList<PathPart>();
         this.builder = factory.createJerialBuilder(path);
     }
 
