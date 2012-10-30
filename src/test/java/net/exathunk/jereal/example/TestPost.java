@@ -11,18 +11,18 @@ import net.exathunk.jereal.base.jerializers.JerializerUtils;
 import net.exathunk.jereal.base.core.VisitException;
 import net.exathunk.jereal.base.util.FlattenVisitor;
 import net.exathunk.jereal.base.util.Logger;
+import net.exathunk.jereal.schema.util.Loader;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.IOException;
+import java.util.*;
 
 public class TestPost {
 
     static {
-        Logger.getPolicyBuilder().add(TestPost.class, Logger.Level.INFO);
+        Logger.getPolicyBuilder().add(TestPost.class, Logger.Level.CRITICAL);
     }
 
     private final JerializerRegistry emptyRegistry = new JerializerRegistryImpl();
@@ -179,14 +179,29 @@ public class TestPost {
         FlattenVisitor visitor = new FlattenVisitor();
         j1.accept(ConsList.<PathPart>nil(), visitor);
 
-        Set<String> actualKeys = pathParts(visitor.runResFunc());
-        assertEquals(expectedKeys, actualKeys);
+        final JObject j2 = visitor.runResFunc();
+
+        for (Map.Entry<String, JThing> entry : j2.seq()) {
+            Logger.getLogger(getClass()).info(entry);
+        }
+
+        Set<String> actualKeys = pathParts(j2);
+        if (expectedKeys != null) assertEquals(expectedKeys, actualKeys);
     }
 
     @Test
-    public void testMoreFlattening() throws JerializerException, VisitException {
+    public void testMoreFlattening() throws JerializerException, VisitException, IOException {
         runFlatteningTest(
                 "{\"a\":{\"b\":{\"c\":1}}}",
                 asSet("/a/b/c"));
+
+        List<String> names = Arrays.asList(
+                "address", "calendar", "card", "geo",
+                "hyper-schema", "interfaces", "json-ref", "schema");
+
+        for (String name : names) {
+            Logger.getLogger(getClass()).info("\n\nNAME: "+name);
+            runFlatteningTest(Loader.loadSchemaString(name), null);
+        }
     }
 }
