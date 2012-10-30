@@ -3,7 +3,7 @@ package net.exathunk.jereal.base.builders;
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.core.PathPart;
 
-public class MapBuilder implements JerialBuilder {
+class MapBuilder implements JerialBuilder {
 
     private final JObject object;
     private final JArray array;

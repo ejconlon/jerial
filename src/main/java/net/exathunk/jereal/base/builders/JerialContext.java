@@ -9,13 +9,17 @@ public class JerialContext {
     public final JerialBuilder builder;
     public final ConsList<PathPart> path;
 
-    public JerialContext(JerialBuilderFactory factory) {
+    public JerialContext() {
+        this(new SimpleMapBuilderFactory());
+    }
+
+    private JerialContext(JerialBuilderFactory factory) {
         this.factory = factory;
         this.path = ConsList.nil();
         this.builder = factory.createJerialBuilder(path);
     }
 
-    public JerialContext(JerialBuilderFactory factory, ConsList<PathPart> path, JerialBuilder builder) {
+    private JerialContext(JerialBuilderFactory factory, ConsList<PathPart> path, JerialBuilder builder) {
         this.factory = factory;
         this.path = path;
         this.builder = builder;

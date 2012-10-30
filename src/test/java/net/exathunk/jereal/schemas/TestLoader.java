@@ -1,8 +1,6 @@
 package net.exathunk.jereal.schemas;
 
 import net.exathunk.jereal.base.*;
-import net.exathunk.jereal.base.builders.JerialBuilderFactory;
-import net.exathunk.jereal.base.builders.SimpleMapBuilderFactory;
 import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
@@ -24,7 +22,7 @@ import static org.junit.Assert.assertFalse;
  */
 public class TestLoader {
 
-    private static void assertFixed(final JerialBuilderFactory factory, final JerializerRegistry registry,
+    private static void assertFixed(final JerializerRegistry registry,
                                     final String name) throws IOException, JerializerException, VisitException {
         final String gold = Loader.loadSchemaString(name);
         assertFalse(gold.isEmpty());
@@ -32,11 +30,11 @@ public class TestLoader {
         final String s1 = JerializerUtils.jobjectToJson(j);
         Logger.log(Logger.Level.TRACE, "READ " + name + " => " + s1);
 
-        final Schema schema = Loader.loadSchema(factory, name);
+        final Schema schema = Loader.loadSchema(name);
 
         Logger.log(Logger.Level.TRACE, "SCHEMA "+schema);
 
-        final String s2 = JerializerUtils.domainToJson(factory, registry, schema);
+        final String s2 = JerializerUtils.domainToJson(registry, schema);
 
         // TODO better assertions... fixpoints are easy though
         assertEquals(s1, s2);
@@ -44,9 +42,6 @@ public class TestLoader {
 
     @Test
     public void testLoadSchema() throws IOException, JerializerException, VisitException {
-        List<JerialBuilderFactory> factories = Arrays.asList(
-                (JerialBuilderFactory)new SimpleMapBuilderFactory());
-
         List<String> names = Arrays.asList(
                 "address", "calendar", "card", "geo",
                 "hyper-schema", "interfaces", "json-ref", "schema");
@@ -54,10 +49,8 @@ public class TestLoader {
         final JerializerRegistry registry =
                 SchemaRegistryFactorySingleton.getInstance().makeJerializerRegistry();
 
-        for (final JerialBuilderFactory factory : factories) {
-            for (final String name : names) {
-                assertFixed(factory, registry, name);
-            }
+        for (final String name : names) {
+            assertFixed(registry, name);
         }
     }
 }
