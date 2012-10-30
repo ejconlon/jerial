@@ -29,12 +29,17 @@ public class OpContext<J, D> {
         return new OpContext<K, D>(dir, path, model, thing, domain, failRef);
     }
 
+    /*
     public OpContext<J, D> withPath(Path path) {
         return new OpContext<J, D>(dir, path, model, thing, domain, failRef);
     }
 
     public OpContext<J, D> withModel(Model model) {
         return new OpContext<J, D>(dir, path, model, thing, domain, failRef);
+    }  */
+
+    public <K> OpContext<K, D> with(Path path, Model model, K thing) {
+        return new OpContext<K, D>(dir, path, model, thing, domain, failRef);
     }
 
     public void fail(OperatorException e) {
@@ -42,13 +47,18 @@ public class OpContext<J, D> {
     }
 
     public boolean hasFailed() {
-        return failRef.getReference() == null;
+        return failRef.getReference() != null;
     }
 
+    // return true if should continue
     public boolean apply(Func1<OpContext<J, D>> f) {
-        if (!hasFailed()) {
+        if (f == null) {
+            return true;
+        } else if (!hasFailed()) {
             f.runFunc(this);
+            return hasFailed();
+        } else {
+            return false;
         }
-        return !hasFailed();
     }
 }

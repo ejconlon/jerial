@@ -2,7 +2,6 @@ package net.exathunk.jereal.base.operators;
 
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.operators.core.Operator;
-import net.exathunk.jereal.base.util.EmptyTypedVisitor;
 
 /**
  * charolastra 10/29/12 9:52 PM
@@ -20,10 +19,7 @@ public class OperatorMapVisitor<F> implements UntypedVisitor {
     @Override
     public boolean visitThing(Path path, JThing thing) throws VisitException {
         Operator<JThing, F> op = opMap.get(path, thing.getModel());
-        if (op != null) {
-            final OpContext newContext = context.withPath(path).withThing(thing);
-            newContext.apply(op);
-        }
-        return false;
+        final OpContext newContext = context.with(path, thing.getModel(), thing);
+        return newContext.apply(op);
     }
 }
