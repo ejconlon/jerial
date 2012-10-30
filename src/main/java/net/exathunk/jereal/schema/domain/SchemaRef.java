@@ -1,4 +1,4 @@
-package net.exathunk.jereal.schema;
+package net.exathunk.jereal.schema.domain;
 
 import net.exathunk.jereal.base.functional.Either;
 
@@ -11,10 +11,10 @@ public class SchemaRef<T> extends Either<Schema, T> {
     }
 
     public static <T> SchemaRef<T> makeSchema(Schema schema) {
-        return new SchemaRef(schema, null);
+        return new SchemaRef<T>(schema, null);
     }
 
     public static <T> SchemaRef<T> makeRef(T ref) {
-        return new SchemaRef(null, ref);
+        return new SchemaRef<T>(null, ref);
     }
 }

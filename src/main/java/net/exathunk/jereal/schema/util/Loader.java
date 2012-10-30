@@ -1,7 +1,9 @@
-package net.exathunk.jereal.schema;
+package net.exathunk.jereal.schema.util;
 
-import net.exathunk.jereal.base.JerializerException;
+import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
+import net.exathunk.jereal.schema.domain.Schema;
+import net.exathunk.jereal.schema.jerializers.SchemaDejerializer;
 
 import java.io.BufferedReader;
 import java.io.IOException;

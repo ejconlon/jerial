@@ -1,6 +1,4 @@
-package net.exathunk.jereal.base.containers;
-
-import net.exathunk.jereal.base.functional.Sequence;
+package net.exathunk.jereal.base.functional;
 
 import java.util.HashMap;
 import java.util.Iterator;

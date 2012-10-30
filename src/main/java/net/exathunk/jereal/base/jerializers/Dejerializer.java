@@ -1,6 +1,5 @@
 package net.exathunk.jereal.base.jerializers;
 
-import net.exathunk.jereal.base.JerializerException;
 import net.exathunk.jereal.base.core.JObject;
 
 /**

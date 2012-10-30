@@ -1,13 +1,14 @@
 package net.exathunk.jereal.schemas;
 
-import net.exathunk.jereal.base.*;
 import net.exathunk.jereal.base.core.JObject;
+import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
 import net.exathunk.jereal.base.core.VisitException;
-import net.exathunk.jereal.schema.Loader;
-import net.exathunk.jereal.schema.Schema;
-import net.exathunk.jereal.schema.SchemaRegistryFactorySingleton;
+import net.exathunk.jereal.base.util.Logger;
+import net.exathunk.jereal.schema.util.Loader;
+import net.exathunk.jereal.schema.domain.Schema;
+import net.exathunk.jereal.schema.util.SchemaRegistryFactorySingleton;
 import org.junit.Test;
 
 import java.io.IOException;

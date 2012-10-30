@@ -1,8 +1,5 @@
 package net.exathunk.jereal.base.jerializers;
 
-import net.exathunk.jereal.base.JerializerException;
-import net.exathunk.jereal.base.jerializers.Jerializer;
-
 /**
  * charolastra 10/27/12 3:08 PM
  */

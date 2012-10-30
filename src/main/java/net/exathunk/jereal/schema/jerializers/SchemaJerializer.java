@@ -1,11 +1,13 @@
-package net.exathunk.jereal.schema;
+package net.exathunk.jereal.schema.jerializers;
 
-import net.exathunk.jereal.base.*;
 import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.jerializers.JDSL;
 import net.exathunk.jereal.base.jerializers.Jerializer;
+import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.core.PathPart;
+import net.exathunk.jereal.schema.domain.Link;
+import net.exathunk.jereal.schema.domain.Schema;
 
 /**
  * charolastra 10/27/12 3:06 PM
@@ -13,8 +15,6 @@ import net.exathunk.jereal.base.core.PathPart;
 public class SchemaJerializer implements Jerializer<Schema> {
     @Override
     public void jerialize(JerializerRegistry registry, Schema schema, JerialContext context) throws JerializerException {
-        Jerializer<Link> linkJerializer = registry.getJerializer(Link.class);
-
         JDSL.addString("id", schema.id, context);
         JDSL.addString("name", schema.name, context);
         JDSL.addString("description", schema.description, context);

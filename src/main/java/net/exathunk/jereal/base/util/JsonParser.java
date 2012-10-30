@@ -1,4 +1,4 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.util;
 
 import net.exathunk.jereal.base.core.*;
 
@@ -368,7 +368,7 @@ public class JsonParser {
         }
 
         @Override
-        public Token next() {
+        public Token<TokenType> next() {
             advance();
             return nextTokens.removeFirst();
         }

@@ -1,4 +1,4 @@
-package net.exathunk.jereal.schema;
+package net.exathunk.jereal.schema.domain;
 
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Either;
@@ -67,7 +67,7 @@ public class Schema {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Schema{");
-        if (id != null) sb.append("id='" + id + '\''+", ");
+        if (id != null) sb.append("id='" + id + '\'' + ", ");
         if (name != null) sb.append("name='" + name + '\''+", ");
         if (title != null) sb.append("title='" + title + '\''+", ");
         if (description != null) sb.append("description='" + description + '\''+", ");

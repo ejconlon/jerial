@@ -1,6 +1,6 @@
 package net.exathunk.jereal.base.operators;
 
-import net.exathunk.jereal.base.containers.TwoLevelMap;
+import net.exathunk.jereal.base.functional.TwoLevelMap;
 import net.exathunk.jereal.base.core.SuperModel;
 
 /**

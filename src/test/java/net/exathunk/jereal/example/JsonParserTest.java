@@ -1,7 +1,7 @@
 package net.exathunk.jereal.example;
 
-import net.exathunk.jereal.base.JsonParser;
-import net.exathunk.jereal.base.Logger;
+import net.exathunk.jereal.base.util.JsonParser;
+import net.exathunk.jereal.base.util.Logger;
 import net.exathunk.jereal.base.core.JThing;
 import org.junit.Test;
 

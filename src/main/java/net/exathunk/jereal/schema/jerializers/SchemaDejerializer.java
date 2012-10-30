@@ -1,11 +1,14 @@
-package net.exathunk.jereal.schema;
+package net.exathunk.jereal.schema.jerializers;
 
 import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.jerializers.Dejerializer;
-import net.exathunk.jereal.base.JerializerException;
+import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.DejerializerRegistry;
 import net.exathunk.jereal.base.functional.Either;
+import net.exathunk.jereal.schema.domain.SchemaRef;
+import net.exathunk.jereal.schema.domain.Link;
+import net.exathunk.jereal.schema.domain.Schema;
 
 import java.util.List;
 import java.util.Map;
@@ -73,9 +76,9 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
                     schema.items = SchemaRef.<String>makeSchema(s);
                 }
             } else if ("$ref".equals(key)) {
-                schema.dollar_ref = value.rawGetString().runResFunc();;
+                schema.dollar_ref = value.rawGetString().runResFunc();
             } else if ("$schema".equals(key)) {
-                schema.dollar_schema = value.rawGetString().runResFunc();;
+                schema.dollar_schema = value.rawGetString().runResFunc();
             } else if ("extends".equals(key)) {
                 if (value.isString()) {
                     schema.extendz = SchemaRef.makeRef(value.rawGetString().runResFunc());

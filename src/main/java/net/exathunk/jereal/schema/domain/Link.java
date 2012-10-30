@@ -1,4 +1,4 @@
-package net.exathunk.jereal.schema;
+package net.exathunk.jereal.schema.domain;
 
 import java.util.Map;
 import java.util.TreeMap;

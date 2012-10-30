@@ -1,11 +1,12 @@
-package net.exathunk.jereal.schema;
+package net.exathunk.jereal.schema.jerializers;
 
 import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.jerializers.JDSL;
 import net.exathunk.jereal.base.jerializers.Jerializer;
-import net.exathunk.jereal.base.JerializerException;
+import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.core.PathPart;
+import net.exathunk.jereal.schema.domain.Link;
 
 /**
  * charolastra 10/27/12 5:50 PM

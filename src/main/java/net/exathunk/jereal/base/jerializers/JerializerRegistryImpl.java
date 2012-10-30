@@ -1,7 +1,5 @@
 package net.exathunk.jereal.base.jerializers;
 
-import net.exathunk.jereal.base.JerializerException;
-
 import java.util.HashMap;
 import java.util.Map;
 

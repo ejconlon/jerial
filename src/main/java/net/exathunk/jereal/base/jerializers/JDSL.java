@@ -1,12 +1,11 @@
 package net.exathunk.jereal.base.jerializers;
 
 import net.exathunk.jereal.base.builders.JerialContext;
-import net.exathunk.jereal.base.JerializerException;
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.functional.Either;
 import net.exathunk.jereal.base.functional.Either3;
 import net.exathunk.jereal.base.core.PathPart;
-import net.exathunk.jereal.schema.Schema;
+import net.exathunk.jereal.schema.domain.Schema;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package net.exathunk.jereal.base.containers;
+package net.exathunk.jereal.base.functional;
 
 /**
  * charolastra 10/29/12 1:02 PM

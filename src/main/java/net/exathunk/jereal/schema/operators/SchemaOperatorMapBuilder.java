@@ -1,4 +1,4 @@
-package net.exathunk.jereal.schema;
+package net.exathunk.jereal.schema.operators;
 
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.functional.Reference;
@@ -6,6 +6,7 @@ import net.exathunk.jereal.base.operators.*;
 import net.exathunk.jereal.base.operators.core.JBooleanOperator;
 import net.exathunk.jereal.base.operators.core.JLongOperator;
 import net.exathunk.jereal.base.operators.core.JStringOperator;
+import net.exathunk.jereal.schema.domain.Schema;
 
 /**
  * charolastra 10/29/12 12:36 PM

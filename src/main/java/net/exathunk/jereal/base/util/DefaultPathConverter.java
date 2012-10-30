@@ -1,4 +1,4 @@
-package net.exathunk.jereal.base;
+package net.exathunk.jereal.base.util;
 
 import net.exathunk.jereal.base.functional.ConsList;
 import net.exathunk.jereal.base.core.PathPart;

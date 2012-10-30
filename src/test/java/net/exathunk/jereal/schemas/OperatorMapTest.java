@@ -3,8 +3,8 @@ package net.exathunk.jereal.schemas;
 import net.exathunk.jereal.base.operators.DeclarationException;
 import net.exathunk.jereal.base.operators.ExecutionException;
 import net.exathunk.jereal.base.operators.OperatorMap;
-import net.exathunk.jereal.schema.Schema;
-import net.exathunk.jereal.schema.SchemaOperatorMapBuilder;
+import net.exathunk.jereal.schema.domain.Schema;
+import net.exathunk.jereal.schema.operators.SchemaOperatorMapBuilder;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
