@@ -1,5 +1,6 @@
 package net.exathunk.jereal.base.operators.declaration;
 
+import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.SuperModel;
 import net.exathunk.jereal.base.operators.Direction;
@@ -13,29 +14,26 @@ import java.util.Set;
 /**
  * charolastra 10/29/12 2:29 PM
  */
-public class Implementer<D, E> implements OperatorMapBuilder<D, E> {
+public class Implementer<J, F> implements OperatorMapBuilder<J, F> {
 
     private final Direction dir;
     private final Path path;
     private final Set<SuperModel> models;
-    private final Map<SuperModel, Operator<D, E, ?>> implementations;
+    private final Map<SuperModel, Operator<J, F>> implementations;
 
     public Implementer(Direction dir, Path path, Set<SuperModel> models) {
         this.dir = dir;
         this.path = path;
         this.models = models;
-        this.implementations = new HashMap<SuperModel, Operator<D, E, ?>>(models.size());
+        this.implementations = new HashMap<SuperModel, Operator<J, F>>(models.size());
         assert path != null;
         assert models != null;
         assert !models.isEmpty();
     }
 
-    public Implementer<D, E> implement(SuperModel model, Operator<D, E, ?> operator) throws DeclarationException {
+    public Implementer<J, F> implement(SuperModel model, Operator<J, F> operator) throws DeclarationException {
         if (!hasDeclared(model)) {
             throw new DeclarationException("Did not declare: "+path+" "+model);
-        }
-        if (!operator.canCast(model)) {
-            throw new DeclarationException("Cannot cast: "+path+" "+model);
         }
         implementations.put(model, operator);
         return this;
@@ -58,7 +56,7 @@ public class Implementer<D, E> implements OperatorMapBuilder<D, E> {
     }
 
     @Override
-    public void buildOperatorMap(OperatorMap<D, E> opMap) throws DeclarationException {
+    public void buildOperatorMap(OperatorMap<J, F> opMap) throws DeclarationException {
         if (!hasImplementedAll()) {
             StringBuilder sb = new StringBuilder();
             for (SuperModel model : models) {
@@ -70,7 +68,7 @@ public class Implementer<D, E> implements OperatorMapBuilder<D, E> {
             if (sb.length() > 0) sb.deleteCharAt(sb.length()-1);
             throw new DeclarationException("Did not implement: "+path+" => "+sb.toString());
         }
-        for (Map.Entry<SuperModel, Operator<D, E, ?>> entry : implementations.entrySet()) {
+        for (Map.Entry<SuperModel, Operator<J, F>> entry : implementations.entrySet()) {
             opMap.dir(dir).put(path, entry.getKey(), entry.getValue());
         }
     }

@@ -1,7 +1,6 @@
 package net.exathunk.jereal.schema.operators;
 
 import net.exathunk.jereal.base.core.*;
-import net.exathunk.jereal.base.functional.Reference;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.base.operators.*;
 import net.exathunk.jereal.base.operators.core.JArrayOperator;
@@ -18,9 +17,9 @@ import java.util.Map;
 /**
  * charolastra 10/29/12 12:36 PM
  */
-public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema, ExecutionException> {
+public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Schema> {
 
-    public void declare(DeclarationBuilder<Schema, ExecutionException> dec) throws DeclarationException {
+    public void declare(DeclarationBuilder<JThing, Schema> dec) throws DeclarationException {
         // 8 simple string
         dec.declare(Path.singletonKey("$ref"), SuperModel.STRING);
         dec.declare(Path.singletonKey("$schema"), SuperModel.STRING);
@@ -57,109 +56,109 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<Schema, Exec
         */
     }
 
-    public void implement(ImplementerPathMap<Schema, ExecutionException> imp) throws DeclarationException {
+    public void implement(ImplementerPathMap<JThing, Schema> imp) throws DeclarationException {
         // 8 simple string
-        imp.path(Path.singletonKey("$ref")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("$ref")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.dollar_ref = thing.runResFunc();
+            public void typedRunFunc(OpContext<JString, Schema> c) {
+                c.out.getLeft().dollar_ref = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("$schema")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("$schema")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.dollar_schema = thing.runResFunc();
+            public void typedRunFunc(OpContext<JString, Schema> c) {
+                c.out.getLeft().dollar_schema = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("description")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("description")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.description = thing.runResFunc();
+            public void typedRunFunc(OpContext<JString, Schema> c) {
+                c.out.getLeft().description = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("format")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("format")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.format = thing.runResFunc();
+            public void typedRunFunc(OpContext<JString, Schema> c) {
+                c.out.getLeft().format = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("fragmentResolution")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("fragmentResolution")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.fragmentResolution = thing.runResFunc();
+            public void typedRunFunc(OpContext<JString, Schema> c) {
+                c.out.getLeft().fragmentResolution = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("id")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("id")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.id = thing.runResFunc();
+            public void typedRunFunc(OpContext<JString, Schema> c) {
+                c.out.getLeft().id = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("name")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("name")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.name = thing.runResFunc();
+            public void typedRunFunc(OpContext<JString, Schema> c) {
+                c.out.getLeft().name = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("title")).implement(SuperModel.STRING, new JStringOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("title")).implement(SuperModel.STRING, new JStringOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JString thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.title = thing.runResFunc();
+            public void typedRunFunc(OpContext<JString, Schema> c) {
+                c.out.getLeft().title = c.thing.runResFunc();
             }
         });
 
         // 2 simple boolean
-        imp.path(Path.singletonKey("required")).implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("required")).implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JBoolean thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.required = thing.runResFunc();
+            public void typedRunFunc(OpContext<JBoolean, Schema> c) {
+                c.out.getLeft().required = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("uniqueItems")).implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("uniqueItems")).implement(SuperModel.BOOLEAN, new JBooleanOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JBoolean thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.uniqueItems = thing.runResFunc();
+            public void typedRunFunc(OpContext<JBoolean, Schema> c) {
+                c.out.getLeft().uniqueItems = c.thing.runResFunc();
             }
         });
 
         // 2 simple long
-        imp.path(Path.singletonKey("minimum")).implement(SuperModel.LONG, new JLongOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("minimum")).implement(SuperModel.LONG, new JLongOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JLong thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.minimum = thing.runResFunc();
+            public void typedRunFunc(OpContext<JLong, Schema> c) {
+                c.out.getLeft().minimum = c.thing.runResFunc();
             }
         });
-        imp.path(Path.singletonKey("minItems")).implement(SuperModel.LONG, new JLongOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("minItems")).implement(SuperModel.LONG, new JLongOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JLong thing, Schema schema, Reference<ExecutionException> fail) {
-                schema.minItems = thing.runResFunc();
+            public void typedRunFunc(OpContext<JLong, Schema> c) {
+                c.out.getLeft().minItems = c.thing.runResFunc();
             }
         });
 
         // 1 simple array
-        imp.path(Path.singletonKey("links")).implement(SuperModel.ARRAY, new JArrayOperator<Schema, ExecutionException>() {
+        imp.path(Path.singletonKey("links")).implement(SuperModel.ARRAY, new JArrayOperator<Schema>() {
             @Override
-            public void runFunc(Direction dir, Path path, JArray thing, Schema schema, Reference<ExecutionException> fail) {
+            public void typedRunFunc(OpContext<JArray, Schema> c) {
                 RegistryFactory factory = SchemaRegistryFactorySingleton.getInstance();
                 DejerializerRegistry registry = factory.makeDejerializerRegistry();
                 try {
                     Dejerializer<Link> linkDejerializer = registry.getDejerializer(Link.class);
-                    for (Map.Entry<Integer, JThing> entry : thing.seq()) {
+                    for (Map.Entry<Integer, JThing> entry : c.thing.seq()) {
                         Link link = new Link();
                         linkDejerializer.dejerialize(registry, entry.getValue().rawGetObject(), link);
-                        schema.links.add(link);
+                        c.out.getLeft().links.add(link);
                     }
                 } catch (JerializerException e) {
-                    fail.setReference(new ExecutionException("link jerializer bs", e));
+                    c.fail(new OperatorException("link jer stuff", e));
                 }
             }
         });
     }
 
-    public void buildOperatorMap(OperatorMap<Schema, ExecutionException> opMap) throws DeclarationException {
-        final DeclarationBuilder<Schema, ExecutionException> dec = new DeclarationBuilder<Schema, ExecutionException>();
+    public void buildOperatorMap(OperatorMap<JThing, Schema> opMap) throws DeclarationException {
+        final DeclarationBuilder<JThing, Schema> dec = new DeclarationBuilder<JThing, Schema>();
         declare(dec);
-        final ImplementerPathMap<Schema, ExecutionException> imp = dec.buildImplementers().dir(Direction.SERIALIZE);
+        final ImplementerPathMap<JThing, Schema> imp = dec.buildImplementers().dir(Direction.SERIALIZE);
         implement(imp);
         imp.buildOperatorMap(opMap);
     }

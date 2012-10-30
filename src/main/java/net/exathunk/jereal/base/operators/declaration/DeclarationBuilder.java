@@ -9,7 +9,7 @@ import net.exathunk.jereal.base.operators.Direction;
 /**
  * charolastra 10/29/12 1:44 PM
  */
-public class DeclarationBuilder<D, E> {
+public class DeclarationBuilder<J, F> {
 
     private final Map<Path, Set<SuperModel>> declarations;
 
@@ -36,16 +36,16 @@ public class DeclarationBuilder<D, E> {
         declare(path, makeSet(models));
     }
 
-    public <Y> ImplementerDirMap<D, E> buildImplementers() {
-        Map<Direction, ImplementerPathMap<D, E>> dirMap = new TreeMap<Direction, ImplementerPathMap<D, E>>();
+    public ImplementerDirMap<J, F> buildImplementers() {
+        Map<Direction, ImplementerPathMap<J, F>> dirMap = new TreeMap<Direction, ImplementerPathMap<J, F>>();
         for (Direction dir : Direction.values()) {
-            Map<Path, Implementer<D, E>> implementers = new HashMap<Path, Implementer<D, E>>();
+            Map<Path, Implementer<J, F>> implementers = new HashMap<Path, Implementer<J, F>>();
             for (Map.Entry<Path, Set<SuperModel>> entry : declarations.entrySet()) {
-                Implementer<D, E> implementer = new Implementer<D, E>(dir, entry.getKey(), entry.getValue());
+                Implementer<J, F> implementer = new Implementer<J, F>(dir, entry.getKey(), entry.getValue());
                 implementers.put(entry.getKey(), implementer);
             }
-            dirMap.put(dir, new ImplementerPathMap<D, E>(implementers));
+            dirMap.put(dir, new ImplementerPathMap<J, F>(implementers));
         }
-        return new ImplementerDirMap<D, E>(dirMap);
+        return new ImplementerDirMap<J, F>(dirMap);
     }
 }

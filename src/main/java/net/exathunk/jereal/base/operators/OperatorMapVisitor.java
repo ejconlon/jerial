@@ -1,66 +1,63 @@
 package net.exathunk.jereal.base.operators;
 
 import net.exathunk.jereal.base.core.*;
-import net.exathunk.jereal.base.functional.EitherRef;
 import net.exathunk.jereal.base.operators.core.Operator;
 import net.exathunk.jereal.base.util.EmptyVisitor;
 
 /**
  * charolastra 10/29/12 9:52 PM
  */
-public class OperatorMapVisitor<D, E extends Throwable> extends EmptyVisitor {
+public class OperatorMapVisitor<F> extends EmptyVisitor {
 
-    private final OperatorMap<D, E> opMap;
-    private final Direction dir;
-    private final EitherRef<D, E> ref;
+    private final OperatorMap<JThing, F> opMap;
+    private final OpContext<JThing, F> context;
 
-    public OperatorMapVisitor(OperatorMap<D, E> opMap, Direction dir, EitherRef<D, E> ref) {
+    public OperatorMapVisitor(OperatorMap<JThing, F> opMap, OpContext<JThing, F> context) {
         this.opMap = opMap;
-        this.dir = dir;
-        this.ref = ref;
+        this.context = context;
     }
 
-    private <Y> boolean run(Path path, Y thing, SuperModel model) throws VisitException {
-        Operator<D, E, Y> op = (Operator<D, E, Y>) opMap.dir(dir).get(path, model);
+    private boolean run(Path path, SuperModel model, JThing thing) throws VisitException {
+        Operator<JThing, F> op = opMap.dir(context.dir).get(path, model);
         boolean hasRun = false;
-        if (op != null && ref.hasLeft()) {
-            final D domain = ref.getLeft();
-            op.runFunc(dir, path, thing, domain, ref.getRightReference());
+        final OpContext newContext = context.withPath(path).withThing(thing);
+        if (op != null && newContext.out.hasLeft()) {
+            op.runFunc(newContext);
             hasRun = true;
         }
-        if (ref.hasRight()) {
-            throw new VisitException("Exception while processing: "+path, ref.getRight());
+        if (newContext.out.hasRight()) {
+            throw new VisitException("Exception while processing: "+context, context.out.getRight());
         }
         return !hasRun;
     }
 
     @Override
     public boolean visitObjectStart(Path path, JObject thing) throws VisitException {
-        return run(path, thing, SuperModel.OBJECT);
+        return run(path, SuperModel.OBJECT, JThing.make(thing));
     }
 
     @Override
     public boolean visitArrayStart(Path path, JArray thing) throws VisitException {
-        return run(path, thing, SuperModel.ARRAY);
+        return run(path, SuperModel.ARRAY, JThing.make(thing));
     }
 
     @Override
     public void visitString(Path path, JString thing) throws VisitException {
-        run(path, thing, SuperModel.STRING);
+        run(path, SuperModel.STRING, JThing.make(thing));
     }
 
     @Override
     public void visitBoolean(Path path, JBoolean thing) throws VisitException {
-        run(path, thing, SuperModel.BOOLEAN);
+        run(path, SuperModel.BOOLEAN, JThing.make(thing));
     }
 
     @Override
     public void visitLong(Path path, JLong thing) throws VisitException {
-        run(path, thing, SuperModel.LONG);
+        run(path, SuperModel.LONG, JThing.make(thing));
     }
 
     @Override
     public void visitDouble(Path path, JDouble thing) throws VisitException {
-        run(path, thing, SuperModel.DOUBLE);
+        run(path, SuperModel.DOUBLE, JThing.make(thing));
     }
 }

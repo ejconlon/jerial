@@ -1,23 +1,19 @@
 package net.exathunk.jereal.base.operators.core;
 
-import net.exathunk.jereal.base.core.JString;
-import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.SuperModel;
-import net.exathunk.jereal.base.core.Visitable;
-import net.exathunk.jereal.base.operators.ExecutionException;
+import net.exathunk.jereal.base.core.*;
+import net.exathunk.jereal.base.operators.OperatorException;
 
 /**
  * charolastra 10/29/12 3:33 PM
  */
-public abstract class JStringOperator<D, E> implements Operator<D, E, JString> {
-    @Override
-    public boolean canCast(SuperModel model) {
-        return SuperModel.STRING.equals(model);
+public abstract class JStringOperator<D> extends BaseOperator<JString, D> {
+    public JStringOperator() {
+        super(Model.STRING, SuperModel.STRING);
     }
 
     @Override
-    public JString cast(SuperModel model, JThing thing) throws ExecutionException {
-        if (!canCast(model)) throw new ExecutionException("Model mismatch: "+model+" "+thing);
+    public JString convert(JThing thing) throws OperatorException {
+        if (!thing.isString()) throw new OperatorException("Expected STRING: "+thing.getModel());
         return thing.rawGetString();
     }
 }

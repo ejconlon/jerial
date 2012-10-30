@@ -7,14 +7,14 @@ import java.util.Map;
 /**
  * charolastra 10/29/12 11:58 PM
  */
-public class ImplementerDirMap<D, E> {
-    private final Map<Direction, ImplementerPathMap<D, E>> dirMap;
+public class ImplementerDirMap<J, F> {
+    private final Map<Direction, ImplementerPathMap<J, F>> dirMap;
 
-    ImplementerDirMap(Map<Direction, ImplementerPathMap<D, E>> dirMap) {
+    ImplementerDirMap(Map<Direction, ImplementerPathMap<J, F>> dirMap) {
         this.dirMap = dirMap;
     }
 
-    public ImplementerPathMap<D, E> dir(Direction dir) {
+    public ImplementerPathMap<J, F> dir(Direction dir) {
         return dirMap.get(dir);
     }
 }

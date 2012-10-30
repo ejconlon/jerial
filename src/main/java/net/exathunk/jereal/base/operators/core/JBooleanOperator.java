@@ -1,22 +1,19 @@
 package net.exathunk.jereal.base.operators.core;
 
-import net.exathunk.jereal.base.core.JBoolean;
-import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.SuperModel;
-import net.exathunk.jereal.base.operators.ExecutionException;
+import net.exathunk.jereal.base.core.*;
+import net.exathunk.jereal.base.operators.OperatorException;
 
 /**
  * charolastra 10/29/12 3:33 PM
  */
-public abstract class JBooleanOperator<D, E> implements Operator<D, E, JBoolean> {
-    @Override
-    public boolean canCast(SuperModel model) {
-        return SuperModel.BOOLEAN.equals(model);
+public abstract class JBooleanOperator<D> extends BaseOperator<JBoolean, D> {
+    public JBooleanOperator() {
+        super(Model.BOOLEAN, SuperModel.BOOLEAN);
     }
 
     @Override
-    public JBoolean cast(SuperModel model, JThing thing) throws ExecutionException {
-        if (!canCast(model)) throw new ExecutionException("Model mismatch: "+model+" "+thing);
+    public JBoolean convert(JThing thing) throws OperatorException {
+        if (!thing.isBoolean()) throw new OperatorException("Expected BOOLEAN: "+thing.getModel());
         return thing.rawGetBoolean();
     }
 }

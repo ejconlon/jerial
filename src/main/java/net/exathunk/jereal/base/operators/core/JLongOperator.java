@@ -1,22 +1,19 @@
 package net.exathunk.jereal.base.operators.core;
 
-import net.exathunk.jereal.base.core.JLong;
-import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.SuperModel;
-import net.exathunk.jereal.base.operators.ExecutionException;
+import net.exathunk.jereal.base.core.*;
+import net.exathunk.jereal.base.operators.OperatorException;
 
 /**
  * charolastra 10/29/12 3:33 PM
  */
-public abstract class JLongOperator<D, E> implements Operator<D, E, JLong> {
-    @Override
-    public boolean canCast(SuperModel model) {
-        return SuperModel.LONG.equals(model);
+public abstract class JLongOperator<D> extends BaseOperator<JLong, D> {
+    public JLongOperator() {
+        super(Model.LONG, SuperModel.LONG);
     }
 
     @Override
-    public JLong cast(SuperModel model, JThing thing) throws ExecutionException {
-        if (!canCast(model)) throw new ExecutionException("Model mismatch: "+model+" "+thing);
+    public JLong convert(JThing thing) throws OperatorException {
+        if (!thing.isLong()) throw new OperatorException("Expected LONG: "+thing.getModel());
         return thing.rawGetLong();
     }
 }

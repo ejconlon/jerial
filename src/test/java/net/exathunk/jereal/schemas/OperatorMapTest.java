@@ -1,16 +1,12 @@
 package net.exathunk.jereal.schemas;
 
-import net.exathunk.jereal.base.core.JObject;
-import net.exathunk.jereal.base.core.Path;
-import net.exathunk.jereal.base.core.VisitException;
+import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.functional.EitherRef;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
-import net.exathunk.jereal.base.operators.Direction;
+import net.exathunk.jereal.base.operators.*;
 import net.exathunk.jereal.base.operators.declaration.DeclarationException;
-import net.exathunk.jereal.base.operators.ExecutionException;
-import net.exathunk.jereal.base.operators.OperatorMap;
-import net.exathunk.jereal.base.operators.OperatorMapVisitor;
+import net.exathunk.jereal.base.operators.declaration.OpOutput;
 import net.exathunk.jereal.base.util.Logger;
 import net.exathunk.jereal.schema.domain.Schema;
 import net.exathunk.jereal.schema.operators.SchemaOperatorMapBuilder;
@@ -36,29 +32,29 @@ public class OperatorMapTest {
         return j;
     }
 
-    private static OperatorMap<Schema, ExecutionException> makeSchemaMap() throws DeclarationException {
+    private static OperatorMap<JThing, Schema> makeSchemaMap() throws DeclarationException {
         SchemaOperatorMapBuilder b = new SchemaOperatorMapBuilder();
-        OperatorMap<Schema, ExecutionException> m = new OperatorMap<Schema, ExecutionException>();
+        OperatorMap<JThing, Schema> m = new OperatorMap<JThing, Schema>();
         b.buildOperatorMap(m);
         return m;
     }
 
     @Test
     public void testSchema() throws DeclarationException {
-        final OperatorMap<Schema, ExecutionException> m = makeSchemaMap();
+        final OperatorMap<JThing, Schema> m = makeSchemaMap();
         assertEquals(false, m.dir(Direction.SERIALIZE).isEmpty());
     }
 
     @Test
     public void testSchemaSerialization() throws DeclarationException, IOException, JerializerException, VisitException {
-        final OperatorMap<Schema, ExecutionException> m = makeSchemaMap();
+        final OperatorMap<JThing, Schema> m = makeSchemaMap();
         final JObject j = loadSchema("schema");
-        final EitherRef<Schema, ExecutionException> r = EitherRef.makeLeftRef(new Schema());
-        final OperatorMapVisitor<Schema, ExecutionException> v = new OperatorMapVisitor<Schema, ExecutionException>(m, Direction.SERIALIZE, r);
+        final OpContext<JThing, Schema> context = new OpContext<JThing, Schema>(Direction.SERIALIZE, Path.root(), SuperModel.OBJECT, null, EitherRef.<Schema, OperatorException>makeLeftRef(new Schema()));
+        final OperatorMapVisitor<Schema> v = new OperatorMapVisitor<Schema>(m, context);
 
-        assertEquals(null, r.getLeft().format);
+        assertEquals(null, context.out.getLeft().format);
         j.accept(Path.root(), v);
-        Logger.getLogger(getClass()).debug(r.getLeft());
-        assertEquals("uri", r.getLeft().format);
+        Logger.getLogger(getClass()).debug(context.out.getLeft());
+        assertEquals("uri", context.out.getLeft().format);
     }
 }
