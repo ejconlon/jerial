@@ -7,9 +7,9 @@ import net.exathunk.jereal.base.jerializers.Jerializer;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.core.PathPart;
 
-public class PostJerializer implements Jerializer<Post, JerialContext> {
+public class PostJerializer<C> implements Jerializer<Post, C> {
     @Override
-    public void jerialize(JDSL<JerialContext> jdsl, JerializerRegistry<JerialContext> registry, Post object, JerialContext context) {
+    public void jerialize(JDSL<C> jdsl, JerializerRegistry<C> registry, Post object, C context) {
         jdsl.addString("title", object.title, context);
         jdsl.addString("body", object.body, context);
     }

@@ -22,7 +22,7 @@ public class OpContext<J, D> {
     }
 
     public boolean hasFailed() {
-        return failRef.getRef() != null;
+        return !failRef.isEmptyRef();
     }
 
     // return true if should continue

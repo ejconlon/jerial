@@ -1,21 +1,24 @@
 package net.exathunk.jereal.example;
 
+import net.exathunk.jereal.base.functional.Ref;
+import net.exathunk.jereal.base.functional.RefImpl;
+
 public class Bag {
-    public final String s;
-    public final Long l;
-    public final Double d;
-    public final Boolean b;
-    public final Bag next;
+    public final Ref<String> s = new RefImpl<String>();
+    public final Ref<Long> l = new RefImpl<Long>();
+    public final Ref<Double> d = new RefImpl<Double>();
+    public final Ref<Boolean> b = new RefImpl<Boolean>();
+    public final Ref<Bag> next = new RefImpl<Bag>();
 
     public Bag(String s, Long l, Double d, Boolean b) {
         this(s, l, d, b, null);
     }
 
     public Bag(String s, Long l, Double d, Boolean b, Bag next) {
-        this.s = s;
-        this.l = l;
-        this.d = d;
-        this.b = b;
-        this.next = next;
+        this.s.setRef(s);
+        this.l.setRef(l);
+        this.d.setRef(d);
+        this.b.setRef(b);
+        if (next != null) this.next.setRef(next);
     }
 }

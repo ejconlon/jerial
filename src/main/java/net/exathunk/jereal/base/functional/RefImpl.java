@@ -6,26 +6,30 @@ package net.exathunk.jereal.base.functional;
 public class RefImpl<T> implements Ref<T> {
 
     private T value = null;
+    private boolean isEmpty = true;
 
     public RefImpl() {}
 
     public RefImpl(T value) {
         this.value = value;
+        this.isEmpty = false;
     }
 
     @Override
     public T getRef() {
+        if (isEmpty) throw new IllegalStateException("NIL REF!");
         return value;
     }
 
     @Override
     public void setRef(T value) {
         this.value = value;
+        this.isEmpty = false;
     }
 
     @Override
     public boolean isEmptyRef() {
-        return value == null;
+        return isEmpty;
     }
 
     @Override
@@ -35,6 +39,7 @@ public class RefImpl<T> implements Ref<T> {
 
         Ref ref = (Ref) o;
 
+        if (isEmpty != ref.isEmptyRef()) return false;
         if (value != null ? !value.equals(ref.getRef()) : ref.getRef() != null) return false;
 
         return true;
@@ -42,13 +47,15 @@ public class RefImpl<T> implements Ref<T> {
 
     @Override
     public int hashCode() {
-        return value != null ? value.hashCode() : 0;
+        int result = value != null ? value.hashCode() : 0;
+        result = 31 * result + (isEmpty ? 1 : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         return "Ref{" +
-                "value=" + value +
+                (isEmpty ? "" : "value=" + value) +
                 '}';
     }
 }

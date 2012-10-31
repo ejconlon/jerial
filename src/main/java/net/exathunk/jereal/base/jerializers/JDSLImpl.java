@@ -18,8 +18,9 @@ import java.util.Map;
 public class JDSLImpl implements JDSL<JerialContext> {
 
     private <T> boolean addSimple(PathPart part, Ref<T> refValue, JerialContext context) {
+        if (refValue == null || refValue.isEmptyRef()) return false;
         final T value = refValue.getRef();
-        if (value != null) {
+        if (1 == 1) {
            if (value instanceof String) {
               context.builder.addThing(part, JThing.make(new JString((String) value)));
            } else if (value instanceof Long) {
