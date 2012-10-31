@@ -8,9 +8,9 @@ import net.exathunk.jereal.schema.domain.Link;
 /**
  * charolastra 10/27/12 5:50 PM
  */
-public class LinkJerializer implements Jerializer<Link, JerialContext> {
+public class LinkJerializer<C> implements Jerializer<Link, C> {
     @Override
-    public void jerialize(JDSL<JerialContext> jdsl, JerializerRegistry<JerialContext> registry, Link link, JerialContext context) throws JerializerException {
+    public void jerialize(JDSL<C> jdsl, JerializerRegistry<C> registry, Link link, C context) throws JerializerException {
         jdsl.addString("rel", link.rel, context);
         jdsl.addString("href", link.href, context);
         jdsl.addString("schema", link.schema, context);

@@ -10,9 +10,7 @@ import net.exathunk.jereal.base.operators.core.*;
 import net.exathunk.jereal.base.operators.declaration.*;
 import net.exathunk.jereal.schema.domain.Link;
 import net.exathunk.jereal.schema.domain.Schema;
-import net.exathunk.jereal.schema.util.SchemaRegistryFactorySingleton;
-
-import java.util.Map;
+import net.exathunk.jereal.schema.util.SchemaRegistryBuilder;
 
 /**
  * charolastra 10/29/12 12:36 PM
@@ -91,7 +89,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         }, new JObjectOperator<Schema, Link>(new Operator<JThing, JObject, Schema, Link>() {
             @Override
             public void runFunc(OpContext<JThing, Schema> opC, ArgContext argC, JObject thing, Link link) {
-                RegistryFactory factory = SchemaRegistryFactorySingleton.getInstance();
+                RegistryFactory<?> factory = new SchemaRegistryBuilder();
                 DejerializerRegistry registry = factory.makeDejerializerRegistry();
                 try {
                     Dejerializer<Link> linkDejerializer = registry.getDejerializer(Link.class);

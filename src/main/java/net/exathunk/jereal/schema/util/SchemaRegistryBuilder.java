@@ -10,21 +10,13 @@ import net.exathunk.jereal.schema.jerializers.SchemaDejerializer;
 import net.exathunk.jereal.schema.jerializers.SchemaJerializer;
 
 /**
- * Horribly accurate name.
- *
  * charolastra 10/27/12 3:33 PM
  */
-public class SchemaRegistryFactorySingleton extends RegistryBuilder {
+public class SchemaRegistryBuilder<C> extends RegistryBuilder<C> {
 
-    private static final SchemaRegistryFactorySingleton INSTANCE = new SchemaRegistryFactorySingleton();
-
-    public static RegistryFactory getInstance() {
-        return INSTANCE;
-    }
-
-    private SchemaRegistryFactorySingleton() {
-        add(Schema.class, new SchemaJerializer(), new SchemaDejerializer());
-        add(Link.class, new LinkJerializer(), new LinkDejerializer());
+    public SchemaRegistryBuilder() {
+        add(Schema.class, new SchemaJerializer<C>(), new SchemaDejerializer());
+        add(Link.class, new LinkJerializer<C>(), new LinkDejerializer());
     }
 
 }

@@ -8,9 +8,9 @@ import net.exathunk.jereal.schema.domain.Schema;
 /**
  * charolastra 10/27/12 3:06 PM
  */
-public class SchemaJerializer implements Jerializer<Schema, JerialContext> {
+public class SchemaJerializer<C> implements Jerializer<Schema, C> {
     @Override
-    public void jerialize(JDSL<JerialContext> jdsl, JerializerRegistry<JerialContext> registry, Schema schema, JerialContext context) throws JerializerException {
+    public void jerialize(JDSL<C> jdsl, JerializerRegistry<C> registry, Schema schema, C context) throws JerializerException {
         jdsl.addString("id", schema.id, context);
         jdsl.addString("name", schema.name, context);
         jdsl.addString("description", schema.description, context);

@@ -1,5 +1,6 @@
 package net.exathunk.jereal.schemas;
 
+import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
@@ -8,7 +9,7 @@ import net.exathunk.jereal.base.core.VisitException;
 import net.exathunk.jereal.base.util.Logger;
 import net.exathunk.jereal.schema.util.Loader;
 import net.exathunk.jereal.schema.domain.Schema;
-import net.exathunk.jereal.schema.util.SchemaRegistryFactorySingleton;
+import net.exathunk.jereal.schema.util.SchemaRegistryBuilder;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class TestLoader {
                 "hyper-schema", "interfaces", "json-ref", "schema");
 
         final JerializerRegistry registry =
-                SchemaRegistryFactorySingleton.getInstance().makeJerializerRegistry();
+                (new SchemaRegistryBuilder<JerialContext>()).makeJerializerRegistry();
 
         for (final String name : names) {
             assertFixed(registry, name);
