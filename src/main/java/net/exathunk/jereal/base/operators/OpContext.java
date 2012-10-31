@@ -1,6 +1,6 @@
 package net.exathunk.jereal.base.operators;
 
-import net.exathunk.jereal.base.functional.Reference;
+import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.operators.core.ArgContext;
 import net.exathunk.jereal.base.operators.core.Operator;
 
@@ -9,20 +9,20 @@ import net.exathunk.jereal.base.operators.core.Operator;
  */
 public class OpContext<J, D> {
     public final OperatorMap<J, D> opMap;
-    public final Reference<OperatorException> failRef;
+    public final Ref<OperatorException> failRef;
 
     public OpContext(OperatorMap<J, D> opMap,
-                     Reference<OperatorException> failRef) {
+                     Ref<OperatorException> failRef) {
         this.failRef = failRef;
         this.opMap = opMap;
     }
 
     public void fail(OperatorException e) {
-        failRef.setReference(e);
+        failRef.setRef(e);
     }
 
     public boolean hasFailed() {
-        return failRef.getReference() != null;
+        return failRef.getRef() != null;
     }
 
     // return true if should continue

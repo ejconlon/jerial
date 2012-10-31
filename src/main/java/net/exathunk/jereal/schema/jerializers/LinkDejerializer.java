@@ -23,17 +23,17 @@ public class LinkDejerializer implements Dejerializer<Link> {
             }
             final String strValue = value.rawGetString().runResFunc();
             if ("rel".equals(key)) {
-                link.rel = strValue;
+                link.rel.setRef(strValue);
             } else if ("href".equals(key)) {
-                link.href = strValue;
+                link.href.setRef(strValue);
             } else if ("schema".equals(key)) {
-                link.schema = strValue;
+                link.schema.setRef(strValue);
             } else if ("targetSchema".equals(key)) {
-                link.targetSchema = strValue;
+                link.targetSchema.setRef(strValue);
             } else if ("enctype".equals(key)) {
-                link.enctype = strValue;
+                link.enctype.setRef(strValue);
             } else if ("method".equals(key)) {
-                link.method = strValue;
+                link.method.setRef(strValue);
             } else if ("properties".equals(key)) {
                 throw new JerializerException("TODO");
             } else {

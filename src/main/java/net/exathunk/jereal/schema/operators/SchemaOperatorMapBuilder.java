@@ -1,6 +1,7 @@
 package net.exathunk.jereal.schema.operators;
 
 import net.exathunk.jereal.base.core.*;
+import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.functional.ResFunc0;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.base.operators.*;
@@ -61,7 +62,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         imp.path(Path.singletonKey("id")).implement(Model.STRING, new JStringOperator<Schema, Schema>(new Operator<JThing, JString, Schema, Schema>() {
             @Override
             public void runFunc(OpContext<JThing, Schema> opC, ArgContext argC, JString thing, Schema domain) {
-                domain.id = thing.runResFunc();
+                domain.id.setRef(thing.runResFunc());
             }
         }));
 
@@ -69,7 +70,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         imp.path(Path.singletonKey("required")).implement(Model.BOOLEAN, new JBooleanOperator<Schema, Schema>(new Operator<JThing, JBoolean, Schema, Schema>() {
             @Override
             public void runFunc(OpContext<JThing, Schema> opC, ArgContext argC, JBoolean thing, Schema domain) {
-                domain.required = thing.runResFunc();
+                domain.required.setRef(thing.runResFunc());
             }
         }));
 
@@ -82,7 +83,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
                     @Override
                     public Link runResFunc() {
                         Link link = new Link();
-                        schema.links.add(link);
+                        schema.links.getRef().add(new RefImpl<Link>(link));
                         return link;
                     }
                 };

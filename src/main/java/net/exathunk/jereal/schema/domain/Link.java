@@ -1,5 +1,8 @@
 package net.exathunk.jereal.schema.domain;
 
+import net.exathunk.jereal.base.functional.Ref;
+import net.exathunk.jereal.base.functional.RefImpl;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -7,24 +10,24 @@ import java.util.TreeMap;
  * charolastra 10/27/12 1:45 PM
  */
 public class Link {
-    public String rel;
-    public String href;
-    public String schema;
-    public String targetSchema;
-    public String enctype;
-    public String method;
-    public final Map<String, SchemaRef<String>> properties = new TreeMap<String, SchemaRef<String>>();
+    public final Ref<String> rel = new RefImpl<String>();
+    public final Ref<String> href = new RefImpl<String>();
+    public final Ref<String> schema = new RefImpl<String>();
+    public final Ref<String> targetSchema = new RefImpl<String>();
+    public final Ref<String> enctype = new RefImpl<String>();
+    public final Ref<String> method = new RefImpl<String>();
+    public final Ref<Map<String, Ref<SchemaRef<String>>>> properties = new RefImpl<Map<String, Ref<SchemaRef<String>>>>(new TreeMap<String, Ref<SchemaRef<String>>>());
 
     @Override
     public String toString() {
         return "Link{" +
-                "rel='" + rel + '\'' +
-                ", href='" + href + '\'' +
-                (schema != null ? ", schema='" + schema + '\'' : "") +
-                (targetSchema != null ? ", targetSchema='" + targetSchema + '\'' : "") +
-                (enctype != null ? ", enctype='" + enctype + '\'' : "") +
-                (method != null ? ", method='" + method + '\'' : "") +
-                (!properties.isEmpty() ? ", properties=" + properties : "") +
+                (!rel.isEmptyRef() ? "rel='" + rel + '\'' : "") +
+                (!href.isEmptyRef() ? ", href='" + href + '\'' : "") +
+                (!schema.isEmptyRef() ? ", schema='" + schema + '\'' : "") +
+                (!targetSchema.isEmptyRef() ? ", targetSchema='" + targetSchema + '\'' : "") +
+                (!enctype.isEmptyRef() ? ", enctype='" + enctype + '\'' : "") +
+                (!method.isEmptyRef() ? ", method='" + method + '\'' : "") +
+                (!properties.isEmptyRef() ? ", properties=" + properties : "") +
                 '}';
     }
 }

@@ -2,6 +2,8 @@ package net.exathunk.jereal.schema.domain;
 
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Either;
+import net.exathunk.jereal.base.functional.Ref;
+import net.exathunk.jereal.base.functional.RefImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,59 +36,59 @@ public class Schema {
         }
     }
 
-    public String id;
-    public String name;
-    public String title;
-    public String description;
-    public String format;
-    public String dollar_ref;
-    public String dollar_schema;
-    public String fragmentResolution;
+    public final Ref<String> id = new RefImpl<String>();
+    public final Ref<String> name = new RefImpl<String>();
+    public final Ref<String> title = new RefImpl<String>();
+    public final Ref<String> description = new RefImpl<String>();
+    public final Ref<String> format = new RefImpl<String>();
+    public final Ref<String> dollar_ref = new RefImpl<String>();
+    public final Ref<String> dollar_schema = new RefImpl<String>();
+    public final Ref<String> fragmentResolution = new RefImpl<String>();
 
     // This is an "unparsed" item
-    public JThing defaultz;
+    public final Ref<JThing> defaultz = new RefImpl<JThing>();
 
-    public Boolean required;
-    public Boolean uniqueItems;
+    public final Ref<Boolean> required = new RefImpl<Boolean>();
+    public final Ref<Boolean> uniqueItems = new RefImpl<Boolean>();
 
-    public Long minItems;
-    public Long minimum;
+    public final Ref<Long> minItems = new RefImpl<Long>();
+    public final Ref<Long> minimum = new RefImpl<Long>();
 
-    public Either<SchemaRef<String>, Boolean> additionalProperties;
+    public final Ref<Either<Ref<SchemaRef<String>>, Ref<Boolean>>> additionalProperties = new RefImpl<Either<Ref<SchemaRef<String>>, Ref<Boolean>>>();
 
-    public List<SchemaRef<TYPE>> type = new ArrayList<SchemaRef<TYPE>>();
+    public final Ref<List<Ref<SchemaRef<TYPE>>>> type = new RefImpl<List<Ref<SchemaRef<TYPE>>>>(new ArrayList<Ref<SchemaRef<TYPE>>>());
 
-    public SchemaRef<String> items;
+    public final Ref<SchemaRef<String>> items = new RefImpl<SchemaRef<String>>();
 
-    public SchemaRef<String> extendz;
+    public final Ref<SchemaRef<String>> extendz = new RefImpl<SchemaRef<String>>();
 
-    public final Map<String, SchemaRef<String>> properties = new TreeMap<String, SchemaRef<String>>();
-    public final List<Link> links = new ArrayList<Link>();
-    public final Map<String, String> dependencies = new TreeMap<String, String>();
+    public final Ref<Map<String, Ref<SchemaRef<String>>>> properties = new RefImpl<Map<String, Ref<SchemaRef<String>>>>(new TreeMap<String, Ref<SchemaRef<String>>>());
+    public final Ref<List<Ref<Link>>> links = new RefImpl<List<Ref<Link>>>(new ArrayList<Ref<Link>>());
+    public final Ref<Map<String, Ref<String>>> dependencies = new RefImpl<Map<String, Ref<String>>>(new TreeMap<String, Ref<String>>());
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Schema{");
-        if (id != null) sb.append("id='" + id + '\'' + ", ");
-        if (name != null) sb.append("name='" + name + '\''+", ");
-        if (title != null) sb.append("title='" + title + '\''+", ");
-        if (description != null) sb.append("description='" + description + '\''+", ");
-        if (format != null) sb.append("format='" + format + '\''+", ");
-        if (dollar_ref != null) sb.append("dollar_ref='" + dollar_ref + '\''+", ");
-        if (dollar_schema != null) sb.append("dollar_schema='" + dollar_schema + '\''+", ");
-        if (fragmentResolution != null) sb.append("fragmentResolution='" + fragmentResolution + '\''+", ");
-        if (defaultz != null) sb.append("defaultz=" + defaultz+", ");
-        if (required != null) sb.append("required=" + required+", ");
-        if (uniqueItems != null) sb.append("uniqueItems=" + uniqueItems+", ");
-        if (minItems != null) sb.append("minItems=" + minItems+", ");
-        if (minimum != null) sb.append("minimum=" + minimum+", ");
-        if (additionalProperties != null) sb.append("additionalProperties=" + additionalProperties+", ");
-        if (type != null) sb.append("type=" + type+", ");
-        if (items != null) sb.append("items=" + items+", ");
-        if (extendz != null) sb.append("extendz=" + extendz+", ");
-        if (!properties.isEmpty()) sb.append("properties=" + properties+", ");
-        if (!links.isEmpty()) sb.append("links=" + links+", ");
-        if (!dependencies.isEmpty()) sb.append("dependencies=" + dependencies+", ");
+        if (!id.isEmptyRef()) sb.append("id='" + id + '\'' + ", ");
+        if (!name.isEmptyRef()) sb.append("name='" + name + '\''+", ");
+        if (!title.isEmptyRef()) sb.append("title='" + title + '\''+", ");
+        if (!description.isEmptyRef()) sb.append("description='" + description + '\''+", ");
+        if (!format.isEmptyRef()) sb.append("format='" + format + '\''+", ");
+        if (!dollar_ref.isEmptyRef()) sb.append("dollar_ref='" + dollar_ref + '\''+", ");
+        if (!dollar_schema.isEmptyRef()) sb.append("dollar_schema='" + dollar_schema + '\''+", ");
+        if (!fragmentResolution.isEmptyRef()) sb.append("fragmentResolution='" + fragmentResolution + '\''+", ");
+        if (!defaultz.isEmptyRef()) sb.append("defaultz=" + defaultz+", ");
+        if (!required.isEmptyRef()) sb.append("required=" + required+", ");
+        if (!uniqueItems.isEmptyRef()) sb.append("uniqueItems=" + uniqueItems+", ");
+        if (!minItems.isEmptyRef()) sb.append("minItems=" + minItems+", ");
+        if (!minimum.isEmptyRef()) sb.append("minimum=" + minimum+", ");
+        if (!additionalProperties.isEmptyRef()) sb.append("additionalProperties=" + additionalProperties+", ");
+        if (!type.isEmptyRef()) sb.append("type=" + type+", ");
+        if (!items.isEmptyRef()) sb.append("items=" + items+", ");
+        if (!extendz.isEmptyRef()) sb.append("extendz=" + extendz+", ");
+        if (!properties.isEmptyRef()) sb.append("properties=" + properties+", ");
+        if (!links.isEmptyRef()) sb.append("links=" + links+", ");
+        if (!dependencies.isEmptyRef()) sb.append("dependencies=" + dependencies+", ");
         sb.append('}');
         return sb.toString();
     }

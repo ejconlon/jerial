@@ -18,32 +18,42 @@ public class EitherRef<D, E> extends Either<D, E> {
         return new EitherRef<D, E>(null, e);
     }
 
-    public Reference<D> getLeftReference() {
+    public Ref<D> getLeftReference() {
         final EitherRef<D, E> thiz = this;
-        return new Reference<D>() {
+        return new Ref<D>() {
             @Override
-            public D getReference() {
+            public D getRef() {
                 return thiz.getLeft();
             }
 
             @Override
-            public void setReference(D reference) {
-                thiz.setLeft(reference);
+            public void setRef(D value) {
+                thiz.setLeft(value);
+            }
+
+            @Override
+            public boolean isEmptyRef() {
+                return !thiz.hasLeft();
             }
         };
     }
 
-    public Reference<E> getRightReference() {
+    public Ref<E> getRightReference() {
         final EitherRef<D, E> thiz = this;
-        return new Reference<E>() {
+        return new Ref<E>() {
             @Override
-            public E getReference() {
+            public E getRef() {
                 return thiz.getRight();
             }
 
             @Override
-            public void setReference(E reference) {
-                thiz.setRight(reference);
+            public void setRef(E value) {
+                thiz.setRight(value);
+            }
+
+            @Override
+            public boolean isEmptyRef() {
+                return !thiz.hasRight();
             }
         };
     }

@@ -1,7 +1,7 @@
 package net.exathunk.jereal.schemas;
 
 import net.exathunk.jereal.base.core.*;
-import net.exathunk.jereal.base.functional.ReferenceImpl;
+import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
 import net.exathunk.jereal.base.operators.*;
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 public class OperatorMapTest {
 
     static {
-           Logger.getPolicyBuilder().add(OperatorMapTest.class, Logger.Level.DEBUG);
+           //Logger.getPolicyBuilder().add(OperatorMapTest.class, Logger.Level.DEBUG);
     }
 
     private static JObject loadSchema(String name) throws IOException, JerializerException {
@@ -48,13 +48,13 @@ public class OperatorMapTest {
     public void testSchemaSerialization() throws DeclarationException, IOException, JerializerException, VisitException {
         final OperatorMap<JThing, Schema> opMap = makeSchemaMap();
         final JObject j = loadSchema("schema");
-        final OpContext<JThing, Schema> context = new OpContext<JThing, Schema>(opMap, new ReferenceImpl<OperatorException>());
+        final OpContext<JThing, Schema> context = new OpContext<JThing, Schema>(opMap, new RefImpl<OperatorException>());
         final Schema domain = new Schema();
         final OperatorVisitor<Schema> v = new OperatorVisitor<Schema>(context, domain);
 
-        assertEquals(null, domain.id);
+        assertEquals(true, domain.id.isEmptyRef());
         JThing.make(j).acceptUntyped(Path.root(), v);
         Logger.getLogger(getClass()).debug(domain);
-        assertEquals("http://json-schema.org/schema#", domain.id);
+        assertEquals("http://json-schema.org/schema#", domain.id.getRef());
     }
 }
