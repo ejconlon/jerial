@@ -39,12 +39,12 @@ public class TestPost {
                 case 0:
                     assertEquals("body", entry.getKey());
                     assertEquals(true, entry.getValue().isString());
-                    assertEquals(post.body.getRef(), entry.getValue().rawGetString().runResFunc());
+                    assertEquals(post.body.getRef(), entry.getValue().rawGetString().getRef());
                     break;
                 case 1:
                     assertEquals("title", entry.getKey());
                     assertEquals(true, entry.getValue().isString());
-                    assertEquals(post.title.getRef(), entry.getValue().rawGetString().runResFunc());
+                    assertEquals(post.title.getRef(), entry.getValue().rawGetString().getRef());
                     break;
                 default:
                     fail();

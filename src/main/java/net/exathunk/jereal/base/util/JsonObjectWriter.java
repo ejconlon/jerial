@@ -80,14 +80,14 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
 
     @Override
     public void visitString(Path part, JString thing) {
-        String v = thing.runResFunc();
+        String v = thing.getRef();
         output(part, v, true);
     }
 
     @Override
     public void visitBoolean(Path part, JBoolean thing) {
         String v = null;
-        Boolean x = thing.runResFunc();
+        Boolean x = thing.getRef();
         if (x != null) v = x.toString().toLowerCase();
         output(part, v, false);
     }
@@ -95,7 +95,7 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
     @Override
     public void visitLong(Path part, JLong thing) {
         String v = null;
-        Long x = thing.runResFunc();
+        Long x = thing.getRef();
         if (x != null) v = x.toString();
         output(part, v, false);
     }
@@ -103,7 +103,7 @@ public class JsonObjectWriter implements TypedVisitor, Func1<StringBuilder> {
     @Override
     public void visitDouble(Path part, JDouble thing) {
         String v = null;
-        Double x = thing.runResFunc();
+        Double x = thing.getRef();
         if (x != null) v = x.toString();
         output(part, v, false);
     }

@@ -21,7 +21,7 @@ public class LinkDejerializer implements Dejerializer<Link> {
             if (!item.getValue().isString()) {
                 throw new JerializerException("Unexpected value: "+key+" "+value);
             }
-            final String strValue = value.rawGetString().runResFunc();
+            final String strValue = value.rawGetString().getRef();
             if ("rel".equals(key)) {
                 link.rel.setRef(strValue);
             } else if ("href".equals(key)) {

@@ -60,7 +60,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         imp.path(Path.singletonKey("id")).implement(Model.STRING, new JStringOperator<Schema, Schema>(new Operator<JThing, JString, Schema, Schema>() {
             @Override
             public void runFunc(OpContext<JThing, Schema> opC, ArgContext argC, JString thing, Schema domain) {
-                domain.id.setRef(thing.runResFunc());
+                domain.id.setRef(thing.getRef());
             }
         }));
 
@@ -68,7 +68,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         imp.path(Path.singletonKey("required")).implement(Model.BOOLEAN, new JBooleanOperator<Schema, Schema>(new Operator<JThing, JBoolean, Schema, Schema>() {
             @Override
             public void runFunc(OpContext<JThing, Schema> opC, ArgContext argC, JBoolean thing, Schema domain) {
-                domain.required.setRef(thing.runResFunc());
+                domain.required.setRef(thing.getRef());
             }
         }));
 
