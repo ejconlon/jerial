@@ -16,13 +16,13 @@ public interface JDSL {
 
     void addThing(PathPart part, Ref<JThing> thing);
 
-    void addBoolean(String key, Ref<Boolean> value);
+    void addBoolean(PathPart part, Ref<Boolean> value);
 
-    void addLong(String key, Ref<Long> value);
+    void addLong(PathPart part, Ref<Long> value);
 
-    void addDouble(String key, Ref<Double> value);
+    void addDouble(PathPart part, Ref<Double> value);
 
-    void addString(String key, Ref<String> value);
+    void addString(PathPart part, Ref<String> value);
 
     <T> void add(PathPart part, Ref<T> value) throws JerializerException;
 

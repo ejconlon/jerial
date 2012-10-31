@@ -7,7 +7,6 @@ import net.exathunk.jereal.base.functional.Either3;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.schema.domain.Schema;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +52,6 @@ public class JDSLImpl implements JDSL {
         return false;
     }
 
-    private boolean addSimple(String key, Ref<?> value) {
-        return addSimple(PathPart.key(key), value);
-    }
-
     @Override
     public void addThing(PathPart part, Ref<JThing> thing) {
         if (thing == null || thing.isEmptyRef()) return;
@@ -64,23 +59,23 @@ public class JDSLImpl implements JDSL {
     }
 
     @Override
-    public void addBoolean(String key, Ref<Boolean> value) {
-        addSimple(key, value);
+    public void addBoolean(PathPart part, Ref<Boolean> value) {
+        addSimple(part, value);
     }
 
     @Override
-    public void addLong(String key, Ref<Long> value) {
-        addSimple(key, value);
+    public void addLong(PathPart part, Ref<Long> value) {
+        addSimple(part, value);
     }
 
     @Override
-    public void addDouble(String key, Ref<Double> value) {
-        addSimple(key, value);
+    public void addDouble(PathPart part, Ref<Double> value) {
+        addSimple(part, value);
     }
 
     @Override
-    public void addString(String key, Ref<String> value) {
-        addSimple(key, value);
+    public void addString(PathPart part, Ref<String> value) {
+        addSimple(part, value);
     }
 
     private <T, A, B, C> boolean addStructural(PathPart part, Ref<T> value) throws JerializerException {
