@@ -1,26 +1,21 @@
 package net.exathunk.jereal.base.dsl;
 
-import net.exathunk.jereal.base.builders.JerialContext;
-import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.Model;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.jerializers.JDSL;
 
 /**
  * charolastra 10/31/12 3:41 AM
  */
-public class ObjectDSLImpl implements ObjectDSL<JThing> {
-    private final JDSL jdsl;
-    private final JerialContext context;
-    private final RefMapGroup<JThing> refMapGroup;
+public class ObjectDSLImpl<T extends PushableContext<T, U>, U> implements ObjectDSL<T, U> {
 
+    private final T context;
+    private final RefMapGroup<T, U> refMapGroup;
 
-    public ObjectDSLImpl(JDSL jdsl, JerialContext context) {
-        this.jdsl = jdsl;
+    public ObjectDSLImpl(T context) {
         this.context = context;
-        refMapGroup = new RefMapGroup<JThing>();
+        refMapGroup = new RefMapGroup<T, U>(Model.OBJECT);
     }
 
     private PathPart makePart(String key) {
@@ -28,17 +23,17 @@ public class ObjectDSLImpl implements ObjectDSL<JThing> {
     }
 
     @Override
-    public Ref<ObjectDSL<JThing>> seeObjectStart(String key) {
+    public Ref<ObjectDSL<T, U>> seeObjectStart(String key) {
         final PathPart part = makePart(key);
-        Ref<ObjectDSL<JThing>> object = new RefImpl<ObjectDSL<JThing>>(new ObjectDSLImpl(jdsl, context.push(part)));
+        Ref<ObjectDSL<T, U>> object = new RefImpl<ObjectDSL<T, U>>(new ObjectDSLImpl(context.push(part)));
         refMapGroup.addObject(part, object);
         return object;
     }
 
     @Override
-    public Ref<ArrayDSL<JThing>> seeArrayStart(String key) {
+    public Ref<ArrayDSL<T, U>> seeArrayStart(String key) {
         final PathPart part = makePart(key);
-        Ref<ArrayDSL<JThing>> array = new RefImpl<ArrayDSL<JThing>>(new ArrayDSLImpl(jdsl, context.push(part)));
+        Ref<ArrayDSL<T, U>> array = new RefImpl<ArrayDSL<T, U>>(new ArrayDSLImpl(context.push(part)));
         refMapGroup.addArray(part, array);
         return array;
     }
@@ -64,12 +59,7 @@ public class ObjectDSLImpl implements ObjectDSL<JThing> {
     }
 
     @Override
-    public Model getModel() {
-        return Model.OBJECT;
-    }
-
-    @Override
-    public JThing walk() throws WalkException {
-        return (new Walker(context, Model.OBJECT, refMapGroup)).walk();
+    public U seeObjectEnd() {
+        return context.runResFunc(refMapGroup);
     }
 }

@@ -10,7 +10,7 @@ import net.exathunk.jereal.base.core.PathPart;
 public class PostJerializer implements Jerializer<Post> {
     @Override
     public void jerialize(JDSL jdsl, Post object) {
-        jdsl.addString("title", object.title);
-        jdsl.addString("body", object.body);
+        jdsl.addString(PathPart.key("title"), object.title);
+        jdsl.addString(PathPart.key("body"), object.body);
     }
 }

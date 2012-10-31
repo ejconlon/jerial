@@ -2,31 +2,27 @@ package net.exathunk.jereal.base.dsl;
 
 import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.jerializers.JDSL;
 
 /**
  * charolastra 10/31/12 3:40 AM
  */
-public class DSLImpl implements DSL<JThing> {
+public class DSLImpl<T extends PushableContext<T, U>, U> implements DSL<T, U> {
 
-    private final JDSL jdsl;
-    private final JerialContext context;
+    private final T context;
 
-    public DSLImpl(JDSL jdsl, JerialContext context) {
-        this.jdsl = jdsl;
+    public DSLImpl(T context) {
         this.context = context;
     }
 
     @Override
-    public Ref<ObjectDSL<JThing>> seeObject() {
-        return new RefImpl<ObjectDSL<JThing>>(new ObjectDSLImpl(jdsl, context));
+    public ObjectDSL<T, U> seeObject() {
+        return new ObjectDSLImpl(context);
     }
 
     @Override
-    public Ref<ArrayDSL<JThing>> seeArray() {
-        return new RefImpl<ArrayDSL<JThing>>(new ArrayDSLImpl(jdsl, context));
+    public ArrayDSL<T, U> seeArray() {
+        return new ArrayDSLImpl(context);
     }
 }

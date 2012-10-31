@@ -11,12 +11,12 @@ import net.exathunk.jereal.schema.domain.Link;
 public class LinkJerializer implements Jerializer<Link> {
     @Override
     public void jerialize(JDSL jdsl, Link link) throws JerializerException {
-        jdsl.addString("rel", link.rel);
-        jdsl.addString("href", link.href);
-        jdsl.addString("schema", link.schema);
-        jdsl.addString("targetSchema", link.targetSchema);
-        jdsl.addString("enctype", link.enctype);
-        jdsl.addString("method", link.method);
+        jdsl.addString(PathPart.key("rel"), link.rel);
+        jdsl.addString(PathPart.key("href"), link.href);
+        jdsl.addString(PathPart.key("schema"), link.schema);
+        jdsl.addString(PathPart.key("targetSchema"), link.targetSchema);
+        jdsl.addString(PathPart.key("enctype"), link.enctype);
+        jdsl.addString(PathPart.key("method"), link.method);
         jdsl.addMap(PathPart.key("properties"), link.properties);
     }
 }

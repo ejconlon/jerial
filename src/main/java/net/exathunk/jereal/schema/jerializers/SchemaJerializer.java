@@ -10,23 +10,23 @@ import net.exathunk.jereal.schema.domain.Schema;
 public class SchemaJerializer implements Jerializer<Schema> {
     @Override
     public void jerialize(JDSL jdsl, Schema schema) throws JerializerException {
-        jdsl.addString("id", schema.id);
-        jdsl.addString("name", schema.name);
-        jdsl.addString("description", schema.description);
-        jdsl.addString("title", schema.title);
-        jdsl.addString("format", schema.format);
-        jdsl.addString("$ref", schema.dollar_ref);
-        jdsl.addString("$schema", schema.dollar_schema);
-        jdsl.addString("fragmentResolution", schema.fragmentResolution);
+        jdsl.addString(PathPart.key("id"), schema.id);
+        jdsl.addString(PathPart.key("name"), schema.name);
+        jdsl.addString(PathPart.key("description"), schema.description);
+        jdsl.addString(PathPart.key("title"), schema.title);
+        jdsl.addString(PathPart.key("format"), schema.format);
+        jdsl.addString(PathPart.key("$ref"), schema.dollar_ref);
+        jdsl.addString(PathPart.key("$schema"), schema.dollar_schema);
+        jdsl.addString(PathPart.key("fragmentResolution"), schema.fragmentResolution);
 
         // Unparsed item
         jdsl.addThing(PathPart.key("default"), schema.defaultz);
 
-        jdsl.addBoolean("required", schema.required);
-        jdsl.addBoolean("uniqueItems", schema.uniqueItems);
+        jdsl.addBoolean(PathPart.key("required"), schema.required);
+        jdsl.addBoolean(PathPart.key("uniqueItems"), schema.uniqueItems);
 
-        jdsl.addLong("minItems", schema.minItems);
-        jdsl.addLong("minimum", schema.minimum);
+        jdsl.addLong(PathPart.key("minItems"), schema.minItems);
+        jdsl.addLong(PathPart.key("minimum"), schema.minimum);
 
         jdsl.add(PathPart.key("additionalProperties"), schema.additionalProperties);
 

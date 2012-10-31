@@ -14,10 +14,10 @@ public class BagJerializer implements Jerializer<Bag> {
 
     @Override
     public void jerialize(JDSL jdsl, Bag bag) throws JerializerException {
-        jdsl.addString("s", bag.s);
-        jdsl.addLong("l", bag.l);
-        jdsl.addDouble("d", bag.d);
-        jdsl.addBoolean("b", bag.b);
+        jdsl.addString(PathPart.key("s"), bag.s);
+        jdsl.addLong(PathPart.key("l"), bag.l);
+        jdsl.addDouble(PathPart.key("d"), bag.d);
+        jdsl.addBoolean(PathPart.key("b"), bag.b);
         jdsl.add(PathPart.key("next"), bag.next);
     }
 }

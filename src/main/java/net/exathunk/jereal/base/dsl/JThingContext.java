@@ -12,26 +12,17 @@ import java.util.Map;
 /**
  * charolastra 10/31/12 2:18 PM
  */
-public class Walker implements Walkable<JThing> {
+public class JThingContext implements PushableContext<JThingContext, JThing> {
     private final JerialContext context;
-    private final Model model;
-    private final RefMapGroup<JThing> group;
 
-    public Walker(JerialContext context, Model model, RefMapGroup<JThing> group) {
+    public JThingContext(JerialContext context) {
         this.context = context;
-        this.model = model;
-        this.group = group;
     }
 
     @Override
-    public Model getModel() {
-        return model;
-    }
-
-    @Override
-    public JThing walk() throws WalkException{
-        Iterator<Map.Entry<PathPart, Ref<ObjectDSL<JThing>>>> objectIt = group.objectIterable().iterator();
-        Iterator<Map.Entry<PathPart, Ref<ArrayDSL<JThing>>>> arrayIt = group.arrayIterable().iterator();
+    public JThing runResFunc(RefMapGroup<JThingContext, JThing> group) {
+        Iterator<Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>>> objectIt = group.objectIterable().iterator();
+        Iterator<Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>>> arrayIt = group.arrayIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<String>>> stringIt = group.stringIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<Boolean>>> booleanIt = group.booleanIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<Long>>> longIt = group.longIterable().iterator();
@@ -42,16 +33,16 @@ public class Walker implements Walkable<JThing> {
                 case OBJECT:
                 {
                     if (!objectIt.hasNext()) continue;
-                    Map.Entry<PathPart, Ref<ObjectDSL<JThing>>> entry = objectIt.next();
-                    JThing walked = entry.getValue().getRef().walk();
+                    Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>> entry = objectIt.next();
+                    JThing walked = entry.getValue().getRef().seeObjectEnd();
                     context.builder.addThing(entry.getKey(), walked);
                     break;
                 }
                 case ARRAY:
                 {
                     if (!arrayIt.hasNext()) continue;
-                    Map.Entry<PathPart, Ref<ArrayDSL<JThing>>> entry = arrayIt.next();
-                    JThing walked = entry.getValue().getRef().walk();
+                    Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>> entry = arrayIt.next();
+                    JThing walked = entry.getValue().getRef().seeArrayEnd();
                     context.builder.addThing(entry.getKey(), walked);
                     break;
                 }
@@ -86,12 +77,17 @@ public class Walker implements Walkable<JThing> {
             }
         }
 
-        if (Model.OBJECT.equals(model)) {
+        if (Model.OBJECT.equals(group.getModel())) {
             return JThing.make(context.builder.buildObject());
-        } else if (Model.ARRAY.equals(model)) {
+        } else if (Model.ARRAY.equals(group.getModel())) {
             return JThing.make(context.builder.buildArray());
         } else {
-            throw new WalkException("Invalid model: "+model);
+            throw new IllegalArgumentException("Invalid model: "+group.getModel());
         }
+    }
+
+    @Override
+    public JThingContext push(PathPart part) {
+        return new JThingContext(context.push(part));
     }
 }

@@ -11,21 +11,30 @@ import java.util.Map;
 /**
  * charolastra 10/31/12 1:22 PM
  */
-public class RefMapGroup<T> {
+public class RefMapGroup<T extends PushableContext<T, U>, U> {
     private final RefMap<PathPart, String> strings = new RefMap<PathPart, String>();
     private final RefMap<PathPart, Boolean> booleans = new RefMap<PathPart, Boolean>();
     private final RefMap<PathPart, Long> longs = new RefMap<PathPart, Long>();
     private final RefMap<PathPart, Double> doubles = new RefMap<PathPart, Double>();
-    private final RefMap<PathPart, ObjectDSL<T>> objects = new RefMap<PathPart, ObjectDSL<T>>();
-    private final RefMap<PathPart, ArrayDSL<T>> arrays = new RefMap<PathPart, ArrayDSL<T>>();
+    private final RefMap<PathPart, ObjectDSL<T, U>> objects = new RefMap<PathPart, ObjectDSL<T, U>>();
+    private final RefMap<PathPart, ArrayDSL<T, U>> arrays = new RefMap<PathPart, ArrayDSL<T, U>>();
     private final List<Model> order = new ArrayList<Model>();
+    private final Model model;
 
-    public void addObject(PathPart part, Ref<ObjectDSL<T>> value) {
+    public RefMapGroup(Model model) {
+        this.model = model;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void addObject(PathPart part, Ref<ObjectDSL<T, U>> value) {
         objects.put(part, value);
         order.add(Model.OBJECT);
     }
 
-    public void addArray(PathPart part, Ref<ArrayDSL<T>> value) {
+    public void addArray(PathPart part, Ref<ArrayDSL<T, U>> value) {
         arrays.put(part, value);
         order.add(Model.ARRAY);
     }
@@ -50,11 +59,11 @@ public class RefMapGroup<T> {
         order.add(Model.LONG);
     }
 
-    public Iterable<Map.Entry<PathPart, Ref<ObjectDSL<T>>>> objectIterable() {
+    public Iterable<Map.Entry<PathPart, Ref<ObjectDSL<T, U>>>> objectIterable() {
         return objects;
     }
 
-    public Iterable<Map.Entry<PathPart, Ref<ArrayDSL<T>>>> arrayIterable() {
+    public Iterable<Map.Entry<PathPart, Ref<ArrayDSL<T, U>>>> arrayIterable() {
         return arrays;
     }
 
