@@ -54,15 +54,15 @@ public class Schema {
     public final Ref<Long> minItems = new RefImpl<Long>();
     public final Ref<Long> minimum = new RefImpl<Long>();
 
-    public final Ref<Either<Ref<SchemaRef<String>>, Ref<Boolean>>> additionalProperties = new RefImpl<Either<Ref<SchemaRef<String>>, Ref<Boolean>>>();
+    public final Ref<Either<SchemaRef, Boolean>> additionalProperties = new RefImpl<Either<SchemaRef, Boolean>>();
 
-    public final Ref<List<SchemaRef<TYPE>>> type = new RefImpl<List<SchemaRef<TYPE>>>(new ArrayList<SchemaRef<TYPE>>());
+    public final Ref<List<SchemaRef>> type = new RefImpl<List<SchemaRef>>(new ArrayList<SchemaRef>());
 
-    public final Ref<SchemaRef<String>> items = new RefImpl<SchemaRef<String>>();
+    public final Ref<SchemaRef> items = new RefImpl<SchemaRef>();
 
-    public final Ref<SchemaRef<String>> extendz = new RefImpl<SchemaRef<String>>();
+    public final Ref<SchemaRef> extendz = new RefImpl<SchemaRef>();
 
-    public final Ref<Map<String, SchemaRef<String>>> properties = new RefImpl<Map<String, SchemaRef<String>>>(new TreeMap<String, SchemaRef<String>>());
+    public final Ref<Map<String, SchemaRef>> properties = new RefImpl<Map<String, SchemaRef>>(new TreeMap<String, SchemaRef>());
     public final Ref<List<Link>> links = new RefImpl<List<Link>>(new ArrayList<Link>());
     public final Ref<Map<String, String>> dependencies = new RefImpl<Map<String, String>>(new TreeMap<String, String>());
 

@@ -83,12 +83,12 @@ public class JDSLImpl implements JDSL {
         addSimple(key, value);
     }
 
-    private <T, A, B, C> boolean addStructural(JerializerRegistry registry, PathPart part, Ref<T> value) throws JerializerException {
+    private <T, A, B, C> boolean addStructural(PathPart part, Ref<T> value) throws JerializerException {
         if (value == null || value.isEmptyRef()) return false;
         if (value.getRef() instanceof Either) {
-            addEither(part, (Ref<Either<Ref<A>, Ref<B>>>)value);
+            addEither(part, (Ref<Either<A, B>>)value);
         } else if (value.getRef() instanceof Either3) {
-            addEither3(part, (Ref<Either3<Ref<A>, Ref<B>, Ref<C>>>) value);
+            addEither3(part, (Ref<Either3<A, B, C>>) value);
         } else if (value.getRef() instanceof  JThing) {
             addThing(part, (Ref<JThing>)value);
         } else {
@@ -99,52 +99,39 @@ public class JDSLImpl implements JDSL {
 
     @Override
     public <T> void add(PathPart part, Ref<T> value) throws JerializerException {
+        if (value == null || value.isEmptyRef()) return;
         if (!addSimple(part, value)) {
-            if (!addStructural(registry, part, value)) {
-                addCustom(part, value);
+            if (!addStructural(part, value)) {
+                addCustom(part, value.getRef());
             }
         }
     }
 
-    private <A, B> void addEither(PathPart part, Ref<Either<Ref<A>, Ref<B>>> either) throws JerializerException {
+    private <A, B> void addEither(PathPart part, Ref<Either<A, B>> either) throws JerializerException {
         if (either == null || either.isEmptyRef()) return;
         if (either.getRef().hasLeft()) {
-            add(part, either.getRef().getLeft());
+            add(part, new RefImpl<A>(either.getRef().getLeft()));
         } else {
-            add(part, either.getRef().getRight());
+            add(part, new RefImpl<B>(either.getRef().getRight()));
         }
     }
 
-    private <A, B, C> void addEither3(PathPart part, Ref<Either3<Ref<A>, Ref<B>, Ref<C>>> either) throws JerializerException {
+    private <A, B, C> void addEither3(PathPart part, Ref<Either3<A, B, C>> either) throws JerializerException {
         if (either == null || either.isEmptyRef()) return;
         if (either.getRef().hasLeft()) {
-            add(part, either.getRef().getLeft());
+            add(part, new RefImpl<A>(either.getRef().getLeft()));
         } else if (either.getRef().hasMiddle()) {
-            add(part, either.getRef().getMiddle());
+            add(part, new RefImpl<B>(either.getRef().getMiddle()));
         } else {
-            add(part, either.getRef().getRight());
+            add(part, new RefImpl<C>(either.getRef().getRight()));
         }
     }
 
-    @Override
-    public void addTypes(String key, List<Schema.TYPE> types) {
-        if (types == null || types.isEmpty()) return;
-        List<JThing> arr = new ArrayList<JThing>(types.size());
-        for (int i = 0; i < types.size(); ++i) {
-            arr.add(JThing.make(new JString(types.get(i).toString())));
-        }
-        if (arr.size() == 1) {
-            context.builder.addThing(PathPart.key(key), arr.get(0));
-        } else {
-            context.builder.addThing(PathPart.key(key), JThing.make(new JArray(arr)));
-        }
-    }
-
-    private <T> void addCustom(PathPart part, Ref<T> subObject) throws JerializerException {
-        if (subObject == null || subObject.isEmptyRef()) return;
+    private <T> void addCustom(PathPart part, T subObject) throws JerializerException {
+        if (subObject == null) return;
         JerialContext newContext = context.push(part);
-        Jerializer<T> jerializer = (Jerializer<T>) registry.getJerializer(subObject.getRef().getClass());
-        jerializer.jerialize(pushContext(newContext), subObject.getRef());
+        Jerializer<T> jerializer = (Jerializer<T>) registry.getJerializer(subObject.getClass());
+        jerializer.jerialize(pushContext(newContext), subObject);
         context.builder.addThing(part, JThing.make(newContext.builder.buildObject()));
     }
 
