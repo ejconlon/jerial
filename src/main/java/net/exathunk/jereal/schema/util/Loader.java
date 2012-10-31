@@ -33,7 +33,7 @@ public class Loader {
         final String schemaString = loadSchemaString(name);
         final Schema schema = new Schema();
         JerializerUtils.jsonToDomain(
-            (new SchemaRegistryBuilder<JerialContext>()).makeDejerializerRegistry(),
+            (new SchemaRegistryBuilder()).makeDejerializerRegistry(),
             new SchemaDejerializer(), schemaString, schema);
         return schema;
     }

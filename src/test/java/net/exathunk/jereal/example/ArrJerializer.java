@@ -13,9 +13,9 @@ import net.exathunk.jereal.base.core.PathPart;
 /**
  * charolastra 10/23/12 9:46 PM
  */
-public class ArrJerializer<C> implements Jerializer<Arr, C> {
+public class ArrJerializer implements Jerializer<Arr> {
     @Override
-    public void jerialize(JDSL<C> jdsl, JerializerRegistry<C> registry, Arr arr, C context) throws JerializerException{
-        jdsl.addList(registry, PathPart.key("objects"), arr.objects, context);
+    public void jerialize(JDSL jdsl, Arr arr) throws JerializerException{
+        jdsl.addList(PathPart.key("objects"), arr.objects);
     }
 }

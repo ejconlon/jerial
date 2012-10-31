@@ -89,7 +89,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         }, new JObjectOperator<Schema, Link>(new Operator<JThing, JObject, Schema, Link>() {
             @Override
             public void runFunc(OpContext<JThing, Schema> opC, ArgContext argC, JObject thing, Link link) {
-                RegistryFactory<?> factory = new SchemaRegistryBuilder();
+                RegistryFactory factory = new SchemaRegistryBuilder();
                 DejerializerRegistry registry = factory.makeDejerializerRegistry();
                 try {
                     Dejerializer<Link> linkDejerializer = registry.getDejerializer(Link.class);

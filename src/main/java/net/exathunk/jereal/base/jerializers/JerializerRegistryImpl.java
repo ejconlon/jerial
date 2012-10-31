@@ -6,10 +6,10 @@ import java.util.Map;
 /**
  * charolastra 10/27/12 3:12 PM
  */
-public class JerializerRegistryImpl<C> implements JerializerRegistry<C> {
+public class JerializerRegistryImpl implements JerializerRegistry {
     private final Map<Class, Jerializer> registry = new HashMap<Class, Jerializer>();
 
-    public <T> void addJerializer(Class<T> key, Jerializer<T, C> value) {
+    public <T> void addJerializer(Class<T> key, Jerializer<T> value) {
         registry.put(key, value);
     }
 
@@ -19,7 +19,7 @@ public class JerializerRegistryImpl<C> implements JerializerRegistry<C> {
     }
 
     @Override
-    public <T> Jerializer<T, C> getJerializer(Class<T> key) throws JerializerException {
+    public <T> Jerializer<T> getJerializer(Class<T> key) throws JerializerException {
         if (registry.containsKey(key)) {
             return registry.get(key);
         } else {

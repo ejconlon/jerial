@@ -8,15 +8,15 @@ import net.exathunk.jereal.schema.domain.Link;
 /**
  * charolastra 10/27/12 5:50 PM
  */
-public class LinkJerializer<C> implements Jerializer<Link, C> {
+public class LinkJerializer implements Jerializer<Link> {
     @Override
-    public void jerialize(JDSL<C> jdsl, JerializerRegistry<C> registry, Link link, C context) throws JerializerException {
-        jdsl.addString("rel", link.rel, context);
-        jdsl.addString("href", link.href, context);
-        jdsl.addString("schema", link.schema, context);
-        jdsl.addString("targetSchema", link.targetSchema, context);
-        jdsl.addString("enctype", link.enctype, context);
-        jdsl.addString("method", link.method, context);
-        jdsl.addMap(registry, PathPart.key("properties"), link.properties, context);
+    public void jerialize(JDSL jdsl, Link link) throws JerializerException {
+        jdsl.addString("rel", link.rel);
+        jdsl.addString("href", link.href);
+        jdsl.addString("schema", link.schema);
+        jdsl.addString("targetSchema", link.targetSchema);
+        jdsl.addString("enctype", link.enctype);
+        jdsl.addString("method", link.method);
+        jdsl.addMap(PathPart.key("properties"), link.properties);
     }
 }

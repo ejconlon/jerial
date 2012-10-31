@@ -12,11 +12,11 @@ import net.exathunk.jereal.schema.jerializers.SchemaJerializer;
 /**
  * charolastra 10/27/12 3:33 PM
  */
-public class SchemaRegistryBuilder<C> extends RegistryBuilder<C> {
+public class SchemaRegistryBuilder extends RegistryBuilder {
 
     public SchemaRegistryBuilder() {
-        add(Schema.class, new SchemaJerializer<C>(), new SchemaDejerializer());
-        add(Link.class, new LinkJerializer<C>(), new LinkDejerializer());
+        add(Schema.class, new SchemaJerializer(), new SchemaDejerializer());
+        add(Link.class, new LinkJerializer(), new LinkDejerializer());
     }
 
 }

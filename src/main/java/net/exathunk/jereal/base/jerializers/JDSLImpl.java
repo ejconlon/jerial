@@ -15,9 +15,21 @@ import java.util.Map;
 /**
  * charolastra 10/27/12 6:33 PM
  */
-public class JDSLImpl implements JDSL<JerialContext> {
+public class JDSLImpl implements JDSL {
 
-    private <T> boolean addSimple(PathPart part, Ref<T> refValue, JerialContext context) {
+    private final JerialContext context;
+    private final JerializerRegistry registry;
+
+    public JDSLImpl(JerialContext context, JerializerRegistry registry) {
+        this.context = context;
+        this.registry = registry;
+    }
+
+    private JDSLImpl pushContext(JerialContext newContext) {
+        return new JDSLImpl(newContext, registry);
+    }
+
+    private <T> boolean addSimple(PathPart part, Ref<T> refValue) {
         if (refValue == null || refValue.isEmptyRef()) return false;
         final T value = refValue.getRef();
         if (1 == 1) {
@@ -40,44 +52,44 @@ public class JDSLImpl implements JDSL<JerialContext> {
         return false;
     }
 
-    private boolean addSimple(String key, Ref<?> value, JerialContext context) {
-        return addSimple(PathPart.key(key), value, context);
+    private boolean addSimple(String key, Ref<?> value) {
+        return addSimple(PathPart.key(key), value);
     }
 
     @Override
-    public void addThing(PathPart part, Ref<JThing> thing, JerialContext context) {
+    public void addThing(PathPart part, Ref<JThing> thing) {
         if (thing == null || thing.isEmptyRef()) return;
         context.builder.addThing(part, thing.getRef());
     }
 
     @Override
-    public void addBoolean(String key, Ref<Boolean> value, JerialContext context) {
-        addSimple(key, value, context);
+    public void addBoolean(String key, Ref<Boolean> value) {
+        addSimple(key, value);
     }
 
     @Override
-    public void addLong(String key, Ref<Long> value, JerialContext context) {
-        addSimple(key, value, context);
+    public void addLong(String key, Ref<Long> value) {
+        addSimple(key, value);
     }
 
     @Override
-    public void addDouble(String key, Ref<Double> value, JerialContext context) {
-        addSimple(key, value, context);
+    public void addDouble(String key, Ref<Double> value) {
+        addSimple(key, value);
     }
 
     @Override
-    public void addString(String key, Ref<String> value, JerialContext context) {
-        addSimple(key, value, context);
+    public void addString(String key, Ref<String> value) {
+        addSimple(key, value);
     }
 
-    private <T, A, B, C> boolean addStructural(JerializerRegistry registry, PathPart part, Ref<T> value, JerialContext context) throws JerializerException {
+    private <T, A, B, C> boolean addStructural(JerializerRegistry registry, PathPart part, Ref<T> value) throws JerializerException {
         if (value == null || value.isEmptyRef()) return false;
         if (value.getRef() instanceof Either) {
-            addEither(registry, part, (Ref<Either<Ref<A>, Ref<B>>>)value, context);
+            addEither(part, (Ref<Either<Ref<A>, Ref<B>>>)value);
         } else if (value.getRef() instanceof Either3) {
-            addEither3(registry, part, (Ref<Either3<Ref<A>, Ref<B>, Ref<C>>>) value, context);
+            addEither3(part, (Ref<Either3<Ref<A>, Ref<B>, Ref<C>>>) value);
         } else if (value.getRef() instanceof  JThing) {
-            addThing(part, (Ref<JThing>)value, context);
+            addThing(part, (Ref<JThing>)value);
         } else {
             return false;
         }
@@ -85,36 +97,36 @@ public class JDSLImpl implements JDSL<JerialContext> {
     }
 
     @Override
-    public <T> void add(JerializerRegistry<JerialContext> registry, PathPart part, Ref<T> value, JerialContext context) throws JerializerException {
-        if (!addSimple(part, value, context)) {
-            if (!addStructural(registry, part, value, context)) {
-                addCustom(registry, part, value, context);
+    public <T> void add(PathPart part, Ref<T> value) throws JerializerException {
+        if (!addSimple(part, value)) {
+            if (!addStructural(registry, part, value)) {
+                addCustom(part, value);
             }
         }
     }
 
-    private <A, B> void addEither(JerializerRegistry registry, PathPart part, Ref<Either<Ref<A>, Ref<B>>> either, JerialContext context) throws JerializerException {
+    private <A, B> void addEither(PathPart part, Ref<Either<Ref<A>, Ref<B>>> either) throws JerializerException {
         if (either == null || either.isEmptyRef()) return;
         if (either.getRef().hasLeft()) {
-            add(registry, part, either.getRef().getLeft(), context);
+            add(part, either.getRef().getLeft());
         } else {
-            add(registry, part, either.getRef().getRight(), context);
+            add(part, either.getRef().getRight());
         }
     }
 
-    private <A, B, C> void addEither3(JerializerRegistry registry, PathPart part, Ref<Either3<Ref<A>, Ref<B>, Ref<C>>> either, JerialContext context) throws JerializerException {
+    private <A, B, C> void addEither3(PathPart part, Ref<Either3<Ref<A>, Ref<B>, Ref<C>>> either) throws JerializerException {
         if (either == null || either.isEmptyRef()) return;
         if (either.getRef().hasLeft()) {
-            add(registry, part, either.getRef().getLeft(), context);
+            add(part, either.getRef().getLeft());
         } else if (either.getRef().hasMiddle()) {
-            add(registry, part, either.getRef().getMiddle(), context);
+            add(part, either.getRef().getMiddle());
         } else {
-            add(registry, part, either.getRef().getRight(), context);
+            add(part, either.getRef().getRight());
         }
     }
 
     @Override
-    public void addTypes(String key, List<Schema.TYPE> types, JerialContext context) {
+    public void addTypes(String key, List<Schema.TYPE> types) {
         if (types == null || types.isEmpty()) return;
         List<JThing> arr = new ArrayList<JThing>(types.size());
         for (int i = 0; i < types.size(); ++i) {
@@ -127,43 +139,43 @@ public class JDSLImpl implements JDSL<JerialContext> {
         }
     }
 
-    private <T> void addCustom(JerializerRegistry<JerialContext> registry, PathPart part, Ref<T> subObject, JerialContext context) throws JerializerException {
+    private <T> void addCustom(PathPart part, Ref<T> subObject) throws JerializerException {
         if (subObject == null || subObject.isEmptyRef()) return;
         JerialContext newContext = context.push(part);
-        Jerializer<T, JerialContext> jerializer = (Jerializer<T, JerialContext>) registry.getJerializer(subObject.getRef().getClass());
-        jerializer.jerialize(this, registry, subObject.getRef(), newContext);
+        Jerializer<T> jerializer = (Jerializer<T>) registry.getJerializer(subObject.getRef().getClass());
+        jerializer.jerialize(pushContext(newContext), subObject.getRef());
         context.builder.addThing(part, JThing.make(newContext.builder.buildObject()));
     }
 
     @Override
-    public <T> void addMap(JerializerRegistry<JerialContext> registry, PathPart part, Ref<Map<String, Ref<T>>> subObjectMap, JerialContext context) throws JerializerException {
+    public <T> void addMap(PathPart part, Ref<Map<String, Ref<T>>> subObjectMap) throws JerializerException {
         if (subObjectMap == null || subObjectMap.isEmptyRef() || subObjectMap.getRef().isEmpty()) return;
         JerialContext parentContext = context.push(part);
         for (Map.Entry<String, Ref<T>> entry : subObjectMap.getRef().entrySet()) {
-            add(registry, PathPart.key(entry.getKey()), entry.getValue(), parentContext);
+            pushContext(parentContext).add(PathPart.key(entry.getKey()), entry.getValue());
         }
         context.builder.addThing(part, JThing.make(parentContext.builder.buildObject()));
     }
 
     @Override
-    public <T> void addSinglyList(JerializerRegistry<JerialContext> registry, PathPart part, Ref<List<Ref<T>>> subObjectList, JerialContext context) throws JerializerException {
+    public <T> void addSinglyList(PathPart part, Ref<List<Ref<T>>> subObjectList) throws JerializerException {
         if (subObjectList == null || subObjectList.isEmptyRef() || subObjectList.getRef().isEmpty()) return;
         if (subObjectList.getRef().size() == 1) {
-            add(registry, part, subObjectList.getRef().get(0), context);
+            add(part, subObjectList.getRef().get(0));
         } else {
-            addList(registry, part, subObjectList, context);
+            addList(part, subObjectList);
         }
     }
 
     @Override
-    public <T> void addList(JerializerRegistry<JerialContext> registry, PathPart part, Ref<List<Ref<T>>> subObjectList, JerialContext context) throws JerializerException {
+    public <T> void addList(PathPart part, Ref<List<Ref<T>>> subObjectList) throws JerializerException {
         if (subObjectList == null || subObjectList.isEmptyRef() || subObjectList.getRef().isEmpty()) return;
         final PathPart parentPart = PathPart.key("links");
         JerialContext parentContext = context.push(parentPart);
         int i = 0;
         for (Ref<T> subObject : subObjectList.getRef()) {
             final PathPart childPart = PathPart.index(i);
-            add(registry, childPart, subObject, parentContext);
+            pushContext(parentContext).add(childPart, subObject);
             i += 1;
         }
         JArray array = parentContext.builder.buildArray();

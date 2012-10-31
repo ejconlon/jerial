@@ -3,17 +3,17 @@ package net.exathunk.jereal.base.jerializers;
 /**
  * charolastra 10/31/12 2:08 AM
  */
-public class SinglyRegistry<X, C> implements JerializerRegistry<C> {
+public class SinglyRegistry<X> implements JerializerRegistry {
 
     private final Class<X> klass;
-    private final Jerializer<X, C> jerializer;
-    private final JerializerRegistry<C> next;
+    private final Jerializer<X> jerializer;
+    private final JerializerRegistry next;
 
-    public SinglyRegistry(Class<X> klass, Jerializer<X, C> jerializer) {
+    public SinglyRegistry(Class<X> klass, Jerializer<X> jerializer) {
         this(klass, jerializer, null);
     }
 
-    public SinglyRegistry(Class<X> klass, Jerializer<X, C> jerializer, JerializerRegistry<C> next) {
+    public SinglyRegistry(Class<X> klass, Jerializer<X> jerializer, JerializerRegistry next) {
         this.klass = klass;
         this.jerializer = jerializer;
         this.next = next;
@@ -31,9 +31,9 @@ public class SinglyRegistry<X, C> implements JerializerRegistry<C> {
     }
 
     @Override
-    public <T> Jerializer<T, C> getJerializer(Class<T> key) throws JerializerException {
+    public <T> Jerializer<T> getJerializer(Class<T> key) throws JerializerException {
         if (klass.equals(key)) {
-            return (Jerializer<T, C>)jerializer;
+            return (Jerializer<T>)jerializer;
         } else if (next != null) {
             return next.getJerializer(key);
         } else {

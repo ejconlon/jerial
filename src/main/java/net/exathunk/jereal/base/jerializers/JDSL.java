@@ -12,25 +12,25 @@ import java.util.Map;
 /**
  * charolastra 10/30/12 8:57 PM
  */
-public interface JDSL<C> {
+public interface JDSL {
 
-    void addThing(PathPart part, Ref<JThing> thing, C context);
+    void addThing(PathPart part, Ref<JThing> thing);
 
-    void addBoolean(String key, Ref<Boolean> value, C context);
+    void addBoolean(String key, Ref<Boolean> value);
 
-    void addLong(String key, Ref<Long> value, C context);
+    void addLong(String key, Ref<Long> value);
 
-    void addDouble(String key, Ref<Double> value, C context);
+    void addDouble(String key, Ref<Double> value);
 
-    void addString(String key, Ref<String> value, C context);
+    void addString(String key, Ref<String> value);
 
-    <T> void add(JerializerRegistry<C> registry, PathPart part, Ref<T> value, C context) throws JerializerException;
+    <T> void add(PathPart part, Ref<T> value) throws JerializerException;
 
-    void addTypes(String key, List<Schema.TYPE> types, C context);
+    void addTypes(String key, List<Schema.TYPE> types);
 
-    <T> void addMap(JerializerRegistry<C> registry, PathPart part, Ref<Map<String, Ref<T>>> subObjectMap, C context) throws JerializerException;
+    <T> void addMap(PathPart part, Ref<Map<String, Ref<T>>> subObjectMap) throws JerializerException;
 
-    <T> void addSinglyList(JerializerRegistry<C> registry, PathPart part, Ref<List<Ref<T>>> subObjectList, C context) throws JerializerException;
+    <T> void addSinglyList(PathPart part, Ref<List<Ref<T>>> subObjectList) throws JerializerException;
 
-    <T> void addList(JerializerRegistry<C> registry, PathPart part, Ref<List<Ref<T>>> subObjectList, C context) throws JerializerException;
+    <T> void addList(PathPart part, Ref<List<Ref<T>>> subObjectList) throws JerializerException;
 }

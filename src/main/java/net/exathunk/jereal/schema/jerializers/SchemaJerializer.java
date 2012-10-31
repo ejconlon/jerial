@@ -1,6 +1,5 @@
 package net.exathunk.jereal.schema.jerializers;
 
-import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.schema.domain.Schema;
@@ -8,39 +7,39 @@ import net.exathunk.jereal.schema.domain.Schema;
 /**
  * charolastra 10/27/12 3:06 PM
  */
-public class SchemaJerializer<C> implements Jerializer<Schema, C> {
+public class SchemaJerializer implements Jerializer<Schema> {
     @Override
-    public void jerialize(JDSL<C> jdsl, JerializerRegistry<C> registry, Schema schema, C context) throws JerializerException {
-        jdsl.addString("id", schema.id, context);
-        jdsl.addString("name", schema.name, context);
-        jdsl.addString("description", schema.description, context);
-        jdsl.addString("title", schema.title, context);
-        jdsl.addString("format", schema.format, context);
-        jdsl.addString("$ref", schema.dollar_ref, context);
-        jdsl.addString("$schema", schema.dollar_schema, context);
-        jdsl.addString("fragmentResolution", schema.fragmentResolution, context);
+    public void jerialize(JDSL jdsl, Schema schema) throws JerializerException {
+        jdsl.addString("id", schema.id);
+        jdsl.addString("name", schema.name);
+        jdsl.addString("description", schema.description);
+        jdsl.addString("title", schema.title);
+        jdsl.addString("format", schema.format);
+        jdsl.addString("$ref", schema.dollar_ref);
+        jdsl.addString("$schema", schema.dollar_schema);
+        jdsl.addString("fragmentResolution", schema.fragmentResolution);
 
         // Unparsed item
-        jdsl.addThing(PathPart.key("default"), schema.defaultz, context);
+        jdsl.addThing(PathPart.key("default"), schema.defaultz);
 
-        jdsl.addBoolean("required", schema.required, context);
-        jdsl.addBoolean("uniqueItems", schema.uniqueItems, context);
+        jdsl.addBoolean("required", schema.required);
+        jdsl.addBoolean("uniqueItems", schema.uniqueItems);
 
-        jdsl.addLong("minItems", schema.minItems, context);
-        jdsl.addLong("minimum", schema.minimum, context);
+        jdsl.addLong("minItems", schema.minItems);
+        jdsl.addLong("minimum", schema.minimum);
 
-        jdsl.add(registry, PathPart.key("additionalProperties"), schema.additionalProperties, context);
+        jdsl.add(PathPart.key("additionalProperties"), schema.additionalProperties);
 
-        jdsl.addSinglyList(registry, PathPart.key("type"), schema.type, context);
+        jdsl.addSinglyList(PathPart.key("type"), schema.type);
 
-        jdsl.add(registry, PathPart.key("items"), schema.items, context);
+        jdsl.add(PathPart.key("items"), schema.items);
 
-        jdsl.add(registry, PathPart.key("extends"), schema.extendz, context);
+        jdsl.add(PathPart.key("extends"), schema.extendz);
 
-        jdsl.addMap(registry, PathPart.key("properties"), schema.properties, context);
+        jdsl.addMap(PathPart.key("properties"), schema.properties);
 
-        jdsl.addMap(registry, PathPart.key("dependencies"), schema.dependencies, context);
+        jdsl.addMap(PathPart.key("dependencies"), schema.dependencies);
 
-        jdsl.addList(registry, PathPart.key("links"), schema.links, context);
+        jdsl.addList(PathPart.key("links"), schema.links);
     }
 }

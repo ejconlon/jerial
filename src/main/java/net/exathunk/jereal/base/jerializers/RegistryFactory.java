@@ -6,7 +6,7 @@ import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 /**
  * charolastra 10/27/12 3:36 PM
  */
-public interface RegistryFactory<C> {
-    JerializerRegistry<C> makeJerializerRegistry();
+public interface RegistryFactory {
+    JerializerRegistry makeJerializerRegistry();
     DejerializerRegistry makeDejerializerRegistry();
 }

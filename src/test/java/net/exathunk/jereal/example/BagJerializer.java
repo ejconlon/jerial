@@ -10,14 +10,14 @@ import net.exathunk.jereal.base.core.PathPart;
 /**
  * charolastra 10/23/12 9:07 PM
  */
-public class BagJerializer<C> implements Jerializer<Bag, C> {
+public class BagJerializer implements Jerializer<Bag> {
 
     @Override
-    public void jerialize(JDSL<C> jdsl, JerializerRegistry<C> registry, Bag bag, C context) throws JerializerException {
-        jdsl.addString("s", bag.s, context);
-        jdsl.addLong("l", bag.l, context);
-        jdsl.addDouble("d", bag.d, context);
-        jdsl.addBoolean("b", bag.b, context);
-        jdsl.add(new SinglyRegistry<Bag, C>(Bag.class, this, registry), PathPart.key("next"), bag.next, context);
+    public void jerialize(JDSL jdsl, Bag bag) throws JerializerException {
+        jdsl.addString("s", bag.s);
+        jdsl.addLong("l", bag.l);
+        jdsl.addDouble("d", bag.d);
+        jdsl.addBoolean("b", bag.b);
+        jdsl.add(PathPart.key("next"), bag.next);
     }
 }

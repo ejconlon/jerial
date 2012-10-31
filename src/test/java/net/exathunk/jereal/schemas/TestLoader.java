@@ -53,7 +53,7 @@ public class TestLoader {
                 "hyper-schema", "interfaces", "json-ref", "schema");
 
         final JerializerRegistry registry =
-                (new SchemaRegistryBuilder<JerialContext>()).makeJerializerRegistry();
+                (new SchemaRegistryBuilder()).makeJerializerRegistry();
 
         for (final String name : names) {
             assertFixed(registry, name);

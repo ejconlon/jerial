@@ -12,17 +12,17 @@ import net.exathunk.jereal.base.util.JsonParser;
  */
 public class JerializerUtils {
 
-    public static <T> JObject domainToJObject(JerializerRegistry<JerialContext> registry,
-                                              Jerializer<T, JerialContext> jerializer, T domain) throws JerializerException {
+    public static <T> JObject domainToJObject(JerializerRegistry registry,
+                                              Jerializer<T> jerializer, T domain) throws JerializerException {
         JerialContext context = new JerialContext();
-        JDSL<JerialContext> jdsl = new JDSLImpl();
-        jerializer.jerialize(jdsl, registry, domain, context);
+        JDSL jdsl = new JDSLImpl(context, registry);
+        jerializer.jerialize(jdsl, domain);
         return context.builder.buildObject();
     }
 
-    public static <T> JObject domainToJObject(JerializerRegistry<JerialContext> registry,
+    public static <T> JObject domainToJObject(JerializerRegistry registry,
                                               T domain) throws JerializerException {
-        Jerializer<T, JerialContext> jerializer = (Jerializer<T, JerialContext>) registry.getJerializer(domain.getClass());
+        Jerializer<T> jerializer = (Jerializer<T>) registry.getJerializer(domain.getClass());
         return domainToJObject(registry, jerializer, domain);
     }
 
@@ -41,13 +41,13 @@ public class JerializerUtils {
     }
 
     public static <T> String domainToJson(JerializerRegistry registry,
-                                          Jerializer<T, JerialContext> jerializer, T domain) throws JerializerException, VisitException {
+                                          Jerializer<T> jerializer, T domain) throws JerializerException, VisitException {
         return jobjectToJson(domainToJObject(registry, jerializer, domain));
     }
 
     public static <T> String domainToJson(JerializerRegistry registry,
                                           T domain) throws JerializerException, VisitException {
-        Jerializer<T, JerialContext> jerializer = registry.getJerializer((Class<T>)domain.getClass());
+        Jerializer<T> jerializer = registry.getJerializer((Class<T>)domain.getClass());
         return jobjectToJson(domainToJObject(registry, jerializer, domain));
     }
 

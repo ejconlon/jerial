@@ -3,17 +3,17 @@ package net.exathunk.jereal.base.jerializers;
 /**
  * charolastra 10/27/12 3:38 PM
  */
-public class RegistryBuilder<C> implements RegistryFactory {
+public class RegistryBuilder implements RegistryFactory {
 
     private final JerializerRegistryImpl jerializerRegistry = new JerializerRegistryImpl();
     private final DejerializerRegistryImpl dejerializerRegistry = new DejerializerRegistryImpl();
 
-    protected <T> void add(Class<T> key, Jerializer<T, C> jerializer, Dejerializer<T> dejerializer) {
+    protected <T> void add(Class<T> key, Jerializer<T> jerializer, Dejerializer<T> dejerializer) {
         add(key, jerializer);
         add(key, dejerializer);
     }
 
-    protected <T> void add(Class<T> key, Jerializer<T, C> jerializer) {
+    protected <T> void add(Class<T> key, Jerializer<T> jerializer) {
         jerializerRegistry.addJerializer(key, jerializer);
     }
 
