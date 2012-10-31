@@ -108,7 +108,7 @@ public class TestPost {
                     assertEquals("objects", entry.getKey());
                     assertEquals(true, entry.getValue().isArray());
                     for (Map.Entry<Integer, JThing> entry1 : entry.getValue().rawGetArray().seq()) {
-                        JThing actual = arr.objects.getRef().get(k++).getRef();
+                        JThing actual = arr.objects.getRef().get(k++);
                         JThing expected = entry1.getValue();
                         assertEquals(expected, actual);
                     }

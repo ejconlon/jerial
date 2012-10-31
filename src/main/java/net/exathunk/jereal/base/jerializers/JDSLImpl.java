@@ -6,6 +6,7 @@ import net.exathunk.jereal.base.functional.Either;
 import net.exathunk.jereal.base.functional.Either3;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.Ref;
+import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.schema.domain.Schema;
 
 import java.util.ArrayList;
@@ -148,34 +149,34 @@ public class JDSLImpl implements JDSL {
     }
 
     @Override
-    public <T> void addMap(PathPart part, Ref<Map<String, Ref<T>>> subObjectMap) throws JerializerException {
+    public <T> void addMap(PathPart part, Ref<Map<String, T>> subObjectMap) throws JerializerException {
         if (subObjectMap == null || subObjectMap.isEmptyRef() || subObjectMap.getRef().isEmpty()) return;
         JerialContext parentContext = context.push(part);
-        for (Map.Entry<String, Ref<T>> entry : subObjectMap.getRef().entrySet()) {
-            pushContext(parentContext).add(PathPart.key(entry.getKey()), entry.getValue());
+        for (Map.Entry<String, T> entry : subObjectMap.getRef().entrySet()) {
+            pushContext(parentContext).add(PathPart.key(entry.getKey()), new RefImpl<Object>(entry.getValue()));
         }
         context.builder.addThing(part, JThing.make(parentContext.builder.buildObject()));
     }
 
     @Override
-    public <T> void addSinglyList(PathPart part, Ref<List<Ref<T>>> subObjectList) throws JerializerException {
+    public <T> void addSinglyList(PathPart part, Ref<List<T>> subObjectList) throws JerializerException {
         if (subObjectList == null || subObjectList.isEmptyRef() || subObjectList.getRef().isEmpty()) return;
         if (subObjectList.getRef().size() == 1) {
-            add(part, subObjectList.getRef().get(0));
+            add(part, new RefImpl<Object>(subObjectList.getRef().get(0)));
         } else {
             addList(part, subObjectList);
         }
     }
 
     @Override
-    public <T> void addList(PathPart part, Ref<List<Ref<T>>> subObjectList) throws JerializerException {
+    public <T> void addList(PathPart part, Ref<List<T>> subObjectList) throws JerializerException {
         if (subObjectList == null || subObjectList.isEmptyRef() || subObjectList.getRef().isEmpty()) return;
         final PathPart parentPart = PathPart.key("links");
         JerialContext parentContext = context.push(parentPart);
         int i = 0;
-        for (Ref<T> subObject : subObjectList.getRef()) {
+        for (T subObject : subObjectList.getRef()) {
             final PathPart childPart = PathPart.index(i);
-            pushContext(parentContext).add(childPart, subObject);
+            pushContext(parentContext).add(childPart, new RefImpl<Object>(subObject));
             i += 1;
         }
         JArray array = parentContext.builder.buildArray();

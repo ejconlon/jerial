@@ -28,9 +28,9 @@ public interface JDSL {
 
     void addTypes(String key, List<Schema.TYPE> types);
 
-    <T> void addMap(PathPart part, Ref<Map<String, Ref<T>>> subObjectMap) throws JerializerException;
+    <T> void addMap(PathPart part, Ref<Map<String, T>> subObjectMap) throws JerializerException;
 
-    <T> void addSinglyList(PathPart part, Ref<List<Ref<T>>> subObjectList) throws JerializerException;
+    <T> void addSinglyList(PathPart part, Ref<List<T>> subObjectList) throws JerializerException;
 
-    <T> void addList(PathPart part, Ref<List<Ref<T>>> subObjectList) throws JerializerException;
+    <T> void addList(PathPart part, Ref<List<T>> subObjectList) throws JerializerException;
 }

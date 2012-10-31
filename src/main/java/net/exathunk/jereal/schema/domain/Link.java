@@ -16,7 +16,7 @@ public class Link {
     public final Ref<String> targetSchema = new RefImpl<String>();
     public final Ref<String> enctype = new RefImpl<String>();
     public final Ref<String> method = new RefImpl<String>();
-    public final Ref<Map<String, Ref<SchemaRef<String>>>> properties = new RefImpl<Map<String, Ref<SchemaRef<String>>>>(new TreeMap<String, Ref<SchemaRef<String>>>());
+    public final Ref<Map<String, SchemaRef<String>>> properties = new RefImpl<Map<String, SchemaRef<String>>>(new TreeMap<String, SchemaRef<String>>());
 
     @Override
     public String toString() {

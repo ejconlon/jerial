@@ -56,15 +56,15 @@ public class Schema {
 
     public final Ref<Either<Ref<SchemaRef<String>>, Ref<Boolean>>> additionalProperties = new RefImpl<Either<Ref<SchemaRef<String>>, Ref<Boolean>>>();
 
-    public final Ref<List<Ref<SchemaRef<TYPE>>>> type = new RefImpl<List<Ref<SchemaRef<TYPE>>>>(new ArrayList<Ref<SchemaRef<TYPE>>>());
+    public final Ref<List<SchemaRef<TYPE>>> type = new RefImpl<List<SchemaRef<TYPE>>>(new ArrayList<SchemaRef<TYPE>>());
 
     public final Ref<SchemaRef<String>> items = new RefImpl<SchemaRef<String>>();
 
     public final Ref<SchemaRef<String>> extendz = new RefImpl<SchemaRef<String>>();
 
-    public final Ref<Map<String, Ref<SchemaRef<String>>>> properties = new RefImpl<Map<String, Ref<SchemaRef<String>>>>(new TreeMap<String, Ref<SchemaRef<String>>>());
-    public final Ref<List<Ref<Link>>> links = new RefImpl<List<Ref<Link>>>(new ArrayList<Ref<Link>>());
-    public final Ref<Map<String, Ref<String>>> dependencies = new RefImpl<Map<String, Ref<String>>>(new TreeMap<String, Ref<String>>());
+    public final Ref<Map<String, SchemaRef<String>>> properties = new RefImpl<Map<String, SchemaRef<String>>>(new TreeMap<String, SchemaRef<String>>());
+    public final Ref<List<Link>> links = new RefImpl<List<Link>>(new ArrayList<Link>());
+    public final Ref<Map<String, String>> dependencies = new RefImpl<Map<String, String>>(new TreeMap<String, String>());
 
     @Override
     public String toString() {

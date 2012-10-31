@@ -81,7 +81,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
                     @Override
                     public Link runResFunc() {
                         Link link = new Link();
-                        schema.links.getRef().add(new RefImpl<Link>(link));
+                        schema.links.getRef().add(link);
                         return link;
                     }
                 };

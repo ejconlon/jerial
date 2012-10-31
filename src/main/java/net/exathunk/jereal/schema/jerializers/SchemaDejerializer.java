@@ -28,7 +28,7 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
             if ("dependencies".equals(key)) {
                 // TODO assert types
                 for (Map.Entry<String, JThing> dep : value.rawGetObject().seq()) {
-                    schema.dependencies.getRef().put(dep.getKey(), new RefImpl<String>(dep.getValue().rawGetString().getRef()));
+                    schema.dependencies.getRef().put(dep.getKey(), dep.getValue().rawGetString().getRef());
                 }
             } else if ("properties".equals(key)) {
                 for (Map.Entry<String, JThing> propEntry : value.rawGetObject().seq()) {
@@ -36,11 +36,11 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
                     final String propKey = propEntry.getKey();
                     final JThing propValue = propEntry.getValue();
                     if (propValue.isString()) {
-                        schema.properties.getRef().put(propKey, new RefImpl<SchemaRef<String>>(SchemaRef.makeRef(propValue.rawGetString().getRef())));
+                        schema.properties.getRef().put(propKey, SchemaRef.makeRef(propValue.rawGetString().getRef()));
                     } else if (propValue.isObject()) {
                         Schema propSchema = new Schema();
                         dejerialize(registry, propValue.rawGetObject(), propSchema);
-                        schema.properties.getRef().put(propKey, new RefImpl<SchemaRef<String>>(SchemaRef.<String>makeSchema(propSchema)));
+                        schema.properties.getRef().put(propKey, SchemaRef.<String>makeSchema(propSchema));
                     } else {
                         throw new JerializerException("Unexpected property: "+propEntry);
                     }
@@ -49,7 +49,7 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
                 for (Map.Entry<Integer, JThing> linkItem : value.rawGetArray().seq()) {
                     Link link = new Link();
                     linkDejerializer.dejerialize(registry, linkItem.getValue().rawGetObject(), link);
-                    schema.links.getRef().add(new RefImpl<Link>(link));
+                    schema.links.getRef().add(link);
                 }
             } else if ("name".equals(key)) {
                 schema.name.setRef(value.rawGetString().getRef());
@@ -116,7 +116,7 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
         }
     }
 
-    private void addTypes(DejerializerRegistry registry, JThing item, Ref<List<Ref<SchemaRef<Schema.TYPE>>>> types) throws JerializerException{
+    private void addTypes(DejerializerRegistry registry, JThing item, Ref<List<SchemaRef<Schema.TYPE>>> types) throws JerializerException{
         if (item.isArray()) {
             for (Map.Entry<Integer, JThing> child : item.rawGetArray().seq()) {
                 addTypes(registry, child.getValue(), types);
@@ -125,11 +125,11 @@ public class SchemaDejerializer implements Dejerializer<Schema> {
             final String s = item.rawGetString().getRef();
             final Schema.TYPE type = Schema.TYPE.fromString(s);
             final SchemaRef<Schema.TYPE> r = SchemaRef.makeRef(type);
-            types.getRef().add(new RefImpl<SchemaRef<Schema.TYPE>>(r));
+            types.getRef().add(r);
         } else if (item.isObject()) {
             Schema s = new Schema();
             dejerialize(registry, item.rawGetObject(), s);
-            types.getRef().add(new RefImpl<SchemaRef<Schema.TYPE>>(SchemaRef.<Schema.TYPE>makeSchema(s)));
+            types.getRef().add(SchemaRef.<Schema.TYPE>makeSchema(s));
         } else {
             throw new JerializerException("Bad type format: "+item);
         }
