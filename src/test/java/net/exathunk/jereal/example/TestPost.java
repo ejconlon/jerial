@@ -40,12 +40,12 @@ public class TestPost {
                 case 0:
                     assertEquals("body", entry.getKey());
                     assertEquals(true, entry.getValue().isString());
-                    assertEquals(post.body, entry.getValue().rawGetString().runResFunc());
+                    assertEquals(post.body.getRef(), entry.getValue().rawGetString().runResFunc());
                     break;
                 case 1:
                     assertEquals("title", entry.getKey());
                     assertEquals(true, entry.getValue().isString());
-                    assertEquals(post.title, entry.getValue().rawGetString().runResFunc());
+                    assertEquals(post.title.getRef(), entry.getValue().rawGetString().runResFunc());
                     break;
                 default:
                     fail();
@@ -107,7 +107,7 @@ public class TestPost {
                     assertEquals("objects", entry.getKey());
                     assertEquals(true, entry.getValue().isArray());
                     for (Map.Entry<Integer, JThing> entry1 : entry.getValue().rawGetArray().seq()) {
-                        JThing actual = arr.objects.get(k++);
+                        JThing actual = arr.objects.getRef().get(k++).getRef();
                         JThing expected = entry1.getValue();
                         assertEquals(expected, actual);
                     }

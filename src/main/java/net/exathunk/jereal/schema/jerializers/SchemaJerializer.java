@@ -8,10 +8,9 @@ import net.exathunk.jereal.schema.domain.Schema;
 /**
  * charolastra 10/27/12 3:06 PM
  */
-public class SchemaJerializer implements Jerializer<Schema> {
+public class SchemaJerializer implements Jerializer<Schema, JerialContext> {
     @Override
-    public void jerialize(JerializerRegistry registry, Schema schema, JerialContext context) throws JerializerException {
-        JDSL jdsl = new JDSLImpl();
+    public void jerialize(JDSL<JerialContext> jdsl, JerializerRegistry<JerialContext> registry, Schema schema, JerialContext context) throws JerializerException {
         jdsl.addString("id", schema.id, context);
         jdsl.addString("name", schema.name, context);
         jdsl.addString("description", schema.description, context);
@@ -22,7 +21,7 @@ public class SchemaJerializer implements Jerializer<Schema> {
         jdsl.addString("fragmentResolution", schema.fragmentResolution, context);
 
         // Unparsed item
-        jdsl.addThing("default", schema.defaultz, context);
+        jdsl.addThing(PathPart.key("default"), schema.defaultz, context);
 
         jdsl.addBoolean("required", schema.required, context);
         jdsl.addBoolean("uniqueItems", schema.uniqueItems, context);
@@ -44,5 +43,4 @@ public class SchemaJerializer implements Jerializer<Schema> {
 
         jdsl.addList(registry, PathPart.key("links"), schema.links, context);
     }
-
 }

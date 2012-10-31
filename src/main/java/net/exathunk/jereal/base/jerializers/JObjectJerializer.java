@@ -4,6 +4,8 @@ import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.PathPart;
+import net.exathunk.jereal.base.functional.Ref;
+import net.exathunk.jereal.base.functional.RefImpl;
 
 import java.util.Map;
 
@@ -13,11 +15,11 @@ import java.util.Map;
  *
  * charolastra 10/24/12 8:06 PM
  */
-public class JObjectJerializer implements Jerializer<JObject> {
+public class JObjectJerializer implements Jerializer<JObject, JerialContext> {
     @Override
-    public void jerialize(JerializerRegistry registry, JObject object, JerialContext context) {
+    public void jerialize(JDSL<JerialContext> jdsl, JerializerRegistry<JerialContext> registry, JObject object, JerialContext context) {
         for (Map.Entry<String, JThing> thing : object.seq()) {
-            context.builder.addThing(PathPart.key(thing.getKey()), thing.getValue());
+            jdsl.addThing(PathPart.key(thing.getKey()), new RefImpl<JThing>(thing.getValue()), context);
         }
     }
 }
