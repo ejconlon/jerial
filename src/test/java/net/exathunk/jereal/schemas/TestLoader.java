@@ -47,9 +47,13 @@ public class TestLoader {
 
     @Test
     public void testLoadSchema() throws IOException, JerializerException, VisitException {
+        //List<String> names = Arrays.asList(
+        //        "address", "calendar", "card", "geo",
+        //        "hyper-schema", "interfaces", "json-ref", "schema");
+
         List<String> names = Arrays.asList(
-                "address", "calendar", "card", "geo",
-                "hyper-schema", "interfaces", "json-ref", "schema");
+                "address"
+        );
 
         final JerializerRegistry registry =
                 (new SchemaRegistryBuilder()).makeJerializerRegistry();

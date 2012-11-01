@@ -1,6 +1,8 @@
 package net.exathunk.jereal.example;
 
+import net.exathunk.jereal.base.builders.MapBuilder;
 import net.exathunk.jereal.base.core.*;
+import net.exathunk.jereal.base.dsl.DomainContext;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.base.util.FlattenVisitor;
 import net.exathunk.jereal.base.util.Logger;
@@ -15,7 +17,8 @@ import java.util.*;
 public class TestPost {
 
     static {
-        Logger.getPolicyBuilder().add(TestPost.class, Logger.Level.CRITICAL);
+        Logger.getPolicyBuilder().add(TestPost.class, Logger.Level.CRITICAL)
+                .add(MapBuilder.class, Logger.Level.TRACE);
         registry = new SinglyRegistry(Arr.class, new ArrJerializer(),
                    new SinglyRegistry(Bag.class, new BagJerializer(),
                    new SinglyRegistry(Post.class, new PostJerializer())));
@@ -89,6 +92,11 @@ public class TestPost {
             Logger.getLogger(getClass()).trace(entry);
             // TODO add assertions
         }
+
+        final Bag bag2 = new Bag();
+        JerializerUtils.jthingToDomain(registry, new BagJerializer<DomainContext, JThing>(), j1, bag2);
+
+        assertEquals(true, bag1.equals(bag2));
     }
 
     @Test
@@ -121,6 +129,12 @@ public class TestPost {
             i += 1;
         }
         assertEquals(1, i);
+
+
+        final Arr arr2 = new Arr();
+        JerializerUtils.jthingToDomain(registry, new ArrJerializer<DomainContext, JThing>(), j, arr2);
+
+        assertEquals(true, arr.equals(arr2));
     }
 
     private static Set<String> pathParts(JObject jobject) {

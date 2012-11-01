@@ -36,7 +36,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
         //dec.declare(Path.singletonKey("minItems"), Model.LONG);
 
         // 1 simple array
-        dec.declare(Path.singletonKey("links"), Model.ARRAY);
+        //dec.declare(Path.singletonKey("links"), Model.ARRAY);
 
         /*// 1 simple object
         dec.declare("dependencies", Model.OBJECT);
@@ -73,7 +73,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
 
 
         // 1 simple array
-        imp.path(Path.singletonKey("links")).implement(Model.ARRAY, new JArrayOperator<Schema, Schema>(new JArrayMapOperator<Schema, Schema, Link>(new Converter<Schema, ResFunc0<Link>>() {
+        /*imp.path(Path.singletonKey("links")).implement(Model.ARRAY, new JArrayOperator<Schema, Schema>(new JArrayMapOperator<Schema, Schema, Link>(new Converter<Schema, ResFunc0<Link>>() {
             @Override
             public ResFunc0<Link> convert(final Schema schema) throws OperatorException {
                 return new ResFunc0<Link>() {
@@ -97,7 +97,7 @@ public class SchemaOperatorMapBuilder implements OperatorMapBuilder<JThing, Sche
                     opC.fail(new OperatorException("link jer stuff", e));
                 }
             }
-        }))));
+        }))));*/
     }
 
     public void buildOperatorMap(OperatorMap<JThing, Schema> opMap) throws DeclarationException {

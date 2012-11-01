@@ -3,6 +3,7 @@ package net.exathunk.jereal.base.dsl;
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
+import net.exathunk.jereal.base.jerializers.JerializerException;
 
 import java.util.Map;
 
@@ -16,8 +17,10 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
         return this;
     }
 
-    private void writeInner(RefMapGroup<DomainContext, JThing> group, PathPart part, JThing value) {
-        switch (value.getModel()) {
+    private void writeInner(RefMapGroup<DomainContext, JThing> group, PathPart part, JThing value) throws JerializerException {
+        RefMapGroup.WModel model = group.getModel(part);
+        if (model == null) return;
+        switch (model) {
             case OBJECT:
             {
                 Ref<ObjectDSL<DomainContext, JThing>> sink = group.getObjects().get(part);
@@ -54,13 +57,19 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
                 if (sink != null) sink.setRef(value.rawGetDouble().getRef());
                 break;
             }
+            case WRITABLE:
+            {
+                Ref<Writable<JThing>> sink = group.getWritables().get(part);
+                if (sink != null) sink.getRef().writeTo(new RefImpl<JThing>(value));
+                break;
+            }
             default:
-                throw new IllegalStateException();
+                throw new IllegalStateException("Uncovered case: "+model);
         }
     }
 
     @Override
-    public void writeObject(RefMapGroup<DomainContext, JThing> group, Ref<JThing> ref) {
+    public void writeObject(RefMapGroup<DomainContext, JThing> group, Ref<JThing> ref) throws JerializerException{
         final JObject array = ref.getRef().rawGetObject();
         for (Map.Entry<String, JThing> entry : array.seq()) {
             final PathPart part = PathPart.key(entry.getKey());
@@ -70,7 +79,7 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
     }
 
     @Override
-    public void writeArray(RefMapGroup<DomainContext, JThing> group, Ref<JThing> ref) {
+    public void writeArray(RefMapGroup<DomainContext, JThing> group, Ref<JThing> ref) throws JerializerException{
         final JArray array = ref.getRef().rawGetArray();
         for (Map.Entry<Integer, JThing> entry : array.seq()) {
             final PathPart part = PathPart.index(entry.getKey());

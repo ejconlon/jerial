@@ -30,8 +30,9 @@ public class Logger {
             customLevels = new HashMap<Class, Level>();
         }
 
-        public void add(Class name, Level level) {
+        public PolicyBuilder add(Class name, Level level) {
             customLevels.put(name, level);
+            return this;
         }
 
         private Policy buildPolicy() {

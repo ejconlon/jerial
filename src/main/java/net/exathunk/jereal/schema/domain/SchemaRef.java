@@ -17,4 +17,8 @@ public class SchemaRef extends Either<Schema, String> {
     public static SchemaRef makeRef(String ref) {
         return new SchemaRef(null, ref);
     }
+
+    public static SchemaRef prototype() {
+        return SchemaRef.makeRef("#");
+    }
 }

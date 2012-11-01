@@ -5,6 +5,7 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
+import net.exathunk.jereal.base.jerializers.JerializerException;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -23,14 +24,16 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
         this.context = context;
     }
 
-    public void writeObject(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ref) {
+    @Override
+    public void writeObject(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ref) throws JerializerException {
         if (!RefMapGroup.WModel.OBJECT.equals(group.getModel())) {
             throw new IllegalArgumentException("Expected object model: "+group.getModel());
         }
         writeInner(group, ref);
     }
 
-    public void writeArray(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ref) {
+    @Override
+    public void writeArray(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ref) throws JerializerException {
         if (!RefMapGroup.WModel.ARRAY.equals(group.getModel())) {
             throw new IllegalArgumentException("Expected array model: "+group.getModel());
         }
@@ -57,77 +60,63 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
         ref.setRef(JThing.make(value.getRef()));
     }
 
-    private void writeInner(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ret) {
-        Iterator<Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>>> objectIt = group.getObjects().iterator();
-        Iterator<Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>>> arrayIt = group.getArrays().iterator();
-        Iterator<Map.Entry<PathPart, Ref<String>>> stringIt = group.getStrings().iterator();
-        Iterator<Map.Entry<PathPart, Ref<Boolean>>> booleanIt = group.getBooleans().iterator();
-        Iterator<Map.Entry<PathPart, Ref<Long>>> longIt = group.getLongs().iterator();
-        Iterator<Map.Entry<PathPart, Ref<Double>>> doubleIt = group.getDoubles().iterator();
-        Iterator<Map.Entry<PathPart, Ref<Writable<JThing>>>> writableIt = group.getWritables().iterator();
-
-        for (RefMapGroup.WModel model : group.getOrders()) {
-            switch (model) {
+    private void writeInner(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ret) throws JerializerException {
+        for (Map.Entry<PathPart, RefMapGroup.WModel> order : group.getOrders()) {
+            switch (order.getValue()) {
                 case OBJECT:
                 {
-                    if (!objectIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
-                    Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>> entry = objectIt.next();
-                    if (entry.getValue().isEmptyRef()) break;
+                    Ref<ObjectDSL<JThingContext, JThing>> objectDSL = group.getObjects().get(order.getKey());
+                    if (objectDSL.isEmptyRef()) break;
                     Ref<JThing> ref = new RefImpl<JThing>();
-                    entry.getValue().getRef().writeTo(ref);
-                    context.builder.addThing(entry.getKey(), ref.getRef());
+                    objectDSL.getRef().writeTo(ref);
+                    context.builder.addThing(order.getKey(), ref.getRef());
                     break;
                 }
                 case ARRAY:
                 {
-                    if (!arrayIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
-                    Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>> entry = arrayIt.next();
-                    if (entry.getValue().isEmptyRef()) break;
+                    Ref<ArrayDSL<JThingContext, JThing>> arrayDSL = group.getArrays().get(order.getKey());
+                    if (arrayDSL.isEmptyRef()) break;
                     Ref<JThing> ref = new RefImpl<JThing>();
-                    entry.getValue().getRef().writeTo(ref);
-                    context.builder.addThing(entry.getKey(), ref.getRef());
+                    arrayDSL.getRef().writeTo(ref);
+                    context.builder.addThing(order.getKey(), ref.getRef());
                     break;
                 }
                 case STRING:
                 {
-                    if (!stringIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
-                    Map.Entry<PathPart, Ref<String>> entry = stringIt.next();
-                    if (entry.getValue().isEmptyRef()) break;
-                    context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
+                    Ref<String> value = group.getStrings().get(order.getKey());
+                    if (value.isEmptyRef()) break;
+                    context.builder.addThing(order.getKey(), JThing.make(value.getRef()));
                     break;
                 }
                 case BOOLEAN:
                 {
-                    if (!booleanIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
-                    Map.Entry<PathPart, Ref<Boolean>> entry = booleanIt.next();
-                    if (entry.getValue().isEmptyRef()) break;
-                    context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
+                    Ref<Boolean> value = group.getBooleans().get(order.getKey());
+                    if (value.isEmptyRef()) break;
+                    context.builder.addThing(order.getKey(), JThing.make(value.getRef()));
                     break;
                 }
                 case LONG:
                 {
-                    if (!longIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
-                    Map.Entry<PathPart, Ref<Long>> entry = longIt.next();
-                    if (entry.getValue().isEmptyRef()) break;
-                    context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
+                    Ref<Long> value = group.getLongs().get(order.getKey());
+                    if (value.isEmptyRef()) break;
+                    context.builder.addThing(order.getKey(), JThing.make(value.getRef()));
                     break;
                 }
                 case DOUBLE:
                 {
-                    if (!doubleIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
-                    Map.Entry<PathPart, Ref<Double>> entry = doubleIt.next();
-                    if (entry.getValue().isEmptyRef()) break;
-                    context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
+                    Ref<Double> value = group.getDoubles().get(order.getKey());
+                    if (value.isEmptyRef()) break;
+                    context.builder.addThing(order.getKey(), JThing.make(value.getRef()));
                     break;
                 }
                 case WRITABLE:
                 {
-                    if (!writableIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
-                    Map.Entry<PathPart, Ref<Writable<JThing>>> entry = writableIt.next();
-                    if (entry.getValue().isEmptyRef()) break;
+                    Ref<Writable<JThing>> writable = group.getWritables().get(order.getKey());
+                    if (writable.isEmptyRef()) break;
                     Ref<JThing> ref = new RefImpl<JThing>();
-                    entry.getValue().getRef().writeTo(ref);
-                    context.builder.addThing(entry.getKey(), ref.getRef());
+                    writable.getRef().writeTo(ref);
+                    if (!ref.isEmptyRef())
+                        context.builder.addThing(order.getKey(), ref.getRef());
                     break;
                 }
                 default:

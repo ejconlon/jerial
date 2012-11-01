@@ -3,10 +3,7 @@ package net.exathunk.jereal.base.jerializers;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.VisitException;
-import net.exathunk.jereal.base.dsl.DSL;
-import net.exathunk.jereal.base.dsl.DSLImpl;
-import net.exathunk.jereal.base.dsl.JThingContext;
-import net.exathunk.jereal.base.dsl.Writable;
+import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.functional.ResFunc0;
@@ -40,10 +37,18 @@ public class JerializerUtils {
     }
 
     // for parity
-    public static <T> void jthingToDomain(DejerializerRegistry registry, Dejerializer<T> dejerializer,
-                                          JThing thing, T domain) throws JerializerException {
-        // TODO dejerialize
-        dejerializer.dejerialize(registry, thing.rawGetObject(), domain);
+    public static <V> void jthingToDomain(JerializerRegistry registry, Jerializer<DomainContext, JThing, V> jerializer,
+                                          JThing thing, V domain) throws JerializerException {
+        Recurser<DomainContext, JThing> recurser = new RecurserImpl<DomainContext, JThing>(registry);
+        DSL dsl = new DSLImpl(new ResFunc0<DomainContext>() {
+            @Override
+            public DomainContext runResFunc() {
+                return new DomainContext();
+            }
+        });
+        Writable<JThing> writable = jerializer.jerialize(recurser, dsl, domain);
+        Ref<JThing> ref = new RefImpl<JThing>(thing);
+        writable.writeTo(ref);
     }
 
     public static String jthingToJson(JThing thing) throws VisitException {
@@ -70,8 +75,8 @@ public class JerializerUtils {
         return parser.parse(json);
     }
 
-    public static <T> void jsonToDomain(DejerializerRegistry registry,
-                                        Dejerializer<T> dejerializer, String json, T domain) throws JerializerException {
-        jthingToDomain(registry, dejerializer, jsonToJThing(json), domain);
+    public static <V> void jsonToDomain(JerializerRegistry registry,
+                                        Jerializer<DomainContext, JThing, V> Jerializer, String json, V domain) throws JerializerException {
+        jthingToDomain(registry, Jerializer, jsonToJThing(json), domain);
     }
 }

@@ -4,7 +4,6 @@ import net.exathunk.jereal.base.dsl.DSL;
 import net.exathunk.jereal.base.dsl.PushableContext;
 import net.exathunk.jereal.base.dsl.Writable;
 import net.exathunk.jereal.base.functional.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 import java.util.Map;

@@ -14,6 +14,11 @@ import net.exathunk.jereal.schema.domain.SchemaRef;
  */
 public class SchemaRefJerializer<T extends PushableContext<T, U>, U> implements Jerializer<T, U, SchemaRef> {
     @Override
+    public SchemaRef prototype() {
+        return SchemaRef.prototype();
+    }
+
+    @Override
     public Writable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, SchemaRef schemaRef) throws JerializerException {
         if (schemaRef.hasLeft()) {
             return (new SchemaJerializer<T, U>()).jerialize(recurser, dsl, schemaRef.getLeft());

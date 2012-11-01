@@ -4,13 +4,25 @@ import net.exathunk.jereal.base.dsl.DSL;
 import net.exathunk.jereal.base.dsl.ObjectDSL;
 import net.exathunk.jereal.base.dsl.PushableContext;
 import net.exathunk.jereal.base.dsl.Writable;
+import net.exathunk.jereal.base.functional.Ref;
+import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.schema.domain.Link;
 import net.exathunk.jereal.schema.domain.Schema;
+import net.exathunk.jereal.schema.domain.SchemaRef;
 
 /**
  * charolastra 10/27/12 3:06 PM
  */
 public class SchemaJerializer<T extends PushableContext<T, U>, U> implements Jerializer<T, U, Schema> {
+
+    private static <V> Ref<V> ref(V v) { return new RefImpl<V>(v); }
+
+    @Override
+    public Schema prototype() {
+        return new Schema();
+    }
+
     @Override
     public Writable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, Schema schema) throws JerializerException {
         ObjectDSL<T, U> objectDSL = dsl.seeObject();
@@ -25,7 +37,7 @@ public class SchemaJerializer<T extends PushableContext<T, U>, U> implements Jer
         objectDSL.seeString("fragmentResolution", schema.fragmentResolution);
 
         // Unparsed item
-        objectDSL.seeWritable("default", recurser.seeThing(dsl, schema.defaultz));
+        objectDSL.seeWritable("default", ref(recurser.seeThing(dsl, schema.defaultz)));
 
         objectDSL.seeBoolean("required", schema.required);
         objectDSL.seeBoolean("uniqueItems", schema.uniqueItems);
@@ -33,21 +45,21 @@ public class SchemaJerializer<T extends PushableContext<T, U>, U> implements Jer
         objectDSL.seeLong("minItems", schema.minItems);
         objectDSL.seeLong("minimum", schema.minimum);
 
-        objectDSL.seeWritable("additionalProperties", recurser.seeCustom(dsl, schema.additionalProperties_SchemaRef));
+        objectDSL.seeWritable("additionalProperties", ref(recurser.seeCustom(dsl, schema.additionalProperties_SchemaRef, SchemaRef.class)));
         objectDSL.seeBoolean("additionalProperties", schema.additionalProperties_Boolean);
 
-        objectDSL.seeWritable("type", recurser.seeCustomList(dsl, schema.type_SchemaRef));
+        objectDSL.seeWritable("type", ref(recurser.seeCustomList(dsl, schema.type_SchemaRef, SchemaRef.class)));
         objectDSL.seeString("type", schema.type_String);
 
-        objectDSL.seeWritable("items", recurser.seeCustom(dsl, schema.items));
+        objectDSL.seeWritable("items", ref(recurser.seeCustom(dsl, schema.items, SchemaRef.class)));
 
-        objectDSL.seeWritable("extends", recurser.seeCustom(dsl, schema.extendz));
+        objectDSL.seeWritable("extends", ref(recurser.seeCustom(dsl, schema.extendz, SchemaRef.class)));
 
-        objectDSL.seeWritable("properties", recurser.seeCustomMap(dsl, schema.properties));
+        objectDSL.seeWritable("properties", ref(recurser.seeCustomMap(dsl, schema.properties, SchemaRef.class)));
 
-        objectDSL.seeWritable("dependencies", recurser.seeSimpleMap(dsl, schema.dependencies));
+        //objectDSL.seeWritable("dependencies", ref(recurser.seeSimpleMap(dsl, schema.dependencies)));
 
-        objectDSL.seeWritable("links", recurser.seeCustomList(dsl, schema.links));
+        objectDSL.seeWritable("links", ref(recurser.seeCustomList(dsl, schema.links, Link.class)));
 
         return objectDSL;
     }

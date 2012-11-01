@@ -1,10 +1,10 @@
 package net.exathunk.jereal.base.dsl;
 
 import net.exathunk.jereal.base.core.PathPart;
+import net.exathunk.jereal.base.functional.Pair;
 import net.exathunk.jereal.base.functional.Ref;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * charolastra 10/31/12 1:22 PM
@@ -22,7 +22,8 @@ public class RefMapGroup<T extends PushableContext<T, U>, U> {
     private final RefMap<PathPart, ObjectDSL<T, U>> objects = new RefMap<PathPart, ObjectDSL<T, U>>();
     private final RefMap<PathPart, ArrayDSL<T, U>> arrays = new RefMap<PathPart, ArrayDSL<T, U>>();
     private final RefMap<PathPart, Writable<U>> writables = new RefMap<PathPart, Writable<U>>();
-    private final List<WModel> order = new ArrayList<WModel>();
+    private final List<Map.Entry<PathPart, WModel>> order = new ArrayList<Map.Entry<PathPart, WModel>>();
+    private final Map<PathPart, WModel> parts = new TreeMap<PathPart, WModel>();
     private final WModel model;
 
     public RefMapGroup(WModel model) {
@@ -33,46 +34,52 @@ public class RefMapGroup<T extends PushableContext<T, U>, U> {
         return model;
     }
 
-    public void addObject(PathPart part, Ref<ObjectDSL<T, U>> value) {
-        if (value.isEmptyRef()) return;
-        objects.put(part, value);
-        order.add(WModel.OBJECT);
+    public WModel getModel(PathPart part) {
+        return parts.get(part);
     }
 
+    private void add(PathPart part, WModel model) {
+        if (parts.containsKey(part)) {
+            throw new IllegalStateException("TODO: Cannot repeat keys: "+part+" "+parts);
+        }
+        parts.put(part, model);
+        order.add(new Pair<PathPart, WModel>(part, model));
+    }
+
+    public void addObject(PathPart part, Ref<ObjectDSL<T, U>> value) {
+        objects.put(part, value);
+        add(part, WModel.OBJECT);
+    }
+
+
     public void addArray(PathPart part, Ref<ArrayDSL<T, U>> value) {
-        if (value.isEmptyRef()) return;
         arrays.put(part, value);
-        order.add(WModel.ARRAY);
+        add(part, WModel.ARRAY);
     }
 
     public void addString(PathPart part, Ref<String> value) {
-        if (value.isEmptyRef()) return;
         strings.put(part, value);
-        order.add(WModel.STRING);
+        add(part, WModel.STRING);
     }
 
     public void addBoolean(PathPart part, Ref<Boolean> value) {
-        if (value.isEmptyRef()) return;
         booleans.put(part, value);
-        order.add(WModel.BOOLEAN);
+        add(part, WModel.BOOLEAN);
     }
 
     public void addDouble(PathPart part, Ref<Double> value) {
-        if (value.isEmptyRef()) return;
         doubles.put(part, value);
-        order.add(WModel.DOUBLE);
+        add(part, WModel.DOUBLE);
     }
 
     public void addLong(PathPart part, Ref<Long> value) {
-        if (value.isEmptyRef()) return;
         longs.put(part, value);
-        order.add(WModel.LONG);
+        add(part, WModel.LONG);
     }
 
     public void addWritable(PathPart part, Ref<Writable<U>> value) {
-        if (value.isEmptyRef()) return;
         writables.put(part, value);
-        order.add(WModel.WRITABLE);
+        add(part, WModel.WRITABLE);
     }
 
     public RefMap<PathPart, ObjectDSL<T, U>>  getObjects() {
@@ -103,7 +110,7 @@ public class RefMapGroup<T extends PushableContext<T, U>, U> {
         return writables;
     }
 
-    public List<WModel> getOrders() {
+    public List<Map.Entry<PathPart, WModel>> getOrders() {
         return order;
     }
 

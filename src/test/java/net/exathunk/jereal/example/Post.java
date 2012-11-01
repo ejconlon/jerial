@@ -7,6 +7,8 @@ public class Post {
     public final Ref<String> title = new RefImpl<String>();
     public final Ref<String> body = new RefImpl<String>();
 
+    public Post() {}
+
     public Post(String title, String body) {
         this.title.setRef(title);
         this.body.setRef(body);

@@ -5,7 +5,6 @@ import net.exathunk.jereal.base.functional.MapSequence;
 import net.exathunk.jereal.base.functional.Maybe;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.functional.Sequence;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Map;
 import java.util.TreeMap;

@@ -39,10 +39,13 @@ public class RefImpl<T> implements Ref<T> {
 
         Ref ref = (Ref) o;
 
-        if (isEmpty != ref.isEmptyRef()) return false;
-        if (value != null ? !value.equals(ref.getRef()) : ref.getRef() != null) return false;
-
-        return true;
+        if (isEmpty) {
+            return ref.isEmptyRef();
+        } else if (ref.isEmptyRef()) {
+            return false;
+        } else {
+            return getRef().equals(ref.getRef());
+        }
     }
 
     @Override

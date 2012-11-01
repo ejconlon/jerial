@@ -20,93 +20,80 @@ public class RecurserImpl<T extends PushableContext<T, U>, U> implements Recurse
     }
 
     @Override
-    public <V> Ref<Writable<U>> seeCustom(DSL<T, U> dsl, Ref<V> domain) throws JerializerException {
-        if (!domain.isEmptyRef() && domain.getRef() != null) {
-            Class<V> klass = (Class<V>)domain.getRef().getClass();
-            Jerializer<T, U, V> jerializer = registry.getJerializer(klass);
-            return new RefImpl<Writable<U>>(jerializer.jerialize(this, dsl, domain.getRef()));
-        } else {
-            return new RefImpl<Writable<U>>();
-        }
-    }
-
-    @Override
-    public <V> Ref<Writable<U>> seeCustomMap(DSL<T, U> dsl, Ref<Map<String, V>> domain) throws JerializerException {
-        if (!domain.isEmptyRef() && domain.getRef() != null && !domain.getRef().isEmpty()) {
-            Map.Entry<String, V> first = domain.getRef().entrySet().iterator().next();
-            if (first.getValue() == null) return new RefImpl<Writable<U>>();
-            Class<V> klass = (Class<V>)first.getValue().getClass();
-            Jerializer<T, U, V> jerializer = registry.getJerializer(klass);
-            ObjectDSL<T, U> objectDSL = dsl.seeObject();
-            for (Map.Entry<String, V> entry : domain.getRef().entrySet()) {
-                Writable<U> writable = jerializer.jerialize(this, dsl, entry.getValue());
-                objectDSL.seeWritable(entry.getKey(), new RefImpl<Writable<U>>(writable));
+    public <V> Writable<U> seeCustom(final DSL<T, U> dsl, final Ref<V> domain, Class<V> klass) throws JerializerException {
+        final Jerializer<T, U, V> jerializer = registry.getJerializer(klass);
+        final Recurser<T, U> thiz = this;
+        return new Writable<U>() {
+            @Override
+            public void writeTo(Ref<U> ref) throws JerializerException {
+                if (domain.isEmptyRef()) {
+                    if (ref.isEmptyRef()) return;
+                    else domain.setRef(jerializer.prototype());
+                }
+                Writable<U> writable = jerializer.jerialize(thiz, dsl, domain.getRef());
+                writable.writeTo(ref);
             }
-            return new RefImpl<Writable<U>>(objectDSL);
-        } else {
-            return new RefImpl<Writable<U>>();
-        }
+        };
     }
 
     @Override
-    public <V> Ref<Writable<U>> seeCustomList(DSL<T, U> dsl, Ref<List<V>> domain) throws JerializerException {
-        if (!domain.isEmptyRef() && domain.getRef() != null &&
-                !domain.getRef().isEmpty() && domain.getRef().get(0) != null) {
-            Class<V> klass = (Class<V>)domain.getRef().get(0).getClass();
-            Jerializer<T, U, V> jerializer = registry.getJerializer(klass);
-            ArrayDSL<T, U> arrayDSL = dsl.seeArray();
-            for (V value : domain.getRef()) {
-                Writable<U> writable = jerializer.jerialize(this, dsl, value);
-                arrayDSL.seeWritable(new RefImpl<Writable<U>>(writable));
-            }
-            return new RefImpl<Writable<U>>(arrayDSL);
-        } else {
-            return new RefImpl<Writable<U>>();
-        }
-    }
-
-    @Override
-    public Ref<Writable<U>> seeSimpleMap(DSL<T, U> dsl, Ref<Map<String, String>> domain) {
-        if (domain.isEmptyRef() || domain.getRef() == null || domain.getRef().isEmpty()) return new RefImpl<Writable<U>>();
-        ObjectDSL<T, U> objectDSL = dsl.seeObject();
-        for (Map.Entry<String, String> entry : domain.getRef().entrySet()) {
-            objectDSL.seeString(entry.getKey(), new RefImpl<String>(entry.getValue()));
-        }
-        return new RefImpl<Writable<U>>(objectDSL);
-    }
-
-    @Override
-    public Ref<Writable<U>> seeThing(DSL<T, U> dsl, Ref<JThing> domain) {
-        if (domain.isEmptyRef() || domain.getRef() == null) return new RefImpl<Writable<U>>();
-        switch (domain.getRef().getModel()) {
-            case OBJECT:
-            {
+    public <V> Writable<U> seeCustomMap(final DSL<T, U> dsl, final Ref<Map<String, V>> domain, Class<V> klass) throws JerializerException {
+        final Jerializer<T, U, V> jerializer = registry.getJerializer(klass);
+        final Recurser<T, U> thiz = this;
+        return new Writable<U>() {
+            @Override
+            public void writeTo(Ref<U> ref) throws JerializerException {
                 ObjectDSL<T, U> objectDSL = dsl.seeObject();
-                for (Map.Entry<String, JThing> entry : domain.getRef().rawGetObject().seq()) {
-                    Ref<Writable<U>> writable = seeThing(dsl, new RefImpl<JThing>(entry.getValue()));
-                    objectDSL.seeWritable(entry.getKey(), writable);
+                for (Map.Entry<String, V> entry : domain.getRef().entrySet()) {
+                    Writable<U> writable = jerializer.jerialize(thiz, dsl, entry.getValue());
+                    objectDSL.seeWritable(entry.getKey(), new RefImpl<Writable<U>>(writable));
                 }
-                return new RefImpl<Writable<U>>(objectDSL);
+                objectDSL.writeTo(ref);
             }
-            case ARRAY:
-            {
+        };
+    }
+
+    @Override
+    public <V> Writable<U> seeCustomList(final DSL<T, U> dsl, final Ref<List<V>> domain, Class<V> klass) throws JerializerException {
+        final Jerializer<T, U, V> jerializer = registry.getJerializer(klass);
+        final Recurser<T, U> thiz = this;
+        return new Writable<U>() {
+            @Override
+            public void writeTo(Ref<U> ref) throws JerializerException {
                 ArrayDSL<T, U> arrayDSL = dsl.seeArray();
-                for (Map.Entry<Integer, JThing> entry : domain.getRef().rawGetArray().seq()) {
-                    Ref<Writable<U>> writable = seeThing(dsl, new RefImpl<JThing>(entry.getValue()));
-                    arrayDSL.seeWritable(writable);
+                for (V value : domain.getRef()) {
+                    Writable<U> writable = jerializer.jerialize(thiz, dsl, value);
+                    arrayDSL.seeWritable(new RefImpl<Writable<U>>(writable));
                 }
-                return new RefImpl<Writable<U>>(arrayDSL);
+                arrayDSL.writeTo(ref);
             }
-            case STRING:
-                return new RefImpl<Writable<U>>(dsl.seeString(domain.getRef().rawGetString()));
-            case BOOLEAN:
-                return new RefImpl<Writable<U>>(dsl.seeBoolean(domain.getRef().rawGetBoolean()));
-            case LONG:
-                return new RefImpl<Writable<U>>(dsl.seeLong(domain.getRef().rawGetLong()));
-            case DOUBLE:
-                return new RefImpl<Writable<U>>(dsl.seeDouble(domain.getRef().rawGetDouble()));
-            default:
-                throw new IllegalStateException("Unexpected model: "+domain.getRef().getModel());
-        }
+        };
+    }
+
+    /*@Override
+    public Writable<U> seeSimpleMap(final DSL<T, U> dsl, final Ref<Map<String, String>> domain) {
+        final Recurser<T, U> thiz = this;
+        return new Writable<U>() {
+            @Override
+            public void writeTo(Ref<U> ref) throws JerializerException {
+                ObjectDSL<T, U> objectDSL = dsl.seeObject();
+                for (Map.Entry<String, String> entry : domain.getRef().entrySet()) {
+                    objectDSL.seeString(entry.getKey(), new RefImpl<String>(entry.getValue()));
+                }
+                objectDSL.writeTo(ref);
+            }
+        };
+    }*/
+
+    @Override
+    public Writable<U> seeThing(final DSL<T, U> dsl, final Ref<JThing> domain) {
+        return new Writable<U>() {
+            @Override
+            public void writeTo(Ref<U> ref) throws JerializerException {
+                if (domain.isEmptyRef()) return;
+                Writable<U> writable = domain.getRef().acceptDSL(dsl);
+                writable.writeTo(ref);
+            }
+        };
     }
 }
