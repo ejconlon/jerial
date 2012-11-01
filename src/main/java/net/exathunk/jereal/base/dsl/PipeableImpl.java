@@ -5,15 +5,15 @@ import net.exathunk.jereal.base.functional.Ref;
 /**
  * charolastra 10/31/12 7:25 PM
  */
-public class WritableImpl<U> implements Writable<U> {
+public class PipeableImpl<U> implements Pipeable<U> {
     private final U value;
 
-    public WritableImpl(U value) {
+    public PipeableImpl(U value) {
         this.value = value;
     }
 
     @Override
-    public void writeTo(Ref<U> ref) {
+    public void pipe(Ref<U> ref) {
         ref.setRef(value);
     }
 }

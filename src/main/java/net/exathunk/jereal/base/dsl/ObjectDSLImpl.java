@@ -59,12 +59,12 @@ public class ObjectDSLImpl<T extends PushableContext<T, U>, U> implements Object
     }
 
     @Override
-    public void seeWritable(String key, Ref<Writable<U>> value) {
+    public void seeWritable(String key, Ref<Pipeable<U>> value) {
         refMapGroup.addWritable(makePart(key), value);
     }
 
     @Override
-    public void writeTo(Ref<U> ref) throws JerializerException {
+    public void pipe(Ref<U> ref) throws JerializerException {
         context.writeObject(refMapGroup, ref);
     }
 }

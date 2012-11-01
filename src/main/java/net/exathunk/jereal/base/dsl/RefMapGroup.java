@@ -21,7 +21,7 @@ public class RefMapGroup<T extends PushableContext<T, U>, U> {
     private final RefMap<PathPart, Double> doubles = new RefMap<PathPart, Double>();
     private final RefMap<PathPart, ObjectDSL<T, U>> objects = new RefMap<PathPart, ObjectDSL<T, U>>();
     private final RefMap<PathPart, ArrayDSL<T, U>> arrays = new RefMap<PathPart, ArrayDSL<T, U>>();
-    private final RefMap<PathPart, Writable<U>> writables = new RefMap<PathPart, Writable<U>>();
+    private final RefMap<PathPart, Pipeable<U>> writables = new RefMap<PathPart, Pipeable<U>>();
     private final List<Map.Entry<PathPart, WModel>> order = new ArrayList<Map.Entry<PathPart, WModel>>();
     private final Map<PathPart, WModel> parts = new TreeMap<PathPart, WModel>();
     private final WModel model;
@@ -77,7 +77,7 @@ public class RefMapGroup<T extends PushableContext<T, U>, U> {
         add(part, WModel.LONG);
     }
 
-    public void addWritable(PathPart part, Ref<Writable<U>> value) {
+    public void addWritable(PathPart part, Ref<Pipeable<U>> value) {
         writables.put(part, value);
         add(part, WModel.WRITABLE);
     }
@@ -106,7 +106,7 @@ public class RefMapGroup<T extends PushableContext<T, U>, U> {
         return doubles;
     }
 
-    public RefMap<PathPart, Writable<U>> getWritables() {
+    public RefMap<PathPart, Pipeable<U>> getWritables() {
         return writables;
     }
 

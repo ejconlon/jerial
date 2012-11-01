@@ -3,7 +3,7 @@ package net.exathunk.jereal.example;
 import net.exathunk.jereal.base.dsl.DSL;
 import net.exathunk.jereal.base.dsl.ObjectDSL;
 import net.exathunk.jereal.base.dsl.PushableContext;
-import net.exathunk.jereal.base.dsl.Writable;
+import net.exathunk.jereal.base.dsl.Pipeable;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.jerializers.*;
@@ -21,7 +21,7 @@ public class ArrJerializer<T extends PushableContext<T, U>, U> implements Jerial
     }
 
     @Override
-    public Writable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, Arr arr) throws JerializerException {
+    public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, Arr arr) throws JerializerException {
         ObjectDSL<T, U> objectDSL = dsl.seeObject();
         objectDSL.seeWritable("objects", ref(recurser.seeCustomList(dsl, arr.objects, Post.class)));
         return objectDSL;

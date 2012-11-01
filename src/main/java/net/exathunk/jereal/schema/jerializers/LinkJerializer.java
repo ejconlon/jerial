@@ -2,8 +2,8 @@ package net.exathunk.jereal.schema.jerializers;
 
 import net.exathunk.jereal.base.dsl.DSL;
 import net.exathunk.jereal.base.dsl.ObjectDSL;
+import net.exathunk.jereal.base.dsl.Pipeable;
 import net.exathunk.jereal.base.dsl.PushableContext;
-import net.exathunk.jereal.base.dsl.Writable;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.jerializers.*;
@@ -23,7 +23,7 @@ public class LinkJerializer<T extends PushableContext<T, U>, U> implements Jeria
     }
 
     @Override
-    public Writable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, Link link) throws JerializerException {
+    public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, Link link) throws JerializerException {
         ObjectDSL<T, U> objectDSL = dsl.seeObject();
         objectDSL.seeString("rel", link.rel);
         objectDSL.seeString("href", link.href);

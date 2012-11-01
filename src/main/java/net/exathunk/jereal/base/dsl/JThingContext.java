@@ -7,7 +7,6 @@ import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -68,7 +67,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                     Ref<ObjectDSL<JThingContext, JThing>> objectDSL = group.getObjects().get(order.getKey());
                     if (objectDSL.isEmptyRef()) break;
                     Ref<JThing> ref = new RefImpl<JThing>();
-                    objectDSL.getRef().writeTo(ref);
+                    objectDSL.getRef().pipe(ref);
                     context.builder.addThing(order.getKey(), ref.getRef());
                     break;
                 }
@@ -77,7 +76,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                     Ref<ArrayDSL<JThingContext, JThing>> arrayDSL = group.getArrays().get(order.getKey());
                     if (arrayDSL.isEmptyRef()) break;
                     Ref<JThing> ref = new RefImpl<JThing>();
-                    arrayDSL.getRef().writeTo(ref);
+                    arrayDSL.getRef().pipe(ref);
                     context.builder.addThing(order.getKey(), ref.getRef());
                     break;
                 }
@@ -111,10 +110,10 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 }
                 case WRITABLE:
                 {
-                    Ref<Writable<JThing>> writable = group.getWritables().get(order.getKey());
+                    Ref<Pipeable<JThing>> writable = group.getWritables().get(order.getKey());
                     if (writable.isEmptyRef()) break;
                     Ref<JThing> ref = new RefImpl<JThing>();
-                    writable.getRef().writeTo(ref);
+                    writable.getRef().pipe(ref);
                     if (!ref.isEmptyRef())
                         context.builder.addThing(order.getKey(), ref.getRef());
                     break;

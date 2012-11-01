@@ -1,8 +1,8 @@
 package net.exathunk.jereal.base.core;
 
 import net.exathunk.jereal.base.dsl.DSL;
+import net.exathunk.jereal.base.dsl.Pipeable;
 import net.exathunk.jereal.base.dsl.PushableContext;
-import net.exathunk.jereal.base.dsl.Writable;
 import net.exathunk.jereal.base.functional.*;
 
 import java.util.List;
@@ -182,7 +182,7 @@ public class JThing implements UntypedVisitable, Visitable {
     }
 
     @Override
-    public <A extends PushableContext<A, B>, B> Writable<B> acceptDSL(DSL<A, B> dsl) {
+    public <A extends PushableContext<A, B>, B> Pipeable<B> acceptDSL(DSL<A, B> dsl) {
         return value.acceptDSL(dsl);
     }
 

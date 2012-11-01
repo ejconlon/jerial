@@ -90,11 +90,11 @@ public class JObject implements JMutableCollection<String, JThing> {
     }
 
     @Override
-    public <A extends PushableContext<A, B>, B> Writable<B> acceptDSL(DSL<A, B> dsl) {
+    public <A extends PushableContext<A, B>, B> Pipeable<B> acceptDSL(DSL<A, B> dsl) {
         ObjectDSL<A, B> objectDSL = dsl.seeObject();
         for (Map.Entry<String, JThing> entry : seq()) {
-            Writable<B> writable = entry.getValue().acceptDSL(dsl);
-            objectDSL.seeWritable(entry.getKey(), new RefImpl<Writable<B>>(writable));
+            Pipeable<B> pipeable = entry.getValue().acceptDSL(dsl);
+            objectDSL.seeWritable(entry.getKey(), new RefImpl<Pipeable<B>>(pipeable));
         }
         return objectDSL;
     }

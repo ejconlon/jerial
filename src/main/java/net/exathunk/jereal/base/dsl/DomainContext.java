@@ -24,13 +24,13 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
             case OBJECT:
             {
                 Ref<ObjectDSL<DomainContext, JThing>> sink = group.getObjects().get(part);
-                if (sink != null) sink.getRef().writeTo(new RefImpl<JThing>(value));
+                if (sink != null) sink.getRef().pipe(new RefImpl<JThing>(value));
                 break;
             }
             case ARRAY:
             {
                 Ref<ArrayDSL<DomainContext, JThing>> sink = group.getArrays().get(part);
-                if (sink != null) sink.getRef().writeTo(new RefImpl<JThing>(value));
+                if (sink != null) sink.getRef().pipe(new RefImpl<JThing>(value));
                 break;
             }
             case STRING:
@@ -59,8 +59,8 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
             }
             case WRITABLE:
             {
-                Ref<Writable<JThing>> sink = group.getWritables().get(part);
-                if (sink != null) sink.getRef().writeTo(new RefImpl<JThing>(value));
+                Ref<Pipeable<JThing>> sink = group.getWritables().get(part);
+                if (sink != null) sink.getRef().pipe(new RefImpl<JThing>(value));
                 break;
             }
             default:

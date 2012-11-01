@@ -60,12 +60,12 @@ public class ArrayDSLImpl<T extends PushableContext<T, U>, U> implements ArrayDS
     }
 
     @Override
-    public void seeWritable(Ref<Writable<U>> value) {
+    public void seeWritable(Ref<Pipeable<U>> value) {
         refMapGroup.addWritable(makePart(), value);
     }
 
     @Override
-    public void writeTo(Ref<U> ref) throws JerializerException {
+    public void pipe(Ref<U> ref) throws JerializerException {
         context.writeArray(refMapGroup, ref);
     }
 }

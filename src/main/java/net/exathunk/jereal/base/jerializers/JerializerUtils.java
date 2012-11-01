@@ -24,9 +24,9 @@ public class JerializerUtils {
                 return new JThingContext();
             }
         });
-        Writable<JThing> writable = jerializer.jerialize(recurser, dsl, domain);
+        Pipeable<JThing> pipeable = jerializer.jerialize(recurser, dsl, domain);
         Ref<JThing> ref = new RefImpl<JThing>();
-        writable.writeTo(ref);
+        pipeable.pipe(ref);
         return ref.getRef();
     }
 
@@ -46,9 +46,9 @@ public class JerializerUtils {
                 return new DomainContext();
             }
         });
-        Writable<JThing> writable = jerializer.jerialize(recurser, dsl, domain);
+        Pipeable<JThing> pipeable = jerializer.jerialize(recurser, dsl, domain);
         Ref<JThing> ref = new RefImpl<JThing>(thing);
-        writable.writeTo(ref);
+        pipeable.pipe(ref);
     }
 
     public static String jthingToJson(JThing thing) throws VisitException {

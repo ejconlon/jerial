@@ -1,8 +1,8 @@
 package net.exathunk.jereal.schema.jerializers;
 
 import net.exathunk.jereal.base.dsl.DSL;
+import net.exathunk.jereal.base.dsl.Pipeable;
 import net.exathunk.jereal.base.dsl.PushableContext;
-import net.exathunk.jereal.base.dsl.Writable;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.jerializers.Jerializer;
 import net.exathunk.jereal.base.jerializers.JerializerException;
@@ -19,7 +19,7 @@ public class SchemaRefJerializer<T extends PushableContext<T, U>, U> implements 
     }
 
     @Override
-    public Writable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, SchemaRef schemaRef) throws JerializerException {
+    public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, SchemaRef schemaRef) throws JerializerException {
         if (schemaRef.hasLeft()) {
             return (new SchemaJerializer<T, U>()).jerialize(recurser, dsl, schemaRef.getLeft());
         } else {
