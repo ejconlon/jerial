@@ -20,10 +20,8 @@ public class RefMap<K, V> implements Iterable<Map.Entry<K, Ref<V>>> {
         return map.containsKey(key);
     }
 
-    public V get(K key) {
-        Ref<V> ref = map.get(key);
-        if (ref != null && !ref.isEmptyRef()) return ref.getRef();
-        else return null;
+    public Ref<V> get(K key) {
+        return map.get(key);
     }
 
     public void put(K key, Ref<V> value) {

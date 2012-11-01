@@ -70,7 +70,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
             switch (model) {
                 case OBJECT:
                 {
-                    if (!objectIt.hasNext()) continue;
+                    if (!objectIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
                     Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>> entry = objectIt.next();
                     if (entry.getValue().isEmptyRef()) break;
                     Ref<JThing> ref = new RefImpl<JThing>();
@@ -80,7 +80,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 }
                 case ARRAY:
                 {
-                    if (!arrayIt.hasNext()) continue;
+                    if (!arrayIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
                     Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>> entry = arrayIt.next();
                     if (entry.getValue().isEmptyRef()) break;
                     Ref<JThing> ref = new RefImpl<JThing>();
@@ -90,7 +90,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 }
                 case STRING:
                 {
-                    if (!stringIt.hasNext()) continue;
+                    if (!stringIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
                     Map.Entry<PathPart, Ref<String>> entry = stringIt.next();
                     if (entry.getValue().isEmptyRef()) break;
                     context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
@@ -98,7 +98,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 }
                 case BOOLEAN:
                 {
-                    if (!booleanIt.hasNext()) continue;
+                    if (!booleanIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
                     Map.Entry<PathPart, Ref<Boolean>> entry = booleanIt.next();
                     if (entry.getValue().isEmptyRef()) break;
                     context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
@@ -106,7 +106,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 }
                 case LONG:
                 {
-                    if (!longIt.hasNext()) continue;
+                    if (!longIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
                     Map.Entry<PathPart, Ref<Long>> entry = longIt.next();
                     if (entry.getValue().isEmptyRef()) break;
                     context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
@@ -114,7 +114,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 }
                 case DOUBLE:
                 {
-                    if (!doubleIt.hasNext()) continue;
+                    if (!doubleIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
                     Map.Entry<PathPart, Ref<Double>> entry = doubleIt.next();
                     if (entry.getValue().isEmptyRef()) break;
                     context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
@@ -122,7 +122,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 }
                 case WRITABLE:
                 {
-                    if (!writableIt.hasNext()) continue;
+                    if (!writableIt.hasNext()) throw new IllegalStateException("key overwritten - logic error");
                     Map.Entry<PathPart, Ref<Writable<JThing>>> entry = writableIt.next();
                     if (entry.getValue().isEmptyRef()) break;
                     Ref<JThing> ref = new RefImpl<JThing>();

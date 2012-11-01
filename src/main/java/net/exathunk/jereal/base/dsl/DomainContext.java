@@ -1,11 +1,8 @@
 package net.exathunk.jereal.base.dsl;
 
-import net.exathunk.jereal.base.core.JArray;
-import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.Path;
-import net.exathunk.jereal.base.core.PathPart;
+import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.functional.Ref;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import net.exathunk.jereal.base.functional.RefImpl;
 
 import java.util.Map;
 
@@ -14,51 +11,71 @@ import java.util.Map;
  */
 public class DomainContext implements PushableContext<DomainContext, JThing> {
 
-    // TODO not this context
-    private final Path path;
-
-    public DomainContext() {
-        this(Path.root());
-    }
-
-    public DomainContext(Path path) {
-        this.path = path;
-    }
-
     @Override
     public DomainContext push(PathPart part) {
-        return new DomainContext(path.cons(part));
+        return this;
+    }
+
+    private void writeInner(RefMapGroup<DomainContext, JThing> group, PathPart part, JThing value) {
+        switch (value.getModel()) {
+            case OBJECT:
+            {
+                Ref<ObjectDSL<DomainContext, JThing>> sink = group.getObjects().get(part);
+                if (sink != null) sink.getRef().writeTo(new RefImpl<JThing>(value));
+                break;
+            }
+            case ARRAY:
+            {
+                Ref<ArrayDSL<DomainContext, JThing>> sink = group.getArrays().get(part);
+                if (sink != null) sink.getRef().writeTo(new RefImpl<JThing>(value));
+                break;
+            }
+            case STRING:
+            {
+                Ref<String> sink = group.getStrings().get(part);
+                if (sink != null) sink.setRef(value.rawGetString().getRef());
+                break;
+            }
+            case BOOLEAN:
+            {
+                Ref<Boolean> sink = group.getBooleans().get(part);
+                if (sink != null) sink.setRef(value.rawGetBoolean().getRef());
+                break;
+            }
+            case LONG:
+            {
+                Ref<Long> sink = group.getLongs().get(part);
+                if (sink != null) sink.setRef(value.rawGetLong().getRef());
+                break;
+            }
+            case DOUBLE:
+            {
+                Ref<Double> sink = group.getDoubles().get(part);
+                if (sink != null) sink.setRef(value.rawGetDouble().getRef());
+                break;
+            }
+            default:
+                throw new IllegalStateException();
+        }
     }
 
     @Override
     public void writeObject(RefMapGroup<DomainContext, JThing> group, Ref<JThing> ref) {
-        throw new NotImplementedException();
+        final JObject array = ref.getRef().rawGetObject();
+        for (Map.Entry<String, JThing> entry : array.seq()) {
+            final PathPart part = PathPart.key(entry.getKey());
+            final JThing value = entry.getValue();
+            writeInner(group, part, value);
+        }
     }
 
     @Override
     public void writeArray(RefMapGroup<DomainContext, JThing> group, Ref<JThing> ref) {
-        final ArrayDSL<DomainContext, JThing> arrayDSL = group.getArrays().get(path.head());
         final JArray array = ref.getRef().rawGetArray();
         for (Map.Entry<Integer, JThing> entry : array.seq()) {
             final PathPart part = PathPart.index(entry.getKey());
             final JThing value = entry.getValue();
-            switch (value.getModel()) {
-                case OBJECT:
-
-                    break;
-                case ARRAY:
-                    break;
-                case STRING:
-                    break;
-                case BOOLEAN:
-                    break;
-                case LONG:
-                    break;
-                case DOUBLE:
-                    break;
-                default:
-                    throw new IllegalStateException();
-            }
+            writeInner(group, part, value);
         }
     }
 
