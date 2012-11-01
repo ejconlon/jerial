@@ -15,7 +15,7 @@ public class ObjectDSLImpl<T extends PushableContext<T, U>, U> implements Object
 
     public ObjectDSLImpl(T context) {
         this.context = context;
-        refMapGroup = new RefMapGroup<T, U>(Model.OBJECT);
+        refMapGroup = new RefMapGroup<T, U>(RefMapGroup.WModel.OBJECT);
     }
 
     private PathPart makePart(String key) {
@@ -40,31 +40,31 @@ public class ObjectDSLImpl<T extends PushableContext<T, U>, U> implements Object
 
     @Override
     public void seeString(String key, Ref<String> value) {
-        refMapGroup.addString(PathPart.key(key), value);
+        refMapGroup.addString(makePart(key), value);
     }
 
     @Override
     public void seeBoolean(String key, Ref<Boolean> value) {
-        refMapGroup.addBoolean(PathPart.key(key), value);
+        refMapGroup.addBoolean(makePart(key), value);
     }
 
     @Override
     public void seeLong(String key, Ref<Long> value) {
-        refMapGroup.addLong(PathPart.key(key), value);
+        refMapGroup.addLong(makePart(key), value);
     }
 
     @Override
     public void seeDouble(String key, Ref<Double> value) {
-        refMapGroup.addDouble(PathPart.key(key), value);
+        refMapGroup.addDouble(makePart(key), value);
     }
 
     @Override
-    public U seeObjectEnd() {
-        return context.runResFunc(refMapGroup);
+    public void seeWritable(String key, Ref<Writable<U>> value) {
+        refMapGroup.addWritable(makePart(key), value);
     }
 
     @Override
-    public void seeRaw(U value) {
-        context.seeRaw(value);
+    public U write() {
+        return context.writeObject(refMapGroup);
     }
 }

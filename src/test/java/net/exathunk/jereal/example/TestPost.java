@@ -31,10 +31,10 @@ public class TestPost {
         final String s = JerializerUtils.domainToJson(registry, new PostJerializer(), post);
         assertEquals(gold, s);
 
-        final JObject j = JerializerUtils.jsonToJObject(gold);
+        final JThing j = JerializerUtils.jsonToJThing(gold);
 
         int i = 0;
-        for (Map.Entry<String, JThing> entry : j.seq()) {
+        for (Map.Entry<String, JThing> entry : j.rawGetObject().seq()) {
             Logger.getLogger(getClass()).trace(entry);
             switch (i) {
                 case 0:
@@ -74,8 +74,8 @@ public class TestPost {
         final String s0 = JerializerUtils.domainToJson(registry, new BagJerializer(), bag0);
         assertEquals(gold0, s0);
 
-        final JObject j0 = JerializerUtils.jsonToJObject(gold0);
-        for (Map.Entry<String, JThing> entry : j0.seq()) {
+        final JThing j0 = JerializerUtils.jsonToJThing(gold0);
+        for (Map.Entry<String, JThing> entry : j0.rawGetObject().seq()) {
             Logger.getLogger(getClass()).trace(entry);
             // TODO add assertions
         }
@@ -84,8 +84,8 @@ public class TestPost {
         final String s1 = JerializerUtils.domainToJson(registry, new BagJerializer(), bag1);
         assertEquals(gold1, s1);
 
-        final JObject j1 = JerializerUtils.jsonToJObject(gold1);
-        for (Map.Entry<String, JThing> entry : j1.seq()) {
+        final JThing j1 = JerializerUtils.jsonToJThing(gold1);
+        for (Map.Entry<String, JThing> entry : j1.rawGetObject().seq()) {
             Logger.getLogger(getClass()).trace(entry);
             // TODO add assertions
         }
@@ -98,10 +98,10 @@ public class TestPost {
         final String s = JerializerUtils.domainToJson(registry, new ArrJerializer(), arr);
         assertEquals(gold, s);
 
-        final JObject j = JerializerUtils.jsonToJObject(gold);
+        final JThing j = JerializerUtils.jsonToJThing(gold);
 
         int i = 0;
-        for (Map.Entry<String, JThing> entry : j.seq()) {
+        for (Map.Entry<String, JThing> entry : j.rawGetObject().seq()) {
             int k = 0;
             Logger.getLogger(getClass()).trace(entry);
             switch (i) {
@@ -145,8 +145,8 @@ public class TestPost {
         final String gold0 = "{\"b\":true,\"d\":4.5,\"l\":12,\"s\":\"x\"}";
         final String gold1 = "{\"b\":false,\"d\":6.7,\"l\":13,\"next\":"+gold0+",\"s\":\"y\",\"z\":[4,5,6]}";
 
-        final JObject j1 = JerializerUtils.jsonToJObject(gold1);
-        for (Map.Entry<String, JThing> entry : j1.seq()) {
+        final JThing j1 = JerializerUtils.jsonToJThing(gold1);
+        for (Map.Entry<String, JThing> entry : j1.rawGetObject().seq()) {
             Logger.getLogger(getClass()).trace(entry);
         }
 
@@ -165,13 +165,13 @@ public class TestPost {
         Set<String> actualKeys = pathParts(j2);
         assertEquals(expectedKeys, actualKeys);
 
-        final String s2 = JerializerUtils.jobjectToJson(j2);
+        final String s2 = JerializerUtils.jthingToJson(JThing.make(j2));
         Logger.getLogger(getClass()).trace(s2);
     }
 
     public void runFlatteningTest(String gold, Set<String> expectedKeys) throws JerializerException, VisitException {
-        final JObject j1 = JerializerUtils.jsonToJObject(gold);
-        for (Map.Entry<String, JThing> entry : j1.seq()) {
+        final JThing j1 = JerializerUtils.jsonToJThing(gold);
+        for (Map.Entry<String, JThing> entry : j1.rawGetObject().seq()) {
             Logger.getLogger(getClass()).trace(entry);
         }
 

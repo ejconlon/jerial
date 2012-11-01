@@ -25,9 +25,9 @@ public class OperatorMapTest {
            //Logger.getPolicyBuilder().add(OperatorMapTest.class, Logger.Level.DEBUG);
     }
 
-    private static JObject loadSchema(String name) throws IOException, JerializerException {
+    private static JThing loadSchema(String name) throws IOException, JerializerException {
         final String s = Loader.loadSchemaString(name);
-        final JObject j = JerializerUtils.jsonToJObject(s);
+        final JThing j = JerializerUtils.jsonToJThing(s);
         return j;
     }
 
@@ -47,13 +47,13 @@ public class OperatorMapTest {
     @Test
     public void testSchemaSerialization() throws DeclarationException, IOException, JerializerException, VisitException {
         final OperatorMap<JThing, Schema> opMap = makeSchemaMap();
-        final JObject j = loadSchema("schema");
+        final JThing j = loadSchema("schema");
         final OpContext<JThing, Schema> context = new OpContext<JThing, Schema>(opMap, new RefImpl<OperatorException>());
         final Schema domain = new Schema();
         final OperatorVisitor<Schema> v = new OperatorVisitor<Schema>(context, domain);
 
         assertEquals(true, domain.id.isEmptyRef());
-        JThing.make(j).acceptUntyped(Path.root(), v);
+        j.acceptUntyped(Path.root(), v);
         Logger.getLogger(getClass()).debug(domain);
         assertEquals("http://json-schema.org/schema#", domain.id.getRef());
     }

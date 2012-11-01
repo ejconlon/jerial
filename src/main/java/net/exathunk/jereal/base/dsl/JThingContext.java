@@ -14,7 +14,6 @@ import java.util.Map;
  */
 public class JThingContext implements PushableContext<JThingContext, JThing> {
     private final JerialContext context;
-    private JThing raw = null;
 
     public JThingContext() {
         this(new JerialContext());
@@ -24,24 +23,57 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
         this.context = context;
     }
 
+    public JThing writeObject(RefMapGroup<JThingContext, JThing> group) {
+        if (!RefMapGroup.WModel.OBJECT.equals(group.getModel())) {
+            throw new IllegalArgumentException("Expected object model: "+group.getModel());
+        }
+        return writeInner(group);
+    }
+
+    public JThing writeArray(RefMapGroup<JThingContext, JThing> group) {
+        if (!RefMapGroup.WModel.ARRAY.equals(group.getModel())) {
+            throw new IllegalArgumentException("Expected array model: "+group.getModel());
+        }
+        return writeInner(group);
+    }
+
     @Override
-    public JThing runResFunc(RefMapGroup<JThingContext, JThing> group) {
-        if (raw != null) return raw;
+    public JThing writeString(Ref<String> value) {
+        return JThing.make(value.getRef());
+    }
+
+    @Override
+    public JThing writeBoolean(Ref<Boolean> value) {
+        return JThing.make(value.getRef());
+    }
+
+    @Override
+    public JThing writeLong(Ref<Long> value) {
+        return JThing.make(value.getRef());
+    }
+
+    @Override
+    public JThing writeDouble(Ref<Double> value) {
+        return JThing.make(value.getRef());
+    }
+
+    private JThing writeInner(RefMapGroup<JThingContext, JThing> group) {
         Iterator<Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>>> objectIt = group.objectIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>>> arrayIt = group.arrayIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<String>>> stringIt = group.stringIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<Boolean>>> booleanIt = group.booleanIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<Long>>> longIt = group.longIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<Double>>> doubleIt = group.doubleIterable().iterator();
+        Iterator<Map.Entry<PathPart, Ref<Writable<JThing>>>> writableIt = group.writableIterable().iterator();
 
-        for (Model model : group.orderIterable()) {
+        for (RefMapGroup.WModel model : group.orderIterable()) {
             switch (model) {
                 case OBJECT:
                 {
                     if (!objectIt.hasNext()) continue;
                     Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>> entry = objectIt.next();
                     if (entry.getValue().isEmptyRef()) break;
-                    JThing walked = entry.getValue().getRef().seeObjectEnd();
+                    JThing walked = entry.getValue().getRef().write();
                     context.builder.addThing(entry.getKey(), walked);
                     break;
                 }
@@ -50,7 +82,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                     if (!arrayIt.hasNext()) continue;
                     Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>> entry = arrayIt.next();
                     if (entry.getValue().isEmptyRef()) break;
-                    JThing walked = entry.getValue().getRef().seeArrayEnd();
+                    JThing walked = entry.getValue().getRef().write();
                     context.builder.addThing(entry.getKey(), walked);
                     break;
                 }
@@ -86,12 +118,24 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                     context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
                     break;
                 }
+                case WRITABLE:
+                {
+                    if (!writableIt.hasNext()) continue;
+                    Map.Entry<PathPart, Ref<Writable<JThing>>> entry = writableIt.next();
+                    if (entry.getValue().isEmptyRef()) break;
+                    Writable<JThing> writable = entry.getValue().getRef();
+                    JThing walked = writable.write();
+                    context.builder.addThing(entry.getKey(), walked);
+                    break;
+                }
+                default:
+                    throw new IllegalStateException("UNCOVERED CASE!");
             }
         }
 
-        if (Model.OBJECT.equals(group.getModel())) {
+        if (RefMapGroup.WModel.OBJECT.equals(group.getModel())) {
             return JThing.make(context.builder.buildObject());
-        } else if (Model.ARRAY.equals(group.getModel())) {
+        } else if (RefMapGroup.WModel.ARRAY.equals(group.getModel())) {
             return JThing.make(context.builder.buildArray());
         } else {
             throw new IllegalArgumentException("Invalid model: "+group.getModel());
@@ -103,8 +147,4 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
         return new JThingContext(context.push(part));
     }
 
-    @Override
-    public void seeRaw(JThing value) {
-        raw = value;
-    }
 }

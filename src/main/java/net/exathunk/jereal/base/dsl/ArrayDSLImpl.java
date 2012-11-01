@@ -16,7 +16,7 @@ public class ArrayDSLImpl<T extends PushableContext<T, U>, U> implements ArrayDS
     public ArrayDSLImpl(T context) {
         this.context = context;
         this.index = 0;
-        refMapGroup = new RefMapGroup<T, U>(Model.ARRAY);
+        refMapGroup = new RefMapGroup<T, U>(RefMapGroup.WModel.ARRAY);
     }
 
     private PathPart makePart() {
@@ -60,12 +60,12 @@ public class ArrayDSLImpl<T extends PushableContext<T, U>, U> implements ArrayDS
     }
 
     @Override
-    public U seeArrayEnd() {
-        return context.runResFunc(refMapGroup);
+    public void seeWritable(Ref<Writable<U>> value) {
+        refMapGroup.addWritable(makePart(), value);
     }
 
     @Override
-    public void seeRaw(U value) {
-        context.seeRaw(value);
+    public U write() {
+        return context.writeArray(refMapGroup);
     }
 }

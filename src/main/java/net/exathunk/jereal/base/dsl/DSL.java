@@ -8,4 +8,8 @@ import net.exathunk.jereal.base.functional.Ref;
 public interface DSL<T extends PushableContext<T, U>, U> {
     ObjectDSL<T, U> seeObject();
     ArrayDSL<T, U> seeArray();
+    Writable<U> seeString(Ref<String> value);
+    Writable<U> seeBoolean(Ref<Boolean> value);
+    Writable<U> seeLong(Ref<Long> value);
+    Writable<U> seeDouble(Ref<Double> value);
 }

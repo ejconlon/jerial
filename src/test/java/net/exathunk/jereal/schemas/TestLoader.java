@@ -2,6 +2,7 @@ package net.exathunk.jereal.schemas;
 
 import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JObject;
+import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
@@ -32,8 +33,8 @@ public class TestLoader {
                                     final String name) throws IOException, JerializerException, VisitException {
         final String gold = Loader.loadSchemaString(name);
         assertFalse(gold.isEmpty());
-        final JObject j = JerializerUtils.jsonToJObject(gold);
-        final String s1 = JerializerUtils.jobjectToJson(j);
+        final JThing j = JerializerUtils.jsonToJThing(gold);
+        final String s1 = JerializerUtils.jthingToJson(j);
         Logger.getLogger(TestLoader.class).trace("READ " + name + " => " + s1);
 
         final Schema schema = Loader.loadSchema(name);

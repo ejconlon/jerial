@@ -1,7 +1,9 @@
 package net.exathunk.jereal.example;
 
+import net.exathunk.jereal.base.dsl.DSL;
 import net.exathunk.jereal.base.dsl.ObjectDSL;
 import net.exathunk.jereal.base.dsl.PushableContext;
+import net.exathunk.jereal.base.dsl.Writable;
 import net.exathunk.jereal.base.jerializers.*;
 
 /**
@@ -10,11 +12,13 @@ import net.exathunk.jereal.base.jerializers.*;
 public class BagJerializer<T extends PushableContext<T, U>, U> implements Jerializer<T, U, Bag> {
 
     @Override
-    public void jerialize(Recurser<T, U> recurser, ObjectDSL<T, U> dsl, Bag bag) throws JerializerException {
-        dsl.seeString("s", bag.s);
-        dsl.seeLong("l", bag.l);
-        dsl.seeDouble("d", bag.d);
-        dsl.seeBoolean("b", bag.b);
-        recurser.seeCustom(dsl, "next", bag.next);
+    public Writable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, Bag bag) throws JerializerException {
+        ObjectDSL<T, U> objectDSL = dsl.seeObject();
+        objectDSL.seeString("s", bag.s);
+        objectDSL.seeLong("l", bag.l);
+        objectDSL.seeDouble("d", bag.d);
+        objectDSL.seeBoolean("b", bag.b);
+        objectDSL.seeWritable("next", recurser.seeCustom(dsl, bag.next));
+        return objectDSL;
     }
 }

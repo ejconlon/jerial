@@ -2,6 +2,7 @@ package net.exathunk.jereal.base.builders;
 
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.core.PathPart;
+import net.exathunk.jereal.base.util.Logger;
 
 class MapBuilder implements JerialBuilder {
 
@@ -17,6 +18,7 @@ class MapBuilder implements JerialBuilder {
 
     @Override
     public void addThing(PathPart part, JThing thing) {
+        //Logger.getLogger(getClass()).critical("addThing: "+part+" "+thing);
         if (part.hasLeft()) {
             assert !isArray;
             isObject = true;
