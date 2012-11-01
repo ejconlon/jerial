@@ -63,4 +63,9 @@ public class ArrayDSLImpl<T extends PushableContext<T, U>, U> implements ArrayDS
     public U seeArrayEnd() {
         return context.runResFunc(refMapGroup);
     }
+
+    @Override
+    public void seeRaw(U value) {
+        context.seeRaw(value);
+    }
 }

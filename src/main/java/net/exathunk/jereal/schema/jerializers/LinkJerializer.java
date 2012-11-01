@@ -1,22 +1,22 @@
 package net.exathunk.jereal.schema.jerializers;
 
-import net.exathunk.jereal.base.builders.JerialContext;
+import net.exathunk.jereal.base.dsl.ObjectDSL;
+import net.exathunk.jereal.base.dsl.PushableContext;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.schema.domain.Link;
 
 /**
  * charolastra 10/27/12 5:50 PM
  */
-public class LinkJerializer implements Jerializer<Link> {
+public class LinkJerializer<T extends PushableContext<T, U>, U> implements Jerializer<T, U, Link> {
     @Override
-    public void jerialize(JDSL jdsl, Link link) throws JerializerException {
-        jdsl.addString(PathPart.key("rel"), link.rel);
-        jdsl.addString(PathPart.key("href"), link.href);
-        jdsl.addString(PathPart.key("schema"), link.schema);
-        jdsl.addString(PathPart.key("targetSchema"), link.targetSchema);
-        jdsl.addString(PathPart.key("enctype"), link.enctype);
-        jdsl.addString(PathPart.key("method"), link.method);
-        jdsl.addMap(PathPart.key("properties"), link.properties);
+    public void jerialize(Recurser<T, U> recurser, ObjectDSL<T, U> dsl, Link link) throws JerializerException {
+        dsl.seeString("rel", link.rel);
+        dsl.seeString("href", link.href);
+        dsl.seeString("schema", link.schema);
+        dsl.seeString("targetSchema", link.targetSchema);
+        dsl.seeString("enctype", link.enctype);
+        dsl.seeString("method", link.method);
+        recurser.seeCustomMap(dsl, "properties", link.properties);
     }
 }

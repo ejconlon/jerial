@@ -14,6 +14,11 @@ import java.util.Map;
  */
 public class JThingContext implements PushableContext<JThingContext, JThing> {
     private final JerialContext context;
+    private JThing raw = null;
+
+    public JThingContext() {
+        this(new JerialContext());
+    }
 
     public JThingContext(JerialContext context) {
         this.context = context;
@@ -21,6 +26,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
 
     @Override
     public JThing runResFunc(RefMapGroup<JThingContext, JThing> group) {
+        if (raw != null) return raw;
         Iterator<Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>>> objectIt = group.objectIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>>> arrayIt = group.arrayIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<String>>> stringIt = group.stringIterable().iterator();
@@ -34,6 +40,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 {
                     if (!objectIt.hasNext()) continue;
                     Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>> entry = objectIt.next();
+                    if (entry.getValue().isEmptyRef()) break;
                     JThing walked = entry.getValue().getRef().seeObjectEnd();
                     context.builder.addThing(entry.getKey(), walked);
                     break;
@@ -42,6 +49,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 {
                     if (!arrayIt.hasNext()) continue;
                     Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>> entry = arrayIt.next();
+                    if (entry.getValue().isEmptyRef()) break;
                     JThing walked = entry.getValue().getRef().seeArrayEnd();
                     context.builder.addThing(entry.getKey(), walked);
                     break;
@@ -50,6 +58,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 {
                     if (!stringIt.hasNext()) continue;
                     Map.Entry<PathPart, Ref<String>> entry = stringIt.next();
+                    if (entry.getValue().isEmptyRef()) break;
                     context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
                     break;
                 }
@@ -57,6 +66,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 {
                     if (!booleanIt.hasNext()) continue;
                     Map.Entry<PathPart, Ref<Boolean>> entry = booleanIt.next();
+                    if (entry.getValue().isEmptyRef()) break;
                     context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
                     break;
                 }
@@ -64,6 +74,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 {
                     if (!longIt.hasNext()) continue;
                     Map.Entry<PathPart, Ref<Long>> entry = longIt.next();
+                    if (entry.getValue().isEmptyRef()) break;
                     context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
                     break;
                 }
@@ -71,6 +82,7 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 {
                     if (!doubleIt.hasNext()) continue;
                     Map.Entry<PathPart, Ref<Double>> entry = doubleIt.next();
+                    if (entry.getValue().isEmptyRef()) break;
                     context.builder.addThing(entry.getKey(), JThing.make(entry.getValue().getRef()));
                     break;
                 }
@@ -89,5 +101,10 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
     @Override
     public JThingContext push(PathPart part) {
         return new JThingContext(context.push(part));
+    }
+
+    @Override
+    public void seeRaw(JThing value) {
+        raw = value;
     }
 }

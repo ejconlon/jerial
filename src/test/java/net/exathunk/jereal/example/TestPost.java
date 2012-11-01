@@ -17,7 +17,8 @@ public class TestPost {
     static {
         Logger.getPolicyBuilder().add(TestPost.class, Logger.Level.CRITICAL);
         registry = new SinglyRegistry(Arr.class, new ArrJerializer(),
-                new SinglyRegistry(Bag.class, new BagJerializer()));
+                   new SinglyRegistry(Bag.class, new BagJerializer(),
+                   new SinglyRegistry(Post.class, new PostJerializer())));
     }
 
     private static final JerializerRegistry registry;
@@ -58,8 +59,8 @@ public class TestPost {
     public void testNulls() throws JerializerException, VisitException {
         final Bag bag0 = new Bag(null, null, null, null);
         // TODO this should be the correct output
-        //final String gold0 = "{\"b\":null,\"d\":null,\"l\":null,\"s\":null}";
-        final String gold0 = "{}";
+        final String gold0 = "{\"b\":null,\"d\":null,\"l\":null,\"s\":null}";
+        //final String gold0 = "{}";
         final String s0 = JerializerUtils.domainToJson(registry, new BagJerializer(), bag0);
         assertEquals(gold0, s0);
     }
@@ -92,8 +93,8 @@ public class TestPost {
 
     @Test
     public void testArray() throws JerializerException, VisitException {
-        final Arr arr = new Arr((long) 1, 2.2,"xyz", true);
-        final String gold = "{\"objects\":[1,2.2,\"xyz\",true]}";
+        final Arr arr = new Arr(new Post("foo", "bar"), new Post("baz", "quux"));
+        final String gold = "{\"objects\":[{\"body\":\"bar\",\"title\":\"foo\"},{\"body\":\"quux\",\"title\":\"baz\"}]}";
         final String s = JerializerUtils.domainToJson(registry, new ArrJerializer(), arr);
         assertEquals(gold, s);
 
@@ -108,9 +109,10 @@ public class TestPost {
                     assertEquals("objects", entry.getKey());
                     assertEquals(true, entry.getValue().isArray());
                     for (Map.Entry<Integer, JThing> entry1 : entry.getValue().rawGetArray().seq()) {
-                        JThing actual = arr.objects.getRef().get(k++);
+                        Post actual = arr.objects.getRef().get(k++);
                         JThing expected = entry1.getValue();
-                        assertEquals(expected, actual);
+                        assertEquals(expected.rawGetObject().get("body").getOrDefault(null).rawGetString().getRef(), actual.body.getRef());
+                        assertEquals(expected.rawGetObject().get("title").getOrDefault(null).rawGetString().getRef(), actual.title.getRef());
                     }
                     break;
                 default:

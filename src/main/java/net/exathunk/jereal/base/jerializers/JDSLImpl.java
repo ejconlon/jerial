@@ -7,6 +7,7 @@ import net.exathunk.jereal.base.functional.Either3;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,11 +124,12 @@ public class JDSLImpl implements JDSL {
     }
 
     private <T> void addCustom(PathPart part, T subObject) throws JerializerException {
-        if (subObject == null) return;
+        throw new NotImplementedException();
+        /*if (subObject == null) return;
         JerialContext newContext = context.push(part);
         Jerializer<T> jerializer = (Jerializer<T>) registry.getJerializer(subObject.getClass());
         jerializer.jerialize(pushContext(newContext), subObject);
-        context.builder.addThing(part, JThing.make(newContext.builder.buildObject()));
+        context.builder.addThing(part, JThing.make(newContext.builder.buildObject())); */
     }
 
     @Override

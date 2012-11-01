@@ -1,26 +1,28 @@
 package net.exathunk.jereal.base.jerializers;
 
+import net.exathunk.jereal.base.dsl.PushableContext;
+
 /**
  * charolastra 10/31/12 2:08 AM
  */
-public class SinglyRegistry<X> implements JerializerRegistry {
+public class SinglyRegistry<T extends PushableContext<T, U>, U, V> implements JerializerRegistry<T, U> {
 
-    private final Class<X> klass;
-    private final Jerializer<X> jerializer;
-    private final JerializerRegistry next;
+    private final Class<V> klass;
+    private final Jerializer<T, U, V> jerializer;
+    private final JerializerRegistry<T, U> next;
 
-    public SinglyRegistry(Class<X> klass, Jerializer<X> jerializer) {
+    public SinglyRegistry(Class<V> klass, Jerializer<T, U, V> jerializer) {
         this(klass, jerializer, null);
     }
 
-    public SinglyRegistry(Class<X> klass, Jerializer<X> jerializer, JerializerRegistry next) {
+    public SinglyRegistry(Class<V> klass, Jerializer<T, U, V> jerializer, JerializerRegistry<T, U> next) {
         this.klass = klass;
         this.jerializer = jerializer;
         this.next = next;
     }
 
     @Override
-    public <T> boolean hasJerializer(Class<T> key) {
+    public <X> boolean hasJerializer(Class<X> key) {
         if (klass.equals(key)) {
             return true;
         } else if (next != null) {
@@ -31,9 +33,9 @@ public class SinglyRegistry<X> implements JerializerRegistry {
     }
 
     @Override
-    public <T> Jerializer<T> getJerializer(Class<T> key) throws JerializerException {
+    public <X> Jerializer<T, U, X> getJerializer(Class<X> key) throws JerializerException {
         if (klass.equals(key)) {
-            return (Jerializer<T>)jerializer;
+            return (Jerializer<T, U, X>)jerializer;
         } else if (next != null) {
             return next.getJerializer(key);
         } else {

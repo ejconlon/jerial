@@ -1,5 +1,7 @@
 package net.exathunk.jereal.base.core;
 
+import net.exathunk.jereal.base.dsl.ObjectDSL;
+import net.exathunk.jereal.base.dsl.PushableContext;
 import net.exathunk.jereal.base.functional.*;
 
 import java.util.List;

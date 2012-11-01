@@ -13,4 +13,5 @@ public interface ArrayDSL<T extends PushableContext<T, U>, U> {
     void seeLong(Ref<Long> value);
     void seeDouble(Ref<Double> value);
     U seeArrayEnd();
+    void seeRaw(U value);
 }

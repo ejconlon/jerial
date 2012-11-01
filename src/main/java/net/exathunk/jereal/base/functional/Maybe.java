@@ -58,8 +58,8 @@ public class Maybe<A> implements Sequence<A> {
         else return new EmptySequence.EmptyIterator<A>();
     }
 
-    public A unJust() {
-        return value;
+    public A getOrDefault(A def) {
+        return (just ? value : def);
     }
 
     public boolean isJust() {

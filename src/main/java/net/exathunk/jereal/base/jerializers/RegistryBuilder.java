@@ -1,28 +1,30 @@
 package net.exathunk.jereal.base.jerializers;
 
+import net.exathunk.jereal.base.dsl.PushableContext;
+
 /**
  * charolastra 10/27/12 3:38 PM
  */
-public class RegistryBuilder implements RegistryFactory {
+public class RegistryBuilder<T extends PushableContext<T, U>, U> implements RegistryFactory<T, U> {
 
     private final JerializerRegistryImpl jerializerRegistry = new JerializerRegistryImpl();
     private final DejerializerRegistryImpl dejerializerRegistry = new DejerializerRegistryImpl();
 
-    protected <T> void add(Class<T> key, Jerializer<T> jerializer, Dejerializer<T> dejerializer) {
+    protected <V> void add(Class<V> key, Jerializer<T, U, V> jerializer, Dejerializer<V> dejerializer) {
         add(key, jerializer);
         add(key, dejerializer);
     }
 
-    protected <T> void add(Class<T> key, Jerializer<T> jerializer) {
+    protected <V> void add(Class<V> key, Jerializer<T, U, V> jerializer) {
         jerializerRegistry.addJerializer(key, jerializer);
     }
 
-    protected <T> void add(Class<T> key, Dejerializer<T> dejerializer) {
+    protected <V> void add(Class<V> key, Dejerializer<V> dejerializer) {
         dejerializerRegistry.addDejerializer(key, dejerializer);
     }
 
     @Override
-    public JerializerRegistry makeJerializerRegistry() {
+    public JerializerRegistry<T, U> makeJerializerRegistry() {
         return jerializerRegistry;
     }
 

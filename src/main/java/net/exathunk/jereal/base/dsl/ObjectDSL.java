@@ -13,4 +13,5 @@ public interface ObjectDSL<T extends PushableContext<T, U>, U> {
     void seeLong(String key, Ref<Long> value);
     void seeDouble(String key, Ref<Double> value);
     U seeObjectEnd();
+    void seeRaw(U value);
 }

@@ -30,31 +30,37 @@ public class RefMapGroup<T extends PushableContext<T, U>, U> {
     }
 
     public void addObject(PathPart part, Ref<ObjectDSL<T, U>> value) {
+        if (value.isEmptyRef()) return;
         objects.put(part, value);
         order.add(Model.OBJECT);
     }
 
     public void addArray(PathPart part, Ref<ArrayDSL<T, U>> value) {
+        if (value.isEmptyRef()) return;
         arrays.put(part, value);
         order.add(Model.ARRAY);
     }
 
     public void addString(PathPart part, Ref<String> value) {
+        if (value.isEmptyRef()) return;
         strings.put(part, value);
         order.add(Model.STRING);
     }
 
     public void addBoolean(PathPart part, Ref<Boolean> value) {
+        if (value.isEmptyRef()) return;
         booleans.put(part, value);
         order.add(Model.BOOLEAN);
     }
 
     public void addDouble(PathPart part, Ref<Double> value) {
+        if (value.isEmptyRef()) return;
         doubles.put(part, value);
         order.add(Model.DOUBLE);
     }
 
     public void addLong(PathPart part, Ref<Long> value) {
+        if (value.isEmptyRef()) return;
         longs.put(part, value);
         order.add(Model.LONG);
     }

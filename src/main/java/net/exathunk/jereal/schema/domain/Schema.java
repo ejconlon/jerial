@@ -54,9 +54,11 @@ public class Schema {
     public final Ref<Long> minItems = new RefImpl<Long>();
     public final Ref<Long> minimum = new RefImpl<Long>();
 
-    public final Ref<Either<SchemaRef, Boolean>> additionalProperties = new RefImpl<Either<SchemaRef, Boolean>>();
+    public final Ref<SchemaRef> additionalProperties_SchemaRef = new RefImpl<SchemaRef>();
+    public final Ref<Boolean> additionalProperties_Boolean = new RefImpl<Boolean>();
 
-    public final Ref<List<SchemaRef>> type = new RefImpl<List<SchemaRef>>(new ArrayList<SchemaRef>());
+    public final Ref<List<SchemaRef>> type_SchemaRef = new RefImpl<List<SchemaRef>>(new ArrayList<SchemaRef>());
+    public final Ref<String> type_String = new RefImpl<String>();
 
     public final Ref<SchemaRef> items = new RefImpl<SchemaRef>();
 
@@ -82,8 +84,10 @@ public class Schema {
         if (!uniqueItems.isEmptyRef()) sb.append("uniqueItems=" + uniqueItems+", ");
         if (!minItems.isEmptyRef()) sb.append("minItems=" + minItems+", ");
         if (!minimum.isEmptyRef()) sb.append("minimum=" + minimum+", ");
-        if (!additionalProperties.isEmptyRef()) sb.append("additionalProperties=" + additionalProperties+", ");
-        if (!type.isEmptyRef()) sb.append("type=" + type+", ");
+        if (!additionalProperties_SchemaRef.isEmptyRef()) sb.append("additionalProperties=" + additionalProperties_SchemaRef+", ");
+        if (!additionalProperties_Boolean.isEmptyRef()) sb.append("additionalProperties=" + additionalProperties_Boolean+", ");
+        if (!type_SchemaRef.isEmptyRef()) sb.append("type=" + type_SchemaRef+", ");
+        if (!type_String.isEmptyRef()) sb.append("type=" + type_String+", ");
         if (!items.isEmptyRef()) sb.append("items=" + items+", ");
         if (!extendz.isEmptyRef()) sb.append("extendz=" + extendz+", ");
         if (!properties.isEmptyRef()) sb.append("properties=" + properties+", ");

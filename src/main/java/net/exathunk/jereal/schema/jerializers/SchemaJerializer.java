@@ -1,45 +1,48 @@
 package net.exathunk.jereal.schema.jerializers;
 
+import net.exathunk.jereal.base.dsl.ObjectDSL;
+import net.exathunk.jereal.base.dsl.PushableContext;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.schema.domain.Schema;
 
 /**
  * charolastra 10/27/12 3:06 PM
  */
-public class SchemaJerializer implements Jerializer<Schema> {
+public class SchemaJerializer<T extends PushableContext<T, U>, U> implements Jerializer<T, U, Schema> {
     @Override
-    public void jerialize(JDSL jdsl, Schema schema) throws JerializerException {
-        jdsl.addString(PathPart.key("id"), schema.id);
-        jdsl.addString(PathPart.key("name"), schema.name);
-        jdsl.addString(PathPart.key("description"), schema.description);
-        jdsl.addString(PathPart.key("title"), schema.title);
-        jdsl.addString(PathPart.key("format"), schema.format);
-        jdsl.addString(PathPart.key("$ref"), schema.dollar_ref);
-        jdsl.addString(PathPart.key("$schema"), schema.dollar_schema);
-        jdsl.addString(PathPart.key("fragmentResolution"), schema.fragmentResolution);
+    public void jerialize(Recurser<T, U> recurser, ObjectDSL<T, U> dsl, Schema schema) throws JerializerException {
+        dsl.seeString("id", schema.id);
+        dsl.seeString("name", schema.name);
+        dsl.seeString("description", schema.description);
+        dsl.seeString("title", schema.title);
+        dsl.seeString("format", schema.format);
+        dsl.seeString("$ref", schema.dollar_ref);
+        dsl.seeString("$schema", schema.dollar_schema);
+        dsl.seeString("fragmentResolution", schema.fragmentResolution);
 
         // Unparsed item
-        jdsl.addThing(PathPart.key("default"), schema.defaultz);
+        recurser.seeThing(dsl, "default", schema.defaultz);
 
-        jdsl.addBoolean(PathPart.key("required"), schema.required);
-        jdsl.addBoolean(PathPart.key("uniqueItems"), schema.uniqueItems);
+        dsl.seeBoolean("required", schema.required);
+        dsl.seeBoolean("uniqueItems", schema.uniqueItems);
 
-        jdsl.addLong(PathPart.key("minItems"), schema.minItems);
-        jdsl.addLong(PathPart.key("minimum"), schema.minimum);
+        dsl.seeLong("minItems", schema.minItems);
+        dsl.seeLong("minimum", schema.minimum);
 
-        jdsl.add(PathPart.key("additionalProperties"), schema.additionalProperties);
+        recurser.seeCustom(dsl, "additionalProperties", schema.additionalProperties_SchemaRef);
+        dsl.seeBoolean("additionalProperties", schema.additionalProperties_Boolean);
 
-        jdsl.addSinglyList(PathPart.key("type"), schema.type);
+        recurser.seeCustomList(dsl, "type", schema.type_SchemaRef);
+        dsl.seeString("type", schema.type_String);
 
-        jdsl.add(PathPart.key("items"), schema.items);
+        recurser.seeCustom(dsl, "items", schema.items);
 
-        jdsl.add(PathPart.key("extends"), schema.extendz);
+        recurser.seeCustom(dsl, "extends", schema.extendz);
 
-        jdsl.addMap(PathPart.key("properties"), schema.properties);
+        recurser.seeCustomMap(dsl, "properties", schema.properties);
 
-        jdsl.addMap(PathPart.key("dependencies"), schema.dependencies);
+        recurser.seeSimpleMap(dsl, "dependencies", schema.dependencies);
 
-        jdsl.addList(PathPart.key("links"), schema.links);
+        recurser.seeCustomList(dsl, "links", schema.links);
     }
 }

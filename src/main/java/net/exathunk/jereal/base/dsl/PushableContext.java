@@ -8,4 +8,5 @@ import net.exathunk.jereal.base.functional.ResFunc1;
  */
 public interface PushableContext<T extends PushableContext<T, U>, U> extends ResFunc1<RefMapGroup<T, U>, U> {
     T push(PathPart part);
+    void seeRaw(U value);
 }

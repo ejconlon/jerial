@@ -62,4 +62,9 @@ public class ObjectDSLImpl<T extends PushableContext<T, U>, U> implements Object
     public U seeObjectEnd() {
         return context.runResFunc(refMapGroup);
     }
+
+    @Override
+    public void seeRaw(U value) {
+        context.seeRaw(value);
+    }
 }

@@ -1,9 +1,13 @@
 package net.exathunk.jereal.base.jerializers;
 
-import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JObject;
+import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.VisitException;
+import net.exathunk.jereal.base.dsl.DSL;
+import net.exathunk.jereal.base.dsl.DSLImpl;
+import net.exathunk.jereal.base.dsl.JThingContext;
+import net.exathunk.jereal.base.dsl.ObjectDSL;
 import net.exathunk.jereal.base.util.JsonObjectWriter;
 import net.exathunk.jereal.base.util.JsonParser;
 
@@ -12,17 +16,18 @@ import net.exathunk.jereal.base.util.JsonParser;
  */
 public class JerializerUtils {
 
-    public static <T> JObject domainToJObject(JerializerRegistry registry,
-                                              Jerializer<T> jerializer, T domain) throws JerializerException {
-        JerialContext context = new JerialContext();
-        JDSL jdsl = new JDSLImpl(context, registry);
-        jerializer.jerialize(jdsl, domain);
-        return context.builder.buildObject();
+    public static <V> JObject domainToJObject(JerializerRegistry registry,
+                                              Jerializer<JThingContext, JThing, V> jerializer, V domain) throws JerializerException {
+        Recurser<JThingContext, JThing> recurser = new RecurserImpl<JThingContext, JThing>(registry);
+        DSL dsl = new DSLImpl(new JThingContext());
+        ObjectDSL<JThingContext, JThing> objectDSL = dsl.seeObject();
+        jerializer.jerialize(recurser, objectDSL, domain);
+        return objectDSL.seeObjectEnd().rawGetObject();
     }
 
-    public static <T> JObject domainToJObject(JerializerRegistry registry,
-                                              T domain) throws JerializerException {
-        Jerializer<T> jerializer = (Jerializer<T>) registry.getJerializer(domain.getClass());
+    public static <V> JObject domainToJObject(JerializerRegistry registry,
+                                              V domain) throws JerializerException {
+        Jerializer<JThingContext, JThing, V> jerializer = registry.getJerializer(domain.getClass());
         return domainToJObject(registry, jerializer, domain);
     }
 
@@ -40,14 +45,14 @@ public class JerializerUtils {
         return sb.toString();
     }
 
-    public static <T> String domainToJson(JerializerRegistry registry,
-                                          Jerializer<T> jerializer, T domain) throws JerializerException, VisitException {
+    public static <V> String domainToJson(JerializerRegistry registry,
+                                          Jerializer<JThingContext, JThing, V> jerializer, V domain) throws JerializerException, VisitException {
         return jobjectToJson(domainToJObject(registry, jerializer, domain));
     }
 
-    public static <T> String domainToJson(JerializerRegistry registry,
-                                          T domain) throws JerializerException, VisitException {
-        Jerializer<T> jerializer = registry.getJerializer((Class<T>)domain.getClass());
+    public static <V> String domainToJson(JerializerRegistry registry,
+                                          V domain) throws JerializerException, VisitException {
+        Jerializer<JThingContext, JThing, V> jerializer = registry.getJerializer(domain.getClass());
         return jobjectToJson(domainToJObject(registry, jerializer, domain));
     }
 
