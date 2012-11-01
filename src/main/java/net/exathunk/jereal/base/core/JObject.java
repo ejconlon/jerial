@@ -1,8 +1,11 @@
 package net.exathunk.jereal.base.core;
 
+import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.MapSequence;
 import net.exathunk.jereal.base.functional.Maybe;
+import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.functional.Sequence;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -85,5 +88,15 @@ public class JObject implements JMutableCollection<String, JThing> {
             entry.getValue().acceptTyped(path.cons(PathPart.key(entry.getKey())), visitor);
         }
         visitor.visitObjectEnd(path, this);
+    }
+
+    @Override
+    public <A extends PushableContext<A, B>, B> Writable<B> acceptDSL(DSL<A, B> dsl) {
+        ObjectDSL<A, B> objectDSL = dsl.seeObject();
+        for (Map.Entry<String, JThing> entry : seq()) {
+            Writable<B> writable = entry.getValue().acceptDSL(dsl);
+            objectDSL.seeWritable(entry.getKey(), new RefImpl<Writable<B>>(writable));
+        }
+        return objectDSL;
     }
 }

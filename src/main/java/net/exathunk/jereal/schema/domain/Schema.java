@@ -1,7 +1,6 @@
 package net.exathunk.jereal.schema.domain;
 
 import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.functional.Either;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 

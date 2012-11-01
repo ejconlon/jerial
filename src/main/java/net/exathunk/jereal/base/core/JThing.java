@@ -1,8 +1,10 @@
 package net.exathunk.jereal.base.core;
 
-import net.exathunk.jereal.base.dsl.ObjectDSL;
+import net.exathunk.jereal.base.dsl.DSL;
 import net.exathunk.jereal.base.dsl.PushableContext;
+import net.exathunk.jereal.base.dsl.Writable;
 import net.exathunk.jereal.base.functional.*;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 import java.util.Map;
@@ -10,12 +12,12 @@ import java.util.Map;
 /**
  * charolastra 10/28/12 3:22 AM
  */
-public class JThing implements TypedVisitable, UntypedVisitable {
+public class JThing implements UntypedVisitable, Visitable {
 
     private final Model model;
-    private final TypedVisitable value;
+    private final Visitable value;
 
-    private JThing(Model model, TypedVisitable value) {
+    private JThing(Model model, Visitable value) {
         this.model = model;
         this.value = value;
         assert model != null;
@@ -178,6 +180,11 @@ public class JThing implements TypedVisitable, UntypedVisitable {
                 }
             }
         }
+    }
+
+    @Override
+    public <A extends PushableContext<A, B>, B> Writable<B> acceptDSL(DSL<A, B> dsl) {
+        return value.acceptDSL(dsl);
     }
 
     @Override

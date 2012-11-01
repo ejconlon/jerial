@@ -16,6 +16,16 @@ public class RefMap<K, V> implements Iterable<Map.Entry<K, Ref<V>>> {
         map = new TreeMap<K, Ref<V>>();
     }
 
+    public boolean containsKey(K key) {
+        return map.containsKey(key);
+    }
+
+    public V get(K key) {
+        Ref<V> ref = map.get(key);
+        if (ref != null && !ref.isEmptyRef()) return ref.getRef();
+        else return null;
+    }
+
     public void put(K key, Ref<V> value) {
         map.put(key, value);
     }

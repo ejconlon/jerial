@@ -2,7 +2,6 @@ package net.exathunk.jereal.base.builders;
 
 import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.core.PathPart;
-import net.exathunk.jereal.base.util.Logger;
 
 class MapBuilder implements JerialBuilder {
 

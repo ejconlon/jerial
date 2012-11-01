@@ -1,12 +1,10 @@
 package net.exathunk.jereal.base.dsl;
 
-import net.exathunk.jereal.base.core.Model;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.Ref;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * charolastra 10/31/12 1:22 PM
@@ -77,35 +75,35 @@ public class RefMapGroup<T extends PushableContext<T, U>, U> {
         order.add(WModel.WRITABLE);
     }
 
-    public Iterable<Map.Entry<PathPart, Ref<ObjectDSL<T, U>>>> objectIterable() {
+    public RefMap<PathPart, ObjectDSL<T, U>>  getObjects() {
         return objects;
     }
 
-    public Iterable<Map.Entry<PathPart, Ref<ArrayDSL<T, U>>>> arrayIterable() {
+    public RefMap<PathPart, ArrayDSL<T, U>> getArrays() {
         return arrays;
     }
 
-    public Iterable<Map.Entry<PathPart, Ref<String>>> stringIterable() {
+    public RefMap<PathPart, String> getStrings() {
         return strings;
     }
 
-    public Iterable<Map.Entry<PathPart, Ref<Boolean>>> booleanIterable() {
+    public RefMap<PathPart, Boolean> getBooleans() {
         return booleans;
     }
 
-    public Iterable<Map.Entry<PathPart, Ref<Long>>> longIterable() {
+    public RefMap<PathPart, Long> getLongs() {
         return longs;
     }
 
-    public Iterable<Map.Entry<PathPart, Ref<Double>>> doubleIterable() {
+    public RefMap<PathPart, Double> getDoubles() {
         return doubles;
     }
 
-    public Iterable<Map.Entry<PathPart, Ref<Writable<U>>>> writableIterable() {
+    public RefMap<PathPart, Writable<U>> getWritables() {
         return writables;
     }
 
-    public Iterable<WModel> orderIterable() {
+    public List<WModel> getOrders() {
         return order;
     }
 

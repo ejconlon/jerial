@@ -1,7 +1,6 @@
 package net.exathunk.jereal.schema.operators;
 
 import net.exathunk.jereal.base.core.*;
-import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.functional.ResFunc0;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.base.operators.*;

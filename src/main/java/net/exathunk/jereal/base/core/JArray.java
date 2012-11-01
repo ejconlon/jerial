@@ -1,6 +1,11 @@
 package net.exathunk.jereal.base.core;
 
+import net.exathunk.jereal.base.dsl.ArrayDSL;
+import net.exathunk.jereal.base.dsl.DSL;
+import net.exathunk.jereal.base.dsl.PushableContext;
+import net.exathunk.jereal.base.dsl.Writable;
 import net.exathunk.jereal.base.functional.*;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,5 +100,15 @@ public class JArray implements JMutableCollection<Integer, JThing> {
             entry.getValue().acceptTyped(path.cons(PathPart.index(entry.getKey())), visitor);
         }
         visitor.visitArrayEnd(path, this);
+    }
+
+    @Override
+    public <A extends PushableContext<A, B>, B> Writable<B> acceptDSL(DSL<A, B> dsl) {
+        ArrayDSL<A, B> arrayDSL = dsl.seeArray();
+        for (Map.Entry<Integer, JThing> entry : seq()) {
+            Writable<B> writable = entry.getValue().acceptDSL(dsl);
+            arrayDSL.seeWritable(new RefImpl<Writable<B>>(writable));
+        }
+        return arrayDSL;
     }
 }

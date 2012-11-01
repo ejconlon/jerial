@@ -9,7 +9,6 @@ import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

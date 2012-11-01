@@ -1,6 +1,5 @@
 package net.exathunk.jereal.base.operators.converters;
 
-import net.exathunk.jereal.base.core.JString;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.Model;
 import net.exathunk.jereal.base.operators.OperatorException;

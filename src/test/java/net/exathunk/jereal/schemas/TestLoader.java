@@ -1,7 +1,5 @@
 package net.exathunk.jereal.schemas;
 
-import net.exathunk.jereal.base.builders.JerialContext;
-import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerRegistry;

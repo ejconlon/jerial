@@ -1,6 +1,5 @@
 package net.exathunk.jereal.base.dsl;
 
-import net.exathunk.jereal.base.core.Model;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;

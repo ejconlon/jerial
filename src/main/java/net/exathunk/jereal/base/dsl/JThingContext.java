@@ -58,15 +58,15 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
     }
 
     private void writeInner(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ret) {
-        Iterator<Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>>> objectIt = group.objectIterable().iterator();
-        Iterator<Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>>> arrayIt = group.arrayIterable().iterator();
-        Iterator<Map.Entry<PathPart, Ref<String>>> stringIt = group.stringIterable().iterator();
-        Iterator<Map.Entry<PathPart, Ref<Boolean>>> booleanIt = group.booleanIterable().iterator();
-        Iterator<Map.Entry<PathPart, Ref<Long>>> longIt = group.longIterable().iterator();
-        Iterator<Map.Entry<PathPart, Ref<Double>>> doubleIt = group.doubleIterable().iterator();
-        Iterator<Map.Entry<PathPart, Ref<Writable<JThing>>>> writableIt = group.writableIterable().iterator();
+        Iterator<Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>>> objectIt = group.getObjects().iterator();
+        Iterator<Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>>> arrayIt = group.getArrays().iterator();
+        Iterator<Map.Entry<PathPart, Ref<String>>> stringIt = group.getStrings().iterator();
+        Iterator<Map.Entry<PathPart, Ref<Boolean>>> booleanIt = group.getBooleans().iterator();
+        Iterator<Map.Entry<PathPart, Ref<Long>>> longIt = group.getLongs().iterator();
+        Iterator<Map.Entry<PathPart, Ref<Double>>> doubleIt = group.getDoubles().iterator();
+        Iterator<Map.Entry<PathPart, Ref<Writable<JThing>>>> writableIt = group.getWritables().iterator();
 
-        for (RefMapGroup.WModel model : group.orderIterable()) {
+        for (RefMapGroup.WModel model : group.getOrders()) {
             switch (model) {
                 case OBJECT:
                 {

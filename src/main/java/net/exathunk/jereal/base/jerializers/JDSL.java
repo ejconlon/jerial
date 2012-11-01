@@ -1,10 +1,8 @@
 package net.exathunk.jereal.base.jerializers;
 
-import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.Ref;
-import net.exathunk.jereal.schema.domain.Schema;
 
 import java.util.List;
 import java.util.Map;
