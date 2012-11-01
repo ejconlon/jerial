@@ -1,6 +1,7 @@
 package net.exathunk.jereal.base.dsl;
 
 import net.exathunk.jereal.base.core.PathPart;
+import net.exathunk.jereal.base.functional.Cont;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.jerializers.JerializerException;
@@ -65,7 +66,7 @@ public class ArrayDSLImpl<T extends PushableContext<T, U>, U> implements ArrayDS
     }
 
     @Override
-    public void pipe(Ref<U> ref) throws JerializerException {
-        context.writeArray(refMapGroup, ref);
+    public void pipe(Cont<U> cont) throws JerializerException {
+        context.writeArray(refMapGroup, cont);
     }
 }

@@ -110,4 +110,8 @@ public class JArray implements JMutableCollection<Integer, JThing> {
         }
         return arrayDSL;
     }
+
+    public List<JThing> getList() {
+        return array;
+    }
 }

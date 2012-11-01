@@ -4,11 +4,11 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.Path;
 import net.exathunk.jereal.base.core.VisitException;
 import net.exathunk.jereal.base.dsl.*;
-import net.exathunk.jereal.base.functional.Ref;
-import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.functional.ResFunc0;
+import net.exathunk.jereal.base.functional.*;
 import net.exathunk.jereal.base.util.JsonObjectWriter;
 import net.exathunk.jereal.base.util.JsonParser;
+
+import java.util.Map;
 
 /**
  * charolastra 10/27/12 2:49 PM
@@ -25,9 +25,9 @@ public class JerializerUtils {
             }
         });
         Pipeable<JThing> pipeable = jerializer.jerialize(recurser, dsl, domain);
-        Ref<JThing> ref = new RefImpl<JThing>();
-        pipeable.pipe(ref);
-        return ref.getRef();
+        Cont<JThing> cont = new ContSingle<JThing>();
+        pipeable.pipe(cont);
+        return cont.getSingle().getRef();
     }
 
     public static <V> JThing domainToJThing(JerializerRegistry registry,
@@ -47,8 +47,8 @@ public class JerializerUtils {
             }
         });
         Pipeable<JThing> pipeable = jerializer.jerialize(recurser, dsl, domain);
-        Ref<JThing> ref = new RefImpl<JThing>(thing);
-        pipeable.pipe(ref);
+        Cont<JThing> cont = new ContMap<JThing>(new RefImpl<Map<String, JThing>>(thing.rawGetObject().getMap()));
+        pipeable.pipe(cont);
     }
 
     public static String jthingToJson(JThing thing) throws VisitException {

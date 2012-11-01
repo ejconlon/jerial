@@ -98,4 +98,8 @@ public class JObject implements JMutableCollection<String, JThing> {
         }
         return objectDSL;
     }
+
+    public Map<String, JThing> getMap() {
+        return map;
+    }
 }

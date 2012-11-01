@@ -37,7 +37,7 @@ public class SchemaJerializer<T extends PushableContext<T, U>, U> implements Jer
         objectDSL.seeString("fragmentResolution", schema.fragmentResolution);
 
         // Unparsed item
-        objectDSL.seeWritable("default", ref(recurser.seeThing(dsl, schema.defaultz)));
+        //objectDSL.seeWritable("default", ref(recurser.seeThing(dsl, schema.defaultz)));
 
         objectDSL.seeBoolean("required", schema.required);
         objectDSL.seeBoolean("uniqueItems", schema.uniqueItems);

@@ -13,9 +13,13 @@ public class Arr {
     public final Ref<List<Post>> objects;
 
     public Arr(Post... args) {
-        objects = new RefImpl<List<Post>>(new ArrayList<Post>(args.length));
-        for (final Post x : args) {
-            objects.getRef().add(x);
+        if (args.length == 0) {
+            objects = new RefImpl<List<Post>>();
+        } else {
+            objects = new RefImpl<List<Post>>(new ArrayList<Post>(args.length));
+            for (final Post x : args) {
+                objects.getRef().add(x);
+            }
         }
     }
 
@@ -26,9 +30,22 @@ public class Arr {
 
         Arr arr = (Arr) o;
 
-        if (objects != null ? !objects.equals(arr.objects) : arr.objects != null) return false;
-
-        return true;
+        if (objects.isEmptyRef()) {
+            return arr.objects.isEmptyRef();
+        } else if (arr.objects.isEmptyRef()) {
+            return false;
+        } else {
+            if (objects.getRef().size() != arr.objects.getRef().size()) {
+                return false;
+            } else {
+                for (int i = 0; i < objects.getRef().size(); ++i) {
+                    if (!objects.getRef().get(i).equals(arr.objects.getRef().get(i))) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
     }
 
     @Override

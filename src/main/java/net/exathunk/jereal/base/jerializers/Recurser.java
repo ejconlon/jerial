@@ -17,5 +17,5 @@ public interface Recurser<T extends PushableContext<T, U>, U> {
     <V> Pipeable<U> seeCustomMap(DSL<T, U> dsl, Ref<Map<String, V>> domain, Class<V> klass) throws JerializerException;
     <V> Pipeable<U> seeCustomList(DSL<T, U> dsl, Ref<List<V>> domain, Class<V> klass) throws JerializerException;
     //Writable<U> seeSimpleMap(DSL<T, U> dsl, Ref<Map<String, String>> domain);
-    Pipeable<U> seeThing(DSL<T, U> dsl, Ref<JThing> domain);
+    //Pipeable<U> seeThing(DSL<T, U> dsl, Ref<JThing> domain);
 }
