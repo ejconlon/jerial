@@ -8,10 +8,10 @@ import net.exathunk.jereal.base.functional.Ref;
  */
 public interface PushableContext<T extends PushableContext<T, U>, U> {
     T push(PathPart part);
-    U writeObject(RefMapGroup<T, U> group);
-    U writeArray(RefMapGroup<T, U> group);
-    U writeString(Ref<String> value);
-    U writeBoolean(Ref<Boolean> value);
-    U writeLong(Ref<Long> value);
-    U writeDouble(Ref<Double> value);
+    void writeObject(RefMapGroup<T, U> group, Ref<U> ref);
+    void writeArray(RefMapGroup<T, U> group, Ref<U> ref);
+    void writeString(Ref<String> value, Ref<U> ref);
+    void writeBoolean(Ref<Boolean> value, Ref<U> ref);
+    void writeLong(Ref<Long> value, Ref<U> ref);
+    void writeDouble(Ref<Double> value, Ref<U> ref);
 }

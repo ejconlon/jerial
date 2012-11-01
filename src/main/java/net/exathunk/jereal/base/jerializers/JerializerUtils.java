@@ -7,6 +7,8 @@ import net.exathunk.jereal.base.dsl.DSL;
 import net.exathunk.jereal.base.dsl.DSLImpl;
 import net.exathunk.jereal.base.dsl.JThingContext;
 import net.exathunk.jereal.base.dsl.Writable;
+import net.exathunk.jereal.base.functional.Ref;
+import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.functional.ResFunc0;
 import net.exathunk.jereal.base.util.JsonObjectWriter;
 import net.exathunk.jereal.base.util.JsonParser;
@@ -26,7 +28,9 @@ public class JerializerUtils {
             }
         });
         Writable<JThing> writable = jerializer.jerialize(recurser, dsl, domain);
-        return writable.write();
+        Ref<JThing> ref = new RefImpl<JThing>();
+        writable.writeTo(ref);
+        return ref.getRef();
     }
 
     public static <V> JThing domainToJThing(JerializerRegistry registry,

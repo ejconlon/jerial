@@ -2,9 +2,9 @@ package net.exathunk.jereal.base.dsl;
 
 import net.exathunk.jereal.base.builders.JerialContext;
 import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.core.Model;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.Ref;
+import net.exathunk.jereal.base.functional.RefImpl;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -23,41 +23,41 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
         this.context = context;
     }
 
-    public JThing writeObject(RefMapGroup<JThingContext, JThing> group) {
+    public void writeObject(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ref) {
         if (!RefMapGroup.WModel.OBJECT.equals(group.getModel())) {
             throw new IllegalArgumentException("Expected object model: "+group.getModel());
         }
-        return writeInner(group);
+        writeInner(group, ref);
     }
 
-    public JThing writeArray(RefMapGroup<JThingContext, JThing> group) {
+    public void writeArray(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ref) {
         if (!RefMapGroup.WModel.ARRAY.equals(group.getModel())) {
             throw new IllegalArgumentException("Expected array model: "+group.getModel());
         }
-        return writeInner(group);
+        writeInner(group, ref);
     }
 
     @Override
-    public JThing writeString(Ref<String> value) {
-        return JThing.make(value.getRef());
+    public void writeString(Ref<String> value, Ref<JThing> ref) {
+        ref.setRef(JThing.make(value.getRef()));
     }
 
     @Override
-    public JThing writeBoolean(Ref<Boolean> value) {
-        return JThing.make(value.getRef());
+    public void writeBoolean(Ref<Boolean> value, Ref<JThing> ref) {
+        ref.setRef(JThing.make(value.getRef()));
     }
 
     @Override
-    public JThing writeLong(Ref<Long> value) {
-        return JThing.make(value.getRef());
+    public void writeLong(Ref<Long> value, Ref<JThing> ref) {
+        ref.setRef(JThing.make(value.getRef()));
     }
 
     @Override
-    public JThing writeDouble(Ref<Double> value) {
-        return JThing.make(value.getRef());
+    public void writeDouble(Ref<Double> value, Ref<JThing> ref) {
+        ref.setRef(JThing.make(value.getRef()));
     }
 
-    private JThing writeInner(RefMapGroup<JThingContext, JThing> group) {
+    private void writeInner(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ret) {
         Iterator<Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>>> objectIt = group.objectIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>>> arrayIt = group.arrayIterable().iterator();
         Iterator<Map.Entry<PathPart, Ref<String>>> stringIt = group.stringIterable().iterator();
@@ -73,8 +73,9 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                     if (!objectIt.hasNext()) continue;
                     Map.Entry<PathPart, Ref<ObjectDSL<JThingContext, JThing>>> entry = objectIt.next();
                     if (entry.getValue().isEmptyRef()) break;
-                    JThing walked = entry.getValue().getRef().write();
-                    context.builder.addThing(entry.getKey(), walked);
+                    Ref<JThing> ref = new RefImpl<JThing>();
+                    entry.getValue().getRef().writeTo(ref);
+                    context.builder.addThing(entry.getKey(), ref.getRef());
                     break;
                 }
                 case ARRAY:
@@ -82,8 +83,9 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                     if (!arrayIt.hasNext()) continue;
                     Map.Entry<PathPart, Ref<ArrayDSL<JThingContext, JThing>>> entry = arrayIt.next();
                     if (entry.getValue().isEmptyRef()) break;
-                    JThing walked = entry.getValue().getRef().write();
-                    context.builder.addThing(entry.getKey(), walked);
+                    Ref<JThing> ref = new RefImpl<JThing>();
+                    entry.getValue().getRef().writeTo(ref);
+                    context.builder.addThing(entry.getKey(), ref.getRef());
                     break;
                 }
                 case STRING:
@@ -123,9 +125,9 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                     if (!writableIt.hasNext()) continue;
                     Map.Entry<PathPart, Ref<Writable<JThing>>> entry = writableIt.next();
                     if (entry.getValue().isEmptyRef()) break;
-                    Writable<JThing> writable = entry.getValue().getRef();
-                    JThing walked = writable.write();
-                    context.builder.addThing(entry.getKey(), walked);
+                    Ref<JThing> ref = new RefImpl<JThing>();
+                    entry.getValue().getRef().writeTo(ref);
+                    context.builder.addThing(entry.getKey(), ref.getRef());
                     break;
                 }
                 default:
@@ -134,9 +136,9 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
         }
 
         if (RefMapGroup.WModel.OBJECT.equals(group.getModel())) {
-            return JThing.make(context.builder.buildObject());
+            ret.setRef(JThing.make(context.builder.buildObject()));
         } else if (RefMapGroup.WModel.ARRAY.equals(group.getModel())) {
-            return JThing.make(context.builder.buildArray());
+            ret.setRef(JThing.make(context.builder.buildArray()));
         } else {
             throw new IllegalArgumentException("Invalid model: "+group.getModel());
         }

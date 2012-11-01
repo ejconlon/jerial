@@ -65,7 +65,7 @@ public class ArrayDSLImpl<T extends PushableContext<T, U>, U> implements ArrayDS
     }
 
     @Override
-    public U write() {
-        return context.writeArray(refMapGroup);
+    public void writeTo(Ref<U> ref) {
+        context.writeArray(refMapGroup, ref);
     }
 }

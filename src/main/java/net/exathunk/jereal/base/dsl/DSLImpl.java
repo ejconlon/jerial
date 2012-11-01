@@ -25,22 +25,42 @@ public class DSLImpl<T extends PushableContext<T, U>, U> implements DSL<T, U> {
     }
 
     @Override
-    public Writable<U> seeString(Ref<String> value) {
-        return new WritableImpl<U>(contextFactory.runResFunc().writeString(value));
+    public Writable<U> seeString(final Ref<String> value) {
+        return new Writable<U>() {
+            @Override
+            public void writeTo(Ref<U> ref) {
+                contextFactory.runResFunc().writeString(value, ref);
+            }
+        };
     }
 
     @Override
-    public Writable<U> seeBoolean(Ref<Boolean> value) {
-        return new WritableImpl<U>(contextFactory.runResFunc().writeBoolean(value));
+    public Writable<U> seeBoolean(final Ref<Boolean> value) {
+        return new Writable<U>() {
+            @Override
+            public void writeTo(Ref<U> ref) {
+                contextFactory.runResFunc().writeBoolean(value, ref);
+            }
+        };
     }
 
     @Override
-    public Writable<U> seeLong(Ref<Long> value) {
-        return new WritableImpl<U>(contextFactory.runResFunc().writeLong(value));
+    public Writable<U> seeLong(final Ref<Long> value) {
+        return new Writable<U>() {
+            @Override
+            public void writeTo(Ref<U> ref) {
+                contextFactory.runResFunc().writeLong(value, ref);
+            }
+        };
     }
 
     @Override
-    public Writable<U> seeDouble(Ref<Double> value) {
-        return new WritableImpl<U>(contextFactory.runResFunc().writeDouble(value));
+    public Writable<U> seeDouble(final Ref<Double> value) {
+        return new Writable<U>() {
+            @Override
+            public void writeTo(Ref<U> ref) {
+                contextFactory.runResFunc().writeDouble(value, ref);
+            }
+        };
     }
 }

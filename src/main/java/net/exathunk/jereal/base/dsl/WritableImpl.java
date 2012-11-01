@@ -1,5 +1,7 @@
 package net.exathunk.jereal.base.dsl;
 
+import net.exathunk.jereal.base.functional.Ref;
+
 /**
  * charolastra 10/31/12 7:25 PM
  */
@@ -11,7 +13,7 @@ public class WritableImpl<U> implements Writable<U> {
     }
 
     @Override
-    public U write() {
-        return value;
+    public void writeTo(Ref<U> ref) {
+        ref.setRef(value);
     }
 }

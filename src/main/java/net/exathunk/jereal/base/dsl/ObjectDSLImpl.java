@@ -64,7 +64,7 @@ public class ObjectDSLImpl<T extends PushableContext<T, U>, U> implements Object
     }
 
     @Override
-    public U write() {
-        return context.writeObject(refMapGroup);
+    public void writeTo(Ref<U> ref) {
+        context.writeObject(refMapGroup, ref);
     }
 }
