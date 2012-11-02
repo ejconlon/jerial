@@ -31,12 +31,12 @@ public class JThingCont implements Cont<JThing> {
 
     @Override
     public boolean isMap() {
-        return !wrapped.isEmptyRef() && wrapped.getRef().isObject();
+        return wrapped.isEmptyRef() || wrapped.getRef().isObject();
     }
 
     @Override
     public boolean isList() {
-        return !wrapped.isEmptyRef() && wrapped.getRef().isArray();
+        return wrapped.isEmptyRef() || wrapped.getRef().isArray();
     }
 
     @Override
@@ -86,14 +86,11 @@ public class JThingCont implements Cont<JThing> {
 
     @Override
     public void setCont(Cont<JThing> cont) {
-        if (cont.isMap()) {
-            if (cont.getMap().isEmptyRef()) return;
+        if (cont.isMap() && !cont.getMap().isEmptyRef()) {
             getMap().setRef(cont.getMap().getRef());
-        } else if (cont.isList()) {
-            if (cont.getList().isEmptyRef()) return;
+        } else if (cont.isList() && !cont.getList().isEmptyRef()) {
             getList().setRef(cont.getList().getRef());
-        } else if (cont.isSingle()) {
-            if (cont.getSingle().isEmptyRef()) return;
+        } else if (cont.isSingle() && !cont.getSingle().isEmptyRef()) {
             getSingle().setRef(cont.getSingle().getRef());
         }
     }

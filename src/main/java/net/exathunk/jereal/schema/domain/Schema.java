@@ -4,10 +4,8 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * charolastra 10/27/12 1:45 PM
@@ -56,16 +54,16 @@ public class Schema {
     public final Ref<SchemaRef> additionalProperties_SchemaRef = new RefImpl<SchemaRef>();
     public final Ref<Boolean> additionalProperties_Boolean = new RefImpl<Boolean>();
 
-    public final Ref<List<SchemaRef>> type_SchemaRef = new RefImpl<List<SchemaRef>>(new ArrayList<SchemaRef>());
+    public final Ref<List<SchemaRef>> type_SchemaRef = new RefImpl<List<SchemaRef>>();
     public final Ref<String> type_String = new RefImpl<String>();
 
     public final Ref<SchemaRef> items = new RefImpl<SchemaRef>();
 
     public final Ref<SchemaRef> extendz = new RefImpl<SchemaRef>();
 
-    public final Ref<Map<String, SchemaRef>> properties = new RefImpl<Map<String, SchemaRef>>(new TreeMap<String, SchemaRef>());
-    public final Ref<List<Link>> links = new RefImpl<List<Link>>(new ArrayList<Link>());
-    public final Ref<Map<String, String>> dependencies = new RefImpl<Map<String, String>>(new TreeMap<String, String>());
+    public final Ref<Map<String, SchemaRef>> properties = new RefImpl<Map<String, SchemaRef>>();
+    public final Ref<List<Link>> links = new RefImpl<List<Link>>();
+    public final Ref<Map<String, String>> dependencies = new RefImpl<Map<String, String>>();
 
     @Override
     public String toString() {

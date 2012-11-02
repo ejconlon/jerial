@@ -1,5 +1,6 @@
 package net.exathunk.jereal.base.dsl;
 
+import net.exathunk.jereal.base.core.Model;
 import net.exathunk.jereal.base.core.PathPart;
 import net.exathunk.jereal.base.functional.Pair;
 import net.exathunk.jereal.base.functional.Ref;
@@ -12,7 +13,25 @@ import java.util.*;
 public class RefMapGroup<T extends PushableContext<T, U>, U> {
 
     public static enum WModel {
-        OBJECT, ARRAY, STRING, BOOLEAN, LONG, DOUBLE, WRITABLE
+        OBJECT, ARRAY, STRING, BOOLEAN, LONG, DOUBLE, WRITABLE;
+
+        public static WModel fromModel(Model model) {
+            switch (model) {
+                case OBJECT:
+                    return WModel.OBJECT;
+                case ARRAY:
+                    return WModel.ARRAY;
+                case STRING:
+                    return WModel.STRING;
+                case BOOLEAN:
+                    return WModel.BOOLEAN;
+                case LONG:
+                    return WModel.LONG;
+                case DOUBLE:
+                    return WModel.DOUBLE;
+            }
+            throw new IllegalArgumentException("Unmapped model: "+model);
+        }
     }
 
     private final RefMap<PathPart, String> strings = new RefMap<PathPart, String>();
@@ -23,7 +42,7 @@ public class RefMapGroup<T extends PushableContext<T, U>, U> {
     private final RefMap<PathPart, ArrayDSL<T, U>> arrays = new RefMap<PathPart, ArrayDSL<T, U>>();
     private final RefMap<PathPart, Pipeable<U>> writables = new RefMap<PathPart, Pipeable<U>>();
     private final List<Map.Entry<PathPart, WModel>> order = new ArrayList<Map.Entry<PathPart, WModel>>();
-    private final Map<PathPart, WModel> parts = new TreeMap<PathPart, WModel>();
+    private final Map<PathPart, Set<WModel>> parts = new TreeMap<PathPart, Set<WModel>>();
     private final WModel model;
 
     public RefMapGroup(WModel model) {
@@ -34,15 +53,20 @@ public class RefMapGroup<T extends PushableContext<T, U>, U> {
         return model;
     }
 
-    public WModel getModel(PathPart part) {
+    public Set<WModel> getModels(PathPart part) {
         return parts.get(part);
     }
 
     private void add(PathPart part, WModel model) {
-        if (parts.containsKey(part)) {
-            throw new IllegalStateException("TODO: Cannot repeat keys: "+part+" "+parts);
+        Set<WModel> models = parts.get(part);
+        if (models == null) {
+            models = new TreeSet<WModel>();
+            parts.put(part, models);
         }
-        parts.put(part, model);
+        if (models.contains(model)) {
+            throw new IllegalArgumentException("Cannot add duplicate key: "+part+" "+model);
+        }
+        models.add(model);
         order.add(new Pair<PathPart, WModel>(part, model));
     }
 

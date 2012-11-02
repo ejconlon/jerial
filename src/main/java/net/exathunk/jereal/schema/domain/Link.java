@@ -4,7 +4,6 @@ import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * charolastra 10/27/12 1:45 PM
@@ -16,7 +15,7 @@ public class Link {
     public final Ref<String> targetSchema = new RefImpl<String>();
     public final Ref<String> enctype = new RefImpl<String>();
     public final Ref<String> method = new RefImpl<String>();
-    public final Ref<Map<String, SchemaRef>> properties = new RefImpl<Map<String, SchemaRef>>(new TreeMap<String, SchemaRef>());
+    public final Ref<Map<String, SchemaRef>> properties = new RefImpl<Map<String, SchemaRef>>();
 
     @Override
     public String toString() {

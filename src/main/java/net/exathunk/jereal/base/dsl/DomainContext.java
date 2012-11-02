@@ -6,6 +6,7 @@ import net.exathunk.jereal.base.jerializers.JerializerException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * charolastra 10/31/12 9:09 PM
@@ -18,8 +19,17 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
     }
 
     private void writeInner(RefMapGroup<DomainContext, JThing> group, PathPart part, JThing value) throws JerializerException {
-        RefMapGroup.WModel model = group.getModel(part);
-        if (model == null) return;
+        Set<RefMapGroup.WModel> models = group.getModels(part);
+        if (models == null) return;
+        final RefMapGroup.WModel model;
+        if (models.size() == 1) {
+            model = models.iterator().next();
+        } else {
+            RefMapGroup.WModel test = RefMapGroup.WModel.fromModel(value.getModel());
+            if (models.contains(test)) model = test;
+            else if (models.contains(RefMapGroup.WModel.WRITABLE)) model = RefMapGroup.WModel.WRITABLE;
+            else throw new IllegalArgumentException("Bad models: "+test+" "+models);
+        }
         switch (model) {
             case OBJECT:
             {
