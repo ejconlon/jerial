@@ -1,8 +1,6 @@
 package net.exathunk.jereal.base.core;
 
-import net.exathunk.jereal.base.dsl.DSL;
-import net.exathunk.jereal.base.dsl.Pipeable;
-import net.exathunk.jereal.base.dsl.PushableContext;
+import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.*;
 
 import java.util.List;
@@ -13,18 +11,15 @@ import java.util.Map;
  */
 public class JThing implements UntypedVisitable, Visitable {
 
-    private final Model model;
     private final Visitable value;
 
-    private JThing(Model model, Visitable value) {
-        this.model = model;
+    private JThing(Visitable value) {
         this.value = value;
-        assert model != null;
         assert value != null;
     }
 
     public Maybe<JObject> getObject() {
-        if (Model.OBJECT.equals(model)) {
+        if (Model.OBJECT.equals(getModel())) {
             return Maybe.just((JObject) value);
         } else {
             return Maybe.nothing();
@@ -32,7 +27,7 @@ public class JThing implements UntypedVisitable, Visitable {
     }
 
     public Maybe<JArray> getArray() {
-        if (Model.ARRAY.equals(model)) {
+        if (Model.ARRAY.equals(getModel())) {
             return Maybe.just((JArray) value);
         } else {
             return Maybe.nothing();
@@ -40,14 +35,14 @@ public class JThing implements UntypedVisitable, Visitable {
     }
 
     public Maybe<JString> getString() {
-        if (Model.STRING.equals(model)) {
+        if (Model.STRING.equals(getModel())) {
             return Maybe.just((JString) value);
         } else {
             return Maybe.nothing();
         }
     }
     public Maybe<JBoolean> getBoolean() {
-        if (Model.BOOLEAN.equals(model)) {
+        if (Model.BOOLEAN.equals(getModel())) {
             return Maybe.just((JBoolean) value);
         } else {
             return Maybe.nothing();
@@ -55,7 +50,7 @@ public class JThing implements UntypedVisitable, Visitable {
     }
 
     public Maybe<JLong> getLong() {
-        if (Model.LONG.equals(model)) {
+        if (Model.LONG.equals(getModel())) {
             return Maybe.just((JLong) value);
         } else {
             return Maybe.nothing();
@@ -63,7 +58,7 @@ public class JThing implements UntypedVisitable, Visitable {
     }
 
     public Maybe<JDouble> getDouble() {
-        if (Model.DOUBLE.equals(model)) {
+        if (Model.DOUBLE.equals(getModel())) {
             return Maybe.just((JDouble) value);
         } else {
             return Maybe.nothing();
@@ -78,86 +73,80 @@ public class JThing implements UntypedVisitable, Visitable {
     public JDouble  rawGetDouble()  { return (JDouble) value; }
 
     public boolean isObject() {
-        return (Model.OBJECT.equals(model));
+        return (Model.OBJECT.equals(getModel()));
     }
 
     public boolean isArray() {
-        return (Model.ARRAY.equals(model));
+        return (Model.ARRAY.equals(getModel()));
     }
 
     public boolean isString() {
-        return (Model.STRING.equals(model));
+        return (Model.STRING.equals(getModel()));
     }
 
     public boolean isBoolean() {
-        return (Model.BOOLEAN.equals(model));
+        return (Model.BOOLEAN.equals(getModel()));
     }
 
     public boolean isLong() {
-        return (Model.LONG.equals(model));
+        return (Model.LONG.equals(getModel()));
     }
 
     public boolean isDouble() {
-        return (Model.DOUBLE.equals(model));
+        return (Model.DOUBLE.equals(getModel()));
     }
 
     public Model getModel() {
-        return model;
+        return value.getModel();
     }
 
-    public static JThing make(JObject object) {
-        return new JThing(Model.OBJECT, object);
+    public static JThing make(JObject visitable) {
+        return new JThing(visitable);
     }
-
-    public static JThing make(JArray array) {
-        return new JThing(Model.ARRAY, array);
+    public static JThing make(JArray visitable) {
+        return new JThing(visitable);
     }
-
-    public static JThing make(JString scalar) {
-        return new JThing(Model.STRING, scalar);
+    public static JThing make(JString visitable) {
+        return new JThing(visitable);
     }
-
-    public static JThing make(JBoolean scalar) {
-        return new JThing(Model.BOOLEAN, scalar);
+    public static JThing make(JBoolean visitable) {
+        return new JThing(visitable);
     }
-
-    public static JThing make(JLong scalar) {
-        return new JThing(Model.LONG, scalar);
+    public static JThing make(JDouble visitable) {
+        return new JThing(visitable);
     }
-
-    public static JThing make(JDouble scalar) {
-        return new JThing(Model.DOUBLE, scalar);
+    public static JThing make(JLong visitable) {
+        return new JThing(visitable);
     }
 
     public static JThing make(Map<String, JThing> object) {
-        return new JThing(Model.OBJECT, new JObject(object));
+        return new JThing(new JObject(object));
     }
 
     public static JThing make(List<JThing> array) {
-        return new JThing(Model.ARRAY, new JArray(array));
+        return new JThing(new JArray(array));
     }
 
     public static JThing make(String scalar) {
-        return new JThing(Model.STRING, new JString(scalar));
+        return new JThing(new JString(scalar));
     }
 
     public static JThing make(Boolean scalar) {
-        return new JThing(Model.BOOLEAN, new JBoolean(scalar));
+        return new JThing(new JBoolean(scalar));
     }
 
     public static JThing make(Long scalar) {
-        return new JThing(Model.LONG, new JLong(scalar));
+        return new JThing(new JLong(scalar));
     }
 
     public static JThing make(Double scalar) {
-        return new JThing(Model.DOUBLE, new JDouble(scalar));
+        return new JThing(new JDouble(scalar));
     }
 
     @Override
     public String toString() {
         return "JThing{" +
-                "model=" + model +
-                ", value=" + value +
+                "value=" + value +
                 '}';
     }
 
@@ -182,7 +171,7 @@ public class JThing implements UntypedVisitable, Visitable {
     }
 
     @Override
-    public <A extends PushableContext<A, B>, B> Pipeable<B> acceptDSL(DSL<A, B> dsl) {
+    public <A extends PushableContext<A, B>, B extends Questionable> Pipeable<B> acceptDSL(DSL<A, B> dsl) {
         return value.acceptDSL(dsl);
     }
 
@@ -194,15 +183,64 @@ public class JThing implements UntypedVisitable, Visitable {
         JThing entries = (JThing) o;
 
         if (!value.equals(entries.value)) return false;
-        if (model != entries.model) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = model.hashCode();
-        result = 31 * result + value.hashCode();
+        int result = value.hashCode();
         return result;
+    }
+
+    @Override
+    public JThing toJThing() {
+        return this;
+    }
+
+    @Override
+    public boolean hasMapSpec() {
+        return value.hasMapSpec();
+    }
+
+    @Override
+    public Map<String, ? extends Speclike> getMapSpec() {
+        return value.getMapSpec();
+    }
+
+    @Override
+    public boolean hasListSpec() {
+        return value.hasListSpec();
+    }
+
+    @Override
+    public List<? extends Speclike> getListSpec() {
+        return value.getListSpec();
+    }
+
+    @Override
+    public Speclike makeSpec() {
+        return this;
+    }
+
+    public static JThing fromSpec(Speclike spec) {
+        switch (spec.getModel()) {
+            case OBJECT:
+                assert spec.hasMapSpec();
+                return JThing.make(JObject.fromSpec(spec.getMapSpec()));
+            case ARRAY:
+                assert spec.hasListSpec();
+                return JThing.make(JArray.fromSpec(spec.getListSpec()));
+            case STRING:
+                return JThing.make(new JString());
+            case BOOLEAN:
+                return JThing.make(new JBoolean());
+            case LONG:
+                return JThing.make(new JLong());
+            case DOUBLE:
+                return JThing.make(new JDouble());
+            default:
+                throw new IllegalArgumentException("Unhandled model: "+spec.getModel());
+        }
     }
 }

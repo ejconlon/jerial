@@ -1,9 +1,6 @@
 package net.exathunk.jereal.schema.jerializers;
 
-import net.exathunk.jereal.base.dsl.DSL;
-import net.exathunk.jereal.base.dsl.ObjectDSL;
-import net.exathunk.jereal.base.dsl.Pipeable;
-import net.exathunk.jereal.base.dsl.PushableContext;
+import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.jerializers.*;
@@ -13,12 +10,12 @@ import net.exathunk.jereal.schema.domain.SchemaRef;
 /**
  * charolastra 10/27/12 5:50 PM
  */
-public class LinkJerializer<T extends PushableContext<T, U>, U> implements Jerializer<T, U, Link> {
+public class LinkJerializer<T extends PushableContext<T, U>, U extends Questionable> implements Jerializer<T, U, Link> {
 
     private static <V> Ref<V> ref(V v) { return new RefImpl<V>(v); }
 
     @Override
-    public Link prototype() {
+    public Link prototype(Speclike spec) {
         return new Link();
     }
 

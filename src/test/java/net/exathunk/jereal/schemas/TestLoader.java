@@ -52,7 +52,7 @@ public class TestLoader {
         //        "hyper-schema", "interfaces", "json-ref", "schema");
 
         List<String> names = Arrays.asList(
-                "address"
+                "address", "calendar", "card", "geo", "hyper-schema"
         );
 
         final JerializerRegistry registry =

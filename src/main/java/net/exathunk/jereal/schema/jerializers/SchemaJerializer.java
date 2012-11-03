@@ -1,9 +1,7 @@
 package net.exathunk.jereal.schema.jerializers;
 
-import net.exathunk.jereal.base.dsl.DSL;
-import net.exathunk.jereal.base.dsl.ObjectDSL;
-import net.exathunk.jereal.base.dsl.Pipeable;
-import net.exathunk.jereal.base.dsl.PushableContext;
+import net.exathunk.jereal.base.core.JThing;
+import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.jerializers.*;
@@ -14,12 +12,12 @@ import net.exathunk.jereal.schema.domain.SchemaRef;
 /**
  * charolastra 10/27/12 3:06 PM
  */
-public class SchemaJerializer<T extends PushableContext<T, U>, U> implements Jerializer<T, U, Schema> {
+public class SchemaJerializer<T extends PushableContext<T, U>, U extends Questionable> implements Jerializer<T, U, Schema> {
 
     private static <V> Ref<V> ref(V v) { return new RefImpl<V>(v); }
 
     @Override
-    public Schema prototype() {
+    public Schema prototype(Speclike spec) {
         return new Schema();
     }
 
@@ -37,7 +35,7 @@ public class SchemaJerializer<T extends PushableContext<T, U>, U> implements Jer
         objectDSL.seeString("fragmentResolution", schema.fragmentResolution);
 
         // Unparsed item
-        //objectDSL.seeWritable("default", ref(recurser.seeThing(dsl, schema.defaultz)));
+        objectDSL.seeWritable("default", ref(recurser.seeThing(dsl, schema.defaultz)));
 
         objectDSL.seeBoolean("required", schema.required);
         objectDSL.seeBoolean("uniqueItems", schema.uniqueItems);
@@ -57,7 +55,7 @@ public class SchemaJerializer<T extends PushableContext<T, U>, U> implements Jer
 
         objectDSL.seeWritable("properties", ref(recurser.seeCustomMap(dsl, schema.properties, SchemaRef.class)));
 
-        //objectDSL.seeWritable("dependencies", ref(recurser.seeSimpleMap(dsl, schema.dependencies)));
+        objectDSL.seeWritable("dependencies", ref(recurser.seeSimpleMap(dsl, schema.dependencies)));
 
         objectDSL.seeWritable("links", ref(recurser.seeCustomList(dsl, schema.links, Link.class)));
 

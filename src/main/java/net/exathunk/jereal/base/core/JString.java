@@ -1,13 +1,14 @@
 package net.exathunk.jereal.base.core;
 
-import net.exathunk.jereal.base.dsl.DSL;
-import net.exathunk.jereal.base.dsl.Pipeable;
-import net.exathunk.jereal.base.dsl.PushableContext;
+import net.exathunk.jereal.base.dsl.*;
 
 /**
  * charolastra 10/27/12 11:56 PM
  */
 public class JString extends JMutableScalarImpl<String> {
+
+    public JString() { super(); }
+
     public JString(String scalar) {
         super(scalar);
     }
@@ -18,7 +19,17 @@ public class JString extends JMutableScalarImpl<String> {
     }
 
     @Override
-    public <A extends PushableContext<A, B>, B> Pipeable<B> acceptDSL(DSL<A, B> dsl) {
+    public <A extends PushableContext<A, B>, B extends Questionable> Pipeable<B> acceptDSL(DSL<A, B> dsl) {
         return dsl.seeString(this);
+    }
+
+    @Override
+    public Model getModel() {
+        return Model.STRING;
+    }
+
+    @Override
+    public JThing toJThing() {
+        return JThing.make(this);
     }
 }

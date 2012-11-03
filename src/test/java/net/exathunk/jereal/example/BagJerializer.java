@@ -1,9 +1,6 @@
 package net.exathunk.jereal.example;
 
-import net.exathunk.jereal.base.dsl.DSL;
-import net.exathunk.jereal.base.dsl.ObjectDSL;
-import net.exathunk.jereal.base.dsl.Pipeable;
-import net.exathunk.jereal.base.dsl.PushableContext;
+import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.jerializers.*;
@@ -11,12 +8,12 @@ import net.exathunk.jereal.base.jerializers.*;
 /**
  * charolastra 10/23/12 9:07 PM
  */
-public class BagJerializer<T extends PushableContext<T, U>, U> implements Jerializer<T, U, Bag> {
+public class BagJerializer<T extends PushableContext<T, U>, U extends Questionable> implements Jerializer<T, U, Bag> {
 
     private static <V> Ref<V> ref(V v) { return new RefImpl<V>(v); }
 
     @Override
-    public Bag prototype() {
+    public Bag prototype(Speclike spec) {
         return new Bag();
     }
 

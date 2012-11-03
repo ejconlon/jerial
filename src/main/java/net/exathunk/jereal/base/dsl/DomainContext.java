@@ -34,13 +34,13 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
             case OBJECT:
             {
                 Ref<ObjectDSL<DomainContext, JThing>> sink = group.getObjects().get(part);
-                if (sink != null) sink.getRef().pipe(new JThingCont(new RefImpl<JThing>(value)));
+                if (sink != null) sink.getRef().pipe(new RefImpl<JThing>(value));
                 break;
             }
             case ARRAY:
             {
                 Ref<ArrayDSL<DomainContext, JThing>> sink = group.getArrays().get(part);
-                if (sink != null) sink.getRef().pipe(new JThingCont(new RefImpl<JThing>(value)));
+                if (sink != null) sink.getRef().pipe(new RefImpl<JThing>(value));
                 break;
             }
             case STRING:
@@ -70,8 +70,7 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
             case WRITABLE:
             {
                 Ref<Pipeable<JThing>> sink = group.getWritables().get(part);
-                final Cont<JThing> cont = new JThingCont(new RefImpl<JThing>(value));
-                if (sink != null) sink.getRef().pipe(cont);
+                if (sink != null) sink.getRef().pipe(new RefImpl<JThing>(value));
                 break;
             }
             default:
@@ -80,9 +79,9 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
     }
 
     @Override
-    public void writeObject(RefMapGroup<DomainContext, JThing> group, Cont<JThing> cont) throws JerializerException{
-        final Map<String, JThing> object = cont.getMap().getRef();
-        for (Map.Entry<String, JThing> entry : object.entrySet()) {
+    public void writeObject(RefMapGroup<DomainContext, JThing> group, Ref<JThing> ref) throws JerializerException{
+        final JObject object = ref.getRef().rawGetObject();
+        for (Map.Entry<String, JThing> entry : object.seq()) {
             final PathPart part = PathPart.key(entry.getKey());
             final JThing value = entry.getValue();
             writeInner(group, part, value);
@@ -90,13 +89,11 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
     }
 
     @Override
-    public void writeArray(RefMapGroup<DomainContext, JThing> group, Cont<JThing> cont) throws JerializerException{
-        final List<JThing> array = cont.getList().getRef();
-        int index = 0;
-        for (final JThing value : array) {
-            final PathPart part = PathPart.index(index);
-            writeInner(group, part, value);
-            index += 1;
+    public void writeArray(RefMapGroup<DomainContext, JThing> group, Ref<JThing> ref) throws JerializerException{
+        final JArray array = ref.getRef().rawGetArray();
+        for (Map.Entry<Integer, JThing> entry : array.seq()) {
+            final PathPart part = PathPart.index(entry.getKey());
+            writeInner(group, part, entry.getValue());
         }
     }
 

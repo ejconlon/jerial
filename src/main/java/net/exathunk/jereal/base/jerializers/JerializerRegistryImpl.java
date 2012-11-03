@@ -1,6 +1,7 @@
 package net.exathunk.jereal.base.jerializers;
 
 import net.exathunk.jereal.base.dsl.PushableContext;
+import net.exathunk.jereal.base.dsl.Questionable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +9,7 @@ import java.util.Map;
 /**
  * charolastra 10/27/12 3:12 PM
  */
-public class JerializerRegistryImpl<T extends PushableContext<T, U>, U> implements JerializerRegistry<T, U> {
+public class JerializerRegistryImpl<T extends PushableContext<T, U>, U extends Questionable> implements JerializerRegistry<T, U> {
     private final Map<Class, Jerializer> registry = new HashMap<Class, Jerializer>();
 
     public <V> void addJerializer(Class<T> key, Jerializer<T, U, V> value) {

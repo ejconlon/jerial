@@ -25,9 +25,9 @@ public class JerializerUtils {
             }
         });
         Pipeable<JThing> pipeable = jerializer.jerialize(recurser, dsl, domain);
-        Cont<JThing> cont = new ContSingle<JThing>();
-        pipeable.pipe(cont);
-        return cont.getSingle().getRef();
+        Ref<JThing> ref = new RefImpl<JThing>();
+        pipeable.pipe(ref);
+        return ref.getRef();
     }
 
     public static <V> JThing domainToJThing(JerializerRegistry registry,
@@ -47,8 +47,8 @@ public class JerializerUtils {
             }
         });
         Pipeable<JThing> pipeable = jerializer.jerialize(recurser, dsl, domain);
-        Cont<JThing> cont = new ContMap<JThing>(new RefImpl<Map<String, JThing>>(thing.rawGetObject().getMap()));
-        pipeable.pipe(cont);
+        Ref<JThing> ref = new RefImpl<JThing>(thing);
+        pipeable.pipe(ref);
     }
 
     public static String jthingToJson(JThing thing) throws VisitException {

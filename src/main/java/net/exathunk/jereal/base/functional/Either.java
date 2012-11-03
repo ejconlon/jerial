@@ -48,12 +48,12 @@ public class Either<Left, Right> {
         return right;
     }
 
-    protected void setLeft(Left left) {
+    public void setLeft(Left left) {
         this.left = left;
         this.right = null;
     }
 
-    protected void setRight(Right right) {
+    public void setRight(Right right) {
         this.right = right;
         this.left = null;
     }

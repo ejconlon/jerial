@@ -1,14 +1,12 @@
 package net.exathunk.jereal.base.core;
 
-import net.exathunk.jereal.base.dsl.ArrayDSL;
-import net.exathunk.jereal.base.dsl.DSL;
-import net.exathunk.jereal.base.dsl.Pipeable;
-import net.exathunk.jereal.base.dsl.PushableContext;
+import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 /**
@@ -102,7 +100,7 @@ public class JArray implements JMutableCollection<Integer, JThing> {
     }
 
     @Override
-    public <A extends PushableContext<A, B>, B> Pipeable<B> acceptDSL(DSL<A, B> dsl) {
+    public <A extends PushableContext<A, B>, B extends Questionable> Pipeable<B> acceptDSL(DSL<A, B> dsl) {
         ArrayDSL<A, B> arrayDSL = dsl.seeArray();
         for (Map.Entry<Integer, JThing> entry : seq()) {
             Pipeable<B> pipeable = entry.getValue().acceptDSL(dsl);
@@ -111,7 +109,46 @@ public class JArray implements JMutableCollection<Integer, JThing> {
         return arrayDSL;
     }
 
-    public List<JThing> getList() {
+    @Override
+    public Model getModel() {
+        return Model.ARRAY;
+    }
+
+    @Override
+    public JThing toJThing() {
+        return JThing.make(this);
+    }
+
+    @Override
+    public boolean hasMapSpec() {
+        return false;
+    }
+
+    @Override
+    public Map<String, ? extends Speclike> getMapSpec() {
+        return null;
+    }
+
+    @Override
+    public boolean hasListSpec() {
+        return true;
+    }
+
+    @Override
+    public List<? extends Speclike> getListSpec() {
         return array;
+    }
+
+    @Override
+    public Speclike makeSpec() {
+        return this;
+    }
+
+    public static JArray fromSpec(List<? extends Speclike> listSpec) {
+        final List<JThing> list = new ArrayList<JThing>(listSpec.size());
+        for (Speclike value : listSpec) {
+            list.add(JThing.fromSpec(value));
+        }
+        return new JArray(list);
     }
 }

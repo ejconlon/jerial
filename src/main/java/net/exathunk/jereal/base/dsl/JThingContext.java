@@ -23,19 +23,19 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
     }
 
     @Override
-    public void writeObject(RefMapGroup<JThingContext, JThing> group, Cont<JThing> cont) throws JerializerException {
+    public void writeObject(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ref) throws JerializerException {
         if (!RefMapGroup.WModel.OBJECT.equals(group.getModel())) {
             throw new IllegalArgumentException("Expected object model: "+group.getModel());
         }
-        writeInner(group, cont);
+        writeInner(group, ref);
     }
 
     @Override
-    public void writeArray(RefMapGroup<JThingContext, JThing> group, Cont<JThing> cont) throws JerializerException {
+    public void writeArray(RefMapGroup<JThingContext, JThing> group, Ref<JThing> ref) throws JerializerException {
         if (!RefMapGroup.WModel.ARRAY.equals(group.getModel())) {
             throw new IllegalArgumentException("Expected array model: "+group.getModel());
         }
-        writeInner(group, cont);
+        writeInner(group, ref);
     }
 
     @Override
@@ -58,25 +58,25 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
         ref.setRef(JThing.make(value.getRef()));
     }
 
-    private void writeInner(RefMapGroup<JThingContext, JThing> group, Cont<JThing> retCont) throws JerializerException {
+    private void writeInner(RefMapGroup<JThingContext, JThing> group, Ref<JThing> retRef) throws JerializerException {
         for (Map.Entry<PathPart, RefMapGroup.WModel> order : group.getOrders()) {
             switch (order.getValue()) {
                 case OBJECT:
                 {
                     Ref<ObjectDSL<JThingContext, JThing>> objectDSL = group.getObjects().get(order.getKey());
                     if (objectDSL.isEmptyRef()) break;
-                    Cont<JThing> ref = new JThingCont();
+                    Ref<JThing> ref = new RefImpl<JThing>();
                     objectDSL.getRef().pipe(ref);
-                    context.builder.addThing(order.getKey(), ref.getSingle().getRef());
+                    context.builder.addThing(order.getKey(), ref.getRef());
                     break;
                 }
                 case ARRAY:
                 {
                     Ref<ArrayDSL<JThingContext, JThing>> arrayDSL = group.getArrays().get(order.getKey());
                     if (arrayDSL.isEmptyRef()) break;
-                    Cont<JThing> ref = new JThingCont();
+                    Ref<JThing> ref = new RefImpl<JThing>();
                     arrayDSL.getRef().pipe(ref);
-                    context.builder.addThing(order.getKey(), ref.getSingle().getRef());
+                    context.builder.addThing(order.getKey(), ref.getRef());
                     break;
                 }
                 case STRING:
@@ -111,10 +111,10 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                 {
                     Ref<Pipeable<JThing>> writable = group.getWritables().get(order.getKey());
                     if (writable.isEmptyRef()) break;
-                    Cont<JThing> ref = new JThingCont();
+                    Ref<JThing> ref = new RefImpl<JThing>();
                     writable.getRef().pipe(ref);
-                    if (!ref.getSingle().isEmptyRef())
-                        context.builder.addThing(order.getKey(), ref.getSingle().getRef());
+                    if (!ref.isEmptyRef())
+                        context.builder.addThing(order.getKey(), ref.getRef());
                     break;
                 }
                 default:
@@ -123,9 +123,9 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
         }
 
         if (RefMapGroup.WModel.OBJECT.equals(group.getModel())) {
-            retCont.getSingle().setRef(JThing.make(context.builder.buildObject()));
+            retRef.setRef(JThing.make(context.builder.buildObject()));
         } else if (RefMapGroup.WModel.ARRAY.equals(group.getModel())) {
-            retCont.getSingle().setRef(JThing.make(context.builder.buildArray()));
+            retRef.setRef(JThing.make(context.builder.buildArray()));
         } else {
             throw new IllegalArgumentException("Invalid model: "+group.getModel());
         }

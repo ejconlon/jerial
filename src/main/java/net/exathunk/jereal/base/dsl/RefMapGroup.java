@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * charolastra 10/31/12 1:22 PM
  */
-public class RefMapGroup<T extends PushableContext<T, U>, U> {
+public class RefMapGroup<T extends PushableContext<T, U>, U extends Questionable> {
 
     public static enum WModel {
         OBJECT, ARRAY, STRING, BOOLEAN, LONG, DOUBLE, WRITABLE;

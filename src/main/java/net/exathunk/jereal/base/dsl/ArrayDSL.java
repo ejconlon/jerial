@@ -5,7 +5,7 @@ import net.exathunk.jereal.base.functional.Ref;
 /**
  * charolastra 10/31/12 2:58 AM
  */
-public interface ArrayDSL<T extends PushableContext<T, U>, U> extends Pipeable<U> {
+public interface ArrayDSL<T extends PushableContext<T, U>, U extends Questionable> extends Pipeable<U> {
     Ref<ObjectDSL<T, U>> seeObjectStart();
     Ref<ArrayDSL<T, U>> seeArrayStart();
     void seeString(Ref<String> value);

@@ -1,11 +1,12 @@
 package net.exathunk.jereal.base.jerializers;
 
 import net.exathunk.jereal.base.dsl.PushableContext;
+import net.exathunk.jereal.base.dsl.Questionable;
 
 /**
  * charolastra 10/31/12 2:08 AM
  */
-public class SinglyRegistry<T extends PushableContext<T, U>, U, V> implements JerializerRegistry<T, U> {
+public class SinglyRegistry<T extends PushableContext<T, U>, U extends Questionable, V> implements JerializerRegistry<T, U> {
 
     private final Class<V> klass;
     private final Jerializer<T, U, V> jerializer;

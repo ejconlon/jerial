@@ -6,6 +6,8 @@ import net.exathunk.jereal.base.functional.Maybe;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.functional.Sequence;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -90,7 +92,7 @@ public class JObject implements JMutableCollection<String, JThing> {
     }
 
     @Override
-    public <A extends PushableContext<A, B>, B> Pipeable<B> acceptDSL(DSL<A, B> dsl) {
+    public <A extends PushableContext<A, B>, B extends Questionable> Pipeable<B> acceptDSL(DSL<A, B> dsl) {
         ObjectDSL<A, B> objectDSL = dsl.seeObject();
         for (Map.Entry<String, JThing> entry : seq()) {
             Pipeable<B> pipeable = entry.getValue().acceptDSL(dsl);
@@ -99,7 +101,46 @@ public class JObject implements JMutableCollection<String, JThing> {
         return objectDSL;
     }
 
-    public Map<String, JThing> getMap() {
+    @Override
+    public Model getModel() {
+        return Model.OBJECT;
+    }
+
+    @Override
+    public JThing toJThing() {
+        return JThing.make(this);
+    }
+
+    @Override
+    public boolean hasMapSpec() {
+        return true;
+    }
+
+    @Override
+    public Map<String, ? extends Speclike> getMapSpec() {
         return map;
+    }
+
+    @Override
+    public boolean hasListSpec() {
+        return false;
+    }
+
+    @Override
+    public List<? extends Speclike> getListSpec() {
+        return null;
+    }
+
+    @Override
+    public Speclike makeSpec() {
+        return this;
+    }
+
+    public static JObject fromSpec(Map<String, ? extends Speclike> mapSpec) {
+        final Map<String, JThing> map = new TreeMap<String, JThing>();
+        for (Map.Entry<String, ? extends Speclike> entry : mapSpec.entrySet()) {
+            map.put(entry.getKey(), JThing.fromSpec(entry.getValue()));
+        }
+        return new JObject(map);
     }
 }

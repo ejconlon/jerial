@@ -1,15 +1,12 @@
 package net.exathunk.jereal.example;
 
-import net.exathunk.jereal.base.dsl.DSL;
-import net.exathunk.jereal.base.dsl.ObjectDSL;
-import net.exathunk.jereal.base.dsl.PushableContext;
-import net.exathunk.jereal.base.dsl.Pipeable;
+import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.jerializers.Jerializer;
 import net.exathunk.jereal.base.jerializers.Recurser;
 
-public class PostJerializer<T extends PushableContext<T, U>, U> implements Jerializer<T, U, Post> {
+public class PostJerializer<T extends PushableContext<T, U>, U extends Questionable> implements Jerializer<T, U, Post> {
     @Override
-    public Post prototype() {
+    public Post prototype(Speclike spec) {
         return new Post();
     }
 

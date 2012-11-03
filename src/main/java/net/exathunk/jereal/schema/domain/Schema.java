@@ -63,7 +63,7 @@ public class Schema {
 
     public final Ref<Map<String, SchemaRef>> properties = new RefImpl<Map<String, SchemaRef>>();
     public final Ref<List<Link>> links = new RefImpl<List<Link>>();
-    public final Ref<Map<String, String>> dependencies = new RefImpl<Map<String, String>>();
+    public final Ref<Map<String, Ref<String>>> dependencies = new RefImpl<Map<String, Ref<String>>>();
 
     @Override
     public String toString() {
