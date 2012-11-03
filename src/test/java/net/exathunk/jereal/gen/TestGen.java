@@ -1,6 +1,7 @@
 package net.exathunk.jereal.gen;
 
-import net.exathunk.jereal.base.gen.Gen;
+import net.exathunk.jereal.base.gen.GenWritable;
+import net.exathunk.jereal.base.gen.MetaGen;
 import org.junit.Test;
 
 import java.util.Map;
@@ -26,11 +27,12 @@ public class TestGen {
         imports.add("gorp.goop.Ref");
         imports.add("boop.beep.RefImpl");
 
-        Gen gen = new Gen(packageName, className, imports, fields);
+        GenWritable gen = MetaGen.makeDefault(packageName, className, imports, fields);
 
-        System.out.print(gen.classToString());
-        System.out.print(gen.interfaceToString());
-        System.out.print(gen.refableInterfaceToString());
+        for (Map.Entry<String, String> entry : gen.makeClassToTextMap().entrySet()) {
+            System.out.println("CLASS: "+entry.getKey());
+            System.out.print(entry.getValue());
+        }
     }
 
 }
