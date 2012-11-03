@@ -29,4 +29,34 @@ public class Link {
                 (!properties.isEmptyRef() ? ", properties=" + properties : "") +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Link)) return false;
+
+        Link link = (Link) o;
+
+        if (!enctype.equals(link.enctype)) return false;
+        if (!href.equals(link.href)) return false;
+        if (!method.equals(link.method)) return false;
+        if (!properties.equals(link.properties)) return false;
+        if (!rel.equals(link.rel)) return false;
+        if (!schema.equals(link.schema)) return false;
+        if (!targetSchema.equals(link.targetSchema)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = rel.hashCode();
+        result = 31 * result + href.hashCode();
+        result = 31 * result + schema.hashCode();
+        result = 31 * result + targetSchema.hashCode();
+        result = 31 * result + enctype.hashCode();
+        result = 31 * result + method.hashCode();
+        result = 31 * result + properties.hashCode();
+        return result;
+    }
 }

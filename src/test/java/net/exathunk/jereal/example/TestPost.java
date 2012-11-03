@@ -17,8 +17,8 @@ import java.util.*;
 public class TestPost {
 
     static {
-        Logger.getPolicyBuilder().add(TestPost.class, Logger.Level.CRITICAL)
-                .add(MapBuilder.class, Logger.Level.TRACE);
+        //Logger.getPolicyBuilder().add(TestPost.class, Logger.Level.TRACE)
+        //        .add(MapBuilder.class, Logger.Level.TRACE);
         registry = new SinglyRegistry(Arr.class, new ArrJerializer(),
                    new SinglyRegistry(Bag.class, new BagJerializer(),
                    new SinglyRegistry(Post.class, new PostJerializer())));

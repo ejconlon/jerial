@@ -93,4 +93,64 @@ public class Schema {
         sb.append('}');
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Schema)) return false;
+
+        Schema schema = (Schema) o;
+
+        if (!additionalProperties_Boolean.equals(schema.additionalProperties_Boolean)) return false;
+        if (!additionalProperties_SchemaRef.equals(schema.additionalProperties_SchemaRef)) return false;
+        if (!defaultz.equals(schema.defaultz)) return false;
+        if (!dependencies.equals(schema.dependencies)) return false;
+        if (!description.equals(schema.description)) return false;
+        if (!dollar_ref.equals(schema.dollar_ref)) return false;
+        if (!dollar_schema.equals(schema.dollar_schema)) return false;
+        if (!extendz.equals(schema.extendz)) return false;
+        if (!format.equals(schema.format)) return false;
+        if (!fragmentResolution.equals(schema.fragmentResolution)) return false;
+        if (!id.equals(schema.id)) return false;
+        if (!items.equals(schema.items)) return false;
+        if (!links.equals(schema.links)) return false;
+        if (!minItems.equals(schema.minItems)) return false;
+        if (!minimum.equals(schema.minimum)) return false;
+        if (!name.equals(schema.name)) return false;
+        if (!properties.equals(schema.properties)) return false;
+        if (!required.equals(schema.required)) return false;
+        if (!title.equals(schema.title)) return false;
+        if (!type_SchemaRef.equals(schema.type_SchemaRef)) return false;
+        if (!type_String.equals(schema.type_String)) return false;
+        if (!uniqueItems.equals(schema.uniqueItems)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + format.hashCode();
+        result = 31 * result + dollar_ref.hashCode();
+        result = 31 * result + dollar_schema.hashCode();
+        result = 31 * result + fragmentResolution.hashCode();
+        result = 31 * result + defaultz.hashCode();
+        result = 31 * result + required.hashCode();
+        result = 31 * result + uniqueItems.hashCode();
+        result = 31 * result + minItems.hashCode();
+        result = 31 * result + minimum.hashCode();
+        result = 31 * result + additionalProperties_SchemaRef.hashCode();
+        result = 31 * result + additionalProperties_Boolean.hashCode();
+        result = 31 * result + type_SchemaRef.hashCode();
+        result = 31 * result + type_String.hashCode();
+        result = 31 * result + items.hashCode();
+        result = 31 * result + extendz.hashCode();
+        result = 31 * result + properties.hashCode();
+        result = 31 * result + links.hashCode();
+        result = 31 * result + dependencies.hashCode();
+        return result;
+    }
 }
