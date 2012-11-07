@@ -38,9 +38,12 @@
         </plugins>
     </build>
 
-    <profiles>
+    <!--<profiles>
         <profile>
             <id>profile-genschemas</id>
+            <activation>
+                <file><exists>/bin/bash</exists></file>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -58,22 +61,22 @@
                                             <arg value="target/generated-sources/gen-javabean/net/exathunk/jereal/genschema"/>
                                             <arg value="net.exathunk.jereal.genschema"/>
                                         </exec>
-                                        <!--<exec executable="chmod">
+                                        <!-/-<exec executable="chmod">
                                             <arg value="-R"/>
                                             <arg value="770"/>
                                             <arg value="src/main/java/net/exathunk/jereal/genschema"/>
-                                        </exec>-->
+                                        </exec>-/->
                                         <delete>
                                             <fileset dir="src/main/java/net/exathunk/jereal/genschema" includes="**/*"/>
                                         </delete>
                                         <copy todir="src/main/java/net/exathunk/jereal/genschema">
                                             <fileset dir="target/generated-sources/gen-javabean/net/exathunk/jereal/genschema"/>
                                         </copy>
-                                        <!--<exec executable="chmod">
+                                        <!-/-<exec executable="chmod">
                                             <arg value="-R"/>
                                             <arg value="550"/>
                                             <arg value="src/main/java/net/exathunk/jereal/genschema"/>
-                                        </exec>-->
+                                        </exec>-/->
                                     </tasks>
                                 </configuration>
                                 <goals>
@@ -85,7 +88,7 @@
                 </plugins>
             </build>
         </profile>
-    </profiles>
+    </profiles>-->
 
     <dependencies>
         <dependency>
@@ -98,6 +101,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.6.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.0.4</version>
         </dependency>
     </dependencies>
 

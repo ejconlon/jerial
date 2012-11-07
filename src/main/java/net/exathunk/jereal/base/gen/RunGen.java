@@ -11,20 +11,52 @@ import net.exathunk.jereal.schema.jerializers.SchemaJerializer;
 import net.exathunk.jereal.schema.util.Loader;
 import net.exathunk.jereal.schema.util.SchemaRegistryBuilder;
 
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+
 import java.io.*;
 import java.util.Map;
 
 /**
  * java RunGen src/main/resources/schemas target/generated-sources/gen-javabean/net/exathunk/jereal/genschema net.exathunk.jereal.genschema
  * charolastra 11/4/12 11:27 AM
+ *
+ * @goal generate
+ * @phase generate-sources
+ * @requiresDependencyResolution compile
+ * @author charolastra
+ * @version $Id$
  */
-public class RunGen {
+public class RunGen extends AbstractMojo {
+
+    final String schemaDir;
+    final String destDir;
+    final String basePackage;
+
+    public RunGen(String schemaDir, String destDir, String basePackage) {
+        this.schemaDir = schemaDir;
+        this.destDir = destDir;
+        this.basePackage = basePackage;
+    }
+
     public static void main(String[] args) throws IOException, JerializerException {
+        RunGen runGen = new RunGen(args[0], args[1], args[2]);
+        runGen.innerExecute();
+    }
+
+    public void execute() throws MojoExecutionException {
+        try {
+            innerExecute();
+        } catch (JerializerException e) {
+            throw new MojoExecutionException("Caught", e);
+        } catch (IOException e) {
+            throw new MojoExecutionException("Caught", e);
+        }
+    }
+
+    public void innerExecute() throws IOException, JerializerException {
         // first arg - schema dir, second arg - dest dir
         // TODO write schemas
-        final String schemaDir = args[0];
-        final String destDir = args[1];
-        final String basePackage = args[2];
 
         File schemas = new File(schemaDir);
         assert schemas.isDirectory() && schemas.canRead();
