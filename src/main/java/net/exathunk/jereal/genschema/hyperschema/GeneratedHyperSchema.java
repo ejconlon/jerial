@@ -7,6 +7,7 @@ import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.genschema.hyperschemaoruri.GeneratedHyperSchemaOrUri;
 import net.exathunk.jereal.genschema.hyperschemaoruri.GeneratedHyperSchemaOrUriContainer;
 import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
@@ -24,7 +25,7 @@ public class GeneratedHyperSchema implements GeneratedHyperSchemaLike, Generated
     private final Ref<List<GeneratedLinksContainer>> links;
     private final Ref<String> mediaType;
     private final Ref<String> pathStart;
-    private final Ref<JThing> properties;
+    private final Ref<GeneratedHyperSchemaOrUriContainer> properties;
     private final Ref<Boolean> readonly;
     private final Ref<Any2<String,GeneratedHyperSchemaOrUriContainer>> requires;
     private final Ref<Boolean> root;
@@ -43,7 +44,7 @@ public class GeneratedHyperSchema implements GeneratedHyperSchemaLike, Generated
         links = new RefImpl<List<GeneratedLinksContainer>>();
         mediaType = new RefImpl<String>();
         pathStart = new RefImpl<String>();
-        properties = new RefImpl<JThing>();
+        properties = new RefImpl<GeneratedHyperSchemaOrUriContainer>();
         readonly = new RefImpl<Boolean>();
         requires = new RefImpl<Any2<String,GeneratedHyperSchemaOrUriContainer>>();
         root = new RefImpl<Boolean>();
@@ -259,15 +260,15 @@ public class GeneratedHyperSchema implements GeneratedHyperSchemaLike, Generated
         return !properties.isEmptyRef();
     }
     @Override
-    public JThing getProperties() {
+    public GeneratedHyperSchemaOrUriContainer getProperties() {
         return properties.getRef();
     }
     @Override
-    public void setProperties(JThing value) {
+    public void setProperties(GeneratedHyperSchemaOrUriContainer value) {
         properties.setRef(value);
     }
     @Override
-    public Ref<JThing> getPropertiesRef() {
+    public Ref<GeneratedHyperSchemaOrUriContainer> getPropertiesRef() {
         return properties;
     }
 

@@ -7,45 +7,55 @@ import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.genschema.interfaces.GeneratedInterfaces;
+import net.exathunk.jereal.genschema.interfaces.GeneratedInterfacesContainer;
 import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
-public class GeneratedInterfacesContainer {
+public class GeneratedInterfacesContainer implements GeneratedInterfacesContainerLike, GeneratedInterfacesContainerRefable {
 
-    private final Ref<JThing> methods;
+    private final Ref<GeneratedInterfaces> GeneratedInterfaces;
 
     public GeneratedInterfacesContainer() {
-        methods = new RefImpl<JThing>();
+        GeneratedInterfaces = new RefImpl<GeneratedInterfaces>();
     }
 
-    public boolean hasMethods() {
-        return !methods.isEmptyRef();
+    @Override
+    public boolean hasGeneratedInterfaces() {
+        return !GeneratedInterfaces.isEmptyRef();
     }
-    public JThing getMethods() {
-        return methods.getRef();
+    @Override
+    public GeneratedInterfaces getGeneratedInterfaces() {
+        return GeneratedInterfaces.getRef();
     }
-    public void setMethods(JThing value) {
-        methods.setRef(value);
+    @Override
+    public void setGeneratedInterfaces(GeneratedInterfaces value) {
+        GeneratedInterfaces.setRef(value);
     }
-    public Ref<JThing> getMethodsRef() {
-        return methods;
+    @Override
+    public Ref<GeneratedInterfaces> getGeneratedInterfacesRef() {
+        return GeneratedInterfaces;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedInterfacesContainer{ ");
-        if (!methods.isEmptyRef()) sb.append("methods='").append(methods).append("', ");
+        if (!GeneratedInterfaces.isEmptyRef()) sb.append("GeneratedInterfaces='").append(GeneratedInterfaces).append("', ");
         return sb.append("}").toString();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof GeneratedInterfacesContainer) {
-            GeneratedInterfacesContainer other = (GeneratedInterfacesContainer) o;
-            if (hasMethods()) {
-                if (!other.hasMethods()) return false;
-                else if (!getMethods().equals(other.getMethods())) return false;
-            } else if (other.hasMethods()) return false;
+        if (o instanceof GeneratedInterfacesContainerLike) {
+            GeneratedInterfacesContainerLike other = (GeneratedInterfacesContainerLike) o;
+            if (hasGeneratedInterfaces()) {
+                if (!other.hasGeneratedInterfaces()) return false;
+                else if (!getGeneratedInterfaces().equals(other.getGeneratedInterfaces())) return false;
+            } else if (other.hasGeneratedInterfaces()) return false;
+            return true;
+        } else if (o instanceof GeneratedInterfacesContainerRefable) {
+            GeneratedInterfacesContainerRefable other = (GeneratedInterfacesContainerRefable) o;
+            if (!getGeneratedInterfacesRef().equals(other.getGeneratedInterfacesRef())) return false;
             return true;
         } else {
             return false;
@@ -55,7 +65,7 @@ public class GeneratedInterfacesContainer {
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + methods.hashCode();
+        result = 31 * result + GeneratedInterfaces.hashCode();
         return result;
     }
 

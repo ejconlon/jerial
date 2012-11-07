@@ -1,4 +1,4 @@
-package net.exathunk.jereal.genschema.links;
+package net.exathunk.jereal.genschema.hyperschemaoruri;
 
 import java.util.List;
 import java.util.Map;
@@ -11,18 +11,10 @@ import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchema;
 import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchemaContainer;
 import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
-public interface GeneratedLinksRefable {
+public interface GeneratedHyperSchemaOrUriContainerLike {
 
-        Ref<String> getEnctypeRef();
-
-        Ref<String> getHrefRef();
-
-        Ref<String> getMethodRef();
-
-        Ref<GeneratedHyperSchemaContainer> getPropertiesRef();
-
-        Ref<String> getRelRef();
-
-        Ref<GeneratedHyperSchemaContainer> getTargetSchemaRef();
+        boolean hasGeneratedHyperSchemaOrUri();
+        Any2<String,GeneratedHyperSchemaContainer> getGeneratedHyperSchemaOrUri();
+        void setGeneratedHyperSchemaOrUri(Any2<String,GeneratedHyperSchemaContainer> value);
 
 }

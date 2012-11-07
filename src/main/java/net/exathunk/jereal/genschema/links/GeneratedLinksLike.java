@@ -7,6 +7,7 @@ import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchema;
 import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchemaContainer;
 import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
@@ -25,8 +26,8 @@ public interface GeneratedLinksLike {
         void setMethod(String value);
 
         boolean hasProperties();
-        JThing getProperties();
-        void setProperties(JThing value);
+        GeneratedHyperSchemaContainer getProperties();
+        void setProperties(GeneratedHyperSchemaContainer value);
 
         boolean hasRel();
         String getRel();

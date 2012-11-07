@@ -5,12 +5,14 @@ import net.exathunk.jereal.schema.domain.SchemaRef;
 import java.util.List;
 
 /**
+ * Look away!  I don't want to touch this any more than I have to...
+ *
  * charolastra 11/6/12 2:09 AM
  */
 public class TypeOracleImpl implements TypeOracle {
 
     @Override
-    public String makeType(String selfType, SchemaRef schemaRef, SchemaRef itemType) {
+    public String makeType(String selfType, SchemaRef schemaRef, SchemaRef itemType, SchemaRef addlPropType) {
         if (schemaRef.hasRight()) {
             final String ts = schemaRef.getRight().getRef();
             String ret = ts.equals("#") ? selfType : Util.xform(ts);
@@ -18,7 +20,13 @@ public class TypeOracleImpl implements TypeOracle {
                 if (itemType == null) {
                     return "List<JThing>";
                 } else {
-                    return "List<"+makeType(selfType, itemType, null)+">";
+                    return "List<"+makeType(selfType, itemType, null, null)+">";
+                }
+            } else if (ret.equals("Object")) {
+                if (addlPropType == null) {
+                    return "JThing";
+                } else {
+                    return makeType(selfType, addlPropType, null, null);
                 }
             } else {
                 return ret;
@@ -30,9 +38,15 @@ public class TypeOracleImpl implements TypeOracle {
                 String ret = ts.equals("#") ? selfType : Util.xform(ts);
                 if (ret.equals("Array")) {
                     if (!s.items.isEmptyRef())
-                        return "List<"+makeType(selfType, s.items.getRef(), null)+">";
+                        return "List<"+makeType(selfType, s.items.getRef(), null, null)+">";
                     else
                         return "List<JThing>";
+                } else if (ret.equals("Object")) {
+                    if (!s.additionalProperties_SchemaRef.isEmptyRef()) {
+                        return makeType(selfType, s.additionalProperties_SchemaRef.getRef(), null, null);
+                    } else {
+                        return "JThing";
+                    }
                 } else {
                     return ret;
                 }
@@ -45,8 +59,10 @@ public class TypeOracleImpl implements TypeOracle {
                 StringBuilder sb = new StringBuilder("Any"+r.size()+"<");
                 SchemaRef itref = null;
                 if (!s.items.isEmptyRef()) { itref = s.items.getRef(); }
+                SchemaRef addlref = null;
+                if (!s.additionalProperties_SchemaRef.isEmptyRef()) { addlref = s.additionalProperties_SchemaRef.getRef(); }
                 for (SchemaRef r2 : r) {
-                    sb.append(makeType(selfType, r2, itref)).append(',');
+                    sb.append(makeType(selfType, r2, itref, addlref)).append(',');
                 }
                 sb.deleteCharAt(sb.length()-1);
                 sb.append(">");

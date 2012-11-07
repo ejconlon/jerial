@@ -4,12 +4,10 @@ import net.exathunk.jereal.base.gen.GenWritable;
 import net.exathunk.jereal.base.gen.Genable;
 import net.exathunk.jereal.base.gen.MetaGen;
 import net.exathunk.jereal.schema.domain.Schema;
+import net.exathunk.jereal.schema.domain.SchemaRef;
 import org.junit.Test;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,6 +26,12 @@ public class TestGen {
         final Set<String> imports = new TreeSet<String>();
         imports.add("gorp.goop.Ref");
         imports.add("boop.beep.RefImpl");
+
+        final Schema schema = new Schema();
+        schema.id.setRef("http://foo.bar.baz/bongo");
+        schema.type_SchemaRef.setRef(new LinkedList<SchemaRef>());
+        schema.type_SchemaRef.getRef().add(SchemaRef.makeRef("string"));
+        schema.type_SchemaRef.getRef().add(SchemaRef.makeRef("#"));
 
         GenWritable gen = MetaGen.makeDefault(new Genable() {
             @Override
@@ -52,7 +56,7 @@ public class TestGen {
 
             @Override
             public Schema getSchema() {
-                return null;
+                return schema;
             }
         });
 

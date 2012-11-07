@@ -1,4 +1,4 @@
-package net.exathunk.jereal.genschema.hyperschemaoruri;
+package net.exathunk.jereal.genschema.schema;
 
 import java.util.List;
 import java.util.Map;
@@ -9,6 +9,10 @@ import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
-public interface GeneratedHyperSchemaOrUriRefable {
+public interface GeneratedSchemaContainerLike {
+
+        boolean hasGeneratedSchema();
+        Any2<GeneratedSchema,String> getGeneratedSchema();
+        void setGeneratedSchema(Any2<GeneratedSchema,String> value);
 
 }

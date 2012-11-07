@@ -7,65 +7,55 @@ import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.genschema.geo.GeneratedGeo;
+import net.exathunk.jereal.genschema.geo.GeneratedGeoContainer;
 import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
-public class GeneratedGeoContainer {
+public class GeneratedGeoContainer implements GeneratedGeoContainerLike, GeneratedGeoContainerRefable {
 
-    private final Ref<Double> latitude;
-    private final Ref<Double> longitude;
+    private final Ref<GeneratedGeo> GeneratedGeo;
 
     public GeneratedGeoContainer() {
-        latitude = new RefImpl<Double>();
-        longitude = new RefImpl<Double>();
+        GeneratedGeo = new RefImpl<GeneratedGeo>();
     }
 
-    public boolean hasLatitude() {
-        return !latitude.isEmptyRef();
+    @Override
+    public boolean hasGeneratedGeo() {
+        return !GeneratedGeo.isEmptyRef();
     }
-    public Double getLatitude() {
-        return latitude.getRef();
+    @Override
+    public GeneratedGeo getGeneratedGeo() {
+        return GeneratedGeo.getRef();
     }
-    public void setLatitude(Double value) {
-        latitude.setRef(value);
+    @Override
+    public void setGeneratedGeo(GeneratedGeo value) {
+        GeneratedGeo.setRef(value);
     }
-    public Ref<Double> getLatitudeRef() {
-        return latitude;
-    }
-
-    public boolean hasLongitude() {
-        return !longitude.isEmptyRef();
-    }
-    public Double getLongitude() {
-        return longitude.getRef();
-    }
-    public void setLongitude(Double value) {
-        longitude.setRef(value);
-    }
-    public Ref<Double> getLongitudeRef() {
-        return longitude;
+    @Override
+    public Ref<GeneratedGeo> getGeneratedGeoRef() {
+        return GeneratedGeo;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedGeoContainer{ ");
-        if (!latitude.isEmptyRef()) sb.append("latitude='").append(latitude).append("', ");
-        if (!longitude.isEmptyRef()) sb.append("longitude='").append(longitude).append("', ");
+        if (!GeneratedGeo.isEmptyRef()) sb.append("GeneratedGeo='").append(GeneratedGeo).append("', ");
         return sb.append("}").toString();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof GeneratedGeoContainer) {
-            GeneratedGeoContainer other = (GeneratedGeoContainer) o;
-            if (hasLatitude()) {
-                if (!other.hasLatitude()) return false;
-                else if (!getLatitude().equals(other.getLatitude())) return false;
-            } else if (other.hasLatitude()) return false;
-            if (hasLongitude()) {
-                if (!other.hasLongitude()) return false;
-                else if (!getLongitude().equals(other.getLongitude())) return false;
-            } else if (other.hasLongitude()) return false;
+        if (o instanceof GeneratedGeoContainerLike) {
+            GeneratedGeoContainerLike other = (GeneratedGeoContainerLike) o;
+            if (hasGeneratedGeo()) {
+                if (!other.hasGeneratedGeo()) return false;
+                else if (!getGeneratedGeo().equals(other.getGeneratedGeo())) return false;
+            } else if (other.hasGeneratedGeo()) return false;
+            return true;
+        } else if (o instanceof GeneratedGeoContainerRefable) {
+            GeneratedGeoContainerRefable other = (GeneratedGeoContainerRefable) o;
+            if (!getGeneratedGeoRef().equals(other.getGeneratedGeoRef())) return false;
             return true;
         } else {
             return false;
@@ -75,8 +65,7 @@ public class GeneratedGeoContainer {
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + latitude.hashCode();
-        result = 31 * result + longitude.hashCode();
+        result = 31 * result + GeneratedGeo.hashCode();
         return result;
     }
 

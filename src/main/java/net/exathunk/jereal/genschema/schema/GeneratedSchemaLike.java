@@ -9,24 +9,25 @@ import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 import net.exathunk.jereal.genschema.schema.GeneratedSchema;
+import net.exathunk.jereal.genschema.schema.GeneratedSchemaContainer;
 
 public interface GeneratedSchemaLike {
 
         boolean hasAdditionalItems();
-        Any2<GeneratedSchema,Boolean> getAdditionalItems();
-        void setAdditionalItems(Any2<GeneratedSchema,Boolean> value);
+        Any2<GeneratedSchemaContainer,Boolean> getAdditionalItems();
+        void setAdditionalItems(Any2<GeneratedSchemaContainer,Boolean> value);
 
         boolean hasAdditionalProperties();
-        Any2<GeneratedSchema,Boolean> getAdditionalProperties();
-        void setAdditionalProperties(Any2<GeneratedSchema,Boolean> value);
+        Any2<GeneratedSchemaContainer,Boolean> getAdditionalProperties();
+        void setAdditionalProperties(Any2<GeneratedSchemaContainer,Boolean> value);
 
         boolean hasDescription();
         String getDescription();
         void setDescription(String value);
 
         boolean hasDisallow();
-        Any3<String,List<Any2<String,GeneratedSchema>>,GeneratedSchema> getDisallow();
-        void setDisallow(Any3<String,List<Any2<String,GeneratedSchema>>,GeneratedSchema> value);
+        Any3<String,List<Any2<String,GeneratedSchemaContainer>>,GeneratedSchemaContainer> getDisallow();
+        void setDisallow(Any3<String,List<Any2<String,GeneratedSchemaContainer>>,GeneratedSchemaContainer> value);
 
         boolean hasEnumField();
         List<JThing> getEnumField();
@@ -41,16 +42,16 @@ public interface GeneratedSchemaLike {
         void setExclusiveMinimum(Double value);
 
         boolean hasExtendsField();
-        Any2<GeneratedSchema,List<GeneratedSchema>> getExtendsField();
-        void setExtendsField(Any2<GeneratedSchema,List<GeneratedSchema>> value);
+        Any2<GeneratedSchemaContainer,List<GeneratedSchemaContainer>> getExtendsField();
+        void setExtendsField(Any2<GeneratedSchemaContainer,List<GeneratedSchemaContainer>> value);
 
         boolean hasFormat();
         String getFormat();
         void setFormat(String value);
 
         boolean hasItems();
-        Any2<GeneratedSchema,List<GeneratedSchema>> getItems();
-        void setItems(Any2<GeneratedSchema,List<GeneratedSchema>> value);
+        Any2<GeneratedSchemaContainer,List<GeneratedSchemaContainer>> getItems();
+        void setItems(Any2<GeneratedSchemaContainer,List<GeneratedSchemaContainer>> value);
 
         boolean hasMaxDecimal();
         Double getMaxDecimal();
@@ -85,24 +86,24 @@ public interface GeneratedSchemaLike {
         void setPattern(String value);
 
         boolean hasProperties();
-        JThing getProperties();
-        void setProperties(JThing value);
+        GeneratedSchemaContainer getProperties();
+        void setProperties(GeneratedSchemaContainer value);
 
         boolean hasRequired();
         Boolean getRequired();
         void setRequired(Boolean value);
 
         boolean hasRequires();
-        Any2<String,GeneratedSchema> getRequires();
-        void setRequires(Any2<String,GeneratedSchema> value);
+        Any2<String,GeneratedSchemaContainer> getRequires();
+        void setRequires(Any2<String,GeneratedSchemaContainer> value);
 
         boolean hasTitle();
         String getTitle();
         void setTitle(String value);
 
         boolean hasType();
-        Any2<String,List<Any2<String,GeneratedSchema>>> getType();
-        void setType(Any2<String,List<Any2<String,GeneratedSchema>>> value);
+        Any2<String,List<Any2<String,GeneratedSchemaContainer>>> getType();
+        void setType(Any2<String,List<Any2<String,GeneratedSchemaContainer>>> value);
 
         boolean hasUniqueItems();
         Boolean getUniqueItems();

@@ -7,6 +7,7 @@ import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.genschema.hyperschemaoruri.GeneratedHyperSchemaOrUri;
 import net.exathunk.jereal.genschema.hyperschemaoruri.GeneratedHyperSchemaOrUriContainer;
 import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
@@ -61,8 +62,8 @@ public interface GeneratedHyperSchemaLike {
         void setPathStart(String value);
 
         boolean hasProperties();
-        JThing getProperties();
-        void setProperties(JThing value);
+        GeneratedHyperSchemaOrUriContainer getProperties();
+        void setProperties(GeneratedHyperSchemaOrUriContainer value);
 
         boolean hasReadonly();
         Boolean getReadonly();
