@@ -2,9 +2,12 @@ package net.exathunk.jereal.base.util;
 
 import net.exathunk.jereal.base.core.*;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * charolastra 10/29/12 5:47 PM
@@ -13,6 +16,10 @@ public class JsonParser {
 
     public JThing parse(String s) {
         return parse(new StringIterator(s));
+    }
+
+    public JThing parse(Reader reader) {
+        return parse(new ReaderIterator(reader));
     }
 
     public JThing parse(Iterator<Character> chit) {
@@ -39,6 +46,50 @@ public class JsonParser {
         @Override
         public Character next() {
             return s.charAt(index++);
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    private static class ReaderIterator implements Iterator<Character> {
+
+        private final char[] buf = new char[1];
+        private boolean _hasNext = false;
+
+        private final Reader reader;
+
+        private ReaderIterator(Reader reader) {
+            this.reader = reader;
+        }
+
+        void advance() {
+            try {
+                if (!_hasNext) {
+                    int read = reader.read(buf);
+                    if (read > 0) {
+                        _hasNext = true;
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            advance();
+            return _hasNext;
+        }
+
+        @Override
+        public Character next() {
+            advance();
+            if (!_hasNext) throw new NoSuchElementException();
+            _hasNext = false;
+            return buf[0];
         }
 
         @Override

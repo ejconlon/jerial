@@ -1,5 +1,6 @@
 package net.exathunk.jereal.schema.util;
 
+import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.jerializers.JerializerException;
 import net.exathunk.jereal.base.jerializers.JerializerUtils;
 import net.exathunk.jereal.schema.domain.Schema;
@@ -30,10 +31,22 @@ public class Loader {
 
     public static Schema loadSchema(String name) throws IOException, JerializerException {
         final String schemaString = loadSchemaString(name);
+        return parseSchemaString(schemaString);
+    }
+
+    public static Schema parseSchemaString(String schemaString) throws JerializerException {
         final Schema schema = new Schema();
         JerializerUtils.jsonToDomain(
-            (new SchemaRegistryBuilder()).makeJerializerRegistry(),
-            new SchemaJerializer(), schemaString, schema);
+                (new SchemaRegistryBuilder()).makeJerializerRegistry(),
+                new SchemaJerializer(), schemaString, schema);
+        return schema;
+    }
+
+    public static Schema parseSchemaThing(JThing thing) throws JerializerException {
+        final Schema schema = new Schema();
+        JerializerUtils.jthingToDomain(
+                (new SchemaRegistryBuilder()).makeJerializerRegistry(),
+                new SchemaJerializer(), thing, schema);
         return schema;
     }
 }

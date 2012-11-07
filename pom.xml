@@ -38,6 +38,55 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>profile-genschemas</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>generate-sources</id>
+                                <phase>generate-sources</phase>
+                                <configuration>
+                                    <tasks>
+                                        <mkdir dir="target/generated-sources" />
+                                        <exec executable="java">
+                                            <arg value="net.exathunk.jereal.base.gen.RunGen"/>
+                                            <arg value="src/main/resources/schemas"/>
+                                            <arg value="target/generated-sources/gen-javabean/net/exathunk/jereal/genschema"/>
+                                            <arg value="net.exathunk.jereal.genschema"/>
+                                        </exec>
+                                        <!--<exec executable="chmod">
+                                            <arg value="-R"/>
+                                            <arg value="770"/>
+                                            <arg value="src/main/java/net/exathunk/jereal/genschema"/>
+                                        </exec>-->
+                                        <delete>
+                                            <fileset dir="src/main/java/net/exathunk/jereal/genschema" includes="**/*"/>
+                                        </delete>
+                                        <copy todir="src/main/java/net/exathunk/jereal/genschema">
+                                            <fileset dir="target/generated-sources/gen-javabean/net/exathunk/jereal/genschema"/>
+                                        </copy>
+                                        <!--<exec executable="chmod">
+                                            <arg value="-R"/>
+                                            <arg value="550"/>
+                                            <arg value="src/main/java/net/exathunk/jereal/genschema"/>
+                                        </exec>-->
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

@@ -18,6 +18,7 @@ public class MetaGen implements GenWritable {
         writables.add(new ClassGen(packageName, className, imports, fields));
         writables.add(new InterfaceGen(packageName, className, imports, fields));
         writables.add(new RefableInterfaceGen(packageName, className, imports, fields));
+        writables.add(new ContainerGen(packageName, className, imports, fields));
         return new MetaGen(writables);
     }
 
