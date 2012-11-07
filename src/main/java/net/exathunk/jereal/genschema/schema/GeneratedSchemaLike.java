@@ -2,7 +2,6 @@ package net.exathunk.jereal.genschema.schema;
 
 import java.util.List;
 import java.util.Map;
-import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
@@ -26,8 +25,8 @@ public interface GeneratedSchemaLike {
         void setDescription(String value);
 
         boolean hasDisallow();
-        Any3<String,List<JThing>,GeneratedSchema> getDisallow();
-        void setDisallow(Any3<String,List<JThing>,GeneratedSchema> value);
+        Any3<String,List<Any2<String,GeneratedSchema>>,GeneratedSchema> getDisallow();
+        void setDisallow(Any3<String,List<Any2<String,GeneratedSchema>>,GeneratedSchema> value);
 
         boolean hasEnumField();
         List<JThing> getEnumField();
@@ -42,16 +41,16 @@ public interface GeneratedSchemaLike {
         void setExclusiveMinimum(Double value);
 
         boolean hasExtendsField();
-        Any2<GeneratedSchema,List<JThing>> getExtendsField();
-        void setExtendsField(Any2<GeneratedSchema,List<JThing>> value);
+        Any2<GeneratedSchema,List<GeneratedSchema>> getExtendsField();
+        void setExtendsField(Any2<GeneratedSchema,List<GeneratedSchema>> value);
 
         boolean hasFormat();
         String getFormat();
         void setFormat(String value);
 
         boolean hasItems();
-        Any2<GeneratedSchema,List<JThing>> getItems();
-        void setItems(Any2<GeneratedSchema,List<JThing>> value);
+        Any2<GeneratedSchema,List<GeneratedSchema>> getItems();
+        void setItems(Any2<GeneratedSchema,List<GeneratedSchema>> value);
 
         boolean hasMaxDecimal();
         Double getMaxDecimal();
@@ -102,8 +101,8 @@ public interface GeneratedSchemaLike {
         void setTitle(String value);
 
         boolean hasType();
-        Any2<String,List<JThing>> getType();
-        void setType(Any2<String,List<JThing>> value);
+        Any2<String,List<Any2<String,GeneratedSchema>>> getType();
+        void setType(Any2<String,List<Any2<String,GeneratedSchema>>> value);
 
         boolean hasUniqueItems();
         Boolean getUniqueItems();

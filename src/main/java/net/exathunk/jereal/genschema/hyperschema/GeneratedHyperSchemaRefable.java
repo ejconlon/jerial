@@ -2,7 +2,6 @@ package net.exathunk.jereal.genschema.hyperschema;
 
 import java.util.List;
 import java.util.Map;
-import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
@@ -23,13 +22,13 @@ public interface GeneratedHyperSchemaRefable {
 
         Ref<JThing> getDefaultFieldRef();
 
-        Ref<Any3<String,List<JThing>,GeneratedHyperSchemaOrUriContainer>> getDisallowRef();
+        Ref<Any3<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>,GeneratedHyperSchemaOrUriContainer>> getDisallowRef();
 
-        Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>>> getExtendsFieldRef();
+        Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>>> getExtendsFieldRef();
 
         Ref<String> getFragmentResolutionRef();
 
-        Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>>> getItemsRef();
+        Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>>> getItemsRef();
 
         Ref<List<GeneratedLinksContainer>> getLinksRef();
 
@@ -45,6 +44,6 @@ public interface GeneratedHyperSchemaRefable {
 
         Ref<Boolean> getRootRef();
 
-        Ref<Any2<String,List<JThing>>> getTypeRef();
+        Ref<Any2<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>>> getTypeRef();
 
 }

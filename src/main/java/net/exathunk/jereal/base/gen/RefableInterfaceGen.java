@@ -8,8 +8,8 @@ import java.util.Set;
  */
 public class RefableInterfaceGen extends Gen {
 
-    public RefableInterfaceGen(String packageName, String className, Set<String> imports, Map<String, String> fields) {
-        super(packageName, className, imports, fields);
+    public RefableInterfaceGen(Genable genable) {
+        super(genable);
     }
 
     private void writeRefableInterfaceFuncs(Stringer sb, String name, String klass) {
@@ -19,7 +19,7 @@ public class RefableInterfaceGen extends Gen {
 
     @Override
     public String effectiveClassName() {
-        return className+"Refable";
+        return genable.getClassName()+"Refable";
     }
 
     @Override
@@ -49,7 +49,7 @@ public class RefableInterfaceGen extends Gen {
 
     @Override
     public void writeMethods(Stringer sb) {
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             writeRefableInterfaceFuncs(sb.indent(), entry.getKey(), entry.getValue());
         }
     }

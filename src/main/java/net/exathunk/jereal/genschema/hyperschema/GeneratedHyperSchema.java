@@ -2,7 +2,6 @@ package net.exathunk.jereal.genschema.hyperschema;
 
 import java.util.List;
 import java.util.Map;
-import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
@@ -18,10 +17,10 @@ public class GeneratedHyperSchema implements GeneratedHyperSchemaLike, Generated
     private final Ref<List<GeneratedHyperSchemaOrUriContainer>> alternate;
     private final Ref<String> contentEncoding;
     private final Ref<JThing> defaultField;
-    private final Ref<Any3<String,List<JThing>,GeneratedHyperSchemaOrUriContainer>> disallow;
-    private final Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>>> extendsField;
+    private final Ref<Any3<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>,GeneratedHyperSchemaOrUriContainer>> disallow;
+    private final Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>>> extendsField;
     private final Ref<String> fragmentResolution;
-    private final Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>>> items;
+    private final Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>>> items;
     private final Ref<List<GeneratedLinksContainer>> links;
     private final Ref<String> mediaType;
     private final Ref<String> pathStart;
@@ -29,7 +28,7 @@ public class GeneratedHyperSchema implements GeneratedHyperSchemaLike, Generated
     private final Ref<Boolean> readonly;
     private final Ref<Any2<String,GeneratedHyperSchemaOrUriContainer>> requires;
     private final Ref<Boolean> root;
-    private final Ref<Any2<String,List<JThing>>> type;
+    private final Ref<Any2<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>>> type;
 
     public GeneratedHyperSchema() {
         additionalItems = new RefImpl<Any2<GeneratedHyperSchemaOrUriContainer,Boolean>>();
@@ -37,10 +36,10 @@ public class GeneratedHyperSchema implements GeneratedHyperSchemaLike, Generated
         alternate = new RefImpl<List<GeneratedHyperSchemaOrUriContainer>>();
         contentEncoding = new RefImpl<String>();
         defaultField = new RefImpl<JThing>();
-        disallow = new RefImpl<Any3<String,List<JThing>,GeneratedHyperSchemaOrUriContainer>>();
-        extendsField = new RefImpl<Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>>>();
+        disallow = new RefImpl<Any3<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>,GeneratedHyperSchemaOrUriContainer>>();
+        extendsField = new RefImpl<Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>>>();
         fragmentResolution = new RefImpl<String>();
-        items = new RefImpl<Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>>>();
+        items = new RefImpl<Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>>>();
         links = new RefImpl<List<GeneratedLinksContainer>>();
         mediaType = new RefImpl<String>();
         pathStart = new RefImpl<String>();
@@ -48,7 +47,7 @@ public class GeneratedHyperSchema implements GeneratedHyperSchemaLike, Generated
         readonly = new RefImpl<Boolean>();
         requires = new RefImpl<Any2<String,GeneratedHyperSchemaOrUriContainer>>();
         root = new RefImpl<Boolean>();
-        type = new RefImpl<Any2<String,List<JThing>>>();
+        type = new RefImpl<Any2<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>>>();
     }
 
     @Override
@@ -141,15 +140,15 @@ public class GeneratedHyperSchema implements GeneratedHyperSchemaLike, Generated
         return !disallow.isEmptyRef();
     }
     @Override
-    public Any3<String,List<JThing>,GeneratedHyperSchemaOrUriContainer> getDisallow() {
+    public Any3<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>,GeneratedHyperSchemaOrUriContainer> getDisallow() {
         return disallow.getRef();
     }
     @Override
-    public void setDisallow(Any3<String,List<JThing>,GeneratedHyperSchemaOrUriContainer> value) {
+    public void setDisallow(Any3<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>,GeneratedHyperSchemaOrUriContainer> value) {
         disallow.setRef(value);
     }
     @Override
-    public Ref<Any3<String,List<JThing>,GeneratedHyperSchemaOrUriContainer>> getDisallowRef() {
+    public Ref<Any3<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>,GeneratedHyperSchemaOrUriContainer>> getDisallowRef() {
         return disallow;
     }
 
@@ -158,15 +157,15 @@ public class GeneratedHyperSchema implements GeneratedHyperSchemaLike, Generated
         return !extendsField.isEmptyRef();
     }
     @Override
-    public Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>> getExtendsField() {
+    public Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>> getExtendsField() {
         return extendsField.getRef();
     }
     @Override
-    public void setExtendsField(Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>> value) {
+    public void setExtendsField(Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>> value) {
         extendsField.setRef(value);
     }
     @Override
-    public Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>>> getExtendsFieldRef() {
+    public Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>>> getExtendsFieldRef() {
         return extendsField;
     }
 
@@ -192,15 +191,15 @@ public class GeneratedHyperSchema implements GeneratedHyperSchemaLike, Generated
         return !items.isEmptyRef();
     }
     @Override
-    public Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>> getItems() {
+    public Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>> getItems() {
         return items.getRef();
     }
     @Override
-    public void setItems(Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>> value) {
+    public void setItems(Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>> value) {
         items.setRef(value);
     }
     @Override
-    public Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>>> getItemsRef() {
+    public Ref<Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>>> getItemsRef() {
         return items;
     }
 
@@ -328,15 +327,15 @@ public class GeneratedHyperSchema implements GeneratedHyperSchemaLike, Generated
         return !type.isEmptyRef();
     }
     @Override
-    public Any2<String,List<JThing>> getType() {
+    public Any2<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>> getType() {
         return type.getRef();
     }
     @Override
-    public void setType(Any2<String,List<JThing>> value) {
+    public void setType(Any2<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>> value) {
         type.setRef(value);
     }
     @Override
-    public Ref<Any2<String,List<JThing>>> getTypeRef() {
+    public Ref<Any2<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>>> getTypeRef() {
         return type;
     }
 

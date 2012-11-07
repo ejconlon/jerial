@@ -2,7 +2,6 @@ package net.exathunk.jereal.genschema.hyperschema;
 
 import java.util.List;
 import java.util.Map;
-import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
@@ -34,20 +33,20 @@ public interface GeneratedHyperSchemaLike {
         void setDefaultField(JThing value);
 
         boolean hasDisallow();
-        Any3<String,List<JThing>,GeneratedHyperSchemaOrUriContainer> getDisallow();
-        void setDisallow(Any3<String,List<JThing>,GeneratedHyperSchemaOrUriContainer> value);
+        Any3<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>,GeneratedHyperSchemaOrUriContainer> getDisallow();
+        void setDisallow(Any3<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>,GeneratedHyperSchemaOrUriContainer> value);
 
         boolean hasExtendsField();
-        Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>> getExtendsField();
-        void setExtendsField(Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>> value);
+        Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>> getExtendsField();
+        void setExtendsField(Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>> value);
 
         boolean hasFragmentResolution();
         String getFragmentResolution();
         void setFragmentResolution(String value);
 
         boolean hasItems();
-        Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>> getItems();
-        void setItems(Any2<GeneratedHyperSchemaOrUriContainer,List<JThing>> value);
+        Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>> getItems();
+        void setItems(Any2<GeneratedHyperSchemaOrUriContainer,List<GeneratedHyperSchemaOrUriContainer>> value);
 
         boolean hasLinks();
         List<GeneratedLinksContainer> getLinks();
@@ -78,7 +77,7 @@ public interface GeneratedHyperSchemaLike {
         void setRoot(Boolean value);
 
         boolean hasType();
-        Any2<String,List<JThing>> getType();
-        void setType(Any2<String,List<JThing>> value);
+        Any2<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>> getType();
+        void setType(Any2<String,List<Any2<String,GeneratedHyperSchemaOrUriContainer>>> value);
 
 }

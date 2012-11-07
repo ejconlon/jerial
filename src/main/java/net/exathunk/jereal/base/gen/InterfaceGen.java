@@ -7,13 +7,13 @@ import java.util.Set;
  * charolastra 11/3/12 2:19 PM
  */
 public class InterfaceGen extends Gen {
-    public InterfaceGen(String packageName, String className, Set<String> imports, Map<String, String> fields) {
-        super(packageName, className, imports, fields);
+    public InterfaceGen(Genable genable) {
+        super(genable);
     }
 
     @Override
     public String effectiveClassName() {
-        return className+"Like";
+        return genable.getClassName()+"Like";
     }
 
     @Override
@@ -43,7 +43,7 @@ public class InterfaceGen extends Gen {
 
     @Override
     public void writeMethods(Stringer sb) {
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             writeInterfaceFuncs(sb.indent(), entry.getKey(), entry.getValue());
         }
     }

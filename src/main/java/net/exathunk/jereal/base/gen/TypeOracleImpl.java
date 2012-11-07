@@ -10,12 +10,16 @@ import java.util.List;
 public class TypeOracleImpl implements TypeOracle {
 
     @Override
-    public String makeType(String selfType, SchemaRef schemaRef) {
+    public String makeType(String selfType, SchemaRef schemaRef, SchemaRef itemType) {
         if (schemaRef.hasRight()) {
             final String ts = schemaRef.getRight().getRef();
             String ret = ts.equals("#") ? selfType : Util.xform(ts);
             if (ret.equals("Array")) {
-                return "List<JThing>";
+                if (itemType == null) {
+                    return "List<JThing>";
+                } else {
+                    return "List<"+makeType(selfType, itemType, null)+">";
+                }
             } else {
                 return ret;
             }
@@ -26,7 +30,7 @@ public class TypeOracleImpl implements TypeOracle {
                 String ret = ts.equals("#") ? selfType : Util.xform(ts);
                 if (ret.equals("Array")) {
                     if (!s.items.isEmptyRef())
-                        return "List<"+makeType(selfType, s.items.getRef())+">";
+                        return "List<"+makeType(selfType, s.items.getRef(), null)+">";
                     else
                         return "List<JThing>";
                 } else {
@@ -39,8 +43,10 @@ public class TypeOracleImpl implements TypeOracle {
                 final List<SchemaRef> r = s.type_SchemaRef.getRef();
                 assert r.size() > 0;
                 StringBuilder sb = new StringBuilder("Any"+r.size()+"<");
+                SchemaRef itref = null;
+                if (!s.items.isEmptyRef()) { itref = s.items.getRef(); }
                 for (SchemaRef r2 : r) {
-                    sb.append(makeType(selfType, r2)).append(',');
+                    sb.append(makeType(selfType, r2, itref)).append(',');
                 }
                 sb.deleteCharAt(sb.length()-1);
                 sb.append(">");

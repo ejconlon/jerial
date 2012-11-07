@@ -2,7 +2,6 @@ package net.exathunk.jereal.genschema.schema;
 
 import java.util.List;
 import java.util.Map;
-import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
@@ -19,7 +18,7 @@ public interface GeneratedSchemaRefable {
 
         Ref<String> getDescriptionRef();
 
-        Ref<Any3<String,List<JThing>,GeneratedSchema>> getDisallowRef();
+        Ref<Any3<String,List<Any2<String,GeneratedSchema>>,GeneratedSchema>> getDisallowRef();
 
         Ref<List<JThing>> getEnumFieldRef();
 
@@ -27,11 +26,11 @@ public interface GeneratedSchemaRefable {
 
         Ref<Double> getExclusiveMinimumRef();
 
-        Ref<Any2<GeneratedSchema,List<JThing>>> getExtendsFieldRef();
+        Ref<Any2<GeneratedSchema,List<GeneratedSchema>>> getExtendsFieldRef();
 
         Ref<String> getFormatRef();
 
-        Ref<Any2<GeneratedSchema,List<JThing>>> getItemsRef();
+        Ref<Any2<GeneratedSchema,List<GeneratedSchema>>> getItemsRef();
 
         Ref<Double> getMaxDecimalRef();
 
@@ -57,7 +56,7 @@ public interface GeneratedSchemaRefable {
 
         Ref<String> getTitleRef();
 
-        Ref<Any2<String,List<JThing>>> getTypeRef();
+        Ref<Any2<String,List<Any2<String,GeneratedSchema>>>> getTypeRef();
 
         Ref<Boolean> getUniqueItemsRef();
 

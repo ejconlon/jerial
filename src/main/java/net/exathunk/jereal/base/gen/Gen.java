@@ -1,5 +1,7 @@
 package net.exathunk.jereal.base.gen;
 
+import net.exathunk.jereal.schema.domain.SchemaRef;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -9,29 +11,23 @@ import java.util.TreeMap;
  */
 public abstract class Gen implements GenLike {
 
-    protected final String packageName;
-    protected final String className;
-    protected final Set<String> imports;
-    protected final Map<String, String> fields;
+    protected final Genable genable;
 
-    public Gen(String packageName, String className, Set<String> imports, Map<String, String> fields) {
-        this.packageName = packageName;
-        this.className = className;
-        this.imports = imports;
-        this.fields = fields;
+    public Gen(Genable genable) {
+        this.genable = genable;
     }
 
     @Override
     public void writePackage(Stringer sb) {
-        sb.append("package ").append(packageName).append(";\n\n");
+        sb.append("package ").append(genable.getPackageName()).append(";\n\n");
     }
 
     @Override
     public void writeImports(Stringer sb) {
-        for (String importt : imports) {
+        for (String importt : genable.getImports()) {
             sb.append("import ").append(importt).append(";\n");
         }
-        if (!imports.isEmpty()) sb.append("\n");
+        if (!genable.getImports().isEmpty()) sb.append("\n");
     }
 
     @Override
@@ -67,7 +63,7 @@ public abstract class Gen implements GenLike {
         Map<String, String> map = new TreeMap<String, String>();
         Stringer sb = new Stringer();
         writeClass(sb);
-        map.put(packageName+"."+effectiveClassName(), sb.toString());
+        map.put(genable.getPackageName()+"."+effectiveClassName(), sb.toString());
         return map;
     }
 }

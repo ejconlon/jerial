@@ -2,7 +2,6 @@ package net.exathunk.jereal.genschema.schema;
 
 import java.util.List;
 import java.util.Map;
-import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
@@ -16,13 +15,13 @@ public class GeneratedSchema implements GeneratedSchemaLike, GeneratedSchemaRefa
     private final Ref<Any2<GeneratedSchema,Boolean>> additionalItems;
     private final Ref<Any2<GeneratedSchema,Boolean>> additionalProperties;
     private final Ref<String> description;
-    private final Ref<Any3<String,List<JThing>,GeneratedSchema>> disallow;
+    private final Ref<Any3<String,List<Any2<String,GeneratedSchema>>,GeneratedSchema>> disallow;
     private final Ref<List<JThing>> enumField;
     private final Ref<Double> exclusiveMaximum;
     private final Ref<Double> exclusiveMinimum;
-    private final Ref<Any2<GeneratedSchema,List<JThing>>> extendsField;
+    private final Ref<Any2<GeneratedSchema,List<GeneratedSchema>>> extendsField;
     private final Ref<String> format;
-    private final Ref<Any2<GeneratedSchema,List<JThing>>> items;
+    private final Ref<Any2<GeneratedSchema,List<GeneratedSchema>>> items;
     private final Ref<Double> maxDecimal;
     private final Ref<Long> maxItems;
     private final Ref<Long> maxLength;
@@ -35,20 +34,20 @@ public class GeneratedSchema implements GeneratedSchemaLike, GeneratedSchemaRefa
     private final Ref<Boolean> required;
     private final Ref<Any2<String,GeneratedSchema>> requires;
     private final Ref<String> title;
-    private final Ref<Any2<String,List<JThing>>> type;
+    private final Ref<Any2<String,List<Any2<String,GeneratedSchema>>>> type;
     private final Ref<Boolean> uniqueItems;
 
     public GeneratedSchema() {
         additionalItems = new RefImpl<Any2<GeneratedSchema,Boolean>>();
         additionalProperties = new RefImpl<Any2<GeneratedSchema,Boolean>>();
         description = new RefImpl<String>();
-        disallow = new RefImpl<Any3<String,List<JThing>,GeneratedSchema>>();
+        disallow = new RefImpl<Any3<String,List<Any2<String,GeneratedSchema>>,GeneratedSchema>>();
         enumField = new RefImpl<List<JThing>>();
         exclusiveMaximum = new RefImpl<Double>();
         exclusiveMinimum = new RefImpl<Double>();
-        extendsField = new RefImpl<Any2<GeneratedSchema,List<JThing>>>();
+        extendsField = new RefImpl<Any2<GeneratedSchema,List<GeneratedSchema>>>();
         format = new RefImpl<String>();
-        items = new RefImpl<Any2<GeneratedSchema,List<JThing>>>();
+        items = new RefImpl<Any2<GeneratedSchema,List<GeneratedSchema>>>();
         maxDecimal = new RefImpl<Double>();
         maxItems = new RefImpl<Long>();
         maxLength = new RefImpl<Long>();
@@ -61,7 +60,7 @@ public class GeneratedSchema implements GeneratedSchemaLike, GeneratedSchemaRefa
         required = new RefImpl<Boolean>();
         requires = new RefImpl<Any2<String,GeneratedSchema>>();
         title = new RefImpl<String>();
-        type = new RefImpl<Any2<String,List<JThing>>>();
+        type = new RefImpl<Any2<String,List<Any2<String,GeneratedSchema>>>>();
         uniqueItems = new RefImpl<Boolean>();
     }
 
@@ -121,15 +120,15 @@ public class GeneratedSchema implements GeneratedSchemaLike, GeneratedSchemaRefa
         return !disallow.isEmptyRef();
     }
     @Override
-    public Any3<String,List<JThing>,GeneratedSchema> getDisallow() {
+    public Any3<String,List<Any2<String,GeneratedSchema>>,GeneratedSchema> getDisallow() {
         return disallow.getRef();
     }
     @Override
-    public void setDisallow(Any3<String,List<JThing>,GeneratedSchema> value) {
+    public void setDisallow(Any3<String,List<Any2<String,GeneratedSchema>>,GeneratedSchema> value) {
         disallow.setRef(value);
     }
     @Override
-    public Ref<Any3<String,List<JThing>,GeneratedSchema>> getDisallowRef() {
+    public Ref<Any3<String,List<Any2<String,GeneratedSchema>>,GeneratedSchema>> getDisallowRef() {
         return disallow;
     }
 
@@ -189,15 +188,15 @@ public class GeneratedSchema implements GeneratedSchemaLike, GeneratedSchemaRefa
         return !extendsField.isEmptyRef();
     }
     @Override
-    public Any2<GeneratedSchema,List<JThing>> getExtendsField() {
+    public Any2<GeneratedSchema,List<GeneratedSchema>> getExtendsField() {
         return extendsField.getRef();
     }
     @Override
-    public void setExtendsField(Any2<GeneratedSchema,List<JThing>> value) {
+    public void setExtendsField(Any2<GeneratedSchema,List<GeneratedSchema>> value) {
         extendsField.setRef(value);
     }
     @Override
-    public Ref<Any2<GeneratedSchema,List<JThing>>> getExtendsFieldRef() {
+    public Ref<Any2<GeneratedSchema,List<GeneratedSchema>>> getExtendsFieldRef() {
         return extendsField;
     }
 
@@ -223,15 +222,15 @@ public class GeneratedSchema implements GeneratedSchemaLike, GeneratedSchemaRefa
         return !items.isEmptyRef();
     }
     @Override
-    public Any2<GeneratedSchema,List<JThing>> getItems() {
+    public Any2<GeneratedSchema,List<GeneratedSchema>> getItems() {
         return items.getRef();
     }
     @Override
-    public void setItems(Any2<GeneratedSchema,List<JThing>> value) {
+    public void setItems(Any2<GeneratedSchema,List<GeneratedSchema>> value) {
         items.setRef(value);
     }
     @Override
-    public Ref<Any2<GeneratedSchema,List<JThing>>> getItemsRef() {
+    public Ref<Any2<GeneratedSchema,List<GeneratedSchema>>> getItemsRef() {
         return items;
     }
 
@@ -444,15 +443,15 @@ public class GeneratedSchema implements GeneratedSchemaLike, GeneratedSchemaRefa
         return !type.isEmptyRef();
     }
     @Override
-    public Any2<String,List<JThing>> getType() {
+    public Any2<String,List<Any2<String,GeneratedSchema>>> getType() {
         return type.getRef();
     }
     @Override
-    public void setType(Any2<String,List<JThing>> value) {
+    public void setType(Any2<String,List<Any2<String,GeneratedSchema>>> value) {
         type.setRef(value);
     }
     @Override
-    public Ref<Any2<String,List<JThing>>> getTypeRef() {
+    public Ref<Any2<String,List<Any2<String,GeneratedSchema>>>> getTypeRef() {
         return type;
     }
 

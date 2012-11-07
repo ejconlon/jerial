@@ -1,5 +1,7 @@
 package net.exathunk.jereal.base.gen;
 
+import net.exathunk.jereal.schema.domain.SchemaRef;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -21,13 +23,13 @@ public class ContainerGen extends Gen {
         return m;
     }
 
-    public ContainerGen(String packageName, String className, Set<String> imports, Map<String, String> fields) {
-        super(packageName, className+"Container", imports, makeContainerFields(className));
+    public ContainerGen(Genable genable) {
+        super(genable);
     }
 
     @Override
     public String effectiveClassName() {
-        return className;
+        return genable.getClassName()+"Container";
     }
 
     @Override
@@ -37,7 +39,7 @@ public class ContainerGen extends Gen {
 
     @Override
     public void writeDeclarations(Stringer sb) {
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             sb.append("private final Ref<").append(entry.getValue()).append("> ").append(entry.getKey()).append(";\n");
         }
         sb.cont().append("\n");
@@ -45,9 +47,9 @@ public class ContainerGen extends Gen {
 
     @Override
     public void writeConstructor(Stringer sb) {
-        sb.append("public ").append(className).append("() {\n");
+        sb.append("public ").append(effectiveClassName()).append("() {\n");
         Stringer sb2 = sb.indent();
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             sb2.append(entry.getKey()).append(" = new RefImpl<").append(entry.getValue()).append(">();\n");
         }
         sb.append("}\n\n");
@@ -58,8 +60,8 @@ public class ContainerGen extends Gen {
         sb.append("@Override\n");
         sb.append("public String toString() {\n");
         Stringer sb2 = sb.indent();
-        sb2.append("StringBuilder sb = new StringBuilder(\"").append(className).append("{ \");\n");
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        sb2.append("StringBuilder sb = new StringBuilder(\"").append(effectiveClassName()).append("{ \");\n");
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             sb2.append("if (!").append(entry.getKey()).append(".isEmptyRef()) sb.append(\"");
             sb2.cont().append(entry.getKey()).append("='\")").append(".append(").append(entry.getKey()).append(").append(\"', \");\n");
         }
@@ -73,9 +75,9 @@ public class ContainerGen extends Gen {
         sb.append("public boolean equals(Object o) {\n");
         Stringer sb2 = sb.indent();
         sb2.append("if (this == o) return true;\n");
-        sb2.append("if (o instanceof ").append(className).append(") {\n");
-        sb2.indent().append(className).append(" other = (").append(className).append(") o;\n");
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        sb2.append("if (o instanceof ").append(effectiveClassName()).append(") {\n");
+        sb2.indent().append(effectiveClassName()).append(" other = (").append(effectiveClassName()).append(") o;\n");
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             writeEqualsInner1(sb2.indent(), entry.getKey());
         }
         sb2.indent().append("return true;\n");
@@ -101,7 +103,7 @@ public class ContainerGen extends Gen {
         sb.append("public int hashCode() {\n");
         Stringer sb2 = sb.indent();
         sb2.append("int result = 0;\n");
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             sb2.append("result = 31 * result + ").append(entry.getKey()).append(".hashCode();\n");
         }
         sb2.append("return result;\n");
@@ -110,7 +112,7 @@ public class ContainerGen extends Gen {
 
     @Override
     public void writeMethods(Stringer sb) {
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             writeMethodsForField(sb, entry.getKey(), entry.getValue());
         }
     }

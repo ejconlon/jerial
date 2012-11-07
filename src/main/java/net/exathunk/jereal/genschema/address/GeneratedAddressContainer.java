@@ -2,7 +2,6 @@ package net.exathunk.jereal.genschema.address;
 
 import java.util.List;
 import java.util.Map;
-import net.exathunk.jereal.base.core.JObject;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
@@ -12,125 +11,125 @@ import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
 public class GeneratedAddressContainer {
 
-    private final Ref<List<JThing>> arrayValue;
-    private final Ref<Boolean> booleanValue;
-    private final Ref<Double> doubleValue;
-    private final Ref<GeneratedLinksContainer> links;
-    private final Ref<Long> longValue;
-    private final Ref<GeneratedAddress> objectValue;
-    private final Ref<String> stringValue;
+    private final Ref<String> countryName;
+    private final Ref<String> extendedAddress;
+    private final Ref<String> locality;
+    private final Ref<String> postOfficeBox;
+    private final Ref<String> postalCode;
+    private final Ref<String> region;
+    private final Ref<String> streetAddress;
 
     public GeneratedAddressContainer() {
-        arrayValue = new RefImpl<List<JThing>>();
-        booleanValue = new RefImpl<Boolean>();
-        doubleValue = new RefImpl<Double>();
-        links = new RefImpl<GeneratedLinksContainer>();
-        longValue = new RefImpl<Long>();
-        objectValue = new RefImpl<GeneratedAddress>();
-        stringValue = new RefImpl<String>();
+        countryName = new RefImpl<String>();
+        extendedAddress = new RefImpl<String>();
+        locality = new RefImpl<String>();
+        postOfficeBox = new RefImpl<String>();
+        postalCode = new RefImpl<String>();
+        region = new RefImpl<String>();
+        streetAddress = new RefImpl<String>();
     }
 
-    public boolean hasArrayValue() {
-        return !arrayValue.isEmptyRef();
+    public boolean hasCountryName() {
+        return !countryName.isEmptyRef();
     }
-    public List<JThing> getArrayValue() {
-        return arrayValue.getRef();
+    public String getCountryName() {
+        return countryName.getRef();
     }
-    public void setArrayValue(List<JThing> value) {
-        arrayValue.setRef(value);
+    public void setCountryName(String value) {
+        countryName.setRef(value);
     }
-    public Ref<List<JThing>> getArrayValueRef() {
-        return arrayValue;
-    }
-
-    public boolean hasBooleanValue() {
-        return !booleanValue.isEmptyRef();
-    }
-    public Boolean getBooleanValue() {
-        return booleanValue.getRef();
-    }
-    public void setBooleanValue(Boolean value) {
-        booleanValue.setRef(value);
-    }
-    public Ref<Boolean> getBooleanValueRef() {
-        return booleanValue;
+    public Ref<String> getCountryNameRef() {
+        return countryName;
     }
 
-    public boolean hasDoubleValue() {
-        return !doubleValue.isEmptyRef();
+    public boolean hasExtendedAddress() {
+        return !extendedAddress.isEmptyRef();
     }
-    public Double getDoubleValue() {
-        return doubleValue.getRef();
+    public String getExtendedAddress() {
+        return extendedAddress.getRef();
     }
-    public void setDoubleValue(Double value) {
-        doubleValue.setRef(value);
+    public void setExtendedAddress(String value) {
+        extendedAddress.setRef(value);
     }
-    public Ref<Double> getDoubleValueRef() {
-        return doubleValue;
-    }
-
-    public boolean hasLinks() {
-        return !links.isEmptyRef();
-    }
-    public GeneratedLinksContainer getLinks() {
-        return links.getRef();
-    }
-    public void setLinks(GeneratedLinksContainer value) {
-        links.setRef(value);
-    }
-    public Ref<GeneratedLinksContainer> getLinksRef() {
-        return links;
+    public Ref<String> getExtendedAddressRef() {
+        return extendedAddress;
     }
 
-    public boolean hasLongValue() {
-        return !longValue.isEmptyRef();
+    public boolean hasLocality() {
+        return !locality.isEmptyRef();
     }
-    public Long getLongValue() {
-        return longValue.getRef();
+    public String getLocality() {
+        return locality.getRef();
     }
-    public void setLongValue(Long value) {
-        longValue.setRef(value);
+    public void setLocality(String value) {
+        locality.setRef(value);
     }
-    public Ref<Long> getLongValueRef() {
-        return longValue;
-    }
-
-    public boolean hasObjectValue() {
-        return !objectValue.isEmptyRef();
-    }
-    public GeneratedAddress getObjectValue() {
-        return objectValue.getRef();
-    }
-    public void setObjectValue(GeneratedAddress value) {
-        objectValue.setRef(value);
-    }
-    public Ref<GeneratedAddress> getObjectValueRef() {
-        return objectValue;
+    public Ref<String> getLocalityRef() {
+        return locality;
     }
 
-    public boolean hasStringValue() {
-        return !stringValue.isEmptyRef();
+    public boolean hasPostOfficeBox() {
+        return !postOfficeBox.isEmptyRef();
     }
-    public String getStringValue() {
-        return stringValue.getRef();
+    public String getPostOfficeBox() {
+        return postOfficeBox.getRef();
     }
-    public void setStringValue(String value) {
-        stringValue.setRef(value);
+    public void setPostOfficeBox(String value) {
+        postOfficeBox.setRef(value);
     }
-    public Ref<String> getStringValueRef() {
-        return stringValue;
+    public Ref<String> getPostOfficeBoxRef() {
+        return postOfficeBox;
+    }
+
+    public boolean hasPostalCode() {
+        return !postalCode.isEmptyRef();
+    }
+    public String getPostalCode() {
+        return postalCode.getRef();
+    }
+    public void setPostalCode(String value) {
+        postalCode.setRef(value);
+    }
+    public Ref<String> getPostalCodeRef() {
+        return postalCode;
+    }
+
+    public boolean hasRegion() {
+        return !region.isEmptyRef();
+    }
+    public String getRegion() {
+        return region.getRef();
+    }
+    public void setRegion(String value) {
+        region.setRef(value);
+    }
+    public Ref<String> getRegionRef() {
+        return region;
+    }
+
+    public boolean hasStreetAddress() {
+        return !streetAddress.isEmptyRef();
+    }
+    public String getStreetAddress() {
+        return streetAddress.getRef();
+    }
+    public void setStreetAddress(String value) {
+        streetAddress.setRef(value);
+    }
+    public Ref<String> getStreetAddressRef() {
+        return streetAddress;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedAddressContainer{ ");
-        if (!arrayValue.isEmptyRef()) sb.append("arrayValue='").append(arrayValue).append("', ");
-        if (!booleanValue.isEmptyRef()) sb.append("booleanValue='").append(booleanValue).append("', ");
-        if (!doubleValue.isEmptyRef()) sb.append("doubleValue='").append(doubleValue).append("', ");
-        if (!links.isEmptyRef()) sb.append("links='").append(links).append("', ");
-        if (!longValue.isEmptyRef()) sb.append("longValue='").append(longValue).append("', ");
-        if (!objectValue.isEmptyRef()) sb.append("objectValue='").append(objectValue).append("', ");
-        if (!stringValue.isEmptyRef()) sb.append("stringValue='").append(stringValue).append("', ");
+        if (!countryName.isEmptyRef()) sb.append("countryName='").append(countryName).append("', ");
+        if (!extendedAddress.isEmptyRef()) sb.append("extendedAddress='").append(extendedAddress).append("', ");
+        if (!locality.isEmptyRef()) sb.append("locality='").append(locality).append("', ");
+        if (!postOfficeBox.isEmptyRef()) sb.append("postOfficeBox='").append(postOfficeBox).append("', ");
+        if (!postalCode.isEmptyRef()) sb.append("postalCode='").append(postalCode).append("', ");
+        if (!region.isEmptyRef()) sb.append("region='").append(region).append("', ");
+        if (!streetAddress.isEmptyRef()) sb.append("streetAddress='").append(streetAddress).append("', ");
         return sb.append("}").toString();
     }
 
@@ -139,34 +138,34 @@ public class GeneratedAddressContainer {
         if (this == o) return true;
         if (o instanceof GeneratedAddressContainer) {
             GeneratedAddressContainer other = (GeneratedAddressContainer) o;
-            if (hasArrayValue()) {
-                if (!other.hasArrayValue()) return false;
-                else if (!getArrayValue().equals(other.getArrayValue())) return false;
-            } else if (other.hasArrayValue()) return false;
-            if (hasBooleanValue()) {
-                if (!other.hasBooleanValue()) return false;
-                else if (!getBooleanValue().equals(other.getBooleanValue())) return false;
-            } else if (other.hasBooleanValue()) return false;
-            if (hasDoubleValue()) {
-                if (!other.hasDoubleValue()) return false;
-                else if (!getDoubleValue().equals(other.getDoubleValue())) return false;
-            } else if (other.hasDoubleValue()) return false;
-            if (hasLinks()) {
-                if (!other.hasLinks()) return false;
-                else if (!getLinks().equals(other.getLinks())) return false;
-            } else if (other.hasLinks()) return false;
-            if (hasLongValue()) {
-                if (!other.hasLongValue()) return false;
-                else if (!getLongValue().equals(other.getLongValue())) return false;
-            } else if (other.hasLongValue()) return false;
-            if (hasObjectValue()) {
-                if (!other.hasObjectValue()) return false;
-                else if (!getObjectValue().equals(other.getObjectValue())) return false;
-            } else if (other.hasObjectValue()) return false;
-            if (hasStringValue()) {
-                if (!other.hasStringValue()) return false;
-                else if (!getStringValue().equals(other.getStringValue())) return false;
-            } else if (other.hasStringValue()) return false;
+            if (hasCountryName()) {
+                if (!other.hasCountryName()) return false;
+                else if (!getCountryName().equals(other.getCountryName())) return false;
+            } else if (other.hasCountryName()) return false;
+            if (hasExtendedAddress()) {
+                if (!other.hasExtendedAddress()) return false;
+                else if (!getExtendedAddress().equals(other.getExtendedAddress())) return false;
+            } else if (other.hasExtendedAddress()) return false;
+            if (hasLocality()) {
+                if (!other.hasLocality()) return false;
+                else if (!getLocality().equals(other.getLocality())) return false;
+            } else if (other.hasLocality()) return false;
+            if (hasPostOfficeBox()) {
+                if (!other.hasPostOfficeBox()) return false;
+                else if (!getPostOfficeBox().equals(other.getPostOfficeBox())) return false;
+            } else if (other.hasPostOfficeBox()) return false;
+            if (hasPostalCode()) {
+                if (!other.hasPostalCode()) return false;
+                else if (!getPostalCode().equals(other.getPostalCode())) return false;
+            } else if (other.hasPostalCode()) return false;
+            if (hasRegion()) {
+                if (!other.hasRegion()) return false;
+                else if (!getRegion().equals(other.getRegion())) return false;
+            } else if (other.hasRegion()) return false;
+            if (hasStreetAddress()) {
+                if (!other.hasStreetAddress()) return false;
+                else if (!getStreetAddress().equals(other.getStreetAddress())) return false;
+            } else if (other.hasStreetAddress()) return false;
             return true;
         } else {
             return false;
@@ -176,13 +175,13 @@ public class GeneratedAddressContainer {
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + arrayValue.hashCode();
-        result = 31 * result + booleanValue.hashCode();
-        result = 31 * result + doubleValue.hashCode();
-        result = 31 * result + links.hashCode();
-        result = 31 * result + longValue.hashCode();
-        result = 31 * result + objectValue.hashCode();
-        result = 31 * result + stringValue.hashCode();
+        result = 31 * result + countryName.hashCode();
+        result = 31 * result + extendedAddress.hashCode();
+        result = 31 * result + locality.hashCode();
+        result = 31 * result + postOfficeBox.hashCode();
+        result = 31 * result + postalCode.hashCode();
+        result = 31 * result + region.hashCode();
+        result = 31 * result + streetAddress.hashCode();
         return result;
     }
 

@@ -13,12 +13,12 @@ public class MetaGen implements GenWritable {
         this.writables = writables;
     }
 
-    public static GenWritable makeDefault(String packageName, String className, Set<String> imports, Map<String, String> fields) {
+    public static GenWritable makeDefault(Genable genable) {
         List<GenWritable> writables = new ArrayList<GenWritable>();
-        writables.add(new ClassGen(packageName, className, imports, fields));
-        writables.add(new InterfaceGen(packageName, className, imports, fields));
-        writables.add(new RefableInterfaceGen(packageName, className, imports, fields));
-        writables.add(new ContainerGen(packageName, className, imports, fields));
+        writables.add(new ClassGen(genable));
+        writables.add(new InterfaceGen(genable));
+        writables.add(new RefableInterfaceGen(genable));
+        writables.add(new ContainerGen(genable));
         return new MetaGen(writables);
     }
 

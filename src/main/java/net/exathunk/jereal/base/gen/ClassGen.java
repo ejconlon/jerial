@@ -1,5 +1,7 @@
 package net.exathunk.jereal.base.gen;
 
+import net.exathunk.jereal.schema.domain.SchemaRef;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -8,23 +10,23 @@ import java.util.TreeMap;
  * charolastra 11/3/12 2:18 PM
  */
 public class ClassGen extends Gen {
-    public ClassGen(String packageName, String className, Set<String> imports, Map<String, String> fields) {
-        super(packageName, className, imports, fields);
+    public ClassGen(Genable genable) {
+        super(genable);
     }
 
     @Override
     public String effectiveClassName() {
-        return className;
+        return genable.getClassName();
     }
 
     @Override
     public void writeOpenClass(Stringer sb) {
-        sb.append("public class ").append(effectiveClassName()).append(" implements ").append(className).append("Like, ").append(className).append("Refable {\n\n");
+        sb.append("public class ").append(effectiveClassName()).append(" implements ").append(genable.getClassName()).append("Like, ").append(genable.getClassName()).append("Refable {\n\n");
     }
 
     @Override
     public void writeDeclarations(Stringer sb) {
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             sb.append("private final Ref<").append(entry.getValue()).append("> ").append(entry.getKey()).append(";\n");
         }
         sb.cont().append("\n");
@@ -32,9 +34,9 @@ public class ClassGen extends Gen {
 
     @Override
     public void writeConstructor(Stringer sb) {
-        sb.append("public ").append(className).append("() {\n");
+        sb.append("public ").append(genable.getClassName()).append("() {\n");
         Stringer sb2 = sb.indent();
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             sb2.append(entry.getKey()).append(" = new RefImpl<").append(entry.getValue()).append(">();\n");
         }
         sb.append("}\n\n");
@@ -45,8 +47,8 @@ public class ClassGen extends Gen {
         sb.append("@Override\n");
         sb.append("public String toString() {\n");
         Stringer sb2 = sb.indent();
-        sb2.append("StringBuilder sb = new StringBuilder(\"").append(className).append("{ \");\n");
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        sb2.append("StringBuilder sb = new StringBuilder(\"").append(genable.getClassName()).append("{ \");\n");
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             sb2.append("if (!").append(entry.getKey()).append(".isEmptyRef()) sb.append(\"");
             sb2.cont().append(entry.getKey()).append("='\")").append(".append(").append(entry.getKey()).append(").append(\"', \");\n");
         }
@@ -60,15 +62,15 @@ public class ClassGen extends Gen {
         sb.append("public boolean equals(Object o) {\n");
         Stringer sb2 = sb.indent();
         sb2.append("if (this == o) return true;\n");
-        sb2.append("if (o instanceof ").append(className).append("Like) {\n");
-        sb2.indent().append(className).append("Like other = (").append(className).append("Like) o;\n");
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        sb2.append("if (o instanceof ").append(genable.getClassName()).append("Like) {\n");
+        sb2.indent().append(genable.getClassName()).append("Like other = (").append(genable.getClassName()).append("Like) o;\n");
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             writeEqualsInner1(sb2.indent(), entry.getKey());
         }
         sb2.indent().append("return true;\n");
-        sb2.append("} else if (o instanceof ").append(className).append("Refable) {\n");
-        sb2.indent().append(className).append("Refable other = (").append(className).append("Refable) o;\n");
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        sb2.append("} else if (o instanceof ").append(genable.getClassName()).append("Refable) {\n");
+        sb2.indent().append(genable.getClassName()).append("Refable other = (").append(genable.getClassName()).append("Refable) o;\n");
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             writeEqualsInner2(sb2.indent(), entry.getKey());
         }
         sb2.indent().append("return true;\n");
@@ -100,7 +102,7 @@ public class ClassGen extends Gen {
         sb.append("public int hashCode() {\n");
         Stringer sb2 = sb.indent();
         sb2.append("int result = 0;\n");
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             sb2.append("result = 31 * result + ").append(entry.getKey()).append(".hashCode();\n");
         }
         sb2.append("return result;\n");
@@ -109,7 +111,7 @@ public class ClassGen extends Gen {
 
     @Override
     public void writeMethods(Stringer sb) {
-        for (Map.Entry<String, String> entry : fields.entrySet()) {
+        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
             writeMethodsForField(sb, entry.getKey(), entry.getValue());
         }
     }
