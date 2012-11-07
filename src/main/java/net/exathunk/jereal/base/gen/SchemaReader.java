@@ -22,10 +22,10 @@ public class SchemaReader {
     private final Set<String> imports;
     private final Map<String, String> fields;
 
-    public SchemaReader(String className, String basePackage, Schema schema, TypeOracle oracle) {
+    public SchemaReader(String className, String packageName, Schema schema, TypeOracle oracle) {
         this.name = className.toLowerCase();
         this.className = className;
-        this.packageName = basePackage+"."+name;
+        this.packageName = packageName;
         this.schema = schema;
         this.imports = new TreeSet<String>();
         this.fields = new TreeMap<String, String>();
@@ -38,7 +38,7 @@ public class SchemaReader {
                 try {
                     final String importClass = oracle.makeType(className, property.getValue());
                     imports.add(importClass);
-                    fields.put(property.getKey(),importClass);
+                    fields.put(Util.camelize(property.getKey()),importClass);
                 } catch (NotImplementedException soon) {}
             }
         }

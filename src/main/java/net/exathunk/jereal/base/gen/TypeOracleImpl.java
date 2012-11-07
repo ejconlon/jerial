@@ -34,7 +34,7 @@ public class TypeOracleImpl implements TypeOracle {
                 }
             } else if (!s.dollar_ref.isEmptyRef()) {
                 final String dr = s.dollar_ref.getRef();
-                return Util.xform(dr.substring(dr.lastIndexOf("/")+1));
+                return Util.xform(dr);
             } else if (!s.type_SchemaRef.isEmptyRef()) {
                 final List<SchemaRef> r = s.type_SchemaRef.getRef();
                 assert r.size() > 0;

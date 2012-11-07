@@ -11,18 +11,18 @@ public class ContainerGen extends Gen {
 
     private static Map<String, String> makeContainerFields(String className) {
         Map<String, String> m = new TreeMap<String, String>();
-        m.put("links", "List<Link>");
-        m.put("object", className);
-        m.put("array", "List<JThing>");
-        m.put("string", "String");
-        m.put("long", "Long");
-        m.put("double", "Double");
-        m.put("boolean", "Boolean");
+        m.put("links", "GeneratedLinksContainer");
+        m.put("objectValue", className);
+        m.put("arrayValue", "List<JThing>");
+        m.put("stringValue", "String");
+        m.put("longValue", "Long");
+        m.put("doubleValue", "Double");
+        m.put("booleanValue", "Boolean");
         return m;
     }
 
     public ContainerGen(String packageName, String className, Set<String> imports, Map<String, String> fields) {
-        super(packageName, className, imports, makeContainerFields(className));
+        super(packageName, className+"Container", imports, makeContainerFields(className));
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ContainerGen extends Gen {
 
     @Override
     public void writeOpenClass(Stringer sb) {
-        sb.append("public class ").append(effectiveClassName()).append("Container implements ").append(className).append("Container<").append(className).append("> {\n\n");
+        sb.append("public class ").append(effectiveClassName()).append(" {\n\n");
     }
 
     @Override
@@ -117,19 +117,19 @@ public class ContainerGen extends Gen {
 
     private void writeMethodsForField(Stringer sb, String name, String klass) {
         final String capName = name.substring(0, 1).toUpperCase()+name.substring(1);
-        sb.append("@Override\n");
+        //sb.append("@Override\n");
         sb.append("public boolean has").append(capName).append("() {\n");
         sb.indent().append("return !"+name+".isEmptyRef();\n");
         sb.append("}\n");
-        sb.append("@Override\n");
+        //sb.append("@Override\n");
         sb.append("public ").append(klass).append(" get").append(capName).append("() {\n");
         sb.indent().append("return "+name+".getRef();\n");
         sb.append("}\n");
-        sb.append("@Override\n");
+        //sb.append("@Override\n");
         sb.append("public void set").append(capName).append("(").append(klass).append(" value) {\n");
         sb.indent().append(name+".setRef(value);\n");
         sb.append("}\n");
-        sb.append("@Override\n");
+        //sb.append("@Override\n");
         sb.append("public Ref<").append(klass).append("> get").append(capName).append("Ref() {\n");
         sb.indent().append("return ").append(name).append(";\n");
         sb.append("}\n\n");
