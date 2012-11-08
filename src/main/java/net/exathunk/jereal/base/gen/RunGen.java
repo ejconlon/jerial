@@ -61,6 +61,8 @@ public class RunGen extends AbstractMojo {
         dest.mkdir();
         assert dest.isDirectory() && dest.canWrite();
 
+        Set<Klass> genKlasses = new TreeSet<Klass>();
+
         JsonParser parser = new JsonParser();
         for (File schema : schemas.listFiles()) {
             BufferedReader reader = new BufferedReader(new FileReader(schema));
@@ -87,6 +89,19 @@ public class RunGen extends AbstractMojo {
                 bufferedWriter.write(contents, 0, contents.length());
                 bufferedWriter.close();
             }
+
+            genKlasses.add(new Klass(klassName, packageName));
+        }
+
+        RegistryGen registryGen = new RegistryGen(new Klass("GenschemaRegistryFactory", basePackage), genKlasses);
+        final File g = new File(destDir+"/GenschemaRegistryFactory.java");
+        for (Map.Entry<String, String> entry : registryGen.makeClassToTextMap().entrySet()) {
+            final String contents = entry.getValue();
+            FileWriter writer = new FileWriter(g);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            bufferedWriter.write(contents, 0, contents.length());
+            bufferedWriter.close();
+            break;
         }
     }
 
