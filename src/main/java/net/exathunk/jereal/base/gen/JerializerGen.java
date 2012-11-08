@@ -87,8 +87,19 @@ public class JerializerGen extends Gen {
             } else {
                 throw new IllegalArgumentException("Unhandled klass (2): "+value);
             }
+        } else if (value.getTemplateArgs().size() == 3) {
+            if (value.getKlass().equals(new Klass(Ref3.class))) {
+                KlassTree first = value.getTemplateArgs().get(0);
+                KlassTree second = value.getTemplateArgs().get(1);
+                KlassTree third = value.getTemplateArgs().get(2);
+                writeDslCommandUncontained(sb, key, first, domainDotGetRefCall + ".getFirstRef()");
+                writeDslCommandUncontained(sb, key, second, domainDotGetRefCall + ".getSecondRef()");
+                writeDslCommandUncontained(sb, key, third, domainDotGetRefCall + ".getThirdRef()");
+            } else {
+                throw new IllegalArgumentException("Unhandled klass (3): "+value);
+            }
         } else {
-            sb.append("// dsl.addSomething("+domainDotGetRefCall+");\n");
+            throw new IllegalArgumentException("Unhandled klass (?): "+value);
         }
     }
 
@@ -112,28 +123,21 @@ public class JerializerGen extends Gen {
             if (value.getKlass().equals(new Klass(List.class))) {
                 assert value.getTemplateArgs().size() == 1;
                 KlassTree inner = value.getTemplateArgs().get(0);
-                assert inner.getTemplateArgs().size() == 1;
-                KlassTree superInner = inner.getTemplateArgs().get(0);
-                if (superInner.getKlass().equals(new Klass("String", "java.lang"))) {
-                    sb.append("objectDSL.seeWritable(\"").append(key).append("\", new RefImpl(recurser.seeStringRefList(dsl, ").append(domainDotGetRefCall).append(")));\n");
-                } else if (superInner.getKlass().equals(new Klass("Double", "java.lang"))) {
-                    sb.append("objectDSL.seeWritable(\"").append(key).append("\", new RefImpl(recurser.seeDoubleRefList(dsl, ").append(domainDotGetRefCall).append(")));\n");
-                } else if (superInner.getKlass().equals(new Klass("Long", "java.lang"))) {
-                    sb.append("objectDSL.seeWritable(\"").append(key).append("\", new RefImpl(recurser.seeLongRefList(dsl, ").append(domainDotGetRefCall).append(")));\n");
-                } else if (superInner.getKlass().equals(new Klass("Boolean", "java.lang"))) {
-                    sb.append("objectDSL.seeWritable(\"").append(key).append("\", new RefImpl(recurser.seeBooleanRefList(dsl, ").append(domainDotGetRefCall).append(")));\n");
-                } else if (superInner.getKlass().equals(new Klass(JThing.class))) {
-                    sb.append("objectDSL.seeWritable(\"").append(key).append("\", new RefImpl(recurser.seeThingRefList(dsl, ").append(domainDotGetRefCall).append(")));\n");
-                } else {
-                    sb.append("objectDSL.seeWritable(\"").append(key).append("\", new RefImpl(recurser.seeCustomRefList(dsl, ").append(domainDotGetRefCall).append(", ").append(superInner.getKlass().getKlassName()+".class").append(")));\n");
+                final String arity = (inner.getTemplateArgs().size() == 1) ? "" : ""+inner.getTemplateArgs().size();
+                sb.append("objectDSL.seeWritable(\"").append(key).append("\", new RefImpl(recurser.seeCustomRefList").append(arity).append("(dsl, ").append(domainDotGetRefCall).append(", ");
+                for (KlassTree k : inner.getTemplateArgs()) {
+                    sb.cont().append(k.getKlass().getKlassName()+".class, ");
                 }
+                sb.cont().deleteCharAt(sb.cont().length()-1);
+                sb.cont().deleteCharAt(sb.cont().length()-1);
+                sb.cont().append(")));\n");
             } else {
                 throw new IllegalArgumentException("Unhandled klass (1): "+value);
             }
         } else if (value.getTemplateArgs().size() == 2) {
             throw new IllegalArgumentException("Unhandled klass (2): "+value);
         } else {
-            sb.append("// dsl.addSomething("+domainDotGetRefCall+");\n");
+            throw new IllegalArgumentException("Unhandled klass (?): "+value);
         }
     }
 }

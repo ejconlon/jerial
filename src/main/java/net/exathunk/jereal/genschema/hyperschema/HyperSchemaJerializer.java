@@ -32,7 +32,9 @@ public class HyperSchemaJerializer<T extends PushableContext<T, U>, U extends Qu
         objectDSL.seeWritable("alternate", new RefImpl(recurser.seeCustomRefList(dsl, domain.getAlternateRef(), HyperSchemaOrUriContainer.class)));
         objectDSL.seeString("contentEncoding", domain.getContentEncodingRef());
         objectDSL.seeWritable("defaultField", new RefImpl(recurser.seeThing(dsl, domain.getDefaultFieldRef())));
-        // dsl.addSomething(domain.getDisallowRef());
+        objectDSL.seeString("disallow", domain.getDisallowRef().getFirstRef());
+        objectDSL.seeWritable("disallow", new RefImpl(recurser.seeCustomRefList2(dsl, domain.getDisallowRef().getSecondRef(), String.class, HyperSchemaOrUriContainer.class)));
+        objectDSL.seeWritable("disallow", new RefImpl(recurser.seeCustom(dsl, domain.getDisallowRef().getThirdRef(), HyperSchemaOrUriContainer.class)));
         objectDSL.seeWritable("extendsField", new RefImpl(recurser.seeCustom(dsl, domain.getExtendsFieldRef().getFirstRef(), HyperSchemaOrUriContainer.class)));
         objectDSL.seeWritable("extendsField", new RefImpl(recurser.seeCustomRefList(dsl, domain.getExtendsFieldRef().getSecondRef(), HyperSchemaOrUriContainer.class)));
         objectDSL.seeString("fragmentResolution", domain.getFragmentResolutionRef());
@@ -47,7 +49,7 @@ public class HyperSchemaJerializer<T extends PushableContext<T, U>, U extends Qu
         objectDSL.seeWritable("requires", new RefImpl(recurser.seeCustom(dsl, domain.getRequiresRef().getSecondRef(), HyperSchemaOrUriContainer.class)));
         objectDSL.seeBoolean("root", domain.getRootRef());
         objectDSL.seeString("type", domain.getTypeRef().getFirstRef());
-        objectDSL.seeWritable("type", new RefImpl(recurser.seeStringRefList(dsl, domain.getTypeRef().getSecondRef())));
+        objectDSL.seeWritable("type", new RefImpl(recurser.seeCustomRefList2(dsl, domain.getTypeRef().getSecondRef(), String.class, HyperSchemaOrUriContainer.class)));
         return objectDSL;
     }
 

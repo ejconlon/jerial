@@ -31,8 +31,10 @@ public class SchemaJerializer<T extends PushableContext<T, U>, U extends Questio
         objectDSL.seeWritable("additionalProperties", new RefImpl(recurser.seeCustom(dsl, domain.getAdditionalPropertiesRef().getFirstRef(), SchemaContainer.class)));
         objectDSL.seeBoolean("additionalProperties", domain.getAdditionalPropertiesRef().getSecondRef());
         objectDSL.seeString("description", domain.getDescriptionRef());
-        // dsl.addSomething(domain.getDisallowRef());
-        objectDSL.seeWritable("enumField", new RefImpl(recurser.seeThingRefList(dsl, domain.getEnumFieldRef())));
+        objectDSL.seeString("disallow", domain.getDisallowRef().getFirstRef());
+        objectDSL.seeWritable("disallow", new RefImpl(recurser.seeCustomRefList2(dsl, domain.getDisallowRef().getSecondRef(), String.class, SchemaContainer.class)));
+        objectDSL.seeWritable("disallow", new RefImpl(recurser.seeCustom(dsl, domain.getDisallowRef().getThirdRef(), SchemaContainer.class)));
+        objectDSL.seeWritable("enumField", new RefImpl(recurser.seeCustomRefList(dsl, domain.getEnumFieldRef(), JThing.class)));
         objectDSL.seeDouble("exclusiveMaximum", domain.getExclusiveMaximumRef());
         objectDSL.seeDouble("exclusiveMinimum", domain.getExclusiveMinimumRef());
         objectDSL.seeWritable("extendsField", new RefImpl(recurser.seeCustom(dsl, domain.getExtendsFieldRef().getFirstRef(), SchemaContainer.class)));
@@ -54,7 +56,7 @@ public class SchemaJerializer<T extends PushableContext<T, U>, U extends Questio
         objectDSL.seeWritable("requires", new RefImpl(recurser.seeCustom(dsl, domain.getRequiresRef().getSecondRef(), SchemaContainer.class)));
         objectDSL.seeString("title", domain.getTitleRef());
         objectDSL.seeString("type", domain.getTypeRef().getFirstRef());
-        objectDSL.seeWritable("type", new RefImpl(recurser.seeStringRefList(dsl, domain.getTypeRef().getSecondRef())));
+        objectDSL.seeWritable("type", new RefImpl(recurser.seeCustomRefList2(dsl, domain.getTypeRef().getSecondRef(), String.class, SchemaContainer.class)));
         objectDSL.seeBoolean("uniqueItems", domain.getUniqueItemsRef());
         return objectDSL;
     }

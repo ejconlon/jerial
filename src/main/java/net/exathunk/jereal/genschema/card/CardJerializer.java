@@ -24,7 +24,7 @@ public class CardJerializer<T extends PushableContext<T, U>, U extends Questiona
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, Card domain) throws JerializerException {
         ObjectDSL<T, U> objectDSL = dsl.seeObject();
-        objectDSL.seeWritable("additionalName", new RefImpl(recurser.seeStringRefList(dsl, domain.getAdditionalNameRef())));
+        objectDSL.seeWritable("additionalName", new RefImpl(recurser.seeCustomRefList(dsl, domain.getAdditionalNameRef(), String.class)));
         objectDSL.seeWritable("adr", new RefImpl(recurser.seeCustom(dsl, domain.getAdrRef(), AddressContainer.class)));
         objectDSL.seeString("bday", domain.getBdayRef());
         objectDSL.seeWritable("email", new RefImpl(recurser.seeThing(dsl, domain.getEmailRef())));
@@ -32,8 +32,8 @@ public class CardJerializer<T extends PushableContext<T, U>, U extends Questiona
         objectDSL.seeString("fn", domain.getFnRef());
         objectDSL.seeWritable("geo", new RefImpl(recurser.seeCustom(dsl, domain.getGeoRef(), GeoContainer.class)));
         objectDSL.seeString("givenName", domain.getGivenNameRef());
-        objectDSL.seeWritable("honorificPrefix", new RefImpl(recurser.seeStringRefList(dsl, domain.getHonorificPrefixRef())));
-        objectDSL.seeWritable("honorificSuffix", new RefImpl(recurser.seeStringRefList(dsl, domain.getHonorificSuffixRef())));
+        objectDSL.seeWritable("honorificPrefix", new RefImpl(recurser.seeCustomRefList(dsl, domain.getHonorificPrefixRef(), String.class)));
+        objectDSL.seeWritable("honorificSuffix", new RefImpl(recurser.seeCustomRefList(dsl, domain.getHonorificSuffixRef(), String.class)));
         objectDSL.seeString("logo", domain.getLogoRef());
         objectDSL.seeString("nickname", domain.getNicknameRef());
         objectDSL.seeWritable("org", new RefImpl(recurser.seeThing(dsl, domain.getOrgRef())));

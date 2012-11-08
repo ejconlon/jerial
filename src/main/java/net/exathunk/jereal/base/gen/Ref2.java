@@ -6,7 +6,7 @@ import net.exathunk.jereal.base.functional.Ref;
  * charolastra 11/7/12 12:26 AM
  */
 public class Ref2<First, Second> {
-    private static enum Which { NULL, FIRST, SECOND };
+    private static enum Which { FIRST, SECOND };
 
     private Which which;
     private First first;
