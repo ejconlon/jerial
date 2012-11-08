@@ -14,36 +14,37 @@ import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.schema.GeneratedSchema;
+import net.exathunk.jereal.genschema.schema.GeneratedSchemaContainer;
 
 public class GeneratedSchemaContainer implements GeneratedSchemaContainerLike, GeneratedSchemaContainerRefable {
 
-    private final Ref<GeneratedSchema> GeneratedSchema;
+    private final Ref<Any2<GeneratedSchema,String>> generatedSchema;
 
     public GeneratedSchemaContainer() {
-        GeneratedSchema = new RefImpl<GeneratedSchema>();
+        generatedSchema = new RefImpl<Any2<GeneratedSchema,String>>();
     }
 
     @Override
     public boolean hasGeneratedSchema() {
-        return !GeneratedSchema.isEmptyRef();
+        return !generatedSchema.isEmptyRef();
     }
     @Override
-    public GeneratedSchema getGeneratedSchema() {
-        return GeneratedSchema.getRef();
+    public Any2<GeneratedSchema,String> getGeneratedSchema() {
+        return generatedSchema.getRef();
     }
     @Override
-    public void setGeneratedSchema(GeneratedSchema value) {
-        GeneratedSchema.setRef(value);
+    public void setGeneratedSchema(Any2<GeneratedSchema,String> value) {
+        generatedSchema.setRef(value);
     }
     @Override
-    public Ref<GeneratedSchema> getGeneratedSchemaRef() {
-        return GeneratedSchema;
+    public Ref<Any2<GeneratedSchema,String>> getGeneratedSchemaRef() {
+        return generatedSchema;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedSchemaContainer{ ");
-        if (!GeneratedSchema.isEmptyRef()) sb.append("GeneratedSchema='").append(GeneratedSchema).append("', ");
+        if (!generatedSchema.isEmptyRef()) sb.append("generatedSchema='").append(generatedSchema).append("', ");
         return sb.append("}").toString();
     }
 
@@ -69,7 +70,7 @@ public class GeneratedSchemaContainer implements GeneratedSchemaContainerLike, G
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + GeneratedSchema.hashCode();
+        result = 31 * result + generatedSchema.hashCode();
         return result;
     }
 

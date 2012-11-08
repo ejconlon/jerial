@@ -50,7 +50,8 @@ public class KlassContext {
 
     public KlassTree resolve(String name) {
         if (name.equals("#")) {
-            return klassTree;
+            assert klassTree.getKlass().getKlassName().startsWith("Generated");
+            return new KlassTree(makeKlass(klassTree.getKlass().getKlassName().substring(9)));
         } else if (name.contains("/")) {
             return new KlassTree(translateFromRef(name));
         } else {

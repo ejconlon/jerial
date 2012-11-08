@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 public class TestGen {
     @Test
     public void testBasic() {
-        final Klass klass = new Klass("Bongo", "foo.bar.baz");
+        final Klass klass = new Klass("GeneratedBongo", "foo.bar.baz");
         final Map<String, KlassTree> fields = new TreeMap<String, KlassTree>();
         fields.put("id", new KlassTree(new Klass(String.class)));
         fields.put("count", new KlassTree(new Klass(Long.class)));

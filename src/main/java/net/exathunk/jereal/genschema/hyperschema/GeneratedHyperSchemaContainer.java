@@ -11,39 +11,38 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchema;
 import net.exathunk.jereal.genschema.hyperschemaoruri.GeneratedHyperSchemaOrUriContainer;
 import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
 public class GeneratedHyperSchemaContainer implements GeneratedHyperSchemaContainerLike, GeneratedHyperSchemaContainerRefable {
 
-    private final Ref<GeneratedHyperSchema> GeneratedHyperSchema;
+    private final Ref<JThing> generatedHyperSchema;
 
     public GeneratedHyperSchemaContainer() {
-        GeneratedHyperSchema = new RefImpl<GeneratedHyperSchema>();
+        generatedHyperSchema = new RefImpl<JThing>();
     }
 
     @Override
     public boolean hasGeneratedHyperSchema() {
-        return !GeneratedHyperSchema.isEmptyRef();
+        return !generatedHyperSchema.isEmptyRef();
     }
     @Override
-    public GeneratedHyperSchema getGeneratedHyperSchema() {
-        return GeneratedHyperSchema.getRef();
+    public JThing getGeneratedHyperSchema() {
+        return generatedHyperSchema.getRef();
     }
     @Override
-    public void setGeneratedHyperSchema(GeneratedHyperSchema value) {
-        GeneratedHyperSchema.setRef(value);
+    public void setGeneratedHyperSchema(JThing value) {
+        generatedHyperSchema.setRef(value);
     }
     @Override
-    public Ref<GeneratedHyperSchema> getGeneratedHyperSchemaRef() {
-        return GeneratedHyperSchema;
+    public Ref<JThing> getGeneratedHyperSchemaRef() {
+        return generatedHyperSchema;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedHyperSchemaContainer{ ");
-        if (!GeneratedHyperSchema.isEmptyRef()) sb.append("GeneratedHyperSchema='").append(GeneratedHyperSchema).append("', ");
+        if (!generatedHyperSchema.isEmptyRef()) sb.append("generatedHyperSchema='").append(generatedHyperSchema).append("', ");
         return sb.append("}").toString();
     }
 
@@ -69,7 +68,7 @@ public class GeneratedHyperSchemaContainer implements GeneratedHyperSchemaContai
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + GeneratedHyperSchema.hashCode();
+        result = 31 * result + generatedHyperSchema.hashCode();
         return result;
     }
 

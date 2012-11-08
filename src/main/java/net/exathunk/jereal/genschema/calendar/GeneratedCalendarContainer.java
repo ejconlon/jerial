@@ -10,38 +10,37 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.calendar.GeneratedCalendar;
 import net.exathunk.jereal.genschema.geo.GeneratedGeoContainer;
 
 public class GeneratedCalendarContainer implements GeneratedCalendarContainerLike, GeneratedCalendarContainerRefable {
 
-    private final Ref<GeneratedCalendar> GeneratedCalendar;
+    private final Ref<JThing> generatedCalendar;
 
     public GeneratedCalendarContainer() {
-        GeneratedCalendar = new RefImpl<GeneratedCalendar>();
+        generatedCalendar = new RefImpl<JThing>();
     }
 
     @Override
     public boolean hasGeneratedCalendar() {
-        return !GeneratedCalendar.isEmptyRef();
+        return !generatedCalendar.isEmptyRef();
     }
     @Override
-    public GeneratedCalendar getGeneratedCalendar() {
-        return GeneratedCalendar.getRef();
+    public JThing getGeneratedCalendar() {
+        return generatedCalendar.getRef();
     }
     @Override
-    public void setGeneratedCalendar(GeneratedCalendar value) {
-        GeneratedCalendar.setRef(value);
+    public void setGeneratedCalendar(JThing value) {
+        generatedCalendar.setRef(value);
     }
     @Override
-    public Ref<GeneratedCalendar> getGeneratedCalendarRef() {
-        return GeneratedCalendar;
+    public Ref<JThing> getGeneratedCalendarRef() {
+        return generatedCalendar;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedCalendarContainer{ ");
-        if (!GeneratedCalendar.isEmptyRef()) sb.append("GeneratedCalendar='").append(GeneratedCalendar).append("', ");
+        if (!generatedCalendar.isEmptyRef()) sb.append("generatedCalendar='").append(generatedCalendar).append("', ");
         return sb.append("}").toString();
     }
 
@@ -67,7 +66,7 @@ public class GeneratedCalendarContainer implements GeneratedCalendarContainerLik
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + GeneratedCalendar.hashCode();
+        result = 31 * result + generatedCalendar.hashCode();
         return result;
     }
 

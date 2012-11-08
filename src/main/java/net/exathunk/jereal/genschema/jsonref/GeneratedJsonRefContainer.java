@@ -9,37 +9,36 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.jsonref.GeneratedJsonRef;
 
 public class GeneratedJsonRefContainer implements GeneratedJsonRefContainerLike, GeneratedJsonRefContainerRefable {
 
-    private final Ref<GeneratedJsonRef> GeneratedJsonRef;
+    private final Ref<JThing> generatedJsonRef;
 
     public GeneratedJsonRefContainer() {
-        GeneratedJsonRef = new RefImpl<GeneratedJsonRef>();
+        generatedJsonRef = new RefImpl<JThing>();
     }
 
     @Override
     public boolean hasGeneratedJsonRef() {
-        return !GeneratedJsonRef.isEmptyRef();
+        return !generatedJsonRef.isEmptyRef();
     }
     @Override
-    public GeneratedJsonRef getGeneratedJsonRef() {
-        return GeneratedJsonRef.getRef();
+    public JThing getGeneratedJsonRef() {
+        return generatedJsonRef.getRef();
     }
     @Override
-    public void setGeneratedJsonRef(GeneratedJsonRef value) {
-        GeneratedJsonRef.setRef(value);
+    public void setGeneratedJsonRef(JThing value) {
+        generatedJsonRef.setRef(value);
     }
     @Override
-    public Ref<GeneratedJsonRef> getGeneratedJsonRefRef() {
-        return GeneratedJsonRef;
+    public Ref<JThing> getGeneratedJsonRefRef() {
+        return generatedJsonRef;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedJsonRefContainer{ ");
-        if (!GeneratedJsonRef.isEmptyRef()) sb.append("GeneratedJsonRef='").append(GeneratedJsonRef).append("', ");
+        if (!generatedJsonRef.isEmptyRef()) sb.append("generatedJsonRef='").append(generatedJsonRef).append("', ");
         return sb.append("}").toString();
     }
 
@@ -65,7 +64,7 @@ public class GeneratedJsonRefContainer implements GeneratedJsonRefContainerLike,
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + GeneratedJsonRef.hashCode();
+        result = 31 * result + generatedJsonRef.hashCode();
         return result;
     }
 

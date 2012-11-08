@@ -13,17 +13,17 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.schema.GeneratedSchema;
+import net.exathunk.jereal.genschema.schema.GeneratedSchemaContainer;
 
 public interface GeneratedSchemaRefable {
 
-        Ref<Any2<GeneratedSchema,Boolean>> getAdditionalItemsRef();
+        Ref<Any2<GeneratedSchemaContainer,Boolean>> getAdditionalItemsRef();
 
-        Ref<Any2<GeneratedSchema,Boolean>> getAdditionalPropertiesRef();
+        Ref<Any2<GeneratedSchemaContainer,Boolean>> getAdditionalPropertiesRef();
 
         Ref<String> getDescriptionRef();
 
-        Ref<Any3<String,List<Any2<String,GeneratedSchema>>,GeneratedSchema>> getDisallowRef();
+        Ref<Any3<String,List<Any2<String,GeneratedSchemaContainer>>,GeneratedSchemaContainer>> getDisallowRef();
 
         Ref<List<JThing>> getEnumFieldRef();
 
@@ -31,11 +31,11 @@ public interface GeneratedSchemaRefable {
 
         Ref<Double> getExclusiveMinimumRef();
 
-        Ref<Any2<GeneratedSchema,List<GeneratedSchema>>> getExtendsFieldRef();
+        Ref<Any2<GeneratedSchemaContainer,List<GeneratedSchemaContainer>>> getExtendsFieldRef();
 
         Ref<String> getFormatRef();
 
-        Ref<Any2<GeneratedSchema,List<GeneratedSchema>>> getItemsRef();
+        Ref<Any2<GeneratedSchemaContainer,List<GeneratedSchemaContainer>>> getItemsRef();
 
         Ref<Double> getMaxDecimalRef();
 
@@ -53,15 +53,15 @@ public interface GeneratedSchemaRefable {
 
         Ref<String> getPatternRef();
 
-        Ref<GeneratedSchema> getPropertiesRef();
+        Ref<GeneratedSchemaContainer> getPropertiesRef();
 
         Ref<Boolean> getRequiredRef();
 
-        Ref<Any2<String,GeneratedSchema>> getRequiresRef();
+        Ref<Any2<String,GeneratedSchemaContainer>> getRequiresRef();
 
         Ref<String> getTitleRef();
 
-        Ref<Any2<String,List<Any2<String,GeneratedSchema>>>> getTypeRef();
+        Ref<Any2<String,List<Any2<String,GeneratedSchemaContainer>>>> getTypeRef();
 
         Ref<Boolean> getUniqueItemsRef();
 

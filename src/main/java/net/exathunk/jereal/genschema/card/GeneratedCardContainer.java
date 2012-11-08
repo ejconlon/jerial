@@ -11,38 +11,37 @@ import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.address.GeneratedAddressContainer;
-import net.exathunk.jereal.genschema.card.GeneratedCard;
 import net.exathunk.jereal.genschema.geo.GeneratedGeoContainer;
 
 public class GeneratedCardContainer implements GeneratedCardContainerLike, GeneratedCardContainerRefable {
 
-    private final Ref<GeneratedCard> GeneratedCard;
+    private final Ref<JThing> generatedCard;
 
     public GeneratedCardContainer() {
-        GeneratedCard = new RefImpl<GeneratedCard>();
+        generatedCard = new RefImpl<JThing>();
     }
 
     @Override
     public boolean hasGeneratedCard() {
-        return !GeneratedCard.isEmptyRef();
+        return !generatedCard.isEmptyRef();
     }
     @Override
-    public GeneratedCard getGeneratedCard() {
-        return GeneratedCard.getRef();
+    public JThing getGeneratedCard() {
+        return generatedCard.getRef();
     }
     @Override
-    public void setGeneratedCard(GeneratedCard value) {
-        GeneratedCard.setRef(value);
+    public void setGeneratedCard(JThing value) {
+        generatedCard.setRef(value);
     }
     @Override
-    public Ref<GeneratedCard> getGeneratedCardRef() {
-        return GeneratedCard;
+    public Ref<JThing> getGeneratedCardRef() {
+        return generatedCard;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedCardContainer{ ");
-        if (!GeneratedCard.isEmptyRef()) sb.append("GeneratedCard='").append(GeneratedCard).append("', ");
+        if (!generatedCard.isEmptyRef()) sb.append("generatedCard='").append(generatedCard).append("', ");
         return sb.append("}").toString();
     }
 
@@ -68,7 +67,7 @@ public class GeneratedCardContainer implements GeneratedCardContainerLike, Gener
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + GeneratedCard.hashCode();
+        result = 31 * result + generatedCard.hashCode();
         return result;
     }
 

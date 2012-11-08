@@ -10,10 +10,9 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.address.GeneratedAddress;
 
 public interface GeneratedAddressContainerRefable {
 
-        Ref<GeneratedAddress> getGeneratedAddressRef();
+        Ref<JThing> getGeneratedAddressRef();
 
 }

@@ -14,11 +14,12 @@ import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.schema.GeneratedSchema;
+import net.exathunk.jereal.genschema.schema.GeneratedSchemaContainer;
 
 public interface GeneratedSchemaContainerLike {
 
         boolean hasGeneratedSchema();
-        GeneratedSchema getGeneratedSchema();
-        void setGeneratedSchema(GeneratedSchema value);
+        Any2<GeneratedSchema,String> getGeneratedSchema();
+        void setGeneratedSchema(Any2<GeneratedSchema,String> value);
 
 }

@@ -11,37 +11,36 @@ import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchemaContainer;
-import net.exathunk.jereal.genschema.links.GeneratedLinks;
 
 public class GeneratedLinksContainer implements GeneratedLinksContainerLike, GeneratedLinksContainerRefable {
 
-    private final Ref<GeneratedLinks> GeneratedLinks;
+    private final Ref<JThing> generatedLinks;
 
     public GeneratedLinksContainer() {
-        GeneratedLinks = new RefImpl<GeneratedLinks>();
+        generatedLinks = new RefImpl<JThing>();
     }
 
     @Override
     public boolean hasGeneratedLinks() {
-        return !GeneratedLinks.isEmptyRef();
+        return !generatedLinks.isEmptyRef();
     }
     @Override
-    public GeneratedLinks getGeneratedLinks() {
-        return GeneratedLinks.getRef();
+    public JThing getGeneratedLinks() {
+        return generatedLinks.getRef();
     }
     @Override
-    public void setGeneratedLinks(GeneratedLinks value) {
-        GeneratedLinks.setRef(value);
+    public void setGeneratedLinks(JThing value) {
+        generatedLinks.setRef(value);
     }
     @Override
-    public Ref<GeneratedLinks> getGeneratedLinksRef() {
-        return GeneratedLinks;
+    public Ref<JThing> getGeneratedLinksRef() {
+        return generatedLinks;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedLinksContainer{ ");
-        if (!GeneratedLinks.isEmptyRef()) sb.append("GeneratedLinks='").append(GeneratedLinks).append("', ");
+        if (!generatedLinks.isEmptyRef()) sb.append("generatedLinks='").append(generatedLinks).append("', ");
         return sb.append("}").toString();
     }
 
@@ -67,7 +66,7 @@ public class GeneratedLinksContainer implements GeneratedLinksContainerLike, Gen
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + GeneratedLinks.hashCode();
+        result = 31 * result + generatedLinks.hashCode();
         return result;
     }
 

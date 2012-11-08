@@ -10,37 +10,36 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.geo.GeneratedGeo;
 
 public class GeneratedGeoContainer implements GeneratedGeoContainerLike, GeneratedGeoContainerRefable {
 
-    private final Ref<GeneratedGeo> GeneratedGeo;
+    private final Ref<JThing> generatedGeo;
 
     public GeneratedGeoContainer() {
-        GeneratedGeo = new RefImpl<GeneratedGeo>();
+        generatedGeo = new RefImpl<JThing>();
     }
 
     @Override
     public boolean hasGeneratedGeo() {
-        return !GeneratedGeo.isEmptyRef();
+        return !generatedGeo.isEmptyRef();
     }
     @Override
-    public GeneratedGeo getGeneratedGeo() {
-        return GeneratedGeo.getRef();
+    public JThing getGeneratedGeo() {
+        return generatedGeo.getRef();
     }
     @Override
-    public void setGeneratedGeo(GeneratedGeo value) {
-        GeneratedGeo.setRef(value);
+    public void setGeneratedGeo(JThing value) {
+        generatedGeo.setRef(value);
     }
     @Override
-    public Ref<GeneratedGeo> getGeneratedGeoRef() {
-        return GeneratedGeo;
+    public Ref<JThing> getGeneratedGeoRef() {
+        return generatedGeo;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedGeoContainer{ ");
-        if (!GeneratedGeo.isEmptyRef()) sb.append("GeneratedGeo='").append(GeneratedGeo).append("', ");
+        if (!generatedGeo.isEmptyRef()) sb.append("generatedGeo='").append(generatedGeo).append("', ");
         return sb.append("}").toString();
     }
 
@@ -66,7 +65,7 @@ public class GeneratedGeoContainer implements GeneratedGeoContainerLike, Generat
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + GeneratedGeo.hashCode();
+        result = 31 * result + generatedGeo.hashCode();
         return result;
     }
 

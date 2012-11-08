@@ -10,37 +10,36 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.address.GeneratedAddress;
 
 public class GeneratedAddressContainer implements GeneratedAddressContainerLike, GeneratedAddressContainerRefable {
 
-    private final Ref<GeneratedAddress> GeneratedAddress;
+    private final Ref<JThing> generatedAddress;
 
     public GeneratedAddressContainer() {
-        GeneratedAddress = new RefImpl<GeneratedAddress>();
+        generatedAddress = new RefImpl<JThing>();
     }
 
     @Override
     public boolean hasGeneratedAddress() {
-        return !GeneratedAddress.isEmptyRef();
+        return !generatedAddress.isEmptyRef();
     }
     @Override
-    public GeneratedAddress getGeneratedAddress() {
-        return GeneratedAddress.getRef();
+    public JThing getGeneratedAddress() {
+        return generatedAddress.getRef();
     }
     @Override
-    public void setGeneratedAddress(GeneratedAddress value) {
-        GeneratedAddress.setRef(value);
+    public void setGeneratedAddress(JThing value) {
+        generatedAddress.setRef(value);
     }
     @Override
-    public Ref<GeneratedAddress> getGeneratedAddressRef() {
-        return GeneratedAddress;
+    public Ref<JThing> getGeneratedAddressRef() {
+        return generatedAddress;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedAddressContainer{ ");
-        if (!GeneratedAddress.isEmptyRef()) sb.append("GeneratedAddress='").append(GeneratedAddress).append("', ");
+        if (!generatedAddress.isEmptyRef()) sb.append("generatedAddress='").append(generatedAddress).append("', ");
         return sb.append("}").toString();
     }
 
@@ -66,7 +65,7 @@ public class GeneratedAddressContainer implements GeneratedAddressContainerLike,
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + GeneratedAddress.hashCode();
+        result = 31 * result + generatedAddress.hashCode();
         return result;
     }
 

@@ -14,9 +14,10 @@ import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.schema.GeneratedSchema;
+import net.exathunk.jereal.genschema.schema.GeneratedSchemaContainer;
 
 public interface GeneratedSchemaContainerRefable {
 
-        Ref<GeneratedSchema> getGeneratedSchemaRef();
+        Ref<Any2<GeneratedSchema,String>> getGeneratedSchemaRef();
 
 }

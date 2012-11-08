@@ -9,37 +9,36 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.interfaces.GeneratedInterfaces;
 
 public class GeneratedInterfacesContainer implements GeneratedInterfacesContainerLike, GeneratedInterfacesContainerRefable {
 
-    private final Ref<GeneratedInterfaces> GeneratedInterfaces;
+    private final Ref<JThing> generatedInterfaces;
 
     public GeneratedInterfacesContainer() {
-        GeneratedInterfaces = new RefImpl<GeneratedInterfaces>();
+        generatedInterfaces = new RefImpl<JThing>();
     }
 
     @Override
     public boolean hasGeneratedInterfaces() {
-        return !GeneratedInterfaces.isEmptyRef();
+        return !generatedInterfaces.isEmptyRef();
     }
     @Override
-    public GeneratedInterfaces getGeneratedInterfaces() {
-        return GeneratedInterfaces.getRef();
+    public JThing getGeneratedInterfaces() {
+        return generatedInterfaces.getRef();
     }
     @Override
-    public void setGeneratedInterfaces(GeneratedInterfaces value) {
-        GeneratedInterfaces.setRef(value);
+    public void setGeneratedInterfaces(JThing value) {
+        generatedInterfaces.setRef(value);
     }
     @Override
-    public Ref<GeneratedInterfaces> getGeneratedInterfacesRef() {
-        return GeneratedInterfaces;
+    public Ref<JThing> getGeneratedInterfacesRef() {
+        return generatedInterfaces;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedInterfacesContainer{ ");
-        if (!GeneratedInterfaces.isEmptyRef()) sb.append("GeneratedInterfaces='").append(GeneratedInterfaces).append("', ");
+        if (!generatedInterfaces.isEmptyRef()) sb.append("generatedInterfaces='").append(generatedInterfaces).append("', ");
         return sb.append("}").toString();
     }
 
@@ -65,7 +64,7 @@ public class GeneratedInterfacesContainer implements GeneratedInterfacesContaine
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + GeneratedInterfaces.hashCode();
+        result = 31 * result + generatedInterfaces.hashCode();
         return result;
     }
 

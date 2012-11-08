@@ -13,7 +13,7 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.schema.GeneratedSchema;
+import net.exathunk.jereal.genschema.schema.GeneratedSchemaContainer;
 
 public class GeneratedSchemaJerializer<T extends PushableContext<T, U>, U extends Questionable> implements Jerializer<T, U, GeneratedSchema> {
 

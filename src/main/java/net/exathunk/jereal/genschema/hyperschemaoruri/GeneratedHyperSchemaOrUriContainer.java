@@ -1,5 +1,6 @@
 package net.exathunk.jereal.genschema.hyperschemaoruri;
 
+import java.lang.String;
 import java.util.List;
 import java.util.Map;
 import net.exathunk.jereal.base.core.JThing;
@@ -9,37 +10,37 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.hyperschemaoruri.GeneratedHyperSchemaOrUri;
+import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchemaContainer;
 
 public class GeneratedHyperSchemaOrUriContainer implements GeneratedHyperSchemaOrUriContainerLike, GeneratedHyperSchemaOrUriContainerRefable {
 
-    private final Ref<GeneratedHyperSchemaOrUri> GeneratedHyperSchemaOrUri;
+    private final Ref<Any2<String,GeneratedHyperSchemaContainer>> generatedHyperSchemaOrUri;
 
     public GeneratedHyperSchemaOrUriContainer() {
-        GeneratedHyperSchemaOrUri = new RefImpl<GeneratedHyperSchemaOrUri>();
+        generatedHyperSchemaOrUri = new RefImpl<Any2<String,GeneratedHyperSchemaContainer>>();
     }
 
     @Override
     public boolean hasGeneratedHyperSchemaOrUri() {
-        return !GeneratedHyperSchemaOrUri.isEmptyRef();
+        return !generatedHyperSchemaOrUri.isEmptyRef();
     }
     @Override
-    public GeneratedHyperSchemaOrUri getGeneratedHyperSchemaOrUri() {
-        return GeneratedHyperSchemaOrUri.getRef();
+    public Any2<String,GeneratedHyperSchemaContainer> getGeneratedHyperSchemaOrUri() {
+        return generatedHyperSchemaOrUri.getRef();
     }
     @Override
-    public void setGeneratedHyperSchemaOrUri(GeneratedHyperSchemaOrUri value) {
-        GeneratedHyperSchemaOrUri.setRef(value);
+    public void setGeneratedHyperSchemaOrUri(Any2<String,GeneratedHyperSchemaContainer> value) {
+        generatedHyperSchemaOrUri.setRef(value);
     }
     @Override
-    public Ref<GeneratedHyperSchemaOrUri> getGeneratedHyperSchemaOrUriRef() {
-        return GeneratedHyperSchemaOrUri;
+    public Ref<Any2<String,GeneratedHyperSchemaContainer>> getGeneratedHyperSchemaOrUriRef() {
+        return generatedHyperSchemaOrUri;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("GeneratedHyperSchemaOrUriContainer{ ");
-        if (!GeneratedHyperSchemaOrUri.isEmptyRef()) sb.append("GeneratedHyperSchemaOrUri='").append(GeneratedHyperSchemaOrUri).append("', ");
+        if (!generatedHyperSchemaOrUri.isEmptyRef()) sb.append("generatedHyperSchemaOrUri='").append(generatedHyperSchemaOrUri).append("', ");
         return sb.append("}").toString();
     }
 
@@ -65,7 +66,7 @@ public class GeneratedHyperSchemaOrUriContainer implements GeneratedHyperSchemaO
     @Override
     public int hashCode() {
         int result = 0;
-        result = 31 * result + GeneratedHyperSchemaOrUri.hashCode();
+        result = 31 * result + generatedHyperSchemaOrUri.hashCode();
         return result;
     }
 

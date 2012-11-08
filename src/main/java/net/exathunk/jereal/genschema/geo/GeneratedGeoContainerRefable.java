@@ -10,10 +10,9 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.geo.GeneratedGeo;
 
 public interface GeneratedGeoContainerRefable {
 
-        Ref<GeneratedGeo> getGeneratedGeoRef();
+        Ref<JThing> getGeneratedGeoRef();
 
 }
