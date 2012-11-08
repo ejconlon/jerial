@@ -10,7 +10,7 @@ import java.util.TreeSet;
  */
 public class Util {
 
-    private static String capitalize(String s) {
+    public static String capitalize(String s) {
         final String[] parts = s.split("\\W+");
         final StringBuilder sb = new StringBuilder();
         for (String part : parts) {
@@ -67,6 +67,8 @@ public class Util {
         outSet.add("net.exathunk.jereal.base.gen.Any3");
         outSet.add("java.util.List");
         outSet.add("java.util.Map");
+        outSet.add("net.exathunk.jereal.base.dsl.*");
+        outSet.add("net.exathunk.jereal.base.jerializers.*");
         for (String imp : inSet) {
             if (imp.startsWith("Any")) {
                 int start = imp.indexOf("<");

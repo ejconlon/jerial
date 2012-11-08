@@ -21,11 +21,13 @@ public class MetaGen implements GenWritable {
         writables.add(new ClassGen(genable));
         writables.add(new InterfaceGen(genable));
         writables.add(new RefableInterfaceGen(genable));
+        writables.add(new JerializerGen(genable));
 
         Genable containerGenable = makeContainerGenable(genable);
         writables.add(new ClassGen(containerGenable));
         writables.add(new InterfaceGen(containerGenable));
         writables.add(new RefableInterfaceGen(containerGenable));
+        writables.add(new JerializerGen(containerGenable));
         return new MetaGen(writables);
     }
 
