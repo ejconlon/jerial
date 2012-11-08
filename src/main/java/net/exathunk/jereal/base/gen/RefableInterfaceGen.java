@@ -14,7 +14,7 @@ public class RefableInterfaceGen extends Gen {
 
     private void writeRefableInterfaceFuncs(Stringer sb, String name, KlassTree klassTree) {
         final String capName = name.substring(0, 1).toUpperCase()+name.substring(1);
-        sb.append("Ref<").append(klassTree).append("> get").append(capName).append("Ref();\n\n");
+        sb.append(klassTree.toString()).append(" get").append(capName).append("Ref();\n\n");
     }
 
     @Override

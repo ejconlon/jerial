@@ -7,8 +7,9 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.hyperschema.HyperSchemaContainer;
 
@@ -147,34 +148,7 @@ public class Links implements LinksLike, LinksRefable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof LinksLike) {
-            LinksLike other = (LinksLike) o;
-            if (hasEnctype()) {
-                if (!other.hasEnctype()) return false;
-                else if (!getEnctype().equals(other.getEnctype())) return false;
-            } else if (other.hasEnctype()) return false;
-            if (hasHref()) {
-                if (!other.hasHref()) return false;
-                else if (!getHref().equals(other.getHref())) return false;
-            } else if (other.hasHref()) return false;
-            if (hasMethod()) {
-                if (!other.hasMethod()) return false;
-                else if (!getMethod().equals(other.getMethod())) return false;
-            } else if (other.hasMethod()) return false;
-            if (hasProperties()) {
-                if (!other.hasProperties()) return false;
-                else if (!getProperties().equals(other.getProperties())) return false;
-            } else if (other.hasProperties()) return false;
-            if (hasRel()) {
-                if (!other.hasRel()) return false;
-                else if (!getRel().equals(other.getRel())) return false;
-            } else if (other.hasRel()) return false;
-            if (hasTargetSchema()) {
-                if (!other.hasTargetSchema()) return false;
-                else if (!getTargetSchema().equals(other.getTargetSchema())) return false;
-            } else if (other.hasTargetSchema()) return false;
-            return true;
-        } else if (o instanceof LinksRefable) {
+        if (o instanceof LinksRefable) {
             LinksRefable other = (LinksRefable) o;
             if (!getEnctypeRef().equals(other.getEnctypeRef())) return false;
             if (!getHrefRef().equals(other.getHrefRef())) return false;

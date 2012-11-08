@@ -6,8 +6,9 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.jsonref.JsonRef;
 
@@ -46,14 +47,7 @@ public class JsonRefContainer implements JsonRefContainerLike, JsonRefContainerR
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof JsonRefContainerLike) {
-            JsonRefContainerLike other = (JsonRefContainerLike) o;
-            if (hasJsonRef()) {
-                if (!other.hasJsonRef()) return false;
-                else if (!getJsonRef().equals(other.getJsonRef())) return false;
-            } else if (other.hasJsonRef()) return false;
-            return true;
-        } else if (o instanceof JsonRefContainerRefable) {
+        if (o instanceof JsonRefContainerRefable) {
             JsonRefContainerRefable other = (JsonRefContainerRefable) o;
             if (!getJsonRefRef().equals(other.getJsonRefRef())) return false;
             return true;

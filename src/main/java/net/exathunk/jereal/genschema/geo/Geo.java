@@ -7,8 +7,9 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 
 public class Geo implements GeoLike, GeoRefable {
@@ -66,18 +67,7 @@ public class Geo implements GeoLike, GeoRefable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof GeoLike) {
-            GeoLike other = (GeoLike) o;
-            if (hasLatitude()) {
-                if (!other.hasLatitude()) return false;
-                else if (!getLatitude().equals(other.getLatitude())) return false;
-            } else if (other.hasLatitude()) return false;
-            if (hasLongitude()) {
-                if (!other.hasLongitude()) return false;
-                else if (!getLongitude().equals(other.getLongitude())) return false;
-            } else if (other.hasLongitude()) return false;
-            return true;
-        } else if (o instanceof GeoRefable) {
+        if (o instanceof GeoRefable) {
             GeoRefable other = (GeoRefable) o;
             if (!getLatitudeRef().equals(other.getLatitudeRef())) return false;
             if (!getLongitudeRef().equals(other.getLongitudeRef())) return false;

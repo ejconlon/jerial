@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class TestGen {
     @Test
     public void testBasic() throws JerializerException {
-        final String s = "{ \"id\":\"http://example.com/bongo\", \"properties\": { \"id\": { \"type\":\"string\" }, \"count\": { \"type\":\"integer\" } }, }";
+        final String s = "{ \"id\":\"http://example.com/bongo\", \"properties\": { \"id\": { \"type\":\"string\" }, \"count\": { \"type\":\"integer\" }, \"confuzed\": { \"type\": [\"number\", \"boolean\"] }, \"ordered\" : { \"type\":\"array\", \"items\":\"integer\" } } }";
 
         final GenWritable gen = RunGen.parseSchemaThing("Bongo", "com.example.bongo", JerializerUtils.jsonToJThing(s));
 

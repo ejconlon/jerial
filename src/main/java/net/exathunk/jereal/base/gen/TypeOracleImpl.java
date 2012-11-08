@@ -1,6 +1,7 @@
 package net.exathunk.jereal.base.gen;
 
 import net.exathunk.jereal.base.core.JThing;
+import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.schema.domain.Schema;
 import net.exathunk.jereal.schema.domain.SchemaRef;
 
@@ -30,13 +31,13 @@ public class TypeOracleImpl implements TypeOracle {
             final String ts = schemaRef.getRight().getRef();
             if (ts.equals("array")) {
                 if (itemType == null) {
-                    return new KlassTree(new Klass(List.class), new Klass(JThing.class));
+                    return new KlassTree(new Klass(Ref.class), new KlassTree(new Klass(List.class), new KlassTree(new Klass(Ref.class), new Klass(JThing.class))));
                 } else {
-                    return new KlassTree(new Klass(List.class), makeType(itemType));
+                    return new KlassTree(new Klass(Ref.class), new KlassTree(new Klass(List.class), makeType(itemType)));
                 }
             } else if (ts.equals("object")) {
                 if (addlPropType == null) {
-                    return new KlassTree(new Klass(JThing.class));
+                    return new KlassTree(new Klass(Ref.class), new Klass(JThing.class));
                 } else {
                     return makeType(addlPropType);
                 }
@@ -49,13 +50,13 @@ public class TypeOracleImpl implements TypeOracle {
                 final String ts = s.type_String.getRef();
                 if (ts.equals("array")) {
                     if (s.items.isEmptyRef()) {
-                        return new KlassTree(new Klass(List.class), new Klass(JThing.class));
+                        return new KlassTree(new Klass(Ref.class), new KlassTree(new Klass(List.class), new KlassTree(new Klass(Ref.class), new Klass(JThing.class))));
                     } else {
-                        return new KlassTree(new Klass(List.class), makeType(s.items.getRef()));
+                        return new KlassTree(new Klass(Ref.class), new KlassTree(new Klass(List.class), makeType(s.items.getRef())));
                     }
                 } else if (ts.equals("object")) {
                     if (s.additionalProperties_SchemaRef.isEmptyRef()) {
-                        return new KlassTree(new Klass(JThing.class));
+                        return new KlassTree(new Klass(Ref.class), new Klass(JThing.class));
                     } else {
                         return makeType(s.additionalProperties_SchemaRef.getRef());
                     }
@@ -74,12 +75,15 @@ public class TypeOracleImpl implements TypeOracle {
                 SchemaRef addlref = null;
                 if (!s.additionalProperties_SchemaRef.isEmptyRef()) { addlref = s.additionalProperties_SchemaRef.getRef(); }
                 for (SchemaRef r2 : r) {
-                    args.add(makeTypeInner(r2, itref, addlref));
+                    KlassTree child = makeTypeInner(r2, itref, addlref);
+                    for (KlassTree grandchild : child.getTemplateArgs()) {
+                        args.add(grandchild);
+                    }
                 }
-                return new KlassTree(new Klass("Any"+r.size(), "net.exathunk.jereal.base.gen"), args);
+                return new KlassTree(new Klass("Ref"+r.size(), "net.exathunk.jereal.base.gen"), args);
             } else {
                 // empty schema
-                return new KlassTree(new Klass(JThing.class));
+                return new KlassTree(new Klass(Ref.class), new Klass(JThing.class));
             }
         }
     }

@@ -10,32 +10,33 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.schema.SchemaContainer;
 
 public interface SchemaRefable {
 
-        Ref<Any2<SchemaContainer,Boolean>> getAdditionalItemsRef();
+        Ref2<SchemaContainer,Boolean> getAdditionalItemsRef();
 
-        Ref<Any2<SchemaContainer,Boolean>> getAdditionalPropertiesRef();
+        Ref2<SchemaContainer,Boolean> getAdditionalPropertiesRef();
 
         Ref<String> getDescriptionRef();
 
-        Ref<Any3<String,List<Any2<String,SchemaContainer>>,SchemaContainer>> getDisallowRef();
+        Ref3<String,List<Ref2<String,SchemaContainer>>,SchemaContainer> getDisallowRef();
 
-        Ref<List<JThing>> getEnumFieldRef();
+        Ref<List<Ref<JThing>>> getEnumFieldRef();
 
         Ref<Double> getExclusiveMaximumRef();
 
         Ref<Double> getExclusiveMinimumRef();
 
-        Ref<Any2<SchemaContainer,List<SchemaContainer>>> getExtendsFieldRef();
+        Ref2<SchemaContainer,List<Ref<SchemaContainer>>> getExtendsFieldRef();
 
         Ref<String> getFormatRef();
 
-        Ref<Any2<SchemaContainer,List<SchemaContainer>>> getItemsRef();
+        Ref2<SchemaContainer,List<Ref<SchemaContainer>>> getItemsRef();
 
         Ref<Double> getMaxDecimalRef();
 
@@ -57,11 +58,11 @@ public interface SchemaRefable {
 
         Ref<Boolean> getRequiredRef();
 
-        Ref<Any2<String,SchemaContainer>> getRequiresRef();
+        Ref2<String,SchemaContainer> getRequiresRef();
 
         Ref<String> getTitleRef();
 
-        Ref<Any2<String,List<Any2<String,SchemaContainer>>>> getTypeRef();
+        Ref2<String,List<Ref2<String,SchemaContainer>>> getTypeRef();
 
         Ref<Boolean> getUniqueItemsRef();
 

@@ -7,8 +7,9 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.address.Address;
 
@@ -47,14 +48,7 @@ public class AddressContainer implements AddressContainerLike, AddressContainerR
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof AddressContainerLike) {
-            AddressContainerLike other = (AddressContainerLike) o;
-            if (hasAddress()) {
-                if (!other.hasAddress()) return false;
-                else if (!getAddress().equals(other.getAddress())) return false;
-            } else if (other.hasAddress()) return false;
-            return true;
-        } else if (o instanceof AddressContainerRefable) {
+        if (o instanceof AddressContainerRefable) {
             AddressContainerRefable other = (AddressContainerRefable) o;
             if (!getAddressRef().equals(other.getAddressRef())) return false;
             return true;

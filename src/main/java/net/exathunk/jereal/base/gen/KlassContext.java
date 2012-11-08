@@ -1,5 +1,7 @@
 package net.exathunk.jereal.base.gen;
 
+import net.exathunk.jereal.base.functional.Ref;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
@@ -50,11 +52,11 @@ public class KlassContext {
 
     public KlassTree resolve(String name) {
         if (name.equals("#")) {
-            return new KlassTree(makeKlass(klassTree.getKlass().getKlassName()));
+            return new KlassTree(new Klass(Ref.class), makeKlass(klassTree.getKlass().getKlassName()));
         } else if (name.contains("/")) {
-            return new KlassTree(translateFromRef(name));
+            return new KlassTree(new Klass(Ref.class), translateFromRef(name));
         } else {
-            return new KlassTree(translateFromString(name));
+            return new KlassTree(new Klass(Ref.class), translateFromString(name));
         }
     }
 
@@ -89,8 +91,9 @@ public class KlassContext {
         outSet.add(new Klass("Ref", "net.exathunk.jereal.base.functional"));
         outSet.add(new Klass("RefImpl", "net.exathunk.jereal.base.functional"));
         outSet.add(new Klass("JThing", "net.exathunk.jereal.base.core"));
-        outSet.add(new Klass("Any2", "net.exathunk.jereal.base.gen"));
-        outSet.add(new Klass("Any3", "net.exathunk.jereal.base.gen"));
+        outSet.add(new Klass("Ref1", "net.exathunk.jereal.base.gen"));
+        outSet.add(new Klass("Ref2", "net.exathunk.jereal.base.gen"));
+        outSet.add(new Klass("Ref3", "net.exathunk.jereal.base.gen"));
         outSet.add(new Klass("*", "net.exathunk.jereal.base.dsl"));
         outSet.add(new Klass("*", "net.exathunk.jereal.base.jerializers"));
         outSet.add(new Klass("List", "java.util"));

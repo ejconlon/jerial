@@ -7,8 +7,9 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.geo.GeoContainer;
 
@@ -247,54 +248,7 @@ public class Calendar implements CalendarLike, CalendarRefable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof CalendarLike) {
-            CalendarLike other = (CalendarLike) o;
-            if (hasCategory()) {
-                if (!other.hasCategory()) return false;
-                else if (!getCategory().equals(other.getCategory())) return false;
-            } else if (other.hasCategory()) return false;
-            if (hasDescription()) {
-                if (!other.hasDescription()) return false;
-                else if (!getDescription().equals(other.getDescription())) return false;
-            } else if (other.hasDescription()) return false;
-            if (hasDtend()) {
-                if (!other.hasDtend()) return false;
-                else if (!getDtend().equals(other.getDtend())) return false;
-            } else if (other.hasDtend()) return false;
-            if (hasDtstart()) {
-                if (!other.hasDtstart()) return false;
-                else if (!getDtstart().equals(other.getDtstart())) return false;
-            } else if (other.hasDtstart()) return false;
-            if (hasDuration()) {
-                if (!other.hasDuration()) return false;
-                else if (!getDuration().equals(other.getDuration())) return false;
-            } else if (other.hasDuration()) return false;
-            if (hasGeo()) {
-                if (!other.hasGeo()) return false;
-                else if (!getGeo().equals(other.getGeo())) return false;
-            } else if (other.hasGeo()) return false;
-            if (hasLocation()) {
-                if (!other.hasLocation()) return false;
-                else if (!getLocation().equals(other.getLocation())) return false;
-            } else if (other.hasLocation()) return false;
-            if (hasRdate()) {
-                if (!other.hasRdate()) return false;
-                else if (!getRdate().equals(other.getRdate())) return false;
-            } else if (other.hasRdate()) return false;
-            if (hasRrule()) {
-                if (!other.hasRrule()) return false;
-                else if (!getRrule().equals(other.getRrule())) return false;
-            } else if (other.hasRrule()) return false;
-            if (hasSummary()) {
-                if (!other.hasSummary()) return false;
-                else if (!getSummary().equals(other.getSummary())) return false;
-            } else if (other.hasSummary()) return false;
-            if (hasUrl()) {
-                if (!other.hasUrl()) return false;
-                else if (!getUrl().equals(other.getUrl())) return false;
-            } else if (other.hasUrl()) return false;
-            return true;
-        } else if (o instanceof CalendarRefable) {
+        if (o instanceof CalendarRefable) {
             CalendarRefable other = (CalendarRefable) o;
             if (!getCategoryRef().equals(other.getCategoryRef())) return false;
             if (!getDescriptionRef().equals(other.getDescriptionRef())) return false;

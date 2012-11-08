@@ -8,8 +8,9 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.hyperschema.HyperSchema;
 import net.exathunk.jereal.genschema.hyperschemaoruri.HyperSchemaOrUriContainer;
@@ -50,14 +51,7 @@ public class HyperSchemaContainer implements HyperSchemaContainerLike, HyperSche
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof HyperSchemaContainerLike) {
-            HyperSchemaContainerLike other = (HyperSchemaContainerLike) o;
-            if (hasHyperSchema()) {
-                if (!other.hasHyperSchema()) return false;
-                else if (!getHyperSchema().equals(other.getHyperSchema())) return false;
-            } else if (other.hasHyperSchema()) return false;
-            return true;
-        } else if (o instanceof HyperSchemaContainerRefable) {
+        if (o instanceof HyperSchemaContainerRefable) {
             HyperSchemaContainerRefable other = (HyperSchemaContainerRefable) o;
             if (!getHyperSchemaRef().equals(other.getHyperSchemaRef())) return false;
             return true;

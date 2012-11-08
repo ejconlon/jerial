@@ -6,8 +6,9 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.interfaces.Interfaces;
 
@@ -46,14 +47,7 @@ public class InterfacesContainer implements InterfacesContainerLike, InterfacesC
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof InterfacesContainerLike) {
-            InterfacesContainerLike other = (InterfacesContainerLike) o;
-            if (hasInterfaces()) {
-                if (!other.hasInterfaces()) return false;
-                else if (!getInterfaces().equals(other.getInterfaces())) return false;
-            } else if (other.hasInterfaces()) return false;
-            return true;
-        } else if (o instanceof InterfacesContainerRefable) {
+        if (o instanceof InterfacesContainerRefable) {
             InterfacesContainerRefable other = (InterfacesContainerRefable) o;
             if (!getInterfacesRef().equals(other.getInterfacesRef())) return false;
             return true;

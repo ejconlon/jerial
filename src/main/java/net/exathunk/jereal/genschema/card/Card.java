@@ -7,15 +7,16 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.address.AddressContainer;
 import net.exathunk.jereal.genschema.geo.GeoContainer;
 
 public class Card implements CardLike, CardRefable {
 
-    private final Ref<List<String>> additionalName;
+    private final Ref<List<Ref<String>>> additionalName;
     private final Ref<AddressContainer> adr;
     private final Ref<String> bday;
     private final Ref<JThing> email;
@@ -23,8 +24,8 @@ public class Card implements CardLike, CardRefable {
     private final Ref<String> fn;
     private final Ref<GeoContainer> geo;
     private final Ref<String> givenName;
-    private final Ref<List<String>> honorificPrefix;
-    private final Ref<List<String>> honorificSuffix;
+    private final Ref<List<Ref<String>>> honorificPrefix;
+    private final Ref<List<Ref<String>>> honorificSuffix;
     private final Ref<String> logo;
     private final Ref<String> nickname;
     private final Ref<JThing> org;
@@ -37,7 +38,7 @@ public class Card implements CardLike, CardRefable {
     private final Ref<String> url;
 
     public Card() {
-        additionalName = new RefImpl<List<String>>();
+        additionalName = new RefImpl<List<Ref<String>>>();
         adr = new RefImpl<AddressContainer>();
         bday = new RefImpl<String>();
         email = new RefImpl<JThing>();
@@ -45,8 +46,8 @@ public class Card implements CardLike, CardRefable {
         fn = new RefImpl<String>();
         geo = new RefImpl<GeoContainer>();
         givenName = new RefImpl<String>();
-        honorificPrefix = new RefImpl<List<String>>();
-        honorificSuffix = new RefImpl<List<String>>();
+        honorificPrefix = new RefImpl<List<Ref<String>>>();
+        honorificSuffix = new RefImpl<List<Ref<String>>>();
         logo = new RefImpl<String>();
         nickname = new RefImpl<String>();
         org = new RefImpl<JThing>();
@@ -64,15 +65,15 @@ public class Card implements CardLike, CardRefable {
         return !additionalName.isEmptyRef();
     }
     @Override
-    public List<String> getAdditionalName() {
+    public List<Ref<String>> getAdditionalName() {
         return additionalName.getRef();
     }
     @Override
-    public void setAdditionalName(List<String> value) {
+    public void setAdditionalName(List<Ref<String>> value) {
         additionalName.setRef(value);
     }
     @Override
-    public Ref<List<String>> getAdditionalNameRef() {
+    public Ref<List<Ref<String>>> getAdditionalNameRef() {
         return additionalName;
     }
 
@@ -200,15 +201,15 @@ public class Card implements CardLike, CardRefable {
         return !honorificPrefix.isEmptyRef();
     }
     @Override
-    public List<String> getHonorificPrefix() {
+    public List<Ref<String>> getHonorificPrefix() {
         return honorificPrefix.getRef();
     }
     @Override
-    public void setHonorificPrefix(List<String> value) {
+    public void setHonorificPrefix(List<Ref<String>> value) {
         honorificPrefix.setRef(value);
     }
     @Override
-    public Ref<List<String>> getHonorificPrefixRef() {
+    public Ref<List<Ref<String>>> getHonorificPrefixRef() {
         return honorificPrefix;
     }
 
@@ -217,15 +218,15 @@ public class Card implements CardLike, CardRefable {
         return !honorificSuffix.isEmptyRef();
     }
     @Override
-    public List<String> getHonorificSuffix() {
+    public List<Ref<String>> getHonorificSuffix() {
         return honorificSuffix.getRef();
     }
     @Override
-    public void setHonorificSuffix(List<String> value) {
+    public void setHonorificSuffix(List<Ref<String>> value) {
         honorificSuffix.setRef(value);
     }
     @Override
-    public Ref<List<String>> getHonorificSuffixRef() {
+    public Ref<List<Ref<String>>> getHonorificSuffixRef() {
         return honorificSuffix;
     }
 
@@ -428,90 +429,7 @@ public class Card implements CardLike, CardRefable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof CardLike) {
-            CardLike other = (CardLike) o;
-            if (hasAdditionalName()) {
-                if (!other.hasAdditionalName()) return false;
-                else if (!getAdditionalName().equals(other.getAdditionalName())) return false;
-            } else if (other.hasAdditionalName()) return false;
-            if (hasAdr()) {
-                if (!other.hasAdr()) return false;
-                else if (!getAdr().equals(other.getAdr())) return false;
-            } else if (other.hasAdr()) return false;
-            if (hasBday()) {
-                if (!other.hasBday()) return false;
-                else if (!getBday().equals(other.getBday())) return false;
-            } else if (other.hasBday()) return false;
-            if (hasEmail()) {
-                if (!other.hasEmail()) return false;
-                else if (!getEmail().equals(other.getEmail())) return false;
-            } else if (other.hasEmail()) return false;
-            if (hasFamilyName()) {
-                if (!other.hasFamilyName()) return false;
-                else if (!getFamilyName().equals(other.getFamilyName())) return false;
-            } else if (other.hasFamilyName()) return false;
-            if (hasFn()) {
-                if (!other.hasFn()) return false;
-                else if (!getFn().equals(other.getFn())) return false;
-            } else if (other.hasFn()) return false;
-            if (hasGeo()) {
-                if (!other.hasGeo()) return false;
-                else if (!getGeo().equals(other.getGeo())) return false;
-            } else if (other.hasGeo()) return false;
-            if (hasGivenName()) {
-                if (!other.hasGivenName()) return false;
-                else if (!getGivenName().equals(other.getGivenName())) return false;
-            } else if (other.hasGivenName()) return false;
-            if (hasHonorificPrefix()) {
-                if (!other.hasHonorificPrefix()) return false;
-                else if (!getHonorificPrefix().equals(other.getHonorificPrefix())) return false;
-            } else if (other.hasHonorificPrefix()) return false;
-            if (hasHonorificSuffix()) {
-                if (!other.hasHonorificSuffix()) return false;
-                else if (!getHonorificSuffix().equals(other.getHonorificSuffix())) return false;
-            } else if (other.hasHonorificSuffix()) return false;
-            if (hasLogo()) {
-                if (!other.hasLogo()) return false;
-                else if (!getLogo().equals(other.getLogo())) return false;
-            } else if (other.hasLogo()) return false;
-            if (hasNickname()) {
-                if (!other.hasNickname()) return false;
-                else if (!getNickname().equals(other.getNickname())) return false;
-            } else if (other.hasNickname()) return false;
-            if (hasOrg()) {
-                if (!other.hasOrg()) return false;
-                else if (!getOrg().equals(other.getOrg())) return false;
-            } else if (other.hasOrg()) return false;
-            if (hasPhoto()) {
-                if (!other.hasPhoto()) return false;
-                else if (!getPhoto().equals(other.getPhoto())) return false;
-            } else if (other.hasPhoto()) return false;
-            if (hasRole()) {
-                if (!other.hasRole()) return false;
-                else if (!getRole().equals(other.getRole())) return false;
-            } else if (other.hasRole()) return false;
-            if (hasSound()) {
-                if (!other.hasSound()) return false;
-                else if (!getSound().equals(other.getSound())) return false;
-            } else if (other.hasSound()) return false;
-            if (hasTel()) {
-                if (!other.hasTel()) return false;
-                else if (!getTel().equals(other.getTel())) return false;
-            } else if (other.hasTel()) return false;
-            if (hasTitle()) {
-                if (!other.hasTitle()) return false;
-                else if (!getTitle().equals(other.getTitle())) return false;
-            } else if (other.hasTitle()) return false;
-            if (hasTz()) {
-                if (!other.hasTz()) return false;
-                else if (!getTz().equals(other.getTz())) return false;
-            } else if (other.hasTz()) return false;
-            if (hasUrl()) {
-                if (!other.hasUrl()) return false;
-                else if (!getUrl().equals(other.getUrl())) return false;
-            } else if (other.hasUrl()) return false;
-            return true;
-        } else if (o instanceof CardRefable) {
+        if (o instanceof CardRefable) {
             CardRefable other = (CardRefable) o;
             if (!getAdditionalNameRef().equals(other.getAdditionalNameRef())) return false;
             if (!getAdrRef().equals(other.getAdrRef())) return false;

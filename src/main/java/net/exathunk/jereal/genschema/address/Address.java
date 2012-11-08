@@ -7,8 +7,9 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 
 public class Address implements AddressLike, AddressRefable {
@@ -166,38 +167,7 @@ public class Address implements AddressLike, AddressRefable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof AddressLike) {
-            AddressLike other = (AddressLike) o;
-            if (hasCountryName()) {
-                if (!other.hasCountryName()) return false;
-                else if (!getCountryName().equals(other.getCountryName())) return false;
-            } else if (other.hasCountryName()) return false;
-            if (hasExtendedAddress()) {
-                if (!other.hasExtendedAddress()) return false;
-                else if (!getExtendedAddress().equals(other.getExtendedAddress())) return false;
-            } else if (other.hasExtendedAddress()) return false;
-            if (hasLocality()) {
-                if (!other.hasLocality()) return false;
-                else if (!getLocality().equals(other.getLocality())) return false;
-            } else if (other.hasLocality()) return false;
-            if (hasPostOfficeBox()) {
-                if (!other.hasPostOfficeBox()) return false;
-                else if (!getPostOfficeBox().equals(other.getPostOfficeBox())) return false;
-            } else if (other.hasPostOfficeBox()) return false;
-            if (hasPostalCode()) {
-                if (!other.hasPostalCode()) return false;
-                else if (!getPostalCode().equals(other.getPostalCode())) return false;
-            } else if (other.hasPostalCode()) return false;
-            if (hasRegion()) {
-                if (!other.hasRegion()) return false;
-                else if (!getRegion().equals(other.getRegion())) return false;
-            } else if (other.hasRegion()) return false;
-            if (hasStreetAddress()) {
-                if (!other.hasStreetAddress()) return false;
-                else if (!getStreetAddress().equals(other.getStreetAddress())) return false;
-            } else if (other.hasStreetAddress()) return false;
-            return true;
-        } else if (o instanceof AddressRefable) {
+        if (o instanceof AddressRefable) {
             AddressRefable other = (AddressRefable) o;
             if (!getCountryNameRef().equals(other.getCountryNameRef())) return false;
             if (!getExtendedAddressRef().equals(other.getExtendedAddressRef())) return false;

@@ -6,8 +6,9 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 
 public class JsonRefJerializer<T extends PushableContext<T, U>, U extends Questionable> implements Jerializer<T, U, JsonRef> {
@@ -19,7 +20,8 @@ public class JsonRefJerializer<T extends PushableContext<T, U>, U extends Questi
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, JsonRef domain) throws JerializerException {
-        return null;
+        ObjectDSL<T, U> objectDSL = dsl.seeObject();
+        return objectDSL;
     }
 
 }

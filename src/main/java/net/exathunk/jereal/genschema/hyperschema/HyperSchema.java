@@ -8,50 +8,51 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.hyperschemaoruri.HyperSchemaOrUriContainer;
 import net.exathunk.jereal.genschema.links.LinksContainer;
 
 public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
 
-    private final Ref<Any2<HyperSchemaOrUriContainer,Boolean>> additionalItems;
-    private final Ref<Any2<HyperSchemaOrUriContainer,Boolean>> additionalProperties;
-    private final Ref<List<HyperSchemaOrUriContainer>> alternate;
+    private final Ref2<HyperSchemaOrUriContainer,Boolean> additionalItems;
+    private final Ref2<HyperSchemaOrUriContainer,Boolean> additionalProperties;
+    private final Ref<List<Ref<HyperSchemaOrUriContainer>>> alternate;
     private final Ref<String> contentEncoding;
     private final Ref<JThing> defaultField;
-    private final Ref<Any3<String,List<Any2<String,HyperSchemaOrUriContainer>>,HyperSchemaOrUriContainer>> disallow;
-    private final Ref<Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>>> extendsField;
+    private final Ref3<String,List<Ref2<String,HyperSchemaOrUriContainer>>,HyperSchemaOrUriContainer> disallow;
+    private final Ref2<HyperSchemaOrUriContainer,List<Ref<HyperSchemaOrUriContainer>>> extendsField;
     private final Ref<String> fragmentResolution;
-    private final Ref<Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>>> items;
-    private final Ref<List<LinksContainer>> links;
+    private final Ref2<HyperSchemaOrUriContainer,List<Ref<HyperSchemaOrUriContainer>>> items;
+    private final Ref<List<Ref<LinksContainer>>> links;
     private final Ref<String> mediaType;
     private final Ref<String> pathStart;
     private final Ref<HyperSchemaOrUriContainer> properties;
     private final Ref<Boolean> readonly;
-    private final Ref<Any2<String,HyperSchemaOrUriContainer>> requires;
+    private final Ref2<String,HyperSchemaOrUriContainer> requires;
     private final Ref<Boolean> root;
-    private final Ref<Any2<String,List<Any2<String,HyperSchemaOrUriContainer>>>> type;
+    private final Ref2<String,List<Ref2<String,HyperSchemaOrUriContainer>>> type;
 
     public HyperSchema() {
-        additionalItems = new RefImpl<Any2<HyperSchemaOrUriContainer,Boolean>>();
-        additionalProperties = new RefImpl<Any2<HyperSchemaOrUriContainer,Boolean>>();
-        alternate = new RefImpl<List<HyperSchemaOrUriContainer>>();
+        additionalItems = new Ref2<HyperSchemaOrUriContainer,Boolean>();
+        additionalProperties = new Ref2<HyperSchemaOrUriContainer,Boolean>();
+        alternate = new RefImpl<List<Ref<HyperSchemaOrUriContainer>>>();
         contentEncoding = new RefImpl<String>();
         defaultField = new RefImpl<JThing>();
-        disallow = new RefImpl<Any3<String,List<Any2<String,HyperSchemaOrUriContainer>>,HyperSchemaOrUriContainer>>();
-        extendsField = new RefImpl<Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>>>();
+        disallow = new Ref3<String,List<Ref2<String,HyperSchemaOrUriContainer>>,HyperSchemaOrUriContainer>();
+        extendsField = new Ref2<HyperSchemaOrUriContainer,List<Ref<HyperSchemaOrUriContainer>>>();
         fragmentResolution = new RefImpl<String>();
-        items = new RefImpl<Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>>>();
-        links = new RefImpl<List<LinksContainer>>();
+        items = new Ref2<HyperSchemaOrUriContainer,List<Ref<HyperSchemaOrUriContainer>>>();
+        links = new RefImpl<List<Ref<LinksContainer>>>();
         mediaType = new RefImpl<String>();
         pathStart = new RefImpl<String>();
         properties = new RefImpl<HyperSchemaOrUriContainer>();
         readonly = new RefImpl<Boolean>();
-        requires = new RefImpl<Any2<String,HyperSchemaOrUriContainer>>();
+        requires = new Ref2<String,HyperSchemaOrUriContainer>();
         root = new RefImpl<Boolean>();
-        type = new RefImpl<Any2<String,List<Any2<String,HyperSchemaOrUriContainer>>>>();
+        type = new Ref2<String,List<Ref2<String,HyperSchemaOrUriContainer>>>();
     }
 
     @Override
@@ -59,15 +60,7 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
         return !additionalItems.isEmptyRef();
     }
     @Override
-    public Any2<HyperSchemaOrUriContainer,Boolean> getAdditionalItems() {
-        return additionalItems.getRef();
-    }
-    @Override
-    public void setAdditionalItems(Any2<HyperSchemaOrUriContainer,Boolean> value) {
-        additionalItems.setRef(value);
-    }
-    @Override
-    public Ref<Any2<HyperSchemaOrUriContainer,Boolean>> getAdditionalItemsRef() {
+    public Ref2<HyperSchemaOrUriContainer,Boolean> getAdditionalItemsRef() {
         return additionalItems;
     }
 
@@ -76,15 +69,7 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
         return !additionalProperties.isEmptyRef();
     }
     @Override
-    public Any2<HyperSchemaOrUriContainer,Boolean> getAdditionalProperties() {
-        return additionalProperties.getRef();
-    }
-    @Override
-    public void setAdditionalProperties(Any2<HyperSchemaOrUriContainer,Boolean> value) {
-        additionalProperties.setRef(value);
-    }
-    @Override
-    public Ref<Any2<HyperSchemaOrUriContainer,Boolean>> getAdditionalPropertiesRef() {
+    public Ref2<HyperSchemaOrUriContainer,Boolean> getAdditionalPropertiesRef() {
         return additionalProperties;
     }
 
@@ -93,15 +78,15 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
         return !alternate.isEmptyRef();
     }
     @Override
-    public List<HyperSchemaOrUriContainer> getAlternate() {
+    public List<Ref<HyperSchemaOrUriContainer>> getAlternate() {
         return alternate.getRef();
     }
     @Override
-    public void setAlternate(List<HyperSchemaOrUriContainer> value) {
+    public void setAlternate(List<Ref<HyperSchemaOrUriContainer>> value) {
         alternate.setRef(value);
     }
     @Override
-    public Ref<List<HyperSchemaOrUriContainer>> getAlternateRef() {
+    public Ref<List<Ref<HyperSchemaOrUriContainer>>> getAlternateRef() {
         return alternate;
     }
 
@@ -144,15 +129,7 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
         return !disallow.isEmptyRef();
     }
     @Override
-    public Any3<String,List<Any2<String,HyperSchemaOrUriContainer>>,HyperSchemaOrUriContainer> getDisallow() {
-        return disallow.getRef();
-    }
-    @Override
-    public void setDisallow(Any3<String,List<Any2<String,HyperSchemaOrUriContainer>>,HyperSchemaOrUriContainer> value) {
-        disallow.setRef(value);
-    }
-    @Override
-    public Ref<Any3<String,List<Any2<String,HyperSchemaOrUriContainer>>,HyperSchemaOrUriContainer>> getDisallowRef() {
+    public Ref3<String,List<Ref2<String,HyperSchemaOrUriContainer>>,HyperSchemaOrUriContainer> getDisallowRef() {
         return disallow;
     }
 
@@ -161,15 +138,7 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
         return !extendsField.isEmptyRef();
     }
     @Override
-    public Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>> getExtendsField() {
-        return extendsField.getRef();
-    }
-    @Override
-    public void setExtendsField(Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>> value) {
-        extendsField.setRef(value);
-    }
-    @Override
-    public Ref<Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>>> getExtendsFieldRef() {
+    public Ref2<HyperSchemaOrUriContainer,List<Ref<HyperSchemaOrUriContainer>>> getExtendsFieldRef() {
         return extendsField;
     }
 
@@ -195,15 +164,7 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
         return !items.isEmptyRef();
     }
     @Override
-    public Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>> getItems() {
-        return items.getRef();
-    }
-    @Override
-    public void setItems(Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>> value) {
-        items.setRef(value);
-    }
-    @Override
-    public Ref<Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>>> getItemsRef() {
+    public Ref2<HyperSchemaOrUriContainer,List<Ref<HyperSchemaOrUriContainer>>> getItemsRef() {
         return items;
     }
 
@@ -212,15 +173,15 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
         return !links.isEmptyRef();
     }
     @Override
-    public List<LinksContainer> getLinks() {
+    public List<Ref<LinksContainer>> getLinks() {
         return links.getRef();
     }
     @Override
-    public void setLinks(List<LinksContainer> value) {
+    public void setLinks(List<Ref<LinksContainer>> value) {
         links.setRef(value);
     }
     @Override
-    public Ref<List<LinksContainer>> getLinksRef() {
+    public Ref<List<Ref<LinksContainer>>> getLinksRef() {
         return links;
     }
 
@@ -297,15 +258,7 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
         return !requires.isEmptyRef();
     }
     @Override
-    public Any2<String,HyperSchemaOrUriContainer> getRequires() {
-        return requires.getRef();
-    }
-    @Override
-    public void setRequires(Any2<String,HyperSchemaOrUriContainer> value) {
-        requires.setRef(value);
-    }
-    @Override
-    public Ref<Any2<String,HyperSchemaOrUriContainer>> getRequiresRef() {
+    public Ref2<String,HyperSchemaOrUriContainer> getRequiresRef() {
         return requires;
     }
 
@@ -331,15 +284,7 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
         return !type.isEmptyRef();
     }
     @Override
-    public Any2<String,List<Any2<String,HyperSchemaOrUriContainer>>> getType() {
-        return type.getRef();
-    }
-    @Override
-    public void setType(Any2<String,List<Any2<String,HyperSchemaOrUriContainer>>> value) {
-        type.setRef(value);
-    }
-    @Override
-    public Ref<Any2<String,List<Any2<String,HyperSchemaOrUriContainer>>>> getTypeRef() {
+    public Ref2<String,List<Ref2<String,HyperSchemaOrUriContainer>>> getTypeRef() {
         return type;
     }
 
@@ -369,78 +314,7 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof HyperSchemaLike) {
-            HyperSchemaLike other = (HyperSchemaLike) o;
-            if (hasAdditionalItems()) {
-                if (!other.hasAdditionalItems()) return false;
-                else if (!getAdditionalItems().equals(other.getAdditionalItems())) return false;
-            } else if (other.hasAdditionalItems()) return false;
-            if (hasAdditionalProperties()) {
-                if (!other.hasAdditionalProperties()) return false;
-                else if (!getAdditionalProperties().equals(other.getAdditionalProperties())) return false;
-            } else if (other.hasAdditionalProperties()) return false;
-            if (hasAlternate()) {
-                if (!other.hasAlternate()) return false;
-                else if (!getAlternate().equals(other.getAlternate())) return false;
-            } else if (other.hasAlternate()) return false;
-            if (hasContentEncoding()) {
-                if (!other.hasContentEncoding()) return false;
-                else if (!getContentEncoding().equals(other.getContentEncoding())) return false;
-            } else if (other.hasContentEncoding()) return false;
-            if (hasDefaultField()) {
-                if (!other.hasDefaultField()) return false;
-                else if (!getDefaultField().equals(other.getDefaultField())) return false;
-            } else if (other.hasDefaultField()) return false;
-            if (hasDisallow()) {
-                if (!other.hasDisallow()) return false;
-                else if (!getDisallow().equals(other.getDisallow())) return false;
-            } else if (other.hasDisallow()) return false;
-            if (hasExtendsField()) {
-                if (!other.hasExtendsField()) return false;
-                else if (!getExtendsField().equals(other.getExtendsField())) return false;
-            } else if (other.hasExtendsField()) return false;
-            if (hasFragmentResolution()) {
-                if (!other.hasFragmentResolution()) return false;
-                else if (!getFragmentResolution().equals(other.getFragmentResolution())) return false;
-            } else if (other.hasFragmentResolution()) return false;
-            if (hasItems()) {
-                if (!other.hasItems()) return false;
-                else if (!getItems().equals(other.getItems())) return false;
-            } else if (other.hasItems()) return false;
-            if (hasLinks()) {
-                if (!other.hasLinks()) return false;
-                else if (!getLinks().equals(other.getLinks())) return false;
-            } else if (other.hasLinks()) return false;
-            if (hasMediaType()) {
-                if (!other.hasMediaType()) return false;
-                else if (!getMediaType().equals(other.getMediaType())) return false;
-            } else if (other.hasMediaType()) return false;
-            if (hasPathStart()) {
-                if (!other.hasPathStart()) return false;
-                else if (!getPathStart().equals(other.getPathStart())) return false;
-            } else if (other.hasPathStart()) return false;
-            if (hasProperties()) {
-                if (!other.hasProperties()) return false;
-                else if (!getProperties().equals(other.getProperties())) return false;
-            } else if (other.hasProperties()) return false;
-            if (hasReadonly()) {
-                if (!other.hasReadonly()) return false;
-                else if (!getReadonly().equals(other.getReadonly())) return false;
-            } else if (other.hasReadonly()) return false;
-            if (hasRequires()) {
-                if (!other.hasRequires()) return false;
-                else if (!getRequires().equals(other.getRequires())) return false;
-            } else if (other.hasRequires()) return false;
-            if (hasRoot()) {
-                if (!other.hasRoot()) return false;
-                else if (!getRoot().equals(other.getRoot())) return false;
-            } else if (other.hasRoot()) return false;
-            if (hasType()) {
-                if (!other.hasType()) return false;
-                else if (!getType().equals(other.getType())) return false;
-            } else if (other.hasType()) return false;
-            return true;
-        } else if (o instanceof HyperSchemaRefable) {
+        if (o instanceof HyperSchemaRefable) {
             HyperSchemaRefable other = (HyperSchemaRefable) o;
             if (!getAdditionalItemsRef().equals(other.getAdditionalItemsRef())) return false;
             if (!getAdditionalPropertiesRef().equals(other.getAdditionalPropertiesRef())) return false;

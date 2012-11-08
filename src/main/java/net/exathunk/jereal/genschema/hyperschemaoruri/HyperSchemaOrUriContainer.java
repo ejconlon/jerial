@@ -7,17 +7,18 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.hyperschema.HyperSchemaContainer;
 
 public class HyperSchemaOrUriContainer implements HyperSchemaOrUriContainerLike, HyperSchemaOrUriContainerRefable {
 
-    private final Ref<Any2<String,HyperSchemaContainer>> hyperSchemaOrUri;
+    private final Ref2<String,HyperSchemaContainer> hyperSchemaOrUri;
 
     public HyperSchemaOrUriContainer() {
-        hyperSchemaOrUri = new RefImpl<Any2<String,HyperSchemaContainer>>();
+        hyperSchemaOrUri = new Ref2<String,HyperSchemaContainer>();
     }
 
     @Override
@@ -25,15 +26,7 @@ public class HyperSchemaOrUriContainer implements HyperSchemaOrUriContainerLike,
         return !hyperSchemaOrUri.isEmptyRef();
     }
     @Override
-    public Any2<String,HyperSchemaContainer> getHyperSchemaOrUri() {
-        return hyperSchemaOrUri.getRef();
-    }
-    @Override
-    public void setHyperSchemaOrUri(Any2<String,HyperSchemaContainer> value) {
-        hyperSchemaOrUri.setRef(value);
-    }
-    @Override
-    public Ref<Any2<String,HyperSchemaContainer>> getHyperSchemaOrUriRef() {
+    public Ref2<String,HyperSchemaContainer> getHyperSchemaOrUriRef() {
         return hyperSchemaOrUri;
     }
 
@@ -47,14 +40,7 @@ public class HyperSchemaOrUriContainer implements HyperSchemaOrUriContainerLike,
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o instanceof HyperSchemaOrUriContainerLike) {
-            HyperSchemaOrUriContainerLike other = (HyperSchemaOrUriContainerLike) o;
-            if (hasHyperSchemaOrUri()) {
-                if (!other.hasHyperSchemaOrUri()) return false;
-                else if (!getHyperSchemaOrUri().equals(other.getHyperSchemaOrUri())) return false;
-            } else if (other.hasHyperSchemaOrUri()) return false;
-            return true;
-        } else if (o instanceof HyperSchemaOrUriContainerRefable) {
+        if (o instanceof HyperSchemaOrUriContainerRefable) {
             HyperSchemaOrUriContainerRefable other = (HyperSchemaOrUriContainerRefable) o;
             if (!getHyperSchemaOrUriRef().equals(other.getHyperSchemaOrUriRef())) return false;
             return true;

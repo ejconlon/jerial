@@ -8,33 +8,34 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.hyperschemaoruri.HyperSchemaOrUriContainer;
 import net.exathunk.jereal.genschema.links.LinksContainer;
 
 public interface HyperSchemaRefable {
 
-        Ref<Any2<HyperSchemaOrUriContainer,Boolean>> getAdditionalItemsRef();
+        Ref2<HyperSchemaOrUriContainer,Boolean> getAdditionalItemsRef();
 
-        Ref<Any2<HyperSchemaOrUriContainer,Boolean>> getAdditionalPropertiesRef();
+        Ref2<HyperSchemaOrUriContainer,Boolean> getAdditionalPropertiesRef();
 
-        Ref<List<HyperSchemaOrUriContainer>> getAlternateRef();
+        Ref<List<Ref<HyperSchemaOrUriContainer>>> getAlternateRef();
 
         Ref<String> getContentEncodingRef();
 
         Ref<JThing> getDefaultFieldRef();
 
-        Ref<Any3<String,List<Any2<String,HyperSchemaOrUriContainer>>,HyperSchemaOrUriContainer>> getDisallowRef();
+        Ref3<String,List<Ref2<String,HyperSchemaOrUriContainer>>,HyperSchemaOrUriContainer> getDisallowRef();
 
-        Ref<Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>>> getExtendsFieldRef();
+        Ref2<HyperSchemaOrUriContainer,List<Ref<HyperSchemaOrUriContainer>>> getExtendsFieldRef();
 
         Ref<String> getFragmentResolutionRef();
 
-        Ref<Any2<HyperSchemaOrUriContainer,List<HyperSchemaOrUriContainer>>> getItemsRef();
+        Ref2<HyperSchemaOrUriContainer,List<Ref<HyperSchemaOrUriContainer>>> getItemsRef();
 
-        Ref<List<LinksContainer>> getLinksRef();
+        Ref<List<Ref<LinksContainer>>> getLinksRef();
 
         Ref<String> getMediaTypeRef();
 
@@ -44,10 +45,10 @@ public interface HyperSchemaRefable {
 
         Ref<Boolean> getReadonlyRef();
 
-        Ref<Any2<String,HyperSchemaOrUriContainer>> getRequiresRef();
+        Ref2<String,HyperSchemaOrUriContainer> getRequiresRef();
 
         Ref<Boolean> getRootRef();
 
-        Ref<Any2<String,List<Any2<String,HyperSchemaOrUriContainer>>>> getTypeRef();
+        Ref2<String,List<Ref2<String,HyperSchemaOrUriContainer>>> getTypeRef();
 
 }

@@ -6,8 +6,9 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.jsonref.JsonRef;
 
@@ -20,8 +21,9 @@ public class JsonRefContainerJerializer<T extends PushableContext<T, U>, U exten
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, JsonRefContainer domain) throws JerializerException {
-        recurser.seeCustom(dsl, domain.getJsonRefRef(), JsonRef.class);
-        return null;
+        ObjectDSL<T, U> objectDSL = dsl.seeObject();
+        objectDSL.seeWritable("jsonRef", new RefImpl(recurser.seeCustom(dsl, domain.getJsonRefRef(), JsonRef.class)));
+        return objectDSL;
     }
 
 }

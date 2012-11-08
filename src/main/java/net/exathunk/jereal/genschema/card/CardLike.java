@@ -7,8 +7,9 @@ import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
-import net.exathunk.jereal.base.gen.Any2;
-import net.exathunk.jereal.base.gen.Any3;
+import net.exathunk.jereal.base.gen.Ref1;
+import net.exathunk.jereal.base.gen.Ref2;
+import net.exathunk.jereal.base.gen.Ref3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.address.AddressContainer;
 import net.exathunk.jereal.genschema.geo.GeoContainer;
@@ -16,8 +17,8 @@ import net.exathunk.jereal.genschema.geo.GeoContainer;
 public interface CardLike {
 
         boolean hasAdditionalName();
-        List<String> getAdditionalName();
-        void setAdditionalName(List<String> value);
+        List<Ref<String>> getAdditionalName();
+        void setAdditionalName(List<Ref<String>> value);
 
         boolean hasAdr();
         AddressContainer getAdr();
@@ -48,12 +49,12 @@ public interface CardLike {
         void setGivenName(String value);
 
         boolean hasHonorificPrefix();
-        List<String> getHonorificPrefix();
-        void setHonorificPrefix(List<String> value);
+        List<Ref<String>> getHonorificPrefix();
+        void setHonorificPrefix(List<Ref<String>> value);
 
         boolean hasHonorificSuffix();
-        List<String> getHonorificSuffix();
-        void setHonorificSuffix(List<String> value);
+        List<Ref<String>> getHonorificSuffix();
+        void setHonorificSuffix(List<Ref<String>> value);
 
         boolean hasLogo();
         String getLogo();

@@ -14,9 +14,17 @@ import java.util.Map;
  * charolastra 10/31/12 3:37 PM
  */
 public interface Recurser<T extends PushableContext<T, U>, U extends Questionable> {
-    <V> Pipeable<U> seeCustom(DSL<T, U> dsl, Ref<V> domain, Class<V> klass) throws JerializerException;
-    <V> Pipeable<U> seeCustomMap(DSL<T, U> dsl, Ref<Map<String, V>> domain, Class<V> klass) throws JerializerException;
-    <V> Pipeable<U> seeCustomList(DSL<T, U> dsl, Ref<List<V>> domain, Class<V> klass) throws JerializerException;
+    <X> Pipeable<U> seeCustom(DSL<T, U> dsl, Ref<X> domain, Class<X> klass) throws JerializerException;
+    <X> Pipeable<U> seeCustomMap(DSL<T, U> dsl, Ref<Map<String, X>> domain, Class<X> klass) throws JerializerException;
+    <X> Pipeable<U> seeCustomList(DSL<T, U> dsl, Ref<List<X>> domain, Class<X> klass) throws JerializerException;
+
     Pipeable<U> seeSimpleMap(DSL<T, U> dsl, Ref<Map<String, Ref<String>>> domain);
+
     Pipeable<U> seeThing(DSL<T, U> dsl, Ref<JThing> domain);
+    Pipeable<U> seeStringRefList(DSL<T, U> dsl, Ref<List<Ref<String>>> domain) throws JerializerException;
+    Pipeable<U> seeBooleanRefList(DSL<T, U> dsl, Ref<List<Ref<Boolean>>> domain) throws JerializerException;
+    Pipeable<U> seeLongRefList(DSL<T, U> dsl, Ref<List<Ref<Long>>> domain) throws JerializerException;
+    Pipeable<U> seeDoubleRefList(DSL<T, U> dsl, Ref<List<Ref<Double>>> domain) throws JerializerException;
+    Pipeable<U> seeThingRefList(DSL<T, U> dsl, Ref<List<Ref<JThing>>> domain) throws JerializerException;
+    <X> Pipeable<U> seeCustomRefList(DSL<T, U> dsl, Ref<List<Ref<X>>> domain, Class<X> klass) throws JerializerException;
 }
