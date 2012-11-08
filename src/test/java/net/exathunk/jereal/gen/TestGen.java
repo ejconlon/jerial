@@ -21,44 +21,7 @@ public class TestGen {
     public void testBasic() throws JerializerException {
         final String s = "{ \"id\":\"http://example.com/bongo\", \"properties\": { \"id\": { \"type\":\"string\" }, \"count\": { \"type\":\"integer\" } }, }";
 
-        final GenWritable gen = RunGen.parseSchemaThing("GeneratedBongo", "com.example.bongo", JerializerUtils.jsonToJThing(s));
-
-        /*final Klass klass = new Klass("GeneratedBongo", "foo.bar.baz");
-        final Map<String, KlassTree> fields = new TreeMap<String, KlassTree>();
-        fields.put("id", new KlassTree(new Klass(String.class)));
-        fields.put("count", new KlassTree(new Klass(Long.class)));
-
-        final Set<Klass> imports = new TreeSet<Klass>();
-        imports.add(new Klass(Ref.class));
-        imports.add(new Klass(RefImpl.class));
-
-        final Schema schema = new Schema();
-        schema.id.setRef("http://foo.bar.baz/bongo");
-        schema.type_SchemaRef.setRef(new LinkedList<SchemaRef>());
-        schema.type_SchemaRef.getRef().add(SchemaRef.makeRef("string"));
-        schema.type_SchemaRef.getRef().add(SchemaRef.makeRef("#"));
-
-        GenWritable gen = MetaGen.makeDefault(new Genable() {
-            @Override
-            public Klass getKlass() {
-                return klass;
-            }
-
-            @Override
-            public Set<Klass> getImports() {
-                return imports;
-            }
-
-            @Override
-            public Map<String, KlassTree> getFields() {
-                return fields;
-            }
-
-            @Override
-            public Schema getSchema() {
-                return schema;
-            }
-        });*/
+        final GenWritable gen = RunGen.parseSchemaThing("Bongo", "com.example.bongo", JerializerUtils.jsonToJThing(s));
 
         for (Map.Entry<String, String> entry : gen.makeClassToTextMap().entrySet()) {
             System.out.println("CLASS: "+entry.getKey());

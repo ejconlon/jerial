@@ -62,6 +62,7 @@ public class JerializerGen extends Gen {
 
     private void writeDslCommand(Stringer sb, String key, KlassTree value) {
         final String domainDotGetRefCall = "domain.get"+KlassContext.capitalize(key)+"Ref()";
+        final String klassString = value.getKlass().getKlassName()+".class";
         if (value.getTemplateArgs().isEmpty()) {
             // Non-templated class: simple
             if (value.getKlass().equals(new Klass("String", "java.lang"))) {
@@ -72,12 +73,10 @@ public class JerializerGen extends Gen {
                 sb.append("dsl.seeLong(").append(domainDotGetRefCall).append(");\n");
             } else if (value.getKlass().equals(new Klass("Boolean", "java.lang"))) {
                 sb.append("dsl.seeBoolean(").append(domainDotGetRefCall).append(");\n");
-            } else if (value.getKlass().getKlassName().startsWith("Generated")) {
-                sb.append("recurser.seeCustom(dsl, ").append(domainDotGetRefCall).append(", ").append(value.getKlass().getKlassName()).append(".class);\n");
             } else if (value.getKlass().equals(new Klass(JThing.class))) {
                 sb.append("recurser.seeThing(dsl, ").append(domainDotGetRefCall).append(");\n");
             } else {
-                throw new IllegalArgumentException("Unknown simple class: "+value);
+                sb.append("recurser.seeCustom(dsl, ").append(domainDotGetRefCall).append(", ").append(klassString).append(");\n");
             }
         } else {
             sb.append("// dsl.addSomething("+domainDotGetRefCall+");\n");

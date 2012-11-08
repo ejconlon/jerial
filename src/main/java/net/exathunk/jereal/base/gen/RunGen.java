@@ -68,15 +68,14 @@ public class RunGen extends AbstractMojo {
             System.out.println(thing);
             String rootString = schemas.toURI().toString();
             if (!rootString.endsWith("/")) rootString = rootString + "/";
-            String rawKlassName = KlassContext.capitalize(schema.toURI().toString().substring(rootString.length()));
-            String klassName = "Generated"+rawKlassName;
-            String packageName = basePackage+"."+rawKlassName.toLowerCase();
+            String klassName = KlassContext.capitalize(schema.toURI().toString().substring(rootString.length()));
+            String packageName = basePackage+"."+klassName.toLowerCase();
 
             GenWritable writable = parseSchemaThing(klassName, packageName, thing);
 
             Map<String, String> m = writable.makeClassToTextMap();
 
-            final File dir = new File(destDir+"/"+rawKlassName.toLowerCase());
+            final File dir = new File(destDir+"/"+klassName.toLowerCase());
             dir.mkdirs();
             for (Map.Entry<String, String> entry : m.entrySet()) {
                 final String fullClass = entry.getKey();

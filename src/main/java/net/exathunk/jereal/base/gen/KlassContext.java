@@ -27,7 +27,7 @@ public class KlassContext {
     private Klass makeKlass(String name) {
         String p = klassTree.getKlass().getPackageName();
         p = p.substring(0, p.lastIndexOf(".")+1) + capitalize(name).toLowerCase();
-        return new Klass("Generated"+capitalize(name)+"Container", p);
+        return new Klass(capitalize(name)+"Container", p);
     }
 
     private Klass translateFromString(String name) {
@@ -50,8 +50,7 @@ public class KlassContext {
 
     public KlassTree resolve(String name) {
         if (name.equals("#")) {
-            assert klassTree.getKlass().getKlassName().startsWith("Generated");
-            return new KlassTree(makeKlass(klassTree.getKlass().getKlassName().substring(9)));
+            return new KlassTree(makeKlass(klassTree.getKlass().getKlassName()));
         } else if (name.contains("/")) {
             return new KlassTree(translateFromRef(name));
         } else {
