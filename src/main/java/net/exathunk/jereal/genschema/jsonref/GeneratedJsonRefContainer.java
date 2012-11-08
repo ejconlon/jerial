@@ -9,13 +9,14 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.jsonref.GeneratedJsonRef;
 
 public class GeneratedJsonRefContainer implements GeneratedJsonRefContainerLike, GeneratedJsonRefContainerRefable {
 
-    private final Ref<JThing> generatedJsonRef;
+    private final Ref<GeneratedJsonRef> generatedJsonRef;
 
     public GeneratedJsonRefContainer() {
-        generatedJsonRef = new RefImpl<JThing>();
+        generatedJsonRef = new RefImpl<GeneratedJsonRef>();
     }
 
     @Override
@@ -23,15 +24,15 @@ public class GeneratedJsonRefContainer implements GeneratedJsonRefContainerLike,
         return !generatedJsonRef.isEmptyRef();
     }
     @Override
-    public JThing getGeneratedJsonRef() {
+    public GeneratedJsonRef getGeneratedJsonRef() {
         return generatedJsonRef.getRef();
     }
     @Override
-    public void setGeneratedJsonRef(JThing value) {
+    public void setGeneratedJsonRef(GeneratedJsonRef value) {
         generatedJsonRef.setRef(value);
     }
     @Override
-    public Ref<JThing> getGeneratedJsonRefRef() {
+    public Ref<GeneratedJsonRef> getGeneratedJsonRefRef() {
         return generatedJsonRef;
     }
 

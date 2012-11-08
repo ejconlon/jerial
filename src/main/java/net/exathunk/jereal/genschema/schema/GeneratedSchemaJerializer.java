@@ -26,28 +26,28 @@ public class GeneratedSchemaJerializer<T extends PushableContext<T, U>, U extend
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedSchema domain) throws JerializerException {
         // dsl.addSomething(domain.getAdditionalItemsRef());
         // dsl.addSomething(domain.getAdditionalPropertiesRef());
-        // dsl.addSomething(domain.getDescriptionRef());
+        dsl.seeString(domain.getDescriptionRef());
         // dsl.addSomething(domain.getDisallowRef());
         // dsl.addSomething(domain.getEnumFieldRef());
-        // dsl.addSomething(domain.getExclusiveMaximumRef());
-        // dsl.addSomething(domain.getExclusiveMinimumRef());
+        dsl.seeDouble(domain.getExclusiveMaximumRef());
+        dsl.seeDouble(domain.getExclusiveMinimumRef());
         // dsl.addSomething(domain.getExtendsFieldRef());
-        // dsl.addSomething(domain.getFormatRef());
+        dsl.seeString(domain.getFormatRef());
         // dsl.addSomething(domain.getItemsRef());
-        // dsl.addSomething(domain.getMaxDecimalRef());
-        // dsl.addSomething(domain.getMaxItemsRef());
-        // dsl.addSomething(domain.getMaxLengthRef());
-        // dsl.addSomething(domain.getMaximumRef());
-        // dsl.addSomething(domain.getMinItemsRef());
-        // dsl.addSomething(domain.getMinLengthRef());
-        // dsl.addSomething(domain.getMinimumRef());
-        // dsl.addSomething(domain.getPatternRef());
-        // dsl.addSomething(domain.getPropertiesRef());
-        // dsl.addSomething(domain.getRequiredRef());
+        dsl.seeDouble(domain.getMaxDecimalRef());
+        dsl.seeLong(domain.getMaxItemsRef());
+        dsl.seeLong(domain.getMaxLengthRef());
+        dsl.seeDouble(domain.getMaximumRef());
+        dsl.seeLong(domain.getMinItemsRef());
+        dsl.seeLong(domain.getMinLengthRef());
+        dsl.seeDouble(domain.getMinimumRef());
+        dsl.seeString(domain.getPatternRef());
+        recurser.seeCustom(dsl, domain.getPropertiesRef(), GeneratedSchemaContainer.class);
+        dsl.seeBoolean(domain.getRequiredRef());
         // dsl.addSomething(domain.getRequiresRef());
-        // dsl.addSomething(domain.getTitleRef());
+        dsl.seeString(domain.getTitleRef());
         // dsl.addSomething(domain.getTypeRef());
-        // dsl.addSomething(domain.getUniqueItemsRef());
+        dsl.seeBoolean(domain.getUniqueItemsRef());
         return null;
     }
 

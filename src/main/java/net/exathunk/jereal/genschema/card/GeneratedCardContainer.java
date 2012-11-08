@@ -11,14 +11,15 @@ import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.address.GeneratedAddressContainer;
+import net.exathunk.jereal.genschema.card.GeneratedCard;
 import net.exathunk.jereal.genschema.geo.GeneratedGeoContainer;
 
 public class GeneratedCardContainer implements GeneratedCardContainerLike, GeneratedCardContainerRefable {
 
-    private final Ref<JThing> generatedCard;
+    private final Ref<GeneratedCard> generatedCard;
 
     public GeneratedCardContainer() {
-        generatedCard = new RefImpl<JThing>();
+        generatedCard = new RefImpl<GeneratedCard>();
     }
 
     @Override
@@ -26,15 +27,15 @@ public class GeneratedCardContainer implements GeneratedCardContainerLike, Gener
         return !generatedCard.isEmptyRef();
     }
     @Override
-    public JThing getGeneratedCard() {
+    public GeneratedCard getGeneratedCard() {
         return generatedCard.getRef();
     }
     @Override
-    public void setGeneratedCard(JThing value) {
+    public void setGeneratedCard(GeneratedCard value) {
         generatedCard.setRef(value);
     }
     @Override
-    public Ref<JThing> getGeneratedCardRef() {
+    public Ref<GeneratedCard> getGeneratedCardRef() {
         return generatedCard;
     }
 

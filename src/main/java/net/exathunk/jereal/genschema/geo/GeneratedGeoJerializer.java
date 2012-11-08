@@ -20,8 +20,8 @@ public class GeneratedGeoJerializer<T extends PushableContext<T, U>, U extends Q
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedGeo domain) throws JerializerException {
-        // dsl.addSomething(domain.getLatitudeRef());
-        // dsl.addSomething(domain.getLongitudeRef());
+        dsl.seeDouble(domain.getLatitudeRef());
+        dsl.seeDouble(domain.getLongitudeRef());
         return null;
     }
 

@@ -19,7 +19,7 @@ public class GeneratedInterfacesJerializer<T extends PushableContext<T, U>, U ex
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedInterfaces domain) throws JerializerException {
-        // dsl.addSomething(domain.getMethodsRef());
+        recurser.seeThing(dsl, domain.getMethodsRef());
         return null;
     }
 

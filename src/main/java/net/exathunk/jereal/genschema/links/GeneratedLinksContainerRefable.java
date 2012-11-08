@@ -11,9 +11,10 @@ import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchemaContainer;
+import net.exathunk.jereal.genschema.links.GeneratedLinks;
 
 public interface GeneratedLinksContainerRefable {
 
-        Ref<JThing> getGeneratedLinksRef();
+        Ref<GeneratedLinks> getGeneratedLinksRef();
 
 }

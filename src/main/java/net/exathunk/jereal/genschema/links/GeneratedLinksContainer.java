@@ -11,13 +11,14 @@ import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchemaContainer;
+import net.exathunk.jereal.genschema.links.GeneratedLinks;
 
 public class GeneratedLinksContainer implements GeneratedLinksContainerLike, GeneratedLinksContainerRefable {
 
-    private final Ref<JThing> generatedLinks;
+    private final Ref<GeneratedLinks> generatedLinks;
 
     public GeneratedLinksContainer() {
-        generatedLinks = new RefImpl<JThing>();
+        generatedLinks = new RefImpl<GeneratedLinks>();
     }
 
     @Override
@@ -25,15 +26,15 @@ public class GeneratedLinksContainer implements GeneratedLinksContainerLike, Gen
         return !generatedLinks.isEmptyRef();
     }
     @Override
-    public JThing getGeneratedLinks() {
+    public GeneratedLinks getGeneratedLinks() {
         return generatedLinks.getRef();
     }
     @Override
-    public void setGeneratedLinks(JThing value) {
+    public void setGeneratedLinks(GeneratedLinks value) {
         generatedLinks.setRef(value);
     }
     @Override
-    public Ref<JThing> getGeneratedLinksRef() {
+    public Ref<GeneratedLinks> getGeneratedLinksRef() {
         return generatedLinks;
     }
 

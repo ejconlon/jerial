@@ -11,6 +11,7 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchema;
 import net.exathunk.jereal.genschema.hyperschemaoruri.GeneratedHyperSchemaOrUriContainer;
 import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
@@ -23,7 +24,7 @@ public class GeneratedHyperSchemaContainerJerializer<T extends PushableContext<T
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedHyperSchemaContainer domain) throws JerializerException {
-        // dsl.addSomething(domain.getGeneratedHyperSchemaRef());
+        recurser.seeCustom(dsl, domain.getGeneratedHyperSchemaRef(), GeneratedHyperSchema.class);
         return null;
     }
 

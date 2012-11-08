@@ -66,16 +66,14 @@ public class RunGen extends AbstractMojo {
             BufferedReader reader = new BufferedReader(new FileReader(schema));
             JThing thing = parser.parse(reader);
             System.out.println(thing);
-            Schema s = Loader.parseSchemaThing(thing);
-            System.out.println(s);
             String rootString = schemas.toURI().toString();
             if (!rootString.endsWith("/")) rootString = rootString + "/";
             String rawKlassName = KlassContext.capitalize(schema.toURI().toString().substring(rootString.length()));
             String klassName = "Generated"+rawKlassName;
-            Klass klass = new Klass(klassName, basePackage+"."+rawKlassName.toLowerCase());
-            SchemaReader schemaReader = new SchemaReader(klass, s);
+            String packageName = basePackage+"."+rawKlassName.toLowerCase();
 
-            GenWritable writable = MetaGen.makeDefault(schemaReader);
+            GenWritable writable = parseSchemaThing(klassName, packageName, thing);
+
             Map<String, String> m = writable.makeClassToTextMap();
 
             final File dir = new File(destDir+"/"+rawKlassName.toLowerCase());
@@ -93,5 +91,12 @@ public class RunGen extends AbstractMojo {
         }
     }
 
-
+    public static GenWritable parseSchemaThing(String klassName, String packageName, JThing thing) throws JerializerException {
+        Schema s = Loader.parseSchemaThing(thing);
+        //System.out.println(s);
+        Klass klass = new Klass(klassName, packageName);
+        SchemaReader schemaReader = new SchemaReader(klass, s);
+        GenWritable writable = MetaGen.makeDefault(schemaReader);
+        return writable;
+    }
 }

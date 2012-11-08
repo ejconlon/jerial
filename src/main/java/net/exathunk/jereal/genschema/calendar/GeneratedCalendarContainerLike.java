@@ -10,12 +10,13 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.calendar.GeneratedCalendar;
 import net.exathunk.jereal.genschema.geo.GeneratedGeoContainer;
 
 public interface GeneratedCalendarContainerLike {
 
         boolean hasGeneratedCalendar();
-        JThing getGeneratedCalendar();
-        void setGeneratedCalendar(JThing value);
+        GeneratedCalendar getGeneratedCalendar();
+        void setGeneratedCalendar(GeneratedCalendar value);
 
 }

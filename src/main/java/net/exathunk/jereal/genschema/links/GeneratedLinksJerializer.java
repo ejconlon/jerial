@@ -21,12 +21,12 @@ public class GeneratedLinksJerializer<T extends PushableContext<T, U>, U extends
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedLinks domain) throws JerializerException {
-        // dsl.addSomething(domain.getEnctypeRef());
-        // dsl.addSomething(domain.getHrefRef());
-        // dsl.addSomething(domain.getMethodRef());
-        // dsl.addSomething(domain.getPropertiesRef());
-        // dsl.addSomething(domain.getRelRef());
-        // dsl.addSomething(domain.getTargetSchemaRef());
+        dsl.seeString(domain.getEnctypeRef());
+        dsl.seeString(domain.getHrefRef());
+        dsl.seeString(domain.getMethodRef());
+        recurser.seeCustom(dsl, domain.getPropertiesRef(), GeneratedHyperSchemaContainer.class);
+        dsl.seeString(domain.getRelRef());
+        recurser.seeCustom(dsl, domain.getTargetSchemaRef(), GeneratedHyperSchemaContainer.class);
         return null;
     }
 

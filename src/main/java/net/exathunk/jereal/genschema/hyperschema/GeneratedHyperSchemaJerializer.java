@@ -26,19 +26,19 @@ public class GeneratedHyperSchemaJerializer<T extends PushableContext<T, U>, U e
         // dsl.addSomething(domain.getAdditionalItemsRef());
         // dsl.addSomething(domain.getAdditionalPropertiesRef());
         // dsl.addSomething(domain.getAlternateRef());
-        // dsl.addSomething(domain.getContentEncodingRef());
-        // dsl.addSomething(domain.getDefaultFieldRef());
+        dsl.seeString(domain.getContentEncodingRef());
+        recurser.seeThing(dsl, domain.getDefaultFieldRef());
         // dsl.addSomething(domain.getDisallowRef());
         // dsl.addSomething(domain.getExtendsFieldRef());
-        // dsl.addSomething(domain.getFragmentResolutionRef());
+        dsl.seeString(domain.getFragmentResolutionRef());
         // dsl.addSomething(domain.getItemsRef());
         // dsl.addSomething(domain.getLinksRef());
-        // dsl.addSomething(domain.getMediaTypeRef());
-        // dsl.addSomething(domain.getPathStartRef());
-        // dsl.addSomething(domain.getPropertiesRef());
-        // dsl.addSomething(domain.getReadonlyRef());
+        dsl.seeString(domain.getMediaTypeRef());
+        dsl.seeString(domain.getPathStartRef());
+        recurser.seeCustom(dsl, domain.getPropertiesRef(), GeneratedHyperSchemaOrUriContainer.class);
+        dsl.seeBoolean(domain.getReadonlyRef());
         // dsl.addSomething(domain.getRequiresRef());
-        // dsl.addSomething(domain.getRootRef());
+        dsl.seeBoolean(domain.getRootRef());
         // dsl.addSomething(domain.getTypeRef());
         return null;
     }

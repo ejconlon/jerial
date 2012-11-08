@@ -3,6 +3,8 @@ package net.exathunk.jereal.gen;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.*;
+import net.exathunk.jereal.base.jerializers.JerializerException;
+import net.exathunk.jereal.base.jerializers.JerializerUtils;
 import net.exathunk.jereal.schema.domain.Schema;
 import net.exathunk.jereal.schema.domain.SchemaRef;
 import org.junit.Test;
@@ -16,8 +18,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestGen {
     @Test
-    public void testBasic() {
-        final Klass klass = new Klass("GeneratedBongo", "foo.bar.baz");
+    public void testBasic() throws JerializerException {
+        final String s = "{ \"id\":\"http://example.com/bongo\", \"properties\": { \"id\": { \"type\":\"string\" }, \"count\": { \"type\":\"integer\" } }, }";
+
+        final GenWritable gen = RunGen.parseSchemaThing("GeneratedBongo", "com.example.bongo", JerializerUtils.jsonToJThing(s));
+
+        /*final Klass klass = new Klass("GeneratedBongo", "foo.bar.baz");
         final Map<String, KlassTree> fields = new TreeMap<String, KlassTree>();
         fields.put("id", new KlassTree(new Klass(String.class)));
         fields.put("count", new KlassTree(new Klass(Long.class)));
@@ -52,7 +58,7 @@ public class TestGen {
             public Schema getSchema() {
                 return schema;
             }
-        });
+        });*/
 
         for (Map.Entry<String, String> entry : gen.makeClassToTextMap().entrySet()) {
             System.out.println("CLASS: "+entry.getKey());

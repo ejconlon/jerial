@@ -20,13 +20,13 @@ public class GeneratedAddressJerializer<T extends PushableContext<T, U>, U exten
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedAddress domain) throws JerializerException {
-        // dsl.addSomething(domain.getCountryNameRef());
-        // dsl.addSomething(domain.getExtendedAddressRef());
-        // dsl.addSomething(domain.getLocalityRef());
-        // dsl.addSomething(domain.getPostOfficeBoxRef());
-        // dsl.addSomething(domain.getPostalCodeRef());
-        // dsl.addSomething(domain.getRegionRef());
-        // dsl.addSomething(domain.getStreetAddressRef());
+        dsl.seeString(domain.getCountryNameRef());
+        dsl.seeString(domain.getExtendedAddressRef());
+        dsl.seeString(domain.getLocalityRef());
+        dsl.seeString(domain.getPostOfficeBoxRef());
+        dsl.seeString(domain.getPostalCodeRef());
+        dsl.seeString(domain.getRegionRef());
+        dsl.seeString(domain.getStreetAddressRef());
         return null;
     }
 

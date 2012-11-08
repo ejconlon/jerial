@@ -10,6 +10,7 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.calendar.GeneratedCalendar;
 import net.exathunk.jereal.genschema.geo.GeneratedGeoContainer;
 
 public class GeneratedCalendarContainerJerializer<T extends PushableContext<T, U>, U extends Questionable> implements Jerializer<T, U, GeneratedCalendarContainer> {
@@ -21,7 +22,7 @@ public class GeneratedCalendarContainerJerializer<T extends PushableContext<T, U
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedCalendarContainer domain) throws JerializerException {
-        // dsl.addSomething(domain.getGeneratedCalendarRef());
+        recurser.seeCustom(dsl, domain.getGeneratedCalendarRef(), GeneratedCalendar.class);
         return null;
     }
 

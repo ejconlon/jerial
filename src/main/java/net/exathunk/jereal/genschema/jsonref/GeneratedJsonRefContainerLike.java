@@ -9,11 +9,12 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.jsonref.GeneratedJsonRef;
 
 public interface GeneratedJsonRefContainerLike {
 
         boolean hasGeneratedJsonRef();
-        JThing getGeneratedJsonRef();
-        void setGeneratedJsonRef(JThing value);
+        GeneratedJsonRef getGeneratedJsonRef();
+        void setGeneratedJsonRef(GeneratedJsonRef value);
 
 }

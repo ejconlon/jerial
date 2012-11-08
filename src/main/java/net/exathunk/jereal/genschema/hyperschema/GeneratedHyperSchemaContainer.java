@@ -11,15 +11,16 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchema;
 import net.exathunk.jereal.genschema.hyperschemaoruri.GeneratedHyperSchemaOrUriContainer;
 import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
 public class GeneratedHyperSchemaContainer implements GeneratedHyperSchemaContainerLike, GeneratedHyperSchemaContainerRefable {
 
-    private final Ref<JThing> generatedHyperSchema;
+    private final Ref<GeneratedHyperSchema> generatedHyperSchema;
 
     public GeneratedHyperSchemaContainer() {
-        generatedHyperSchema = new RefImpl<JThing>();
+        generatedHyperSchema = new RefImpl<GeneratedHyperSchema>();
     }
 
     @Override
@@ -27,15 +28,15 @@ public class GeneratedHyperSchemaContainer implements GeneratedHyperSchemaContai
         return !generatedHyperSchema.isEmptyRef();
     }
     @Override
-    public JThing getGeneratedHyperSchema() {
+    public GeneratedHyperSchema getGeneratedHyperSchema() {
         return generatedHyperSchema.getRef();
     }
     @Override
-    public void setGeneratedHyperSchema(JThing value) {
+    public void setGeneratedHyperSchema(GeneratedHyperSchema value) {
         generatedHyperSchema.setRef(value);
     }
     @Override
-    public Ref<JThing> getGeneratedHyperSchemaRef() {
+    public Ref<GeneratedHyperSchema> getGeneratedHyperSchemaRef() {
         return generatedHyperSchema;
     }
 

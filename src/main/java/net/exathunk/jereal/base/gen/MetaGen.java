@@ -54,11 +54,18 @@ public class MetaGen implements GenWritable {
             public Map<String, KlassTree> getFields() {
                 KlassContext klassContext = new KlassContext(new KlassTree(genable.getKlass()));
                 KlassTree tree = (new TypeOracleImpl(klassContext)).makeType(SchemaRef.makeSchema(genable.getSchema()));
-                for (int i = 0; i < tree.getTemplateArgs().size(); ++i) {
-                    if (tree.getTemplateArgs().get(i).getKlass().equals(new Klass(JThing.class))) {
-                        tree.getTemplateArgs().set(i, new KlassTree(genable.getKlass()));
+                if (tree.getTemplateArgs().isEmpty()) {
+                    if (tree.getKlass().equals(new Klass(JThing.class))) {
+                        tree = klassContext.getKlassTree();
+                    }
+                } else {
+                    for (int i = 0; i < tree.getTemplateArgs().size(); ++i) {
+                        if (tree.getTemplateArgs().get(i).getKlass().equals(new Klass(JThing.class))) {
+                            tree.getTemplateArgs().set(i, new KlassTree(genable.getKlass()));
+                        }
                     }
                 }
+
                 final Map<String, KlassTree> containerFields = new TreeMap<String, KlassTree>();
                 containerFields.put(KlassContext.camelize(genable.getKlass().getKlassName()), tree);
                 return containerFields;

@@ -21,17 +21,17 @@ public class GeneratedCalendarJerializer<T extends PushableContext<T, U>, U exte
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedCalendar domain) throws JerializerException {
-        // dsl.addSomething(domain.getCategoryRef());
-        // dsl.addSomething(domain.getDescriptionRef());
-        // dsl.addSomething(domain.getDtendRef());
-        // dsl.addSomething(domain.getDtstartRef());
-        // dsl.addSomething(domain.getDurationRef());
-        // dsl.addSomething(domain.getGeoRef());
-        // dsl.addSomething(domain.getLocationRef());
-        // dsl.addSomething(domain.getRdateRef());
-        // dsl.addSomething(domain.getRruleRef());
-        // dsl.addSomething(domain.getSummaryRef());
-        // dsl.addSomething(domain.getUrlRef());
+        dsl.seeString(domain.getCategoryRef());
+        dsl.seeString(domain.getDescriptionRef());
+        dsl.seeString(domain.getDtendRef());
+        dsl.seeString(domain.getDtstartRef());
+        dsl.seeString(domain.getDurationRef());
+        recurser.seeCustom(dsl, domain.getGeoRef(), GeneratedGeoContainer.class);
+        dsl.seeString(domain.getLocationRef());
+        dsl.seeString(domain.getRdateRef());
+        dsl.seeString(domain.getRruleRef());
+        dsl.seeString(domain.getSummaryRef());
+        dsl.seeString(domain.getUrlRef());
         return null;
     }
 

@@ -10,13 +10,14 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.geo.GeneratedGeo;
 
 public class GeneratedGeoContainer implements GeneratedGeoContainerLike, GeneratedGeoContainerRefable {
 
-    private final Ref<JThing> generatedGeo;
+    private final Ref<GeneratedGeo> generatedGeo;
 
     public GeneratedGeoContainer() {
-        generatedGeo = new RefImpl<JThing>();
+        generatedGeo = new RefImpl<GeneratedGeo>();
     }
 
     @Override
@@ -24,15 +25,15 @@ public class GeneratedGeoContainer implements GeneratedGeoContainerLike, Generat
         return !generatedGeo.isEmptyRef();
     }
     @Override
-    public JThing getGeneratedGeo() {
+    public GeneratedGeo getGeneratedGeo() {
         return generatedGeo.getRef();
     }
     @Override
-    public void setGeneratedGeo(JThing value) {
+    public void setGeneratedGeo(GeneratedGeo value) {
         generatedGeo.setRef(value);
     }
     @Override
-    public Ref<JThing> getGeneratedGeoRef() {
+    public Ref<GeneratedGeo> getGeneratedGeoRef() {
         return generatedGeo;
     }
 

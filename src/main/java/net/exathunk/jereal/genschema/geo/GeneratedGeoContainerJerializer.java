@@ -10,6 +10,7 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.geo.GeneratedGeo;
 
 public class GeneratedGeoContainerJerializer<T extends PushableContext<T, U>, U extends Questionable> implements Jerializer<T, U, GeneratedGeoContainer> {
 
@@ -20,7 +21,7 @@ public class GeneratedGeoContainerJerializer<T extends PushableContext<T, U>, U 
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedGeoContainer domain) throws JerializerException {
-        // dsl.addSomething(domain.getGeneratedGeoRef());
+        recurser.seeCustom(dsl, domain.getGeneratedGeoRef(), GeneratedGeo.class);
         return null;
     }
 

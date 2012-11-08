@@ -9,13 +9,14 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.interfaces.GeneratedInterfaces;
 
 public class GeneratedInterfacesContainer implements GeneratedInterfacesContainerLike, GeneratedInterfacesContainerRefable {
 
-    private final Ref<JThing> generatedInterfaces;
+    private final Ref<GeneratedInterfaces> generatedInterfaces;
 
     public GeneratedInterfacesContainer() {
-        generatedInterfaces = new RefImpl<JThing>();
+        generatedInterfaces = new RefImpl<GeneratedInterfaces>();
     }
 
     @Override
@@ -23,15 +24,15 @@ public class GeneratedInterfacesContainer implements GeneratedInterfacesContaine
         return !generatedInterfaces.isEmptyRef();
     }
     @Override
-    public JThing getGeneratedInterfaces() {
+    public GeneratedInterfaces getGeneratedInterfaces() {
         return generatedInterfaces.getRef();
     }
     @Override
-    public void setGeneratedInterfaces(JThing value) {
+    public void setGeneratedInterfaces(GeneratedInterfaces value) {
         generatedInterfaces.setRef(value);
     }
     @Override
-    public Ref<JThing> getGeneratedInterfacesRef() {
+    public Ref<GeneratedInterfaces> getGeneratedInterfacesRef() {
         return generatedInterfaces;
     }
 

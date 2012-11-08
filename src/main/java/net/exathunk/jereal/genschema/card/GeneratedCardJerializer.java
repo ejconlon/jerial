@@ -23,25 +23,25 @@ public class GeneratedCardJerializer<T extends PushableContext<T, U>, U extends 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedCard domain) throws JerializerException {
         // dsl.addSomething(domain.getAdditionalNameRef());
-        // dsl.addSomething(domain.getAdrRef());
-        // dsl.addSomething(domain.getBdayRef());
-        // dsl.addSomething(domain.getEmailRef());
-        // dsl.addSomething(domain.getFamilyNameRef());
-        // dsl.addSomething(domain.getFnRef());
-        // dsl.addSomething(domain.getGeoRef());
-        // dsl.addSomething(domain.getGivenNameRef());
+        recurser.seeCustom(dsl, domain.getAdrRef(), GeneratedAddressContainer.class);
+        dsl.seeString(domain.getBdayRef());
+        recurser.seeThing(dsl, domain.getEmailRef());
+        dsl.seeString(domain.getFamilyNameRef());
+        dsl.seeString(domain.getFnRef());
+        recurser.seeCustom(dsl, domain.getGeoRef(), GeneratedGeoContainer.class);
+        dsl.seeString(domain.getGivenNameRef());
         // dsl.addSomething(domain.getHonorificPrefixRef());
         // dsl.addSomething(domain.getHonorificSuffixRef());
-        // dsl.addSomething(domain.getLogoRef());
-        // dsl.addSomething(domain.getNicknameRef());
-        // dsl.addSomething(domain.getOrgRef());
-        // dsl.addSomething(domain.getPhotoRef());
-        // dsl.addSomething(domain.getRoleRef());
-        // dsl.addSomething(domain.getSoundRef());
-        // dsl.addSomething(domain.getTelRef());
-        // dsl.addSomething(domain.getTitleRef());
-        // dsl.addSomething(domain.getTzRef());
-        // dsl.addSomething(domain.getUrlRef());
+        dsl.seeString(domain.getLogoRef());
+        dsl.seeString(domain.getNicknameRef());
+        recurser.seeThing(dsl, domain.getOrgRef());
+        dsl.seeString(domain.getPhotoRef());
+        dsl.seeString(domain.getRoleRef());
+        dsl.seeString(domain.getSoundRef());
+        recurser.seeThing(dsl, domain.getTelRef());
+        dsl.seeString(domain.getTitleRef());
+        dsl.seeString(domain.getTzRef());
+        dsl.seeString(domain.getUrlRef());
         return null;
     }
 

@@ -9,11 +9,12 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.interfaces.GeneratedInterfaces;
 
 public interface GeneratedInterfacesContainerLike {
 
         boolean hasGeneratedInterfaces();
-        JThing getGeneratedInterfaces();
-        void setGeneratedInterfaces(JThing value);
+        GeneratedInterfaces getGeneratedInterfaces();
+        void setGeneratedInterfaces(GeneratedInterfaces value);
 
 }

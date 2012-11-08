@@ -9,6 +9,7 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.jsonref.GeneratedJsonRef;
 
 public class GeneratedJsonRefContainerJerializer<T extends PushableContext<T, U>, U extends Questionable> implements Jerializer<T, U, GeneratedJsonRefContainer> {
 
@@ -19,7 +20,7 @@ public class GeneratedJsonRefContainerJerializer<T extends PushableContext<T, U>
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedJsonRefContainer domain) throws JerializerException {
-        // dsl.addSomething(domain.getGeneratedJsonRefRef());
+        recurser.seeCustom(dsl, domain.getGeneratedJsonRefRef(), GeneratedJsonRef.class);
         return null;
     }
 

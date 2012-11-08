@@ -1,5 +1,7 @@
 package net.exathunk.jereal.base.gen;
 
+import net.exathunk.jereal.base.core.JThing;
+
 import java.util.Map;
 
 /**
@@ -52,9 +54,33 @@ public class JerializerGen extends Gen {
         sb.append("public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, ").append(genable.getKlass().getKlassName()).append(" domain) throws JerializerException {\n");
         Stringer sb2 = sb.indent();
         for (Map.Entry<String, KlassTree> entry : genable.getFields().entrySet()) {
-            sb2.append("// dsl.addSomething(domain.get").append(KlassContext.capitalize(entry.getKey())).append("Ref());\n");
+            writeDslCommand(sb2, entry.getKey(), entry.getValue());
         }
         sb2.append("return null;\n");
         sb.append("}\n\n");
+    }
+
+    private void writeDslCommand(Stringer sb, String key, KlassTree value) {
+        final String domainDotGetRefCall = "domain.get"+KlassContext.capitalize(key)+"Ref()";
+        if (value.getTemplateArgs().isEmpty()) {
+            // Non-templated class: simple
+            if (value.getKlass().equals(new Klass("String", "java.lang"))) {
+                sb.append("dsl.seeString(").append(domainDotGetRefCall).append(");\n");
+            } else if (value.getKlass().equals(new Klass("Double", "java.lang"))) {
+                sb.append("dsl.seeDouble(").append(domainDotGetRefCall).append(");\n");
+            } else if (value.getKlass().equals(new Klass("Long", "java.lang"))) {
+                sb.append("dsl.seeLong(").append(domainDotGetRefCall).append(");\n");
+            } else if (value.getKlass().equals(new Klass("Boolean", "java.lang"))) {
+                sb.append("dsl.seeBoolean(").append(domainDotGetRefCall).append(");\n");
+            } else if (value.getKlass().getKlassName().startsWith("Generated")) {
+                sb.append("recurser.seeCustom(dsl, ").append(domainDotGetRefCall).append(", ").append(value.getKlass().getKlassName()).append(".class);\n");
+            } else if (value.getKlass().equals(new Klass(JThing.class))) {
+                sb.append("recurser.seeThing(dsl, ").append(domainDotGetRefCall).append(");\n");
+            } else {
+                throw new IllegalArgumentException("Unknown simple class: "+value);
+            }
+        } else {
+            sb.append("// dsl.addSomething("+domainDotGetRefCall+");\n");
+        }
     }
 }

@@ -10,14 +10,15 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.calendar.GeneratedCalendar;
 import net.exathunk.jereal.genschema.geo.GeneratedGeoContainer;
 
 public class GeneratedCalendarContainer implements GeneratedCalendarContainerLike, GeneratedCalendarContainerRefable {
 
-    private final Ref<JThing> generatedCalendar;
+    private final Ref<GeneratedCalendar> generatedCalendar;
 
     public GeneratedCalendarContainer() {
-        generatedCalendar = new RefImpl<JThing>();
+        generatedCalendar = new RefImpl<GeneratedCalendar>();
     }
 
     @Override
@@ -25,15 +26,15 @@ public class GeneratedCalendarContainer implements GeneratedCalendarContainerLik
         return !generatedCalendar.isEmptyRef();
     }
     @Override
-    public JThing getGeneratedCalendar() {
+    public GeneratedCalendar getGeneratedCalendar() {
         return generatedCalendar.getRef();
     }
     @Override
-    public void setGeneratedCalendar(JThing value) {
+    public void setGeneratedCalendar(GeneratedCalendar value) {
         generatedCalendar.setRef(value);
     }
     @Override
-    public Ref<JThing> getGeneratedCalendarRef() {
+    public Ref<GeneratedCalendar> getGeneratedCalendarRef() {
         return generatedCalendar;
     }
 

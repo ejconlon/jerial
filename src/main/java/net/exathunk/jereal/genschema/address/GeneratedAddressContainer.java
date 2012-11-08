@@ -10,13 +10,14 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
+import net.exathunk.jereal.genschema.address.GeneratedAddress;
 
 public class GeneratedAddressContainer implements GeneratedAddressContainerLike, GeneratedAddressContainerRefable {
 
-    private final Ref<JThing> generatedAddress;
+    private final Ref<GeneratedAddress> generatedAddress;
 
     public GeneratedAddressContainer() {
-        generatedAddress = new RefImpl<JThing>();
+        generatedAddress = new RefImpl<GeneratedAddress>();
     }
 
     @Override
@@ -24,15 +25,15 @@ public class GeneratedAddressContainer implements GeneratedAddressContainerLike,
         return !generatedAddress.isEmptyRef();
     }
     @Override
-    public JThing getGeneratedAddress() {
+    public GeneratedAddress getGeneratedAddress() {
         return generatedAddress.getRef();
     }
     @Override
-    public void setGeneratedAddress(JThing value) {
+    public void setGeneratedAddress(GeneratedAddress value) {
         generatedAddress.setRef(value);
     }
     @Override
-    public Ref<JThing> getGeneratedAddressRef() {
+    public Ref<GeneratedAddress> getGeneratedAddressRef() {
         return generatedAddress;
     }
 

@@ -11,6 +11,7 @@ import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
 import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchemaContainer;
+import net.exathunk.jereal.genschema.links.GeneratedLinks;
 
 public class GeneratedLinksContainerJerializer<T extends PushableContext<T, U>, U extends Questionable> implements Jerializer<T, U, GeneratedLinksContainer> {
 
@@ -21,7 +22,7 @@ public class GeneratedLinksContainerJerializer<T extends PushableContext<T, U>, 
 
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, GeneratedLinksContainer domain) throws JerializerException {
-        // dsl.addSomething(domain.getGeneratedLinksRef());
+        recurser.seeCustom(dsl, domain.getGeneratedLinksRef(), GeneratedLinks.class);
         return null;
     }
 
