@@ -9,16 +9,14 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchema;
-import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchemaContainer;
-import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
+import net.exathunk.jereal.genschema.hyperschemaoruri.GeneratedHyperSchemaOrUri;
 
 public class GeneratedHyperSchemaOrUriContainer implements GeneratedHyperSchemaOrUriContainerLike, GeneratedHyperSchemaOrUriContainerRefable {
 
-    private final Ref<Any2<String,GeneratedHyperSchemaContainer>> GeneratedHyperSchemaOrUri;
+    private final Ref<GeneratedHyperSchemaOrUri> GeneratedHyperSchemaOrUri;
 
     public GeneratedHyperSchemaOrUriContainer() {
-        GeneratedHyperSchemaOrUri = new RefImpl<Any2<String,GeneratedHyperSchemaContainer>>();
+        GeneratedHyperSchemaOrUri = new RefImpl<GeneratedHyperSchemaOrUri>();
     }
 
     @Override
@@ -26,15 +24,15 @@ public class GeneratedHyperSchemaOrUriContainer implements GeneratedHyperSchemaO
         return !GeneratedHyperSchemaOrUri.isEmptyRef();
     }
     @Override
-    public Any2<String,GeneratedHyperSchemaContainer> getGeneratedHyperSchemaOrUri() {
+    public GeneratedHyperSchemaOrUri getGeneratedHyperSchemaOrUri() {
         return GeneratedHyperSchemaOrUri.getRef();
     }
     @Override
-    public void setGeneratedHyperSchemaOrUri(Any2<String,GeneratedHyperSchemaContainer> value) {
+    public void setGeneratedHyperSchemaOrUri(GeneratedHyperSchemaOrUri value) {
         GeneratedHyperSchemaOrUri.setRef(value);
     }
     @Override
-    public Ref<Any2<String,GeneratedHyperSchemaContainer>> getGeneratedHyperSchemaOrUriRef() {
+    public Ref<GeneratedHyperSchemaOrUri> getGeneratedHyperSchemaOrUriRef() {
         return GeneratedHyperSchemaOrUri;
     }
 

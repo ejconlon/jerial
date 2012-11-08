@@ -12,14 +12,14 @@ public class RefableInterfaceGen extends Gen {
         super(genable);
     }
 
-    private void writeRefableInterfaceFuncs(Stringer sb, String name, String klass) {
+    private void writeRefableInterfaceFuncs(Stringer sb, String name, KlassTree klassTree) {
         final String capName = name.substring(0, 1).toUpperCase()+name.substring(1);
-        sb.append("Ref<").append(klass).append("> get").append(capName).append("Ref();\n\n");
+        sb.append("Ref<").append(klassTree).append("> get").append(capName).append("Ref();\n\n");
     }
 
     @Override
     public String effectiveClassName() {
-        return genable.getClassName()+"Refable";
+        return genable.getKlass().getKlassName()+"Refable";
     }
 
     @Override
@@ -49,7 +49,7 @@ public class RefableInterfaceGen extends Gen {
 
     @Override
     public void writeMethods(Stringer sb) {
-        for (Map.Entry<String, String> entry : genable.getFields().entrySet()) {
+        for (Map.Entry<String, KlassTree> entry : genable.getFields().entrySet()) {
             writeRefableInterfaceFuncs(sb.indent(), entry.getKey(), entry.getValue());
         }
     }

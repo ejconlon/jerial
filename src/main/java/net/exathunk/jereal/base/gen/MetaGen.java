@@ -34,32 +34,26 @@ public class MetaGen implements GenWritable {
     private static Genable makeContainerGenable(final Genable genable) {
         return new Genable() {
             @Override
-            public String getClassName() {
-                return genable.getClassName()+"Container";
+            public Klass getKlass() {
+                return new Klass(genable.getKlass().getKlassName()+"Container", genable.getKlass().getPackageName());
             }
 
             @Override
-            public String getPackageName() {
-                return genable.getPackageName();
-            }
-
-            @Override
-            public Set<String> getImports() {
-                final Set<String> tempImports = new TreeSet<String>(genable.getImports());
-                final Set<String> imports = new TreeSet<String>();
-                for (String klass : getFields().values()) {
-                    tempImports.add(klass);
+            public Set<Klass> getImports() {
+                final Set<Klass> tempImports = new TreeSet<Klass>(genable.getImports());
+                final Set<Klass> imports = new TreeSet<Klass>();
+                for (KlassTree klassTree : getFields().values()) {
+                    tempImports.addAll(klassTree.collectImports());
                 }
-                Util.rejiggerImports(tempImports, imports);
+                KlassContext.rejiggerImports(tempImports, imports);
                 return imports;
             }
 
             @Override
-            public Map<String, String> getFields() {
-                String selfType = (new TypeOracleImpl()).makeType(genable.getClassName(), SchemaRef.makeSchema(genable.getSchema()), null, null);
-                selfType = selfType.replace("JThing", genable.getClassName());
-                final Map<String, String> containerFields = new TreeMap<String, String>();
-                containerFields.put(genable.getClassName(), selfType);
+            public Map<String, KlassTree> getFields() {
+                KlassContext klassContext = new KlassContext(new KlassTree(genable.getKlass()));
+                final Map<String, KlassTree> containerFields = new TreeMap<String, KlassTree>();
+                containerFields.put(genable.getKlass().getKlassName(), klassContext.getKlassTree());
                 return containerFields;
             }
 

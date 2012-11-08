@@ -9,12 +9,10 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchema;
-import net.exathunk.jereal.genschema.hyperschema.GeneratedHyperSchemaContainer;
-import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
+import net.exathunk.jereal.genschema.hyperschemaoruri.GeneratedHyperSchemaOrUri;
 
 public interface GeneratedHyperSchemaOrUriContainerRefable {
 
-        Ref<Any2<String,GeneratedHyperSchemaContainer>> getGeneratedHyperSchemaOrUriRef();
+        Ref<GeneratedHyperSchemaOrUri> getGeneratedHyperSchemaOrUriRef();
 
 }

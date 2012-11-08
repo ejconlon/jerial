@@ -9,13 +9,11 @@ import java.util.Set;
  * charolastra 11/7/12 2:20 PM
  */
 public interface Genable {
-    String getClassName();
+    Klass getKlass();
 
-    String getPackageName();
+    Set<Klass> getImports();
 
-    Set<String> getImports();
-
-    Map<String, String> getFields();
+    Map<String, KlassTree> getFields();
 
     Schema getSchema();
 }

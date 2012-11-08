@@ -13,58 +13,49 @@ import java.util.*;
 public class SchemaReader implements Genable {
     private final Schema schema;
 
-    private final String name;
-    private final String packageName;
-    private final String className;
-    private final Set<String> imports;
-    private final Map<String, String> fields;
+    private final Klass klass;
+    private final Set<Klass> imports;
+    private final Map<String, KlassTree> fields;
 
-    public SchemaReader(String className, String packageName, Schema schema, TypeOracle oracle) {
-        this.name = className.toLowerCase();
-        this.className = className;
-        this.packageName = packageName;
+    public SchemaReader(Klass klass, Schema schema) {
+        this.klass = klass;
         this.schema = schema;
-        this.imports = new TreeSet<String>();
-        this.fields = new TreeMap<String, String>();
-        parse(oracle);
+        this.imports = new TreeSet<Klass>();
+        this.fields = new TreeMap<String, KlassTree>();
+        parse();
     }
 
-    private void parse(TypeOracle oracle) {
-        final Set<String> tempImports = new TreeSet<String>();
-        final Map<String, String> tempFields = new TreeMap<String, String>();
+    private void parse() {
+        TypeOracle oracle = new TypeOracleImpl(new KlassContext(new KlassTree(klass)));
+        final Set<Klass> tempImports = new TreeSet<Klass>();
+        final Map<String, KlassTree> tempFields = new TreeMap<String, KlassTree>();
 
         if (!schema.properties.isEmptyRef()) {
            for (Map.Entry<String, SchemaRef> property : schema.properties.getRef().entrySet()) {
                 try {
-                    final String importClass = oracle.makeType(className+"Container", property.getValue(), null, null);
-                    tempImports.add(importClass);
-                    tempFields.put(Util.camelize(property.getKey()),importClass);
+                    final KlassTree importClass = oracle.makeType(property.getValue());
+                    tempImports.addAll(importClass.collectImports());
+                    tempFields.put(KlassContext.camelize(property.getKey()),importClass);
                 } catch (NotImplementedException soon) {}
             }
         }
 
-        Util.rejiggerImports(tempImports, imports);
-        Util.rejiggerFields(tempFields, fields);
-    }
-
-
-    @Override
-    public String getClassName() {
-        return className;
+        KlassContext.rejiggerImports(tempImports, imports);
+        KlassContext.rejiggerFields(tempFields, fields);
     }
 
     @Override
-    public String getPackageName() {
-        return packageName;
+    public Klass getKlass() {
+        return klass;
     }
 
     @Override
-    public Set<String> getImports() {
+    public Set<Klass> getImports() {
         return imports;
     }
 
     @Override
-    public Map<String, String> getFields() {
+    public Map<String, KlassTree> getFields() {
         return fields;
     }
 

@@ -1,5 +1,6 @@
 package net.exathunk.jereal.genschema.calendar;
 
+import java.lang.String;
 import java.util.List;
 import java.util.Map;
 import net.exathunk.jereal.base.core.JThing;
@@ -9,9 +10,7 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.geo.GeneratedGeo;
 import net.exathunk.jereal.genschema.geo.GeneratedGeoContainer;
-import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
 
 public class GeneratedCalendar implements GeneratedCalendarLike, GeneratedCalendarRefable {
 

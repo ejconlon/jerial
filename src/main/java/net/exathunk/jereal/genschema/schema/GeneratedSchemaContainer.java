@@ -1,5 +1,9 @@
 package net.exathunk.jereal.genschema.schema;
 
+import java.lang.Boolean;
+import java.lang.Double;
+import java.lang.Long;
+import java.lang.String;
 import java.util.List;
 import java.util.Map;
 import net.exathunk.jereal.base.core.JThing;
@@ -9,14 +13,14 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
+import net.exathunk.jereal.genschema.schema.GeneratedSchema;
 
 public class GeneratedSchemaContainer implements GeneratedSchemaContainerLike, GeneratedSchemaContainerRefable {
 
-    private final Ref<Any2<GeneratedSchema,String>> GeneratedSchema;
+    private final Ref<GeneratedSchema> GeneratedSchema;
 
     public GeneratedSchemaContainer() {
-        GeneratedSchema = new RefImpl<Any2<GeneratedSchema,String>>();
+        GeneratedSchema = new RefImpl<GeneratedSchema>();
     }
 
     @Override
@@ -24,15 +28,15 @@ public class GeneratedSchemaContainer implements GeneratedSchemaContainerLike, G
         return !GeneratedSchema.isEmptyRef();
     }
     @Override
-    public Any2<GeneratedSchema,String> getGeneratedSchema() {
+    public GeneratedSchema getGeneratedSchema() {
         return GeneratedSchema.getRef();
     }
     @Override
-    public void setGeneratedSchema(Any2<GeneratedSchema,String> value) {
+    public void setGeneratedSchema(GeneratedSchema value) {
         GeneratedSchema.setRef(value);
     }
     @Override
-    public Ref<Any2<GeneratedSchema,String>> getGeneratedSchemaRef() {
+    public Ref<GeneratedSchema> getGeneratedSchemaRef() {
         return GeneratedSchema;
     }
 

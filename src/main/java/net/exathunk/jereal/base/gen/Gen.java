@@ -19,12 +19,12 @@ public abstract class Gen implements GenLike {
 
     @Override
     public void writePackage(Stringer sb) {
-        sb.append("package ").append(genable.getPackageName()).append(";\n\n");
+        sb.append("package ").append(genable.getKlass().getPackageName()).append(";\n\n");
     }
 
     @Override
     public void writeImports(Stringer sb) {
-        for (String importt : genable.getImports()) {
+        for (Klass importt : genable.getImports()) {
             sb.append("import ").append(importt).append(";\n");
         }
         if (!genable.getImports().isEmpty()) sb.append("\n");
@@ -63,7 +63,7 @@ public abstract class Gen implements GenLike {
         Map<String, String> map = new TreeMap<String, String>();
         Stringer sb = new Stringer();
         writeClass(sb);
-        map.put(genable.getPackageName()+"."+effectiveClassName(), sb.toString());
+        map.put(genable.getKlass().getPackageName()+"."+effectiveClassName(), sb.toString());
         return map;
     }
 }

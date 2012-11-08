@@ -1,15 +1,10 @@
 package net.exathunk.jereal.base.gen;
 
 import net.exathunk.jereal.base.core.JThing;
-import net.exathunk.jereal.base.dsl.Speclike;
 import net.exathunk.jereal.base.jerializers.JerializerException;
-import net.exathunk.jereal.base.jerializers.JerializerRegistry;
-import net.exathunk.jereal.base.jerializers.JerializerUtils;
 import net.exathunk.jereal.base.util.JsonParser;
 import net.exathunk.jereal.schema.domain.Schema;
-import net.exathunk.jereal.schema.jerializers.SchemaJerializer;
 import net.exathunk.jereal.schema.util.Loader;
-import net.exathunk.jereal.schema.util.SchemaRegistryBuilder;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -67,7 +62,6 @@ public class RunGen extends AbstractMojo {
         assert dest.isDirectory() && dest.canWrite();
 
         JsonParser parser = new JsonParser();
-        TypeOracle oracle = new TypeOracleImpl();
         for (File schema : schemas.listFiles()) {
             BufferedReader reader = new BufferedReader(new FileReader(schema));
             JThing thing = parser.parse(reader);
@@ -76,14 +70,15 @@ public class RunGen extends AbstractMojo {
             System.out.println(s);
             String rootString = schemas.toURI().toString();
             if (!rootString.endsWith("/")) rootString = rootString + "/";
-            final String innerName = Util.xform(schema.toURI().toString().substring(rootString.length()));
-            final String name = innerName.substring(9, innerName.length()-9);
-            SchemaReader schemaReader = new SchemaReader("Generated"+name, basePackage+"."+name.toLowerCase(), s, oracle);
+            String rawKlassName = KlassContext.capitalize(schema.toURI().toString().substring(rootString.length()));
+            String klassName = "Generated"+rawKlassName;
+            Klass klass = new Klass(klassName, basePackage+"."+rawKlassName.toLowerCase());
+            SchemaReader schemaReader = new SchemaReader(klass, s);
 
             GenWritable writable = MetaGen.makeDefault(schemaReader);
             Map<String, String> m = writable.makeClassToTextMap();
 
-            final File dir = new File(destDir+"/"+name.toLowerCase());
+            final File dir = new File(destDir+"/"+rawKlassName.toLowerCase());
             dir.mkdirs();
             for (Map.Entry<String, String> entry : m.entrySet()) {
                 final String fullClass = entry.getKey();

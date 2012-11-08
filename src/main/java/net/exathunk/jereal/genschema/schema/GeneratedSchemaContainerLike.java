@@ -1,5 +1,9 @@
 package net.exathunk.jereal.genschema.schema;
 
+import java.lang.Boolean;
+import java.lang.Double;
+import java.lang.Long;
+import java.lang.String;
 import java.util.List;
 import java.util.Map;
 import net.exathunk.jereal.base.core.JThing;
@@ -9,12 +13,12 @@ import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Any2;
 import net.exathunk.jereal.base.gen.Any3;
 import net.exathunk.jereal.base.jerializers.*;
-import net.exathunk.jereal.genschema.links.GeneratedLinksContainer;
+import net.exathunk.jereal.genschema.schema.GeneratedSchema;
 
 public interface GeneratedSchemaContainerLike {
 
         boolean hasGeneratedSchema();
-        Any2<GeneratedSchema,String> getGeneratedSchema();
-        void setGeneratedSchema(Any2<GeneratedSchema,String> value);
+        GeneratedSchema getGeneratedSchema();
+        void setGeneratedSchema(GeneratedSchema value);
 
 }
