@@ -99,7 +99,7 @@ public class KlassContext {
         outSet.add(new Klass("List", "java.util"));
         outSet.add(new Klass("Map", "java.util"));
         for (Klass k : inSet) {
-            outSet.add(k);
+            outSet.add(new Klass("*", k.getPackageName()));
         }
     }
 }

@@ -63,9 +63,9 @@ public class RefMapGroup<T extends PushableContext<T, U>, U extends Questionable
             models = new TreeSet<WModel>();
             parts.put(part, models);
         }
-        if (models.contains(model)) {
+        /*if (models.contains(model)) {
             throw new IllegalArgumentException("Cannot add duplicate key: "+part+" "+model);
-        }
+        }*/
         models.add(model);
         order.add(new Pair<PathPart, WModel>(part, model));
     }

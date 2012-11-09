@@ -63,11 +63,11 @@ public class JerializerGen extends Gen {
         sb.append("}\n\n");
     }
 
-    private void writeDslCommand(Stringer sb, String key, KlassTree value) {
+    protected void writeDslCommand(Stringer sb, String key, KlassTree value) {
         writeDslCommand(sb, key, value, "domain");
     }
 
-    private void writeDslCommand(Stringer sb, String key, KlassTree value, String domainDotGetRefCall) {
+    protected void writeDslCommand(Stringer sb, String key, KlassTree value, String domainDotGetRefCall) {
         domainDotGetRefCall += ".get"+KlassContext.capitalize(key)+"Ref()";
         if (value.getTemplateArgs().isEmpty()) {
             throw new IllegalArgumentException("Unhandled klass (0): "+value);
@@ -103,7 +103,7 @@ public class JerializerGen extends Gen {
         }
     }
 
-    private void writeDslCommandUncontained(Stringer sb, String key, KlassTree value, String domainDotGetRefCall) {
+    protected void writeDslCommandUncontained(Stringer sb, String key, KlassTree value, String domainDotGetRefCall) {
         if (value.getTemplateArgs().isEmpty()) {
             // Non-templated class: simple
             if (value.getKlass().equals(new Klass("String", "java.lang"))) {

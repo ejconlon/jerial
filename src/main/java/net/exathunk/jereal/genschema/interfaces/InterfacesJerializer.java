@@ -2,8 +2,10 @@ package net.exathunk.jereal.genschema.interfaces;
 
 import java.util.List;
 import java.util.Map;
+import net.exathunk.jereal.base.core.*;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.dsl.*;
+import net.exathunk.jereal.base.functional.*;
 import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.base.functional.RefImpl;
 import net.exathunk.jereal.base.gen.Ref1;

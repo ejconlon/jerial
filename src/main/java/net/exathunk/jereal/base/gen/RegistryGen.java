@@ -36,6 +36,8 @@ public class RegistryGen extends Gen {
                 for (Klass x : genKlasses) {
                     i.add(x);
                     i.add(new Klass(x.getKlassName()+"Jerializer", x.getPackageName()));
+                    i.add(new Klass(x.getKlassName()+"Container", x.getPackageName()));
+                    i.add(new Klass(x.getKlassName()+"ContainerJerializer", x.getPackageName()));
                 }
                 return i;
             }
@@ -73,6 +75,7 @@ public class RegistryGen extends Gen {
         Stringer sb2 = sb.indent();
         for (Klass k : genKlasses) {
             sb2.append("add(").append(k.getKlassName()).append(".class, new ").append(k.getKlassName()).append("Jerializer());\n");
+            sb2.append("add(").append(k.getKlassName()).append("Container.class, new ").append(k.getKlassName()).append("ContainerJerializer());\n");
         }
         sb.append("}\n\n");
     }

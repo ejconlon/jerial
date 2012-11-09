@@ -233,7 +233,7 @@ public class RecurserImpl<T extends PushableContext<T, U>, U extends Questionabl
 
         final Jerializer<T, U, Y> jerializerY = registry.hasJerializer(klassY) ? registry.getJerializer(klassY) : null;
         if (jerializerY == null && !canConvertDefault(klassY)) throw new JerializerException("Invalid klassY: "+klassY);
-        final Model modelY = modelFor(klassX);
+        final Model modelY = modelFor(klassY);
 
         if (modelX.equals(modelY)) throw new JerializerException("Matching models: "+modelX);
         

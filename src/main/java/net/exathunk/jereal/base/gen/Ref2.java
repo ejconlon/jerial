@@ -123,10 +123,10 @@ public class Ref2<First, Second> {
 
     @Override
     public String toString() {
-        return "Any2{" +
-                "which=" + which +
-                ", first=" + first +
-                ", second=" + second +
+        return "Ref2{" +
+                (which != null ? ("which=" + which) : "") +
+                (first != null ? (", first=" + first) : "") +
+                (second != null ? (", second=" + second) : "") +
                 '}';
     }
 }

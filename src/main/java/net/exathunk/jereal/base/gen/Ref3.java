@@ -165,11 +165,11 @@ public class Ref3<First, Second, Third> {
 
     @Override
     public String toString() {
-        return "Any3{" +
-                "which=" + which +
-                ", first=" + first +
-                ", second=" + second +
-                ", third=" + third +
+        return "Ref3{" +
+                (which != null ? ("which=" + which) : "") +
+                (first != null ? (", first=" + first) : "") +
+                (second != null ? (", second=" + second) : "") +
+                (third != null ? (", third=" + third) : "") +
                 '}';
     }
 }
