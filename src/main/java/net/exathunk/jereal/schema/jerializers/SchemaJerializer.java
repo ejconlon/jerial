@@ -35,7 +35,7 @@ public class SchemaJerializer<T extends PushableContext<T, U>, U extends Questio
         objectDSL.seeString("fragmentResolution", schema.fragmentResolution);
 
         // Unparsed item
-        objectDSL.seeWritable("default", ref(recurser.seeThing(dsl, schema.defaultz)));
+        objectDSL.seeCustom("default", ref(recurser.seeThing(dsl, schema.defaultz)));
 
         objectDSL.seeBoolean("required", schema.required);
         objectDSL.seeBoolean("uniqueItems", schema.uniqueItems);
@@ -43,21 +43,21 @@ public class SchemaJerializer<T extends PushableContext<T, U>, U extends Questio
         objectDSL.seeLong("minItems", schema.minItems);
         objectDSL.seeLong("minimum", schema.minimum);
 
-        objectDSL.seeWritable("additionalProperties", ref(recurser.seeCustom(dsl, schema.additionalProperties_SchemaRef, SchemaRef.class)));
+        objectDSL.seeCustom("additionalProperties", ref(recurser.seeCustom(dsl, schema.additionalProperties_SchemaRef, SchemaRef.class)));
         objectDSL.seeBoolean("additionalProperties", schema.additionalProperties_Boolean);
 
-        objectDSL.seeWritable("type", ref(recurser.seeCustomList(dsl, schema.type_SchemaRef, SchemaRef.class)));
+        objectDSL.seeList("type", ref(recurser.seeCustomList(dsl, schema.type_SchemaRef, SchemaRef.class)));
         objectDSL.seeString("type", schema.type_String);
 
-        objectDSL.seeWritable("items", ref(recurser.seeCustom(dsl, schema.items, SchemaRef.class)));
+        objectDSL.seeCustom("items", ref(recurser.seeCustom(dsl, schema.items, SchemaRef.class)));
 
-        objectDSL.seeWritable("extends", ref(recurser.seeCustom(dsl, schema.extendz, SchemaRef.class)));
+        objectDSL.seeCustom("extends", ref(recurser.seeCustom(dsl, schema.extendz, SchemaRef.class)));
 
-        objectDSL.seeWritable("properties", ref(recurser.seeCustomMap(dsl, schema.properties, SchemaRef.class)));
+        objectDSL.seeCustom("properties", ref(recurser.seeCustomMap(dsl, schema.properties, SchemaRef.class)));
 
-        objectDSL.seeWritable("dependencies", ref(recurser.seeSimpleMap(dsl, schema.dependencies)));
+        objectDSL.seeCustom("dependencies", ref(recurser.seeSimpleMap(dsl, schema.dependencies)));
 
-        objectDSL.seeWritable("links", ref(recurser.seeCustomList(dsl, schema.links, Link.class)));
+        objectDSL.seeList("links", ref(recurser.seeCustomList(dsl, schema.links, Link.class)));
 
         return objectDSL;
     }

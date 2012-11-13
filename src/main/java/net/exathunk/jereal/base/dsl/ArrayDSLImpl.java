@@ -61,8 +61,13 @@ public class ArrayDSLImpl<T extends PushableContext<T, U>, U extends Questionabl
     }
 
     @Override
-    public void seeWritable(Ref<Pipeable<U>> value) {
-        refMapGroup.addWritable(makePart(), value);
+    public void seeCustom(Ref<Pipeable<U>> value) {
+        refMapGroup.addCustom(makePart(), value);
+    }
+
+    @Override
+    public void seeList(Ref<Pipeable<U>> value) {
+        refMapGroup.addList(makePart(), value);
     }
 
     @Override

@@ -3,6 +3,7 @@ package net.exathunk.jereal.base.gen;
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.core.Model;
 import net.exathunk.jereal.base.functional.Ref;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class ContainerJerializerGen extends JerializerGen {
                     }else {
                         foundModel = Model.OBJECT;
                     }
-                    modelRets.put(foundModel, "domain.get"+KlassContext.capitalize(entry.getKey())+"Ref().set"+names[i]+"(new "+sub+"());\n");
+                    modelRets.put(foundModel, ("domain.get"+KlassContext.capitalize(entry.getKey())+"Ref().set"+names[i]+"(new "+sub+"());\n").replace("new Map<", "new TreeMap<"));
                     i += 1;
                 }
                 sb2.append(genable.getKlass().getKlassName()).append(" domain = new ").append(genable.getKlass().getKlassName()).append("();\n");
@@ -65,7 +66,6 @@ public class ContainerJerializerGen extends JerializerGen {
             } else {
                 sb2.append("return new ").append(genable.getKlass().getKlassName()).append("();\n");
             }
-            // TODO Need to look at the types in the klassTree and return a prototype for each based on the spec model
         }
         sb.append("}\n\n");
 
@@ -136,6 +136,12 @@ public class ContainerJerializerGen extends JerializerGen {
                 final String baseClassName = value.getKlass().getKlassName();
                 sb.append("return (new "+baseClassName+"Jerializer()).jerialize(recurser, dsl, "+domainDotGetRefCall+".getRef());\n");
             }
+        } else if (value.getTemplateArgs().size() == 2 && value.getKlass().equals(new Klass(Map.class))){
+            KlassTree k = value.getTemplateArgs().get(1);
+            if (k.getKlass().equals(new Klass(Ref.class))) { k = k.getTemplateArgs().get(0); }
+            else if (k.getKlass().equals(new Klass(Ref2.class))) throw new NotImplementedException();
+            else if (k.getKlass().equals(new Klass(Ref3.class))) throw new NotImplementedException();
+            sb.append("return recurser.seeCustomMap(dsl, "+domainDotGetRefCall+", "+k.getKlass()+".class);\n");
         } else {
             throw new IllegalArgumentException("Unhandled klass (?): "+value);
         }

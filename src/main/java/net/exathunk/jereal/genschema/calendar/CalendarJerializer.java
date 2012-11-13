@@ -29,7 +29,7 @@ public class CalendarJerializer<T extends PushableContext<T, U>, U extends Quest
         objectDSL.seeString("dtend", domain.getDtendRef());
         objectDSL.seeString("dtstart", domain.getDtstartRef());
         objectDSL.seeString("duration", domain.getDurationRef());
-        objectDSL.seeWritable("geo", new RefImpl(recurser.seeCustom(dsl, domain.getGeoRef(), GeoContainer.class)));
+        objectDSL.seeCustom("geo", new RefImpl(recurser.seeCustom(dsl, domain.getGeoRef(), GeoContainer.class)));
         objectDSL.seeString("location", domain.getLocationRef());
         objectDSL.seeString("rdate", domain.getRdateRef());
         objectDSL.seeString("rrule", domain.getRruleRef());

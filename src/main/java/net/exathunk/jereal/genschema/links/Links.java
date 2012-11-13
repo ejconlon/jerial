@@ -1,6 +1,7 @@
 package net.exathunk.jereal.genschema.links;
 
 import java.lang.*;
+import java.util.*;
 import java.util.List;
 import java.util.Map;
 import net.exathunk.jereal.base.core.JThing;
@@ -19,7 +20,7 @@ public class Links implements LinksLike, LinksRefable {
     private final Ref<String> enctype;
     private final Ref<String> href;
     private final Ref<String> method;
-    private final Ref<HyperSchemaContainer> properties;
+    private final Ref<Map<String,Ref<HyperSchemaContainer>>> properties;
     private final Ref<String> rel;
     private final Ref<HyperSchemaContainer> targetSchema;
 
@@ -27,7 +28,7 @@ public class Links implements LinksLike, LinksRefable {
         enctype = new RefImpl<String>();
         href = new RefImpl<String>();
         method = new RefImpl<String>();
-        properties = new RefImpl<HyperSchemaContainer>();
+        properties = new RefImpl<Map<String,Ref<HyperSchemaContainer>>>();
         rel = new RefImpl<String>();
         targetSchema = new RefImpl<HyperSchemaContainer>();
     }
@@ -88,15 +89,15 @@ public class Links implements LinksLike, LinksRefable {
         return !properties.isEmptyRef();
     }
     @Override
-    public HyperSchemaContainer getProperties() {
+    public Map<String,Ref<HyperSchemaContainer>> getProperties() {
         return properties.getRef();
     }
     @Override
-    public void setProperties(HyperSchemaContainer value) {
+    public void setProperties(Map<String,Ref<HyperSchemaContainer>> value) {
         properties.setRef(value);
     }
     @Override
-    public Ref<HyperSchemaContainer> getPropertiesRef() {
+    public Ref<Map<String,Ref<HyperSchemaContainer>>> getPropertiesRef() {
         return properties;
     }
 

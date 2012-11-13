@@ -107,9 +107,15 @@ public class JThingContext implements PushableContext<JThingContext, JThing> {
                     context.builder.addThing(order.getKey(), JThing.make(value.getRef()));
                     break;
                 }
-                case WRITABLE:
+                case CUSTOM:
+                case LIST:
                 {
-                    Ref<Pipeable<JThing>> writable = group.getWritables().get(order.getKey());
+                    final Ref<Pipeable<JThing>> writable;
+                    if ( RefMapGroup.WModel.CUSTOM.equals(order.getValue())) {
+                        writable = group.getCustoms().get(order.getKey());
+                    } else {
+                        writable = group.getLists().get(order.getKey());
+                    }
                     if (writable.isEmptyRef()) break;
                     Ref<JThing> ref = new RefImpl<JThing>();
                     writable.getRef().pipe(ref);

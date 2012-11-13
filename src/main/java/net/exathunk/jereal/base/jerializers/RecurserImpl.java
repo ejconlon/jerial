@@ -38,7 +38,7 @@ public class RecurserImpl<T extends PushableContext<T, U>, U extends Questionabl
     }
 
     @Override
-    public <V> Pipeable<U> seeCustomMap(final DSL<T, U> dsl, final Ref<Map<String, V>> domain, Class<V> klass) throws JerializerException {
+    public <V> Pipeable<U> seeCustomMap(final DSL<T, U> dsl, final Ref<Map<String, Ref<V>>> domain, Class<V> klass) throws JerializerException {
         final Jerializer<T, U, V> jerializer = registry.getJerializer(klass);
         final Recurser<T, U> thiz = this;
         return new Pipeable<U>() {
@@ -52,16 +52,16 @@ public class RecurserImpl<T extends PushableContext<T, U>, U extends Questionabl
                         if (!Model.OBJECT.equals(spec.getModel()) || mapSpec == null) {
                             throw new JerializerException("Expected object: "+spec.getModel());
                         }
-                        domain.setRef(new TreeMap<String, V>());
+                        domain.setRef(new TreeMap<String, Ref<V>>());
                         for (Map.Entry<String, ? extends Speclike> entry : mapSpec.entrySet()) {
-                            domain.getRef().put(entry.getKey(), jerializer.prototype(entry.getValue()));
+                            domain.getRef().put(entry.getKey(), new RefImpl<V>(jerializer.prototype(entry.getValue())));
                         }
                     }
                 }
                 ObjectDSL<T, U> objectDSL = dsl.seeObject();
-                for (Map.Entry<String, V> entry : domain.getRef().entrySet()) {
-                    Pipeable<U> pipeable = jerializer.jerialize(thiz, dsl, entry.getValue());
-                    objectDSL.seeWritable(entry.getKey(), new RefImpl<Pipeable<U>>(pipeable));
+                for (Map.Entry<String, Ref<V>> entry : domain.getRef().entrySet()) {
+                    Pipeable<U> pipeable = jerializer.jerialize(thiz, dsl, entry.getValue().getRef());
+                    objectDSL.seeCustom(entry.getKey(), new RefImpl<Pipeable<U>>(pipeable));
                 }
                 objectDSL.pipe(ref);
             }
@@ -92,7 +92,7 @@ public class RecurserImpl<T extends PushableContext<T, U>, U extends Questionabl
                 ArrayDSL<T, U> arrayDSL = dsl.seeArray();
                 for (final V value : domain.getRef()) {
                     Pipeable<U> pipeable = jerializer.jerialize(thiz, dsl, value);
-                    arrayDSL.seeWritable(new RefImpl<Pipeable<U>>(pipeable));
+                    arrayDSL.seeCustom(new RefImpl<Pipeable<U>>(pipeable));
                 }
                 arrayDSL.pipe(ref);
             }
@@ -218,7 +218,7 @@ public class RecurserImpl<T extends PushableContext<T, U>, U extends Questionabl
                     } else {
                         throw new JerializerException("Invalid klass: "+klass);
                     }
-                    arrayDSL.seeWritable(new RefImpl<Pipeable<U>>(pipeable));
+                    arrayDSL.seeCustom(new RefImpl<Pipeable<U>>(pipeable));
                 }
                 arrayDSL.pipe(ref);
             }
@@ -301,7 +301,7 @@ public class RecurserImpl<T extends PushableContext<T, U>, U extends Questionabl
                             throw new JerializerException("Invalid y...");
                         }
                     }
-                    arrayDSL.seeWritable(new RefImpl<Pipeable<U>>(pipeable));
+                    arrayDSL.seeCustom(new RefImpl<Pipeable<U>>(pipeable));
                 }
                 arrayDSL.pipe(ref);
             }

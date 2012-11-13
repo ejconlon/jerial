@@ -54,8 +54,8 @@ public interface HyperSchemaLike {
         void setPathStart(String value);
 
         boolean hasProperties();
-        HyperSchemaOrUriContainer getProperties();
-        void setProperties(HyperSchemaOrUriContainer value);
+        Map<String,Ref<HyperSchemaOrUriContainer>> getProperties();
+        void setProperties(Map<String,Ref<HyperSchemaOrUriContainer>> value);
 
         boolean hasReadonly();
         Boolean getReadonly();

@@ -24,7 +24,7 @@ public class BagJerializer<T extends PushableContext<T, U>, U extends Questionab
         objectDSL.seeLong("l", bag.l);
         objectDSL.seeDouble("d", bag.d);
         objectDSL.seeBoolean("b", bag.b);
-        objectDSL.seeWritable("next", ref(recurser.seeCustom(dsl, bag.next, Bag.class)));
+        objectDSL.seeCustom("next", ref(recurser.seeCustom(dsl, bag.next, Bag.class)));
         return objectDSL;
     }
 }

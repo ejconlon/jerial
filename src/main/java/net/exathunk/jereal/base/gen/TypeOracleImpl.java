@@ -7,6 +7,7 @@ import net.exathunk.jereal.schema.domain.SchemaRef;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Look away!  I don't want to touch this any more than I have to...
@@ -36,11 +37,11 @@ public class TypeOracleImpl implements TypeOracle {
                     return new KlassTree(new Klass(Ref.class), new KlassTree(new Klass(List.class), makeType(itemType)));
                 }
             } else if (ts.equals("object")) {
-                if (addlPropType == null) {
-                    return new KlassTree(new Klass(Ref.class), new Klass(JThing.class));
-                } else {
-                    return makeType(addlPropType);
-                }
+                //if (addlPropType == null) {
+                    return new KlassTree(new Klass(Ref.class), new KlassTree(new Klass(Map.class), new KlassTree(new Klass(String.class)), new KlassTree(new Klass(Ref.class), new Klass(JThing.class))));
+                //} else {
+                //    return new KlassTree(new Klass(Ref.class), new KlassTree(new Klass(Map.class), new KlassTree(new Klass(String.class)), makeType(addlPropType)));
+                //}
             } else {
                 return klassContext.resolve(ts);
             }
@@ -56,9 +57,9 @@ public class TypeOracleImpl implements TypeOracle {
                     }
                 } else if (ts.equals("object")) {
                     if (s.additionalProperties_SchemaRef.isEmptyRef()) {
-                        return new KlassTree(new Klass(Ref.class), new Klass(JThing.class));
+                        return new KlassTree(new Klass(Ref.class), new KlassTree(new Klass(Map.class), new KlassTree(new Klass(String.class)), new KlassTree(new Klass(Ref.class), new Klass(JThing.class))));
                     } else {
-                        return makeType(s.additionalProperties_SchemaRef.getRef());
+                        return new KlassTree(new Klass(Ref.class), new KlassTree(new Klass(Map.class), new KlassTree(new Klass(String.class)), makeType(s.additionalProperties_SchemaRef.getRef())));
                     }
                 } else {
                     return klassContext.resolve(ts);

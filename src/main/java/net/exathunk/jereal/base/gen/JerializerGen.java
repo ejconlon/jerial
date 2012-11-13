@@ -2,6 +2,7 @@ package net.exathunk.jereal.base.gen;
 
 import net.exathunk.jereal.base.core.JThing;
 import net.exathunk.jereal.base.functional.Ref;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 import java.util.Map;
@@ -115,16 +116,16 @@ public class JerializerGen extends Gen {
             } else if (value.getKlass().equals(new Klass("Boolean", "java.lang"))) {
                 sb.append("objectDSL.seeBoolean(\"").append(key).append("\", ").append(domainDotGetRefCall).append(");\n");
             } else if (value.getKlass().equals(new Klass(JThing.class))) {
-                sb.append("objectDSL.seeWritable(\"").append(key).append("\", new RefImpl(recurser.seeThing(dsl, ").append(domainDotGetRefCall).append(")));\n");
+                sb.append("objectDSL.seeCustom(\"").append(key).append("\", new RefImpl(recurser.seeThing(dsl, ").append(domainDotGetRefCall).append(")));\n");
             } else {
-                sb.append("objectDSL.seeWritable(\"").append(key).append("\", new RefImpl(recurser.seeCustom(dsl, ").append(domainDotGetRefCall).append(", ").append(value.getKlass().getKlassName()+".class").append(")));\n");
+                sb.append("objectDSL.seeCustom(\"").append(key).append("\", new RefImpl(recurser.seeCustom(dsl, ").append(domainDotGetRefCall).append(", ").append(value.getKlass().getKlassName()+".class").append(")));\n");
             }
         } else if (value.getTemplateArgs().size() == 1) {
             if (value.getKlass().equals(new Klass(List.class))) {
                 assert value.getTemplateArgs().size() == 1;
                 KlassTree inner = value.getTemplateArgs().get(0);
                 final String arity = (inner.getTemplateArgs().size() == 1) ? "" : ""+inner.getTemplateArgs().size();
-                sb.append("objectDSL.seeWritable(\"").append(key).append("\", new RefImpl(recurser.seeCustomRefList").append(arity).append("(dsl, ").append(domainDotGetRefCall).append(", ");
+                sb.append("objectDSL.seeList(\"").append(key).append("\", new RefImpl(recurser.seeCustomRefList").append(arity).append("(dsl, ").append(domainDotGetRefCall).append(", ");
                 for (KlassTree k : inner.getTemplateArgs()) {
                     sb.cont().append(k.getKlass().getKlassName()+".class, ");
                 }
@@ -134,8 +135,12 @@ public class JerializerGen extends Gen {
             } else {
                 throw new IllegalArgumentException("Unhandled klass (1): "+value);
             }
-        } else if (value.getTemplateArgs().size() == 2) {
-            throw new IllegalArgumentException("Unhandled klass (2): "+value);
+        } else if (value.getTemplateArgs().size() == 2 && value.getKlass().equals(new Klass(Map.class))) {
+            KlassTree k = value.getTemplateArgs().get(1);
+            if (k.getKlass().equals(new Klass(Ref.class))) { k = k.getTemplateArgs().get(0); }
+            else if (k.getKlass().equals(new Klass(Ref2.class))) throw new NotImplementedException();
+            else if (k.getKlass().equals(new Klass(Ref3.class))) throw new NotImplementedException();
+            sb.append("objectDSL.seeCustom(\""+key+"\", new RefImpl(recurser.seeCustomMap(dsl, "+domainDotGetRefCall+", "+k.getKlass()+".class)));\n");
         } else {
             throw new IllegalArgumentException("Unhandled klass (?): "+value);
         }

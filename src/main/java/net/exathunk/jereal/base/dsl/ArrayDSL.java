@@ -12,5 +12,7 @@ public interface ArrayDSL<T extends PushableContext<T, U>, U extends Questionabl
     void seeBoolean(Ref<Boolean> value);
     void seeLong(Ref<Long> value);
     void seeDouble(Ref<Double> value);
-    void seeWritable(Ref<Pipeable<U>> value);
+    // Grr
+    void seeCustom(Ref<Pipeable<U>> value);
+    void seeList(Ref<Pipeable<U>> value);
 }

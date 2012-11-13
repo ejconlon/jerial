@@ -44,7 +44,7 @@ public interface HyperSchemaRefable {
 
         Ref<String> getPathStartRef();
 
-        Ref<HyperSchemaOrUriContainer> getPropertiesRef();
+        Ref<Map<String,Ref<HyperSchemaOrUriContainer>>> getPropertiesRef();
 
         Ref<Boolean> getReadonlyRef();
 

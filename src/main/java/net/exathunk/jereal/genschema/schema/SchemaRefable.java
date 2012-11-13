@@ -55,7 +55,7 @@ public interface SchemaRefable {
 
         Ref<String> getPatternRef();
 
-        Ref<SchemaContainer> getPropertiesRef();
+        Ref<Map<String,Ref<SchemaContainer>>> getPropertiesRef();
 
         Ref<Boolean> getRequiredRef();
 

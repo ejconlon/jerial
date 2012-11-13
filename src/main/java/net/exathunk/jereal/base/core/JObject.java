@@ -96,7 +96,7 @@ public class JObject implements JMutableCollection<String, JThing> {
         ObjectDSL<A, B> objectDSL = dsl.seeObject();
         for (Map.Entry<String, JThing> entry : seq()) {
             Pipeable<B> pipeable = entry.getValue().acceptDSL(dsl);
-            objectDSL.seeWritable(entry.getKey(), new RefImpl<Pipeable<B>>(pipeable));
+            objectDSL.seeCustom(entry.getKey(), new RefImpl<Pipeable<B>>(pipeable));
         }
         return objectDSL;
     }

@@ -1,6 +1,7 @@
 package net.exathunk.jereal.genschema.links;
 
 import java.lang.*;
+import java.util.*;
 import java.util.List;
 import java.util.Map;
 import net.exathunk.jereal.base.core.JThing;
@@ -22,7 +23,7 @@ public interface LinksRefable {
 
         Ref<String> getMethodRef();
 
-        Ref<HyperSchemaContainer> getPropertiesRef();
+        Ref<Map<String,Ref<HyperSchemaContainer>>> getPropertiesRef();
 
         Ref<String> getRelRef();
 

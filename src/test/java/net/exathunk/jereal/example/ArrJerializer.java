@@ -20,7 +20,7 @@ public class ArrJerializer<T extends PushableContext<T, U>, U extends Questionab
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, Arr arr) throws JerializerException {
         ObjectDSL<T, U> objectDSL = dsl.seeObject();
-        objectDSL.seeWritable("objects", ref(recurser.seeCustomList(dsl, arr.objects, Post.class)));
+        objectDSL.seeCustom("objects", ref(recurser.seeCustomList(dsl, arr.objects, Post.class)));
         return objectDSL;
     }
 }

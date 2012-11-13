@@ -37,7 +37,7 @@ public class Schema implements SchemaLike, SchemaRefable {
     private final Ref<Long> minLength;
     private final Ref<Double> minimum;
     private final Ref<String> pattern;
-    private final Ref<SchemaContainer> properties;
+    private final Ref<Map<String,Ref<SchemaContainer>>> properties;
     private final Ref<Boolean> required;
     private final Ref2<String,SchemaContainer> requires;
     private final Ref<String> title;
@@ -63,7 +63,7 @@ public class Schema implements SchemaLike, SchemaRefable {
         minLength = new RefImpl<Long>();
         minimum = new RefImpl<Double>();
         pattern = new RefImpl<String>();
-        properties = new RefImpl<SchemaContainer>();
+        properties = new RefImpl<Map<String,Ref<SchemaContainer>>>();
         required = new RefImpl<Boolean>();
         requires = new Ref2<String,SchemaContainer>();
         title = new RefImpl<String>();
@@ -342,15 +342,15 @@ public class Schema implements SchemaLike, SchemaRefable {
         return !properties.isEmptyRef();
     }
     @Override
-    public SchemaContainer getProperties() {
+    public Map<String,Ref<SchemaContainer>> getProperties() {
         return properties.getRef();
     }
     @Override
-    public void setProperties(SchemaContainer value) {
+    public void setProperties(Map<String,Ref<SchemaContainer>> value) {
         properties.setRef(value);
     }
     @Override
-    public Ref<SchemaContainer> getPropertiesRef() {
+    public Ref<Map<String,Ref<SchemaContainer>>> getPropertiesRef() {
         return properties;
     }
 

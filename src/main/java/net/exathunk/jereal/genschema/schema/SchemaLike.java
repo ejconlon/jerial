@@ -77,8 +77,8 @@ public interface SchemaLike {
         void setPattern(String value);
 
         boolean hasProperties();
-        SchemaContainer getProperties();
-        void setProperties(SchemaContainer value);
+        Map<String,Ref<SchemaContainer>> getProperties();
+        void setProperties(Map<String,Ref<SchemaContainer>> value);
 
         boolean hasRequired();
         Boolean getRequired();

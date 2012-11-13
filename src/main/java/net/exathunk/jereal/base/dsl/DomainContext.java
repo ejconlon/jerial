@@ -27,7 +27,8 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
         } else {
             RefMapGroup.WModel test = RefMapGroup.WModel.fromModel(value.getModel());
             if (models.contains(test)) model = test;
-            else if (models.contains(RefMapGroup.WModel.WRITABLE)) model = RefMapGroup.WModel.WRITABLE;
+            else if (models.contains(RefMapGroup.WModel.CUSTOM)) model = RefMapGroup.WModel.CUSTOM;
+            else if (models.contains(RefMapGroup.WModel.LIST)) model = RefMapGroup.WModel.LIST;
             else throw new IllegalArgumentException("Bad models: "+test+" "+models);
         }
         switch (model) {
@@ -67,9 +68,15 @@ public class DomainContext implements PushableContext<DomainContext, JThing> {
                 if (sink != null) sink.setRef(value.rawGetDouble().getRef());
                 break;
             }
-            case WRITABLE:
+            case CUSTOM:
+            case LIST:
             {
-                Ref<Pipeable<JThing>> sink = group.getWritables().get(part);
+                final Ref<Pipeable<JThing>> sink;
+                if ( RefMapGroup.WModel.CUSTOM.equals(model)) {
+                    sink = group.getCustoms().get(part);
+                } else {
+                    sink = group.getLists().get(part);
+                }
                 if (sink != null) sink.getRef().pipe(new RefImpl<JThing>(value));
                 break;
             }

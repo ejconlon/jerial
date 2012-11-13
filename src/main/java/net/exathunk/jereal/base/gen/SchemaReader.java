@@ -1,5 +1,6 @@
 package net.exathunk.jereal.base.gen;
 
+import net.exathunk.jereal.base.functional.Ref;
 import net.exathunk.jereal.schema.domain.Schema;
 import net.exathunk.jereal.schema.domain.SchemaRef;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -31,9 +32,9 @@ public class SchemaReader implements Genable {
         final Map<String, KlassTree> tempFields = new TreeMap<String, KlassTree>();
 
         if (!schema.properties.isEmptyRef()) {
-           for (Map.Entry<String, SchemaRef> property : schema.properties.getRef().entrySet()) {
+           for (Map.Entry<String, Ref<SchemaRef>> property : schema.properties.getRef().entrySet()) {
                 try {
-                    final KlassTree importClass = oracle.makeType(property.getValue());
+                    final KlassTree importClass = oracle.makeType(property.getValue().getRef());
                     tempImports.addAll(importClass.collectImports());
                     tempFields.put(KlassContext.camelize(property.getKey()),importClass);
                 } catch (NotImplementedException soon) {}

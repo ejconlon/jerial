@@ -25,7 +25,7 @@ public interface CardRefable {
 
         Ref<String> getBdayRef();
 
-        Ref<JThing> getEmailRef();
+        Ref<Map<String,Ref<JThing>>> getEmailRef();
 
         Ref<String> getFamilyNameRef();
 
@@ -43,7 +43,7 @@ public interface CardRefable {
 
         Ref<String> getNicknameRef();
 
-        Ref<JThing> getOrgRef();
+        Ref<Map<String,Ref<JThing>>> getOrgRef();
 
         Ref<String> getPhotoRef();
 
@@ -51,7 +51,7 @@ public interface CardRefable {
 
         Ref<String> getSoundRef();
 
-        Ref<JThing> getTelRef();
+        Ref<Map<String,Ref<JThing>>> getTelRef();
 
         Ref<String> getTitleRef();
 

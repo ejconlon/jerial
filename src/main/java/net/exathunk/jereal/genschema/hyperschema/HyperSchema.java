@@ -32,7 +32,7 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
     private final Ref<List<Ref<LinksContainer>>> links;
     private final Ref<String> mediaType;
     private final Ref<String> pathStart;
-    private final Ref<HyperSchemaOrUriContainer> properties;
+    private final Ref<Map<String,Ref<HyperSchemaOrUriContainer>>> properties;
     private final Ref<Boolean> readonly;
     private final Ref2<String,HyperSchemaOrUriContainer> requires;
     private final Ref<Boolean> root;
@@ -51,7 +51,7 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
         links = new RefImpl<List<Ref<LinksContainer>>>();
         mediaType = new RefImpl<String>();
         pathStart = new RefImpl<String>();
-        properties = new RefImpl<HyperSchemaOrUriContainer>();
+        properties = new RefImpl<Map<String,Ref<HyperSchemaOrUriContainer>>>();
         readonly = new RefImpl<Boolean>();
         requires = new Ref2<String,HyperSchemaOrUriContainer>();
         root = new RefImpl<Boolean>();
@@ -227,15 +227,15 @@ public class HyperSchema implements HyperSchemaLike, HyperSchemaRefable {
         return !properties.isEmptyRef();
     }
     @Override
-    public HyperSchemaOrUriContainer getProperties() {
+    public Map<String,Ref<HyperSchemaOrUriContainer>> getProperties() {
         return properties.getRef();
     }
     @Override
-    public void setProperties(HyperSchemaOrUriContainer value) {
+    public void setProperties(Map<String,Ref<HyperSchemaOrUriContainer>> value) {
         properties.setRef(value);
     }
     @Override
-    public Ref<HyperSchemaOrUriContainer> getPropertiesRef() {
+    public Ref<Map<String,Ref<HyperSchemaOrUriContainer>>> getPropertiesRef() {
         return properties;
     }
 

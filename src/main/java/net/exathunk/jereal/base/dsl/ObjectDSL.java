@@ -13,5 +13,7 @@ public interface ObjectDSL<T extends PushableContext<T, U>, U extends Questionab
     void seeBoolean(String key, Ref<Boolean> value);
     void seeLong(String key, Ref<Long> value);
     void seeDouble(String key, Ref<Double> value);
-    void seeWritable(String key, Ref<Pipeable<U>> value);
+    // Grr
+    void seeCustom(String key, Ref<Pipeable<U>> value);
+    void seeList(String key, Ref<Pipeable<U>> value);
 }

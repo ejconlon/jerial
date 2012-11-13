@@ -55,12 +55,12 @@ public class MetaGen implements GenWritable {
                 KlassContext klassContext = new KlassContext(new KlassTree(genable.getKlass()));
                 KlassTree tree = (new TypeOracleImpl(klassContext)).makeType(SchemaRef.makeSchema(genable.getSchema()));
                 if (tree.getTemplateArgs().isEmpty()) {
-                    if (tree.getKlass().equals(new Klass(JThing.class))) {
+                    if (tree.getKlass().equals(new Klass(JThing.class)) || tree.getKlass().equals(new Klass(Map.class))) {
                         tree = klassContext.getKlassTree();
                     }
                 } else {
                     for (int i = 0; i < tree.getTemplateArgs().size(); ++i) {
-                        if (tree.getTemplateArgs().get(i).getKlass().equals(new Klass(JThing.class))) {
+                        if (tree.getTemplateArgs().get(i).getKlass().equals(new Klass(JThing.class)) || tree.getTemplateArgs().get(i).getKlass().equals(new Klass(Map.class))) {
                             tree.getTemplateArgs().set(i, new KlassTree(genable.getKlass()));
                         }
                     }

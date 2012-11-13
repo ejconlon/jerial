@@ -1,6 +1,7 @@
 package net.exathunk.jereal.genschema.links;
 
 import java.lang.*;
+import java.util.*;
 import java.util.List;
 import java.util.Map;
 import net.exathunk.jereal.base.core.JThing;
@@ -29,8 +30,8 @@ public interface LinksLike {
         void setMethod(String value);
 
         boolean hasProperties();
-        HyperSchemaContainer getProperties();
-        void setProperties(HyperSchemaContainer value);
+        Map<String,Ref<HyperSchemaContainer>> getProperties();
+        void setProperties(Map<String,Ref<HyperSchemaContainer>> value);
 
         boolean hasRel();
         String getRel();

@@ -28,7 +28,7 @@ public class LinkJerializer<T extends PushableContext<T, U>, U extends Questiona
         objectDSL.seeString("targetSchema", link.targetSchema);
         objectDSL.seeString("enctype", link.enctype);
         objectDSL.seeString("method", link.method);
-        objectDSL.seeWritable("properties", ref(recurser.seeCustomMap(dsl, link.properties, SchemaRef.class)));
+        objectDSL.seeCustom("properties", ref(recurser.seeCustomMap(dsl, link.properties, SchemaRef.class)));
         return objectDSL;
     }
 }

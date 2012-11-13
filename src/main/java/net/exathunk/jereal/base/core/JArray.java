@@ -104,7 +104,7 @@ public class JArray implements JMutableCollection<Integer, JThing> {
         ArrayDSL<A, B> arrayDSL = dsl.seeArray();
         for (Map.Entry<Integer, JThing> entry : seq()) {
             Pipeable<B> pipeable = entry.getValue().acceptDSL(dsl);
-            arrayDSL.seeWritable(new RefImpl<Pipeable<B>>(pipeable));
+            arrayDSL.seeCustom(new RefImpl<Pipeable<B>>(pipeable));
         }
         return arrayDSL;
     }

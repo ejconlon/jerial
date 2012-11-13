@@ -32,8 +32,8 @@ public interface CardLike {
         void setBday(String value);
 
         boolean hasEmail();
-        JThing getEmail();
-        void setEmail(JThing value);
+        Map<String,Ref<JThing>> getEmail();
+        void setEmail(Map<String,Ref<JThing>> value);
 
         boolean hasFamilyName();
         String getFamilyName();
@@ -68,8 +68,8 @@ public interface CardLike {
         void setNickname(String value);
 
         boolean hasOrg();
-        JThing getOrg();
-        void setOrg(JThing value);
+        Map<String,Ref<JThing>> getOrg();
+        void setOrg(Map<String,Ref<JThing>> value);
 
         boolean hasPhoto();
         String getPhoto();
@@ -84,8 +84,8 @@ public interface CardLike {
         void setSound(String value);
 
         boolean hasTel();
-        JThing getTel();
-        void setTel(JThing value);
+        Map<String,Ref<JThing>> getTel();
+        void setTel(Map<String,Ref<JThing>> value);
 
         boolean hasTitle();
         String getTitle();

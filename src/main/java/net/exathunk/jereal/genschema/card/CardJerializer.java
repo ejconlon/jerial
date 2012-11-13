@@ -27,23 +27,23 @@ public class CardJerializer<T extends PushableContext<T, U>, U extends Questiona
     @Override
     public Pipeable<U> jerialize(Recurser<T, U> recurser, DSL<T, U> dsl, Card domain) throws JerializerException {
         ObjectDSL<T, U> objectDSL = dsl.seeObject();
-        objectDSL.seeWritable("additionalName", new RefImpl(recurser.seeCustomRefList(dsl, domain.getAdditionalNameRef(), String.class)));
-        objectDSL.seeWritable("adr", new RefImpl(recurser.seeCustom(dsl, domain.getAdrRef(), AddressContainer.class)));
+        objectDSL.seeList("additionalName", new RefImpl(recurser.seeCustomRefList(dsl, domain.getAdditionalNameRef(), String.class)));
+        objectDSL.seeCustom("adr", new RefImpl(recurser.seeCustom(dsl, domain.getAdrRef(), AddressContainer.class)));
         objectDSL.seeString("bday", domain.getBdayRef());
-        objectDSL.seeWritable("email", new RefImpl(recurser.seeThing(dsl, domain.getEmailRef())));
+        objectDSL.seeCustom("email", new RefImpl(recurser.seeCustomMap(dsl, domain.getEmailRef(), net.exathunk.jereal.base.core.JThing.class)));
         objectDSL.seeString("familyName", domain.getFamilyNameRef());
         objectDSL.seeString("fn", domain.getFnRef());
-        objectDSL.seeWritable("geo", new RefImpl(recurser.seeCustom(dsl, domain.getGeoRef(), GeoContainer.class)));
+        objectDSL.seeCustom("geo", new RefImpl(recurser.seeCustom(dsl, domain.getGeoRef(), GeoContainer.class)));
         objectDSL.seeString("givenName", domain.getGivenNameRef());
-        objectDSL.seeWritable("honorificPrefix", new RefImpl(recurser.seeCustomRefList(dsl, domain.getHonorificPrefixRef(), String.class)));
-        objectDSL.seeWritable("honorificSuffix", new RefImpl(recurser.seeCustomRefList(dsl, domain.getHonorificSuffixRef(), String.class)));
+        objectDSL.seeList("honorificPrefix", new RefImpl(recurser.seeCustomRefList(dsl, domain.getHonorificPrefixRef(), String.class)));
+        objectDSL.seeList("honorificSuffix", new RefImpl(recurser.seeCustomRefList(dsl, domain.getHonorificSuffixRef(), String.class)));
         objectDSL.seeString("logo", domain.getLogoRef());
         objectDSL.seeString("nickname", domain.getNicknameRef());
-        objectDSL.seeWritable("org", new RefImpl(recurser.seeThing(dsl, domain.getOrgRef())));
+        objectDSL.seeCustom("org", new RefImpl(recurser.seeCustomMap(dsl, domain.getOrgRef(), net.exathunk.jereal.base.core.JThing.class)));
         objectDSL.seeString("photo", domain.getPhotoRef());
         objectDSL.seeString("role", domain.getRoleRef());
         objectDSL.seeString("sound", domain.getSoundRef());
-        objectDSL.seeWritable("tel", new RefImpl(recurser.seeThing(dsl, domain.getTelRef())));
+        objectDSL.seeCustom("tel", new RefImpl(recurser.seeCustomMap(dsl, domain.getTelRef(), net.exathunk.jereal.base.core.JThing.class)));
         objectDSL.seeString("title", domain.getTitleRef());
         objectDSL.seeString("tz", domain.getTzRef());
         objectDSL.seeString("url", domain.getUrlRef());

@@ -22,7 +22,7 @@ public class Card implements CardLike, CardRefable {
     private final Ref<List<Ref<String>>> additionalName;
     private final Ref<AddressContainer> adr;
     private final Ref<String> bday;
-    private final Ref<JThing> email;
+    private final Ref<Map<String,Ref<JThing>>> email;
     private final Ref<String> familyName;
     private final Ref<String> fn;
     private final Ref<GeoContainer> geo;
@@ -31,11 +31,11 @@ public class Card implements CardLike, CardRefable {
     private final Ref<List<Ref<String>>> honorificSuffix;
     private final Ref<String> logo;
     private final Ref<String> nickname;
-    private final Ref<JThing> org;
+    private final Ref<Map<String,Ref<JThing>>> org;
     private final Ref<String> photo;
     private final Ref<String> role;
     private final Ref<String> sound;
-    private final Ref<JThing> tel;
+    private final Ref<Map<String,Ref<JThing>>> tel;
     private final Ref<String> title;
     private final Ref<String> tz;
     private final Ref<String> url;
@@ -44,7 +44,7 @@ public class Card implements CardLike, CardRefable {
         additionalName = new RefImpl<List<Ref<String>>>();
         adr = new RefImpl<AddressContainer>();
         bday = new RefImpl<String>();
-        email = new RefImpl<JThing>();
+        email = new RefImpl<Map<String,Ref<JThing>>>();
         familyName = new RefImpl<String>();
         fn = new RefImpl<String>();
         geo = new RefImpl<GeoContainer>();
@@ -53,11 +53,11 @@ public class Card implements CardLike, CardRefable {
         honorificSuffix = new RefImpl<List<Ref<String>>>();
         logo = new RefImpl<String>();
         nickname = new RefImpl<String>();
-        org = new RefImpl<JThing>();
+        org = new RefImpl<Map<String,Ref<JThing>>>();
         photo = new RefImpl<String>();
         role = new RefImpl<String>();
         sound = new RefImpl<String>();
-        tel = new RefImpl<JThing>();
+        tel = new RefImpl<Map<String,Ref<JThing>>>();
         title = new RefImpl<String>();
         tz = new RefImpl<String>();
         url = new RefImpl<String>();
@@ -119,15 +119,15 @@ public class Card implements CardLike, CardRefable {
         return !email.isEmptyRef();
     }
     @Override
-    public JThing getEmail() {
+    public Map<String,Ref<JThing>> getEmail() {
         return email.getRef();
     }
     @Override
-    public void setEmail(JThing value) {
+    public void setEmail(Map<String,Ref<JThing>> value) {
         email.setRef(value);
     }
     @Override
-    public Ref<JThing> getEmailRef() {
+    public Ref<Map<String,Ref<JThing>>> getEmailRef() {
         return email;
     }
 
@@ -272,15 +272,15 @@ public class Card implements CardLike, CardRefable {
         return !org.isEmptyRef();
     }
     @Override
-    public JThing getOrg() {
+    public Map<String,Ref<JThing>> getOrg() {
         return org.getRef();
     }
     @Override
-    public void setOrg(JThing value) {
+    public void setOrg(Map<String,Ref<JThing>> value) {
         org.setRef(value);
     }
     @Override
-    public Ref<JThing> getOrgRef() {
+    public Ref<Map<String,Ref<JThing>>> getOrgRef() {
         return org;
     }
 
@@ -340,15 +340,15 @@ public class Card implements CardLike, CardRefable {
         return !tel.isEmptyRef();
     }
     @Override
-    public JThing getTel() {
+    public Map<String,Ref<JThing>> getTel() {
         return tel.getRef();
     }
     @Override
-    public void setTel(JThing value) {
+    public void setTel(Map<String,Ref<JThing>> value) {
         tel.setRef(value);
     }
     @Override
-    public Ref<JThing> getTelRef() {
+    public Ref<Map<String,Ref<JThing>>> getTelRef() {
         return tel;
     }
 

@@ -13,7 +13,7 @@ import java.util.*;
 public class RefMapGroup<T extends PushableContext<T, U>, U extends Questionable> {
 
     public static enum WModel {
-        OBJECT, ARRAY, STRING, BOOLEAN, LONG, DOUBLE, WRITABLE;
+        OBJECT, ARRAY, STRING, BOOLEAN, LONG, DOUBLE, CUSTOM, LIST;
 
         public static WModel fromModel(Model model) {
             switch (model) {
@@ -40,7 +40,8 @@ public class RefMapGroup<T extends PushableContext<T, U>, U extends Questionable
     private final RefMap<PathPart, Double> doubles = new RefMap<PathPart, Double>();
     private final RefMap<PathPart, ObjectDSL<T, U>> objects = new RefMap<PathPart, ObjectDSL<T, U>>();
     private final RefMap<PathPart, ArrayDSL<T, U>> arrays = new RefMap<PathPart, ArrayDSL<T, U>>();
-    private final RefMap<PathPart, Pipeable<U>> writables = new RefMap<PathPart, Pipeable<U>>();
+    private final RefMap<PathPart, Pipeable<U>> customs = new RefMap<PathPart, Pipeable<U>>();
+    private final RefMap<PathPart, Pipeable<U>> lists = new RefMap<PathPart, Pipeable<U>>();
     private final List<Map.Entry<PathPart, WModel>> order = new ArrayList<Map.Entry<PathPart, WModel>>();
     private final Map<PathPart, Set<WModel>> parts = new TreeMap<PathPart, Set<WModel>>();
     private final WModel model;
@@ -63,9 +64,9 @@ public class RefMapGroup<T extends PushableContext<T, U>, U extends Questionable
             models = new TreeSet<WModel>();
             parts.put(part, models);
         }
-        /*if (models.contains(model)) {
+        if (models.contains(model)) {
             throw new IllegalArgumentException("Cannot add duplicate key: "+part+" "+model);
-        }*/
+        }
         models.add(model);
         order.add(new Pair<PathPart, WModel>(part, model));
     }
@@ -101,9 +102,14 @@ public class RefMapGroup<T extends PushableContext<T, U>, U extends Questionable
         add(part, WModel.LONG);
     }
 
-    public void addWritable(PathPart part, Ref<Pipeable<U>> value) {
-        writables.put(part, value);
-        add(part, WModel.WRITABLE);
+    public void addCustom(PathPart part, Ref<Pipeable<U>> value) {
+        customs.put(part, value);
+        add(part, WModel.CUSTOM);
+    }
+
+    public void addList(PathPart part, Ref<Pipeable<U>> value) {
+        lists.put(part, value);
+        add(part, WModel.LIST);
     }
 
     public RefMap<PathPart, ObjectDSL<T, U>>  getObjects() {
@@ -130,8 +136,12 @@ public class RefMapGroup<T extends PushableContext<T, U>, U extends Questionable
         return doubles;
     }
 
-    public RefMap<PathPart, Pipeable<U>> getWritables() {
-        return writables;
+    public RefMap<PathPart, Pipeable<U>> getCustoms() {
+        return customs;
+    }
+
+    public RefMap<PathPart, Pipeable<U>> getLists() {
+        return lists;
     }
 
     public List<Map.Entry<PathPart, WModel>> getOrders() {

@@ -16,7 +16,6 @@ import java.util.Map;
  */
 public interface Recurser<T extends PushableContext<T, U>, U extends Questionable> {
     <X> Pipeable<U> seeCustom(DSL<T, U> dsl, Ref<X> domain, Class<X> klass) throws JerializerException;
-    <X> Pipeable<U> seeCustomMap(DSL<T, U> dsl, Ref<Map<String, X>> domain, Class<X> klass) throws JerializerException;
     <X> Pipeable<U> seeCustomList(DSL<T, U> dsl, Ref<List<X>> domain, Class<X> klass) throws JerializerException;
 
     Pipeable<U> seeSimpleMap(DSL<T, U> dsl, Ref<Map<String, Ref<String>>> domain);
@@ -24,4 +23,5 @@ public interface Recurser<T extends PushableContext<T, U>, U extends Questionabl
     Pipeable<U> seeThing(DSL<T, U> dsl, Ref<JThing> domain);
     <X> Pipeable<U> seeCustomRefList(DSL<T, U> dsl, Ref<List<Ref<X>>> domain, Class<X> klass) throws JerializerException;
     <X, Y> Pipeable<U> seeCustomRefList2(DSL<T, U> dsl, Ref<List<Ref2<X, Y>>> domain, Class<X> klassX, Class<Y> klassY) throws JerializerException;
+    <X> Pipeable<U> seeCustomMap(DSL<T, U> dsl, Ref<Map<String, Ref<X>>> domain, Class<X> klass) throws JerializerException;
 }

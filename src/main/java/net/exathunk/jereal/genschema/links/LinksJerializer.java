@@ -1,6 +1,7 @@
 package net.exathunk.jereal.genschema.links;
 
 import java.lang.*;
+import java.util.*;
 import java.util.List;
 import java.util.Map;
 import net.exathunk.jereal.base.core.JThing;
@@ -27,9 +28,9 @@ public class LinksJerializer<T extends PushableContext<T, U>, U extends Question
         objectDSL.seeString("enctype", domain.getEnctypeRef());
         objectDSL.seeString("href", domain.getHrefRef());
         objectDSL.seeString("method", domain.getMethodRef());
-        objectDSL.seeWritable("properties", new RefImpl(recurser.seeCustom(dsl, domain.getPropertiesRef(), HyperSchemaContainer.class)));
+        objectDSL.seeCustom("properties", new RefImpl(recurser.seeCustomMap(dsl, domain.getPropertiesRef(), net.exathunk.jereal.genschema.hyperschema.HyperSchemaContainer.class)));
         objectDSL.seeString("rel", domain.getRelRef());
-        objectDSL.seeWritable("targetSchema", new RefImpl(recurser.seeCustom(dsl, domain.getTargetSchemaRef(), HyperSchemaContainer.class)));
+        objectDSL.seeCustom("targetSchema", new RefImpl(recurser.seeCustom(dsl, domain.getTargetSchemaRef(), HyperSchemaContainer.class)));
         return objectDSL;
     }
 
