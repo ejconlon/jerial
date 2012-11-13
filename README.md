@@ -1,13 +1,13 @@
-Jereal
+Jerial
 ======
 
 I started this to try to work with JSON-Schema in a strongly-typed language (Java).  In the process I wrote a bunch of stuff... JSON parser, AST nodes, visitors, code generators, serialization primitives, generated serialization and prototyping functions, etc.  In short, it turns a schema like this:
 
-> {
->   "id": "http://example.com/bag",
->   "properties": {
->     "s": {
->       "type":"string"
+> {\n
+>   "id": "http://example.com/bag",\n
+>   "properties": {\n
+>     "s": {\n
+>       "type":"string"\n
 >     },
 >     "b": {
 >       "type":"boolean"
