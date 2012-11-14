@@ -46,4 +46,4 @@ and a (de)serialization function like this:
         return objectDSL;
     }
 
-I'm just short of boostrapping the thing with a few core generated Schema classes, but to really be happy with that I'd have to go back and rework a few things.  The main headache is that union types are numerous in the core schemas, which makes the generated classes huge and awkward to work with.  I figure I've learned enough to move on now.
+I'm just short of boostrapping the thing with a few core generated Schema classes, but to really be happy with that I'd have to go back and rework a few things.  The main headache is that union types are numerous in the core schemas, which makes the generated classes huge and awkward to work with.  I'm going to work with a non-union-typed subset and see how that goes.
